@@ -1,0 +1,21 @@
+
+:root{--bg:#f5f6f7;--surface:#fff;--text:#182126;--muted:#68737a;--accent:#c8102e;--line:#e4e8ea;--ok:#16794c;--warn:#986600;--tag:#eef1f3;--shadow:0 8px 30px rgba(20,30,35,.08);--max:1100px}
+*{box-sizing:border-box}body{margin:0;font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+.wrap{width:min(var(--max),calc(100% - 30px));margin:auto}header{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 80%,#6f071b),var(--accent));color:#fff;padding:48px 0 38px}
+.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.12em;font-weight:800;opacity:.85}.eyebrow.accent{color:var(--accent);opacity:1}
+h1{font-size:clamp(2.2rem,6vw,4.6rem);line-height:.95;margin:.4rem 0 1rem}.toolbar{display:grid;grid-template-columns:1.6fr 1fr auto;gap:10px;padding:28px 0 10px}
+input,select,textarea{width:100%;font:inherit;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff}textarea{resize:vertical}
+.btn{border:0;border-radius:12px;padding:11px 14px;background:var(--accent);color:white;font-weight:750;cursor:pointer;text-decoration:none;display:inline-block}.btn.secondary{background:white;color:var(--text);border:1px solid var(--line)}.btn.danger{background:#8d1728}
+.section-head{margin:30px 0 12px}.section-head h2{margin:0}.section-head p{margin:.2rem 0 0;color:var(--muted)}
+.feature,.card{background:white;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}.feature{padding:24px}.feature h2{margin:.4rem 0;font-size:1.6rem}
+.meta,.topics,.btnrow,.inline,.editor-actions,.tabs{display:flex;gap:8px;flex-wrap:wrap}.chip{background:var(--tag);padding:6px 10px;border-radius:999px;font-size:.82rem;font-weight:700}.oa{background:#e9f7ef;color:var(--ok)}.pay{background:#fff1d5;color:var(--warn)}
+.topic-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:9px 12px;cursor:pointer}.topic-btn.active{background:var(--text);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{padding:18px;display:flex;flex-direction:column;min-height:285px}.card h3{margin:.4rem 0;font-size:1.05rem}.card p{color:var(--muted);flex:1}
+.small{font-size:.82rem;color:var(--muted)}.new{font-size:.72rem;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}.empty{text-align:center;color:var(--muted);padding:40px;display:none}
+.admin-entry{text-align:center;padding:34px}.linkbtn,.iconbtn{background:none;border:0;cursor:pointer;font:inherit}.linkbtn{color:var(--muted)}.iconbtn{font-size:1.2rem}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:18px;z-index:30}.hidden{display:none!important}.modal-card{width:min(900px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:20px;padding:22px}
+.modal-top{display:flex;justify-content:space-between;gap:20px;align-items:start}.modal-top h2{margin:.2rem 0 1rem}.tabs{border-bottom:1px solid var(--line);margin-bottom:18px}.tab{background:none;border:0;padding:10px 4px;cursor:pointer;font-weight:750;color:var(--muted)}.tab.active{color:var(--accent);border-bottom:3px solid var(--accent)}
+.editor-actions{margin-bottom:16px}.editor-actions select{flex:1}.doi-box{background:#f8fafb;border:1px solid var(--line);padding:14px;border-radius:14px;margin-bottom:16px}.inline{margin-top:6px}.inline input{flex:1}.hint{color:var(--muted);font-size:.84rem;margin:.5rem 0 0}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.span2{grid-column:1/-1}label{font-size:.88rem;font-weight:700;display:block}label input,label select,label textarea{margin-top:5px;font-weight:400}.check{display:flex;gap:8px;align-items:center;margin:14px 0}.check input{width:auto}.status{min-height:1.4em;color:var(--muted)}
+footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 45px;color:var(--muted);font-size:.9rem}
+@media(max-width:760px){.toolbar,.form-grid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.wrap{width:min(var(--max),calc(100% - 20px))}.span2{grid-column:auto}.inline{display:grid}}
