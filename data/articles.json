@@ -1,0 +1,215 @@
+[
+  {
+    "id": "erc-guidelines-2025",
+    "title": "European Resuscitation Council Guidelines 2025",
+    "authors": "European Resuscitation Council",
+    "journal": "ERC Guidelines / Resuscitation",
+    "year": 2025,
+    "doi": "",
+    "topics": [
+      "Reanimation",
+      "Notfallmedizin",
+      "Ausbildung"
+    ],
+    "type": "Leitlinie",
+    "read": "30+ min",
+    "access": "oa",
+    "why": "Zentrale europäische Referenz für Reanimation. Besonders praktisch sind die frei verfügbaren Kapitel, Algorithmen, Pocket Cards und Ausbildungsunterlagen.",
+    "publisherUrl": "https://www.erc.edu/science-research/guidelines/guidelines-2025/",
+    "freeUrl": "https://www.erc.edu/download-centre/",
+    "featured": true,
+    "added": "2026-09-06"
+  },
+  {
+    "id": "who-prehospital-emergency-care-2025",
+    "title": "Prehospital emergency care – operational guidance for ambulance systems",
+    "authors": "World Health Organization",
+    "journal": "WHO Guidance",
+    "year": 2025,
+    "doi": "",
+    "topics": [
+      "Rettungsdienstsystem",
+      "Organisation",
+      "Qualität"
+    ],
+    "type": "Guidance",
+    "read": "Nachschlagewerk",
+    "access": "oa",
+    "why": "Sehr umfangreiche WHO-Handreichung zu präklinischen Systemen, Leitstelle, Medical Control, Übergabe, Ausstattung, Infektionsprävention und klinischen Protokollen.",
+    "publisherUrl": "https://www.who.int/publications/i/item/9789240114067",
+    "freeUrl": "https://www.who.int/publications/i/item/9789240114067",
+    "featured": false,
+    "added": "2026-09-05"
+  },
+  {
+    "id": "ems-sepsis-systematic-review",
+    "title": "Prehospital management and identification of sepsis by emergency medical services: a systematic review",
+    "authors": "Lane et al.",
+    "journal": "Emergency Medicine Journal",
+    "year": 2016,
+    "doi": "10.1136/emermed-2015-205261",
+    "topics": [
+      "Sepsis",
+      "Notfallmedizin",
+      "Rettungsdienst"
+    ],
+    "type": "Systematic Review",
+    "read": "15–20 min",
+    "access": "paywall",
+    "why": "Guter Überblick über die präklinische Erkennung und Versorgung von Sepsis und damit ein interessanter Ausgangspunkt für Fortbildungen zur frühen Identifikation.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/26864327/",
+    "freeUrl": "",
+    "featured": false,
+    "added": "2026-09-04"
+  },
+  {
+    "id": "emergency-team-competencies",
+    "title": "Emergency team competencies: scoping review for briefing and debriefing",
+    "authors": "Emergency healthcare research group",
+    "journal": "Scoping Review",
+    "year": 2023,
+    "doi": "",
+    "topics": [
+      "CRM",
+      "Human Factors",
+      "Ausbildung",
+      "Debriefing"
+    ],
+    "type": "Scoping Review",
+    "read": "15 min",
+    "access": "free",
+    "why": "Leitet acht zentrale Kompetenzbereiche für Notfallteams ab: Kommunikation, Entscheidungsfindung, klinische Fertigkeiten, Situationsbewusstsein, Führung, Aufgabenmanagement, Zusammenarbeit sowie Stress- und Fatigue-Management.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/37507807/",
+    "freeUrl": "https://pubmed.ncbi.nlm.nih.gov/37507807/",
+    "featured": false,
+    "added": "2026-09-03"
+  },
+  {
+    "id": "hems-simulation-program",
+    "title": "Simulation-based medical education for Ambulance Jet and Helicopter Emergency Medical Services",
+    "authors": "Nabecker et al.",
+    "journal": "Simulation-based EMS education",
+    "year": 2021,
+    "doi": "",
+    "topics": [
+      "Simulation",
+      "CRM",
+      "HEMS",
+      "Ausbildung"
+    ],
+    "type": "Programmbeschreibung",
+    "read": "12–15 min",
+    "access": "oa",
+    "why": "Praxisnahes Beispiel für wiederkehrendes High-Fidelity-Simulationstraining mit CRM und videounterstütztem Debriefing im luftgebundenen Rettungsdienst.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/PMC10939555/",
+    "freeUrl": "https://pubmed.ncbi.nlm.nih.gov/PMC10939555/",
+    "featured": false,
+    "added": "2026-09-02"
+  },
+  {
+    "id": "learning-simulation-prehospital",
+    "title": "Learning by simulation in prehospital emergency care – an integrative literature review",
+    "authors": "Abelsson et al.",
+    "journal": "Scandinavian Journal of Caring Sciences",
+    "year": 2015,
+    "doi": "",
+    "topics": [
+      "Simulation",
+      "Ausbildung",
+      "Rettungsdienst"
+    ],
+    "type": "Literaturreview",
+    "read": "12–15 min",
+    "access": "paywall",
+    "why": "Speziell auf präklinisches Lernen durch Simulation ausgerichtet. Betont unter anderem Kommunikation mit Patient:innen und den Stellenwert des Debriefings.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/26333061/",
+    "freeUrl": "",
+    "featured": false,
+    "added": "2026-09-01"
+  },
+  {
+    "id": "debriefing-systematic-review-2024",
+    "title": "Debriefing Methods for Simulation in Healthcare: A Systematic Review",
+    "authors": "Simulation in Healthcare",
+    "journal": "Simulation in Healthcare",
+    "year": 2024,
+    "doi": "10.1097/SIH.0000000000000765",
+    "topics": [
+      "Debriefing",
+      "Simulation",
+      "Ausbildung"
+    ],
+    "type": "Systematic Review",
+    "read": "15–20 min",
+    "access": "paywall",
+    "why": "Aktueller systematischer Überblick über Debriefing-Ansätze. Besonders interessant für Ausbilder:innen, weil die Evidenz hinter verschiedenen Methoden kritisch eingeordnet wird.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/38240623/",
+    "freeUrl": "",
+    "featured": false,
+    "added": "2026-08-30"
+  },
+  {
+    "id": "human-factors-simulation-em",
+    "title": "Human Factors and Simulation in Emergency Medicine",
+    "authors": "Academic Emergency Medicine Consensus Group",
+    "journal": "Academic Emergency Medicine",
+    "year": 2017,
+    "doi": "",
+    "topics": [
+      "Human Factors",
+      "CRM",
+      "Simulation"
+    ],
+    "type": "Consensus Statement",
+    "read": "15 min",
+    "access": "paywall",
+    "why": "Grundlagenartikel dazu, wie Human Factors und Simulation zur Verbesserung von Sicherheit, Teamarbeit und Systemgestaltung in der Notfallmedizin genutzt werden können.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/28925571/",
+    "freeUrl": "",
+    "featured": false,
+    "added": "2026-08-28"
+  },
+  {
+    "id": "abcde-debriefing",
+    "title": "The ABCDE Approach: A Simplified Model for Debriefing During Simulation in Emergency Medicine",
+    "authors": "Rajendran et al.",
+    "journal": "Emergency Medicine / Simulation Education",
+    "year": 2023,
+    "doi": "",
+    "topics": [
+      "Debriefing",
+      "Simulation",
+      "Ausbildung"
+    ],
+    "type": "Review / Praxisartikel",
+    "read": "8–10 min",
+    "access": "free",
+    "why": "Ein leicht merkbares Debriefing-Modell mit Fokus auf psychologische Sicherheit, Beziehung, Kommunikationsansatz, Inhalt und Rahmenbedingungen.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/36883075/",
+    "freeUrl": "https://pubmed.ncbi.nlm.nih.gov/36883075/",
+    "featured": false,
+    "added": "2026-08-27"
+  },
+  {
+    "id": "ai-debriefing-2026",
+    "title": "Artificial intelligence to support debriefing in simulation-based healthcare education: a scoping review",
+    "authors": "Alnazawi & Almarhabi",
+    "journal": "Advances in Simulation",
+    "year": 2026,
+    "doi": "10.1186/s41077-026-00447-6",
+    "topics": [
+      "Simulation",
+      "Debriefing",
+      "KI",
+      "Ausbildung"
+    ],
+    "type": "Scoping Review",
+    "read": "15 min",
+    "access": "oa",
+    "why": "Aktueller Überblick darüber, wie KI zur Unterstützung von Debriefings eingesetzt wird. Interessant für die Weiterentwicklung moderner Ausbildungskonzepte.",
+    "publisherUrl": "https://pubmed.ncbi.nlm.nih.gov/42351276/",
+    "freeUrl": "https://pubmed.ncbi.nlm.nih.gov/42351276/",
+    "featured": false,
+    "added": "2026-08-26"
+  }
+]
