@@ -1,5 +1,24 @@
 [
   {
+    "id": "test-1788816812649",
+    "title": "test",
+    "authors": "tse",
+    "journal": "",
+    "year": 2015,
+    "doi": "",
+    "topics": [
+      "eses"
+    ],
+    "type": "Fachartikel",
+    "read": "18",
+    "access": "oa",
+    "why": "esfe",
+    "publisherUrl": "",
+    "freeUrl": "",
+    "featured": true,
+    "added": "2026-09-07"
+  },
+  {
     "id": "erc-guidelines-2025",
     "title": "European Resuscitation Council Guidelines 2025",
     "authors": "European Resuscitation Council",
@@ -17,7 +36,7 @@
     "why": "Zentrale europäische Referenz für Reanimation. Besonders praktisch sind die frei verfügbaren Kapitel, Algorithmen, Pocket Cards und Ausbildungsunterlagen.",
     "publisherUrl": "https://www.erc.edu/science-research/guidelines/guidelines-2025/",
     "freeUrl": "https://www.erc.edu/download-centre/",
-    "featured": true,
+    "featured": false,
     "added": "2026-09-06"
   },
   {
