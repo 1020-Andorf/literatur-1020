@@ -1,24 +1,5 @@
 [
   {
-    "id": "test-1788816812649",
-    "title": "test",
-    "authors": "tse",
-    "journal": "",
-    "year": 2015,
-    "doi": "",
-    "topics": [
-      "eses"
-    ],
-    "type": "Fachartikel",
-    "read": "18",
-    "access": "oa",
-    "why": "esfe",
-    "publisherUrl": "",
-    "freeUrl": "",
-    "featured": true,
-    "added": "2026-09-07"
-  },
-  {
     "id": "erc-guidelines-2025",
     "title": "European Resuscitation Council Guidelines 2025",
     "authors": "European Resuscitation Council",
