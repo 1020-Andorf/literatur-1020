@@ -4,171 +4,88 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Kuratierte Literatur für Rettungsdienst und Ausbildung.">
-<title>Wissen für den Dienst</title>
-<link rel="stylesheet" href="styles.css?v=4">
+<title>RD-Literatur</title>
+<link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <div id="siteEyebrow" class="eyebrow"></div>
-    <h1 id="siteTitle">Wissen für den Dienst</h1>
-    <p id="siteSubtitle"></p>
+<header class="topbar">
+  <div class="wrap nav-wrap">
+    <a class="brand" href="#" aria-label="Startseite">
+      <span class="brand-mark" aria-hidden="true">✚</span>
+      <span><strong id="siteTitle">RD-Literatur</strong><small id="siteSubtitle">Wissenschaft. Für den Einsatz. Gemeinsam besser.</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Hauptnavigation">
+      <button id="navCurrent" class="nav-link active" type="button">⌂ <span>Startseite</span></button>
+      <button id="navArchive" class="nav-link" type="button">▣ <span>Archiv</span></button>
+      <a class="nav-link" href="#about">ⓘ <span>Über uns</span></a>
+      <a class="nav-link" href="#faq">? <span>FAQ</span></a>
+    </nav>
+    <button id="adminOpen" class="admin-btn" type="button">🔒 Redaktion</button>
   </div>
 </header>
 
-<main class="wrap">
-  <section class="toolbar">
-    <input id="search" type="search" placeholder="Titel, Autor, Thema oder Stichwort suchen …">
-    <select id="level">
-      <option value="all">Alle Levels</option>
-      <option value="rs">RS</option>
-      <option value="rs-nfs">RS–NFS</option>
-      <option value="nfs">NFS</option>
-    </select>
-    <select id="language">
-      <option value="all">Alle Sprachen</option>
-      <option value="de">Deutsch</option>
-      <option value="en">Englisch</option>
-    </select>
-    <select id="typeFilter"><option value="all">Alle Evidenz-/Dokumenttypen</option></select>
-    <select id="access">
-      <option value="all">Alle Zugriffsarten</option>
-      <option value="oa">Open Access</option>
-      <option value="free">Freie Version verfügbar</option>
-      <option value="paywall">Paywall</option>
-    </select>
-    <button id="resetFilters" class="btn secondary" type="button">Filter zurücksetzen</button>
-    <button id="randomBtn" class="btn secondary">🎲 Zufälliger Lesetipp</button>
+<main class="wrap page-shell">
+  <section class="topic-section">
+    <div class="topic-head">
+      <div><h1>Themenbereiche</h1><p>Wähle die für dich relevanten Themen, um passende Artikel zu finden.</p></div>
+      <div class="less-card"><span>💡</span><div><strong>Weniger ist mehr</strong><small>Wir bündeln Einzelthemen in übersichtliche Hauptbereiche. So findest du schneller, was du suchst.</small></div></div>
+    </div>
+    <div id="topics" class="topics"></div>
   </section>
 
-  <nav class="view-switch" aria-label="Literaturansicht">
-    <button id="currentViewBtn" class="view-btn active" type="button">Aktuell <span id="currentCount" class="view-count"></span></button>
-    <button id="archiveViewBtn" class="view-btn" type="button">Archiv <span id="archiveCount" class="view-count"></span></button>
-  </nav>
+  <section class="filter-panel" aria-label="Filter">
+    <div class="filter-field"><label for="level">👥 Zielgruppe</label><select id="level"><option value="all">Alle</option><option value="rs">RS</option><option value="rs-nfs">RS–NFS</option><option value="nfs">NFS</option></select></div>
+    <div class="filter-field"><label for="language">🌐 Sprache</label><select id="language"><option value="all">Alle</option><option value="de">Deutsch</option><option value="en">Englisch</option></select></div>
+    <div class="filter-field"><label for="typeFilter">▤ Evidenztyp</label><select id="typeFilter"><option value="all">Alle</option></select></div>
+    <div class="filter-field"><label for="access">🔓 Zugriff</label><select id="access"><option value="all">Alle</option><option value="oa">Open Access</option><option value="free">Freie Version</option><option value="paywall">Paywall</option></select></div>
+    <div class="search-field"><span>⌕</span><input id="search" type="search" placeholder="Suche nach Titel, Thema, Autor …"></div>
+    <button id="resetFilters" class="reset-btn" type="button">↻ Filter zurücksetzen</button>
+  </section>
 
-  <section id="archiveNotice" class="archive-notice hidden">Im frei zugänglichen Archiv findest du alle Beiträge, die länger als 30 Tage auf der Startseite waren oder vorzeitig von der Redaktion archiviert wurden.</section>
-  <section id="featured"></section>
+  <section id="archiveNotice" class="archive-notice hidden">Alle Beiträge im Archiv bleiben frei zugänglich und vollständig durchsuchbar. Nach 30 Tagen auf der Startseite werden Artikel automatisch hierher verschoben.</section>
 
-  <section class="section-head"><div><h2>Themen</h2><p>Kategorien entstehen automatisch aus den Themen deiner Artikel.</p></div></section>
-  <div id="topics" class="topics"></div>
+  <section class="content-head">
+    <nav class="view-switch" aria-label="Literaturansicht">
+      <button id="currentViewBtn" class="view-btn active" type="button">▤ Aktuell <span id="currentCount"></span></button>
+      <button id="archiveViewBtn" class="view-btn" type="button">▣ Archiv <span id="archiveCount"></span></button>
+    </nav>
+    <div class="sort-wrap"><label for="sort">Sortieren nach:</label><select id="sort"><option value="newest">Neueste zuerst</option><option value="title">Titel A–Z</option><option value="year">Publikationsjahr</option></select></div>
+  </section>
 
-  <section class="section-head"><div><h2 id="listHeading">Literatur & Empfehlungen</h2><p id="count"></p></div></section>
+  <section class="section-head"><div><h2 id="listHeading">Aktuelle Literatur</h2><p id="count"></p></div></section>
   <section id="cards" class="grid"></section>
   <div id="empty" class="empty">Keine passenden Einträge gefunden.</div>
 
-  <section class="admin-entry"><button id="adminOpen" class="linkbtn">🔐 Redaktion</button></section>
+  <section id="about" class="info-section"><h2>Über diese Sammlung</h2><p>Die Sammlung bündelt frei zugängliche und praxisrelevante Fachliteratur für Rettungssanitäter:innen bis Notfallsanitäter:innen. Sie ersetzt keine lokalen SOPs, Leitlinien oder ärztlichen Anordnungen.</p></section>
+  <section id="faq" class="info-section"><h2>FAQ</h2><p><strong>Warum verschwinden Beiträge von der Startseite?</strong> Nach 30 Tagen wandern sie automatisch ins Archiv. Dort bleiben sie dauerhaft frei zugänglich und durchsuchbar.</p></section>
 </main>
 
 <div id="pinModal" class="modal hidden">
   <div class="pin-card" role="dialog" aria-modal="true" aria-labelledby="pinTitle">
-    <div class="eyebrow accent">Redaktion</div>
-    <h2 id="pinTitle">PIN eingeben</h2>
-    <p>Bitte zuerst die Redaktions-PIN eingeben.</p>
-    <form id="pinForm">
-      <input id="adminPinInput" type="password" inputmode="numeric" autocomplete="current-password" required autofocus placeholder="PIN">
-      <div class="btnrow">
-        <button class="btn" type="submit">Redaktion öffnen</button>
-        <button id="pinCancel" class="btn secondary" type="button">Abbrechen</button>
-      </div>
-      <p id="pinStatus" class="status"></p>
-    </form>
+    <div class="modal-icon">🔒</div><h2 id="pinTitle">Redaktion öffnen</h2><p>Bitte gib deine Redaktions-PIN ein.</p>
+    <form id="pinForm"><input id="adminPinInput" type="password" inputmode="numeric" autocomplete="current-password" required placeholder="PIN"><div class="btnrow"><button class="btn" type="submit">Öffnen</button><button id="pinCancel" class="btn secondary" type="button">Abbrechen</button></div><p id="pinStatus" class="status"></p></form>
   </div>
 </div>
 
 <div id="adminModal" class="modal hidden">
   <div class="modal-card">
-    <div class="modal-top">
-      <div><div class="eyebrow accent">Redaktion</div><h2>Website verwalten</h2></div>
-      <button id="adminClose" class="iconbtn">✕</button>
-    </div>
-
-    <div class="tabs">
-      <button class="tab active" data-tab="articleTab">Artikel</button>
-      <button class="tab" data-tab="siteTab">Erscheinungsbild</button>
-    </div>
-
+    <div class="modal-top"><div><div class="eyebrow accent">Redaktion</div><h2>Website verwalten</h2></div><button id="adminClose" class="iconbtn">✕</button></div>
+    <div class="tabs"><button class="tab active" data-tab="articleTab">Artikel</button><button class="tab" data-tab="siteTab">Erscheinungsbild</button></div>
     <section id="articleTab" class="tabpane">
-      <div class="editor-actions">
-        <select id="articleSelect"><option value="">Neuen Artikel anlegen</option></select>
-        <button id="newArticleBtn" class="btn secondary" type="button">+ Neu</button>
-      </div>
-
-      <div class="doi-box">
-        <label>DOI automatisch übernehmen
-          <div class="inline">
-            <input id="doiLookup" placeholder="z. B. 10.1186/s41077-026-00447-6">
-            <button id="doiBtn" type="button" class="btn secondary">🔎 Artikeldaten abrufen</button>
-          </div>
-        </label>
-        <p class="hint">Titel, Autor:innen, Journal, Jahr, DOI und Original-Link werden über Crossref ergänzt. Thema, Lesezeit und deine Einordnung bleiben bewusst redaktionell.</p>
-      </div>
-
-      <form id="articleForm">
-        <input type="hidden" name="id">
-        <div class="form-grid">
-          <label>Titel<input name="title" required></label>
-          <label>Autor:innen<input name="authors"></label>
-          <label>Journal / Quelle<input name="journal"></label>
-          <label>Jahr<input name="year" type="number" min="1900" max="2100"></label>
-          <label>DOI<input name="doi"></label>
-          <label>Dokumenttyp / Evidenztyp
-            <select name="type">
-              <option>Fachartikel</option><option>Review</option><option>Systematic Review</option>
-              <option>Leitlinie</option><option>Guidance</option><option>Paper</option>
-              <option>Consensus Statement</option><option>Sonstiges</option>
-            </select>
-          </label>
-          <label>Themen / Kategorien<input name="topics" placeholder="Reanimation, CRM, Ausbildung"></label>
-          <label>Level
-            <select name="level">
-              <option value="rs">RS</option><option value="rs-nfs" selected>RS–NFS</option><option value="nfs">NFS</option>
-            </select>
-          </label>
-          <label>Sprache
-            <select name="language"><option value="de">Deutsch</option><option value="en">Englisch</option></select>
-          </label>
-          <label>Lizenz<input name="license" placeholder="z. B. CC BY 4.0"></label>
-          <label>Lesezeit<input name="read" placeholder="12 min"></label>
-          <label>Zugriff
-            <select name="access">
-              <option value="oa">Open Access</option>
-              <option value="free">Freie Version verfügbar</option>
-              <option value="paywall">Paywall</option>
-            </select>
-          </label>
-          <label>Original-/Verlagslink<input name="publisherUrl" type="url"></label>
-          <label>Freier Volltext / Repository<input name="freeUrl" type="url"></label>
-        </div>
-        <label>Warum lesenswert?<textarea name="why" rows="4"></textarea></label>
-        <label class="check"><input name="featured" type="checkbox"> Als aktuellen Lesetipp markieren</label>
-        <div class="btnrow">
-          <button class="btn" type="submit">Speichern</button>
-          <button id="previewBtn" class="btn secondary" type="button">Vorschau</button>
-          <button id="archiveToggleBtn" class="btn secondary hidden" type="button">Ins Archiv verschieben</button>
-          <button id="deleteBtn" class="btn danger hidden" type="button">Artikel löschen</button>
-        </div>
-        <p id="formStatus" class="status"></p>
-      </form>
+      <div class="editor-actions"><select id="articleSelect"><option value="">Neuen Artikel anlegen</option></select><button id="newArticleBtn" class="btn secondary" type="button">+ Neu</button></div>
+      <div class="doi-box"><label>DOI automatisch übernehmen<div class="inline"><input id="doiLookup" placeholder="z. B. 10.1186/s41077-026-00447-6"><button id="doiBtn" type="button" class="btn secondary">🔎 Artikeldaten abrufen</button></div></label><p class="hint">Titel, Autor:innen, Journal, Jahr, DOI und Original-Link werden über Crossref ergänzt.</p></div>
+      <form id="articleForm"><input type="hidden" name="id"><div class="form-grid">
+        <label>Titel<input name="title" required></label><label>Autor:innen<input name="authors"></label><label>Journal / Quelle<input name="journal"></label><label>Jahr<input name="year" type="number" min="1900" max="2100"></label><label>DOI<input name="doi"></label>
+        <label>Dokumenttyp / Evidenztyp<select name="type"><option>Fachartikel</option><option>Review</option><option>Systematic Review</option><option>Leitlinie</option><option>Guidance</option><option>Paper</option><option>Consensus Statement</option><option>Sonstiges</option></select></label>
+        <label>Themen / Kategorien<input name="topics" placeholder="z. B. Reanimation, Trauma"></label><label>Level<select name="level"><option value="rs">RS</option><option value="rs-nfs" selected>RS–NFS</option><option value="nfs">NFS</option></select></label>
+        <label>Sprache<select name="language"><option value="de">Deutsch</option><option value="en">Englisch</option></select></label><label>Lizenz<input name="license" placeholder="z. B. CC BY 4.0"></label><label>Lesezeit<input name="read" placeholder="12 min"></label>
+        <label>Zugriff<select name="access"><option value="oa">Open Access</option><option value="free">Freie Version verfügbar</option><option value="paywall">Paywall</option></select></label><label>Original-/Verlagslink<input name="publisherUrl" type="url"></label><label>Freier Volltext / Repository<input name="freeUrl" type="url"></label>
+      </div><label>Warum lesenswert?<textarea name="why" rows="4"></textarea></label><label class="check"><input name="featured" type="checkbox"> Als aktuellen Lesetipp markieren</label><div class="btnrow"><button class="btn" type="submit">Speichern</button><button id="previewBtn" class="btn secondary" type="button">Vorschau</button><button id="archiveToggleBtn" class="btn secondary hidden" type="button">Ins Archiv verschieben</button><button id="deleteBtn" class="btn danger hidden" type="button">Artikel löschen</button></div><p id="formStatus" class="status"></p></form>
     </section>
-
-    <section id="siteTab" class="tabpane hidden">
-      <form id="siteForm">
-        <div class="form-grid">
-          <label>Titel<input name="title"></label>
-          <label>Kleine Zeile über dem Titel<input name="eyebrow"></label>
-          <label class="span2">Untertitel<textarea name="subtitle" rows="3"></textarea></label>
-          <label class="span2">Hinweis im Footer<textarea name="footer" rows="3"></textarea></label>
-          <label>Akzentfarbe<input name="accent" type="color"></label>
-        </div>
-        <div class="btnrow"><button class="btn" type="submit">Erscheinungsbild speichern</button></div>
-        <p id="siteStatus" class="status"></p>
-      </form>
-    </section>
+    <section id="siteTab" class="tabpane hidden"><form id="siteForm"><div class="form-grid"><label>Titel<input name="title"></label><label>Kleine Zeile über dem Titel<input name="eyebrow"></label><label class="span2">Untertitel<textarea name="subtitle" rows="3"></textarea></label><label class="span2">Hinweis im Footer<textarea name="footer" rows="3"></textarea></label><label>Akzentfarbe<input name="accent" type="color"></label></div><div class="btnrow"><button class="btn" type="submit">Erscheinungsbild speichern</button></div><p id="siteStatus" class="status"></p></form></section>
   </div>
 </div>
 
-<footer><div class="wrap" id="siteFooter"></div></footer>
-<script src="./config.js?v=3"></script>
-<script src="./app.js?v=4"></script>
-</body>
-</html>
+<footer><div class="wrap footer-inner"><span id="siteFooter"></span><span>Wissen teilen. Leben retten. ♥</span></div></footer>
+<script src="./config.js?v=3"></script><script src="./app.js?v=5"></script>
+</body></html>

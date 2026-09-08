@@ -32,3 +32,12 @@ Hinweis: Lizenzangaben wurden nur konkret benannt, wenn sie eindeutig zuordenbar
 - Initial bleiben zwei kuratierte Beiträge auf der Startseite; alle übrigen vorhandenen Beiträge befinden sich im frei zugänglichen Archiv.
 - Die Redaktions-PIN wird jetzt beim Öffnen der Redaktion in einem vorgeschalteten Dialog abgefragt und nicht mehr in den Formularen wiederholt.
 - Der Worker stellt dafür `POST /auth` zur PIN-Prüfung bereit.
+
+## Design-Update v5
+- neues RD-Literatur-Layout nach dem freigegebenen Mockup
+- reduzierte Themenansicht: redaktionelle Einzel-Tags werden automatisch in 13 Hauptbereiche gebündelt
+- Karten zeigen nur noch einen primären Themenbereich statt sämtlicher Tags
+- Filter als moderne, abgerundete Filterleiste mit Zielgruppe, Sprache, Evidenztyp, Zugriff und Suche
+- Navigation für Startseite/Archiv sowie Sortierung ergänzt
+- PIN-Dialog wieder kompatibel mit älteren Worker-Versionen: PIN wird beim Öffnen erfasst und bei Schreibzugriffen serverseitig geprüft
+- 30-Tage-Archivlogik und manuelles Zurückholen bleiben unverändert aktiv
