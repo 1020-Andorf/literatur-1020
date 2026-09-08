@@ -41,3 +41,14 @@ Hinweis: Lizenzangaben wurden nur konkret benannt, wenn sie eindeutig zuordenbar
 - Navigation für Startseite/Archiv sowie Sortierung ergänzt
 - PIN-Dialog wieder kompatibel mit älteren Worker-Versionen: PIN wird beim Öffnen erfasst und bei Schreibzugriffen serverseitig geprüft
 - 30-Tage-Archivlogik und manuelles Zurückholen bleiben unverändert aktiv
+
+## Mobile-Optimierung v6
+- Navigation auf Smartphones zweizeilig und horizontal wischbar
+- Themenbereiche als kompakte, horizontal wischbare Karten statt langer vertikaler Liste
+- Filter auf Smartphones als 2-Spalten-Raster, Suche und Reset über volle Breite
+- Artikelkarten einspaltig mit kompakter Typografie und Touch-Zielen
+- Sortierung und Aktuell/Archiv-Schalter für kleine Displays optimiert
+- Redaktionsbereich auf Smartphones als vollflächige Bottom-Sheet-/Vollbildansicht
+- Formulareingaben mit 16px Schrift gegen automatischen iOS-Zoom
+- Safe-Area-Unterstützung für Geräte mit Notch/Home-Indikator
+- Zusätzliche Feinabstimmung unter 390px und für Touch-Geräte
