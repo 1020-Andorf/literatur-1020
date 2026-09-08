@@ -9,7 +9,9 @@
 - Kategorien entstehen automatisch aus allen verwendeten Themen
 - Open Access / freie Version / Paywall
 - Lesetipp markieren
-- Suche und Filter
+- Suche und Filter nach Thema, Level (RS / RS–NFS / NFS), Sprache, Evidenz-/Dokumenttyp und Zugriff
+- Lizenzkennzeichnung direkt an jedem Artikel
+- Startbestand mit deutsch- und englischsprachigen Open-Access-Artikeln zu Rettungsdienst und Notfallmedizin
 - Titel, Untertitel, Kopfzeile, Footer und Akzentfarbe im Redaktionsbereich ändern
 - gemeinsames Speichern mit PIN über Cloudflare Worker
 - GitHub Pages bleibt die öffentliche Leseseite
@@ -57,3 +59,12 @@ Danach in `config.js` die Worker-URL eintragen:
 ## Sicherheit
 PIN und GitHub-Token niemals in HTML, JavaScript oder config.js eintragen.
 Sie gehören ausschließlich als Secrets in den Worker.
+
+
+## Neue Artikelfelder
+Jeder Artikel kann zusätzlich enthalten:
+- `level`: `rs`, `rs-nfs` oder `nfs`
+- `language`: `de` oder `en`
+- `license`: z. B. `CC BY 4.0`
+
+Bestehende Datensätze ohne diese Felder bleiben kompatibel; die Oberfläche verwendet dafür neutrale Standardwerte.

@@ -19,12 +19,25 @@
 <main class="wrap">
   <section class="toolbar">
     <input id="search" type="search" placeholder="Titel, Autor, Thema oder Stichwort suchen …">
+    <select id="level">
+      <option value="all">Alle Levels</option>
+      <option value="rs">RS</option>
+      <option value="rs-nfs">RS–NFS</option>
+      <option value="nfs">NFS</option>
+    </select>
+    <select id="language">
+      <option value="all">Alle Sprachen</option>
+      <option value="de">Deutsch</option>
+      <option value="en">Englisch</option>
+    </select>
+    <select id="typeFilter"><option value="all">Alle Evidenz-/Dokumenttypen</option></select>
     <select id="access">
       <option value="all">Alle Zugriffsarten</option>
       <option value="oa">Open Access</option>
       <option value="free">Freie Version verfügbar</option>
       <option value="paywall">Paywall</option>
     </select>
+    <button id="resetFilters" class="btn secondary" type="button">Filter zurücksetzen</button>
     <button id="randomBtn" class="btn secondary">🎲 Zufälliger Lesetipp</button>
   </section>
 
@@ -76,7 +89,7 @@
           <label>Journal / Quelle<input name="journal"></label>
           <label>Jahr<input name="year" type="number" min="1900" max="2100"></label>
           <label>DOI<input name="doi"></label>
-          <label>Dokumenttyp
+          <label>Dokumenttyp / Evidenztyp
             <select name="type">
               <option>Fachartikel</option><option>Review</option><option>Systematic Review</option>
               <option>Leitlinie</option><option>Guidance</option><option>Paper</option>
@@ -84,6 +97,15 @@
             </select>
           </label>
           <label>Themen / Kategorien<input name="topics" placeholder="Reanimation, CRM, Ausbildung"></label>
+          <label>Level
+            <select name="level">
+              <option value="rs">RS</option><option value="rs-nfs" selected>RS–NFS</option><option value="nfs">NFS</option>
+            </select>
+          </label>
+          <label>Sprache
+            <select name="language"><option value="de">Deutsch</option><option value="en">Englisch</option></select>
+          </label>
+          <label>Lizenz<input name="license" placeholder="z. B. CC BY 4.0"></label>
           <label>Lesezeit<input name="read" placeholder="12 min"></label>
           <label>Zugriff
             <select name="access">
@@ -125,7 +147,7 @@
 </div>
 
 <footer><div class="wrap" id="siteFooter"></div></footer>
-<script src="./config.js?v=2"></script>
-<script src="./app.js?v=2"></script>
+<script src="./config.js?v=3"></script>
+<script src="./app.js?v=3"></script>
 </body>
 </html>
