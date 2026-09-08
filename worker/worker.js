@@ -9,6 +9,10 @@ export default {
   try{
    if(url.pathname==="/articles"&&request.method==="GET")return json(await getJson(env,"data/articles.json"),200,cors);
    if(url.pathname==="/site"&&request.method==="GET")return json(await getJson(env,"data/site.json"),200,cors);
+   if(url.pathname==="/auth"&&request.method==="POST"){
+    const ok=await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256);
+    return ok?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);
+   }
    if(!await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256))return json({error:"PIN ungültig"},401,cors);
 
    if(url.pathname==="/articles"&&(request.method==="POST"||request.method==="PUT")){

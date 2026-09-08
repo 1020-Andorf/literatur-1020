@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Kuratierte Literatur für Rettungsdienst und Ausbildung.">
 <title>Wissen für den Dienst</title>
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 <header>
@@ -41,17 +41,39 @@
     <button id="randomBtn" class="btn secondary">🎲 Zufälliger Lesetipp</button>
   </section>
 
+  <nav class="view-switch" aria-label="Literaturansicht">
+    <button id="currentViewBtn" class="view-btn active" type="button">Aktuell <span id="currentCount" class="view-count"></span></button>
+    <button id="archiveViewBtn" class="view-btn" type="button">Archiv <span id="archiveCount" class="view-count"></span></button>
+  </nav>
+
+  <section id="archiveNotice" class="archive-notice hidden">Im frei zugänglichen Archiv findest du alle Beiträge, die länger als 30 Tage auf der Startseite waren oder vorzeitig von der Redaktion archiviert wurden.</section>
   <section id="featured"></section>
 
   <section class="section-head"><div><h2>Themen</h2><p>Kategorien entstehen automatisch aus den Themen deiner Artikel.</p></div></section>
   <div id="topics" class="topics"></div>
 
-  <section class="section-head"><div><h2>Literatur & Empfehlungen</h2><p id="count"></p></div></section>
+  <section class="section-head"><div><h2 id="listHeading">Literatur & Empfehlungen</h2><p id="count"></p></div></section>
   <section id="cards" class="grid"></section>
   <div id="empty" class="empty">Keine passenden Einträge gefunden.</div>
 
   <section class="admin-entry"><button id="adminOpen" class="linkbtn">🔐 Redaktion</button></section>
 </main>
+
+<div id="pinModal" class="modal hidden">
+  <div class="pin-card" role="dialog" aria-modal="true" aria-labelledby="pinTitle">
+    <div class="eyebrow accent">Redaktion</div>
+    <h2 id="pinTitle">PIN eingeben</h2>
+    <p>Bitte zuerst die Redaktions-PIN eingeben.</p>
+    <form id="pinForm">
+      <input id="adminPinInput" type="password" inputmode="numeric" autocomplete="current-password" required autofocus placeholder="PIN">
+      <div class="btnrow">
+        <button class="btn" type="submit">Redaktion öffnen</button>
+        <button id="pinCancel" class="btn secondary" type="button">Abbrechen</button>
+      </div>
+      <p id="pinStatus" class="status"></p>
+    </form>
+  </div>
+</div>
 
 <div id="adminModal" class="modal hidden">
   <div class="modal-card">
@@ -116,13 +138,13 @@
           </label>
           <label>Original-/Verlagslink<input name="publisherUrl" type="url"></label>
           <label>Freier Volltext / Repository<input name="freeUrl" type="url"></label>
-          <label>Redaktions-PIN<input name="pin" type="password" inputmode="numeric" required></label>
         </div>
         <label>Warum lesenswert?<textarea name="why" rows="4"></textarea></label>
         <label class="check"><input name="featured" type="checkbox"> Als aktuellen Lesetipp markieren</label>
         <div class="btnrow">
           <button class="btn" type="submit">Speichern</button>
           <button id="previewBtn" class="btn secondary" type="button">Vorschau</button>
+          <button id="archiveToggleBtn" class="btn secondary hidden" type="button">Ins Archiv verschieben</button>
           <button id="deleteBtn" class="btn danger hidden" type="button">Artikel löschen</button>
         </div>
         <p id="formStatus" class="status"></p>
@@ -137,7 +159,6 @@
           <label class="span2">Untertitel<textarea name="subtitle" rows="3"></textarea></label>
           <label class="span2">Hinweis im Footer<textarea name="footer" rows="3"></textarea></label>
           <label>Akzentfarbe<input name="accent" type="color"></label>
-          <label>Redaktions-PIN<input name="pin" type="password" required></label>
         </div>
         <div class="btnrow"><button class="btn" type="submit">Erscheinungsbild speichern</button></div>
         <p id="siteStatus" class="status"></p>
@@ -148,6 +169,6 @@
 
 <footer><div class="wrap" id="siteFooter"></div></footer>
 <script src="./config.js?v=3"></script>
-<script src="./app.js?v=3"></script>
+<script src="./app.js?v=4"></script>
 </body>
 </html>

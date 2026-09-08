@@ -20,8 +20,11 @@
     "why": "Praxisnaher Open-Access-CME-Beitrag zu Schlaganfallerkennung, ABC-Problemen, Schweregradeinschätzung und zielgerichteter Klinikzuweisung.",
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-023-01273-3",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-023-01273-3",
-    "featured": false,
-    "added": "2026-09-08"
+    "featured": true,
+    "added": "2026-09-08",
+    "archived": false,
+    "archiveDate": "",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "erc-guidelines-2025",
@@ -45,7 +48,10 @@
     "added": "2026-09-06",
     "level": "rs-nfs",
     "language": "en",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-06"
   },
   {
     "id": "who-prehospital-emergency-care-2025",
@@ -69,7 +75,10 @@
     "added": "2026-09-05",
     "level": "rs-nfs",
     "language": "en",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-05"
   },
   {
     "id": "ems-sepsis-systematic-review",
@@ -93,7 +102,10 @@
     "added": "2026-09-04",
     "level": "rs-nfs",
     "language": "en",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-04"
   },
   {
     "id": "emergency-team-competencies",
@@ -118,7 +130,10 @@
     "added": "2026-09-03",
     "level": "rs-nfs",
     "language": "en",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-03"
   },
   {
     "id": "hems-simulation-program",
@@ -143,7 +158,10 @@
     "added": "2026-09-02",
     "level": "rs-nfs",
     "language": "en",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-02"
   },
   {
     "id": "learning-simulation-prehospital",
@@ -167,7 +185,10 @@
     "added": "2026-09-01",
     "level": "rs-nfs",
     "language": "de",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-01"
   },
   {
     "id": "debriefing-systematic-review-2024",
@@ -191,7 +212,10 @@
     "added": "2026-08-30",
     "level": "rs-nfs",
     "language": "de",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-08-30"
   },
   {
     "id": "human-factors-simulation-em",
@@ -215,7 +239,10 @@
     "added": "2026-08-28",
     "level": "rs-nfs",
     "language": "de",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-08-28"
   },
   {
     "id": "abcde-debriefing",
@@ -239,7 +266,10 @@
     "added": "2026-08-27",
     "level": "rs-nfs",
     "language": "de",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-08-27"
   },
   {
     "id": "ai-debriefing-2026",
@@ -264,7 +294,10 @@
     "added": "2026-08-26",
     "level": "rs-nfs",
     "language": "de",
-    "license": ""
+    "license": "",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-08-26"
   },
   {
     "id": "de-stroke-praxis-dach-2024",
@@ -289,7 +322,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-022-01112-x",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-022-01112-x",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-ueberlebensnetz-2026",
@@ -312,8 +348,11 @@
     "why": "Aktuelle Stellungnahme des Österreichischen Rats für Wiederbelebung zur Weiterentwicklung der klassischen Überlebenskette zu einem adaptiven Überlebensnetz.",
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-026-01758-x",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-026-01758-x",
-    "featured": true,
-    "added": "2026-09-08"
+    "featured": false,
+    "added": "2026-09-08",
+    "archived": false,
+    "archiveDate": "",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-eckpunktepapier-2025",
@@ -338,7 +377,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-025-01612-6",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-025-01612-6",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-medikamente-rettungsmittel-2024",
@@ -363,7 +405,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-022-01036-6",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-022-01036-6",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-integrierte-versorgung-rd-2024",
@@ -388,7 +433,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-022-00995-0",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-022-00995-0",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-notfallleitsystem-2024",
@@ -413,7 +461,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-022-01073-1",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-022-01073-1",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-rettungsdienststrukturen-neu-denken-2026",
@@ -437,7 +488,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-023-01248-4",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-023-01248-4",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-digitale-rettungskette-2026",
@@ -462,7 +516,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-026-01774-x",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-026-01774-x",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-be-prepared-2025",
@@ -486,7 +543,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-025-01581-w",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-025-01581-w",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-bridging-kritisch-2024",
@@ -511,7 +571,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-023-01276-0",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-023-01276-0",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "de-gruende-praeklinische-notfallversorgung-2021",
@@ -536,7 +599,10 @@
     "publisherUrl": "https://link.springer.com/article/10.1007/s10049-020-00832-2",
     "freeUrl": "https://link.springer.com/article/10.1007/s10049-020-00832-2",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "stroke-missed-ems-2021",
@@ -560,7 +626,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8077214/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8077214/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "stroke-recognition-first-aid-2020",
@@ -584,7 +653,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7725197/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7725197/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "clinical-reasoning-ems-2019",
@@ -608,7 +680,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6700770/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6700770/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "pain-experiences-prehospital-2023",
@@ -632,7 +707,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10086522/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10086522/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "paediatric-prehospital-pain-2021",
@@ -656,7 +734,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8665507/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8665507/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "patient-safety-paramedics-review-2024",
@@ -680,7 +761,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10981423/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10981423/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "non-conveyance-safety-2017",
@@ -704,7 +788,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5513207/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5513207/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "sepsis-identification-prehospital-2016",
@@ -728,7 +815,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985978/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4985978/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "death-dying-prehospital-2020",
@@ -752,7 +842,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7511644/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7511644/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "ems-work-wellbeing-2020",
@@ -776,7 +869,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7332532/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7332532/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "ptsd-paramedics-2023",
@@ -800,7 +896,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10035789/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10035789/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "pre-ems-first-responders-review-2021",
@@ -825,7 +924,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8449697/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8449697/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "urban-rural-prehospital-times-2022",
@@ -849,7 +951,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9778378/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9778378/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "als-vs-bls-2010",
@@ -874,7 +979,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3001418/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3001418/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "prehospital-airway-management-2022",
@@ -898,7 +1006,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7616021/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7616021/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "prehospital-pocus-2018",
@@ -923,7 +1034,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6019293/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6019293/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "post-rosc-targets-2024",
@@ -947,7 +1061,10 @@
     "publisherUrl": "https://www.sciencedirect.com/science/article/pii/S2666520424001425",
     "freeUrl": "https://www.sciencedirect.com/science/article/pii/S2666520424001425",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "stop-the-bleed-2025",
@@ -972,7 +1089,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11799122/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11799122/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "adult-prehospital-pain-scoping-2026",
@@ -996,7 +1116,10 @@
     "publisherUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13015054/",
     "freeUrl": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13015054/",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "grey-areas-ohca-2026",
@@ -1020,7 +1143,10 @@
     "publisherUrl": "https://www.sciencedirect.com/science/article/pii/S266652042600010X",
     "freeUrl": "https://www.sciencedirect.com/science/article/pii/S266652042600010X",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "austria-hems-ohca-2024",
@@ -1044,7 +1170,10 @@
     "publisherUrl": "https://www.sciencedirect.com/science/article/pii/S2666520424001292",
     "freeUrl": "https://www.sciencedirect.com/science/article/pii/S2666520424001292",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   },
   {
     "id": "austria-alpine-urban-ohca-2025",
@@ -1069,6 +1198,9 @@
     "publisherUrl": "https://www.sciencedirect.com/science/article/pii/S2666520425002942",
     "freeUrl": "https://www.sciencedirect.com/science/article/pii/S2666520425002942",
     "featured": false,
-    "added": "2026-09-08"
+    "added": "2026-09-08",
+    "archived": true,
+    "archiveDate": "2026-09-08",
+    "activeSince": "2026-09-08"
   }
 ]
