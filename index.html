@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="Kuratierte Literatur für Rettungsdienst und Ausbildung.">
 <title>RD-Literatur</title>
-<link rel="stylesheet" href="styles.css?v=6">
+<link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
 <header class="topbar">
@@ -26,20 +26,22 @@
 
 <main class="wrap page-shell">
   <section class="topic-section">
-    <div class="topic-head">
-      <div><h1>Themenbereiche</h1><p>Wähle die für dich relevanten Themen, um passende Artikel zu finden.</p></div>
-      <div class="less-card"><span>💡</span><div><strong>Weniger ist mehr</strong><small>Wir bündeln Einzelthemen in übersichtliche Hauptbereiche. So findest du schneller, was du suchst.</small></div></div>
-    </div>
-    <div id="topics" class="topics"></div>
+    <div class="topic-head"><h1>Literatur finden</h1></div>
+    <div id="topics" class="topics" aria-label="Themenbereiche"></div>
   </section>
 
-  <section class="filter-panel" aria-label="Filter">
-    <div class="filter-field"><label for="level">👥 Zielgruppe</label><select id="level"><option value="all">Alle</option><option value="rs">RS</option><option value="rs-nfs">RS–NFS</option><option value="nfs">NFS</option></select></div>
-    <div class="filter-field"><label for="language">🌐 Sprache</label><select id="language"><option value="all">Alle</option><option value="de">Deutsch</option><option value="en">Englisch</option></select></div>
-    <div class="filter-field"><label for="typeFilter">▤ Evidenztyp</label><select id="typeFilter"><option value="all">Alle</option></select></div>
-    <div class="filter-field"><label for="access">🔓 Zugriff</label><select id="access"><option value="all">Alle</option><option value="oa">Open Access</option><option value="free">Freie Version</option><option value="paywall">Paywall</option></select></div>
-    <div class="search-field"><span>⌕</span><input id="search" type="search" placeholder="Suche nach Titel, Thema, Autor …"></div>
-    <button id="resetFilters" class="reset-btn" type="button">↻ Filter zurücksetzen</button>
+  <section class="finder" aria-label="Literatursuche">
+    <div class="search-field"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Titel, Thema oder Autor suchen …"></div>
+    <details id="filterDetails" class="filter-details">
+      <summary>Filter <span class="filter-hint">Zielgruppe, Sprache, Evidenz & Zugriff</span></summary>
+      <div class="filter-panel">
+        <div class="filter-field"><label for="level">Zielgruppe</label><select id="level"><option value="all">Alle</option><option value="rs">RS</option><option value="rs-nfs">RS–NFS</option><option value="nfs">NFS</option></select></div>
+        <div class="filter-field"><label for="language">Sprache</label><select id="language"><option value="all">Alle</option><option value="de">Deutsch</option><option value="en">Englisch</option></select></div>
+        <div class="filter-field"><label for="typeFilter">Evidenztyp</label><select id="typeFilter"><option value="all">Alle</option></select></div>
+        <div class="filter-field"><label for="access">Zugriff</label><select id="access"><option value="all">Alle</option><option value="oa">Open Access</option><option value="free">Freie Version</option><option value="paywall">Paywall</option></select></div>
+        <button id="resetFilters" class="reset-btn" type="button">Filter zurücksetzen</button>
+      </div>
+    </details>
   </section>
 
   <section id="archiveNotice" class="archive-notice hidden">Alle Beiträge im Archiv bleiben frei zugänglich und vollständig durchsuchbar. Nach 30 Tagen auf der Startseite werden Artikel automatisch hierher verschoben.</section>
@@ -87,5 +89,5 @@
 </div>
 
 <footer><div class="wrap footer-inner"><span id="siteFooter"></span><span>Wissen teilen. Leben retten. ♥</span></div></footer>
-<script src="./config.js?v=3"></script><script src="./app.js?v=6"></script>
+<script src="./config.js?v=3"></script><script src="./app.js?v=7"></script>
 </body></html>
