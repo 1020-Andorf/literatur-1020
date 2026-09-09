@@ -52,3 +52,10 @@ Hinweis: Lizenzangaben wurden nur konkret benannt, wenn sie eindeutig zuordenbar
 - Formulareingaben mit 16px Schrift gegen automatischen iOS-Zoom
 - Safe-Area-Unterstützung für Geräte mit Notch/Home-Indikator
 - Zusätzliche Feinabstimmung unter 390px und für Touch-Geräte
+
+
+## v8 – Leere Inhalte wirklich ausblenden
+- Ein leerer Untertitel bleibt leer und wird im Header vollständig ausgeblendet; es gibt keinen automatischen Standardtext mehr.
+- FAQ wurde aus Navigation und Seite entfernt.
+- Ein leerer Footer-Hinweis wird ebenfalls nicht mehr durch einen Standardtext ersetzt.
+- Asset-Versionen wurden erhöht, damit Browser/GitHub Pages nicht die alte JavaScript-Version aus dem Cache verwenden.
