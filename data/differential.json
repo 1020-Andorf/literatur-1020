@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "symptoms": [
+    {
+      "id": "thoraxschmerz",
+      "title": "Thoraxschmerz",
+      "icon": "♥",
+      "subtitle": "Mögliche Ursachen, gezielte Anamnese, Diagnostik und Red Flags.",
+      "causes": [
+        "Akutes Koronarsyndrom (ACS)",
+        "Lungenembolie",
+        "Aortensyndrom",
+        "Pneumothorax",
+        "Perikarditis",
+        "Reflux / ösophageale Ursache",
+        "muskuloskelettale Ursache"
+      ],
+      "questions": [
+        "OPQRST",
+        "Begleitsymptome",
+        "Risikofaktoren",
+        "Vorerkrankungen",
+        "Medikamente",
+        "situativer Zusammenhang"
+      ],
+      "measures": [
+        "ABCDE",
+        "Vitalparameter erfassen",
+        "EKG nach Ausbildungsstandard",
+        "gezielte körperliche Untersuchung"
+      ],
+      "redFlags": [
+        "starke oder anhaltende Beschwerden",
+        "neu aufgetretene Dyspnoe",
+        "hämodynamische Instabilität",
+        "neurologische Auffälligkeiten"
+      ],
+      "remember": "Lebensbedrohliche Ursachen im strukturierten Vorgehen früh berücksichtigen."
+    },
+    {
+      "id": "dyspnoe",
+      "title": "Dyspnoe",
+      "icon": "◉",
+      "subtitle": "Atemnot strukturiert einordnen.",
+      "causes": [
+        "Obstruktive Atemwegserkrankung",
+        "Lungenödem",
+        "Pneumonie",
+        "Pneumothorax",
+        "Lungenembolie",
+        "Anaphylaxie"
+      ],
+      "questions": [
+        "Beginn und Verlauf",
+        "Auslöser",
+        "Vorerkrankungen",
+        "Medikamente",
+        "Thoraxschmerz / Fieber / Allergiehinweise"
+      ],
+      "measures": [
+        "ABCDE",
+        "Atemfrequenz",
+        "SpO₂",
+        "Auskultation nach Ausbildungsstandard",
+        "EtCO₂, wenn verfügbar"
+      ],
+      "redFlags": [
+        "Erschöpfungszeichen",
+        "Zyanose",
+        "Bewusstseinsveränderung",
+        "fehlende oder stark eingeschränkte Atmung"
+      ],
+      "remember": "Atemarbeit, Oxygenierung und Verlauf gemeinsam beurteilen."
+    },
+    {
+      "id": "bewusstsein",
+      "title": "Bewusstseinsstörung",
+      "icon": "◆",
+      "subtitle": "Neurologische und metabolische Ursachen mitdenken.",
+      "causes": [
+        "Hypoglykämie",
+        "Krampfanfall / postiktal",
+        "Schlaganfall",
+        "Intoxikation",
+        "Hypoxie",
+        "Kreislaufstörung"
+      ],
+      "questions": [
+        "Zeitpunkt / Verlauf",
+        "Zeugenbericht",
+        "Vorerkrankungen",
+        "Medikamente / Substanzen",
+        "Trauma"
+      ],
+      "measures": [
+        "ABCDE",
+        "AVPU/GCS nach Ausbildungsstandard",
+        "BZ",
+        "Pupillen",
+        "neurologische Auffälligkeiten"
+      ],
+      "redFlags": [
+        "fehlende Schutzreflexe",
+        "Krampfanfall",
+        "fokale Ausfälle",
+        "rasch zunehmende Bewusstseinsminderung"
+      ],
+      "remember": "Reversible Ursachen strukturiert suchen und den Verlauf wiederholt beurteilen."
+    },
+    {
+      "id": "schock",
+      "title": "Schockzeichen",
+      "icon": "!",
+      "subtitle": "Perfusionsstörung früh erkennen.",
+      "causes": [
+        "Hypovolämie / Blutung",
+        "Anaphylaxie",
+        "Sepsis",
+        "kardiogene Ursache",
+        "obstruktive Ursache"
+      ],
+      "questions": [
+        "Beginn und Auslöser",
+        "Blutung / Flüssigkeitsverlust",
+        "Allergiehinweise",
+        "Infektzeichen",
+        "kardiale Beschwerden"
+      ],
+      "measures": [
+        "ABCDE",
+        "HF und Blutdruck",
+        "Haut / Rekapillarisierung",
+        "SpO₂",
+        "Verlaufskontrollen"
+      ],
+      "redFlags": [
+        "Hypotonie",
+        "Bewusstseinsminderung",
+        "kaltschweißige oder marmorierte Haut",
+        "rasch progredienter Verlauf"
+      ],
+      "remember": "Schock ist ein dynamischer Zustand – Verlauf und Ursache gemeinsam beurteilen."
+    }
+  ]
+}
