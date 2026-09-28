@@ -9,6 +9,11 @@ export default {
   try{
    if(url.pathname==="/articles"&&request.method==="GET")return json(await getJson(env,"data/articles.json"),200,cors);
    if(url.pathname==="/site"&&request.method==="GET")return json(await getJson(env,"data/site.json"),200,cors);
+   if(url.pathname.startsWith("/content/")&&request.method==="GET"){
+    const name=decodeURIComponent(url.pathname.split("/").pop());
+    if(!["abcde","differential","skilltraining"].includes(name))return json({error:"Unbekannter Inhalt"},404,cors);
+    return json(await getJson(env,`data/${name}.json`),200,cors);
+   }
    if(url.pathname==="/auth"&&request.method==="POST"){
     const ok=await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256);
     return ok?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);
@@ -31,6 +36,15 @@ export default {
    if(url.pathname==="/site"&&request.method==="PUT"){
     const next=await request.json();const cur=await getJson(env,"data/site.json",true);
     await putJson(env,"data/site.json",next,cur.sha,"Website-Einstellungen aktualisieren");return json({ok:true},200,cors);
+   }
+   if(url.pathname.startsWith("/content/")&&request.method==="PUT"){
+    const name=decodeURIComponent(url.pathname.split("/").pop());
+    if(!["abcde","differential","skilltraining"].includes(name))return json({error:"Unbekannter Inhalt"},404,cors);
+    const next=await request.json();
+    if(!next||typeof next!=="object")return json({error:"Ungültige Daten"},400,cors);
+    const cur=await getJson(env,`data/${name}.json`,true);
+    await putJson(env,`data/${name}.json`,next,cur.sha,`Wissensportal: ${name} aktualisieren`);
+    return json({ok:true},200,cors);
    }
    return json({error:"Not found"},404,cors);
   }catch(e){return json({error:e.message||"Serverfehler"},500,cors)}
