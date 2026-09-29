@@ -1,0 +1,19 @@
+OST 1020 - Wissenssammlung v2.1
+
+WICHTIG:
+Alle Dateien und den Ordner data direkt in die Wurzel des GitHub-Pages-Repositories kopieren.
+Nicht nur die HTML-Dateien hochladen.
+
+Erforderlich im Repository-Root:
+- index.html
+- literatur.html
+- abcde.html
+- differential.html
+- skilltraining.html
+- editor.html
+- portal.css
+- portal.js
+- portal-content.js
+- data/articles.json
+
+Danach vorhandene Dateien überschreiben und committen.
