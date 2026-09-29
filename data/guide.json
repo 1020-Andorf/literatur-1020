@@ -1,0 +1,71 @@
+[
+  {
+    "id": "quick",
+    "icon": "🚀",
+    "title": "Schnellstart",
+    "steps": [
+      "VitaSim im Trainings-WLAN öffnen",
+      "Szenariotraining wählen",
+      "Fall aus der Bibliothek starten",
+      "Monitor und Geräte prüfen",
+      "Training starten"
+    ]
+  },
+  {
+    "id": "scenario",
+    "icon": "🎮",
+    "title": "Szenario starten",
+    "steps": [
+      "Fallbibliothek öffnen",
+      "Fall auswählen",
+      "Fernbedienung öffnen",
+      "Ausgangswerte prüfen",
+      "Start drücken"
+    ]
+  },
+  {
+    "id": "monitor",
+    "icon": "🖥️",
+    "title": "Monitor verwenden",
+    "steps": [
+      "Monitorseite auf Zielgerät öffnen",
+      "RS/NFS/Bilder-Modus auswählen",
+      "Vitalparameter über Master steuern",
+      "Rhythmus und Anzeige kontrollieren"
+    ]
+  },
+  {
+    "id": "devices",
+    "icon": "📱",
+    "title": "Geräte verbinden",
+    "steps": [
+      "Simulationsgeräte öffnen",
+      "Gerät koppeln",
+      "Rolle zuweisen",
+      "Verbindungsstatus prüfen"
+    ]
+  },
+  {
+    "id": "ble",
+    "icon": "🩺",
+    "title": "BLE-Simulatoren",
+    "steps": [
+      "Gerät einschalten",
+      "Verbindung im Bereich Simulationsgeräte prüfen",
+      "Messwerte testen",
+      "Bei Abbruch neu verbinden"
+    ]
+  },
+  {
+    "id": "debrief",
+    "icon": "📊",
+    "title": "Debriefing & Bewertung",
+    "steps": [
+      "Training beenden",
+      "Timeline prüfen",
+      "Bewertung ergänzen",
+      "Debriefing durchführen",
+      "PDF bei Bedarf exportieren"
+    ]
+  }
+]

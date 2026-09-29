@@ -1,0 +1,23 @@
+[
+  {
+    "id": "m1",
+    "icon": "📄",
+    "title": "Bewertungsbögen",
+    "category": "Ausbildung",
+    "note": "Ablage für PDF- oder Druckvorlagen."
+  },
+  {
+    "id": "m2",
+    "icon": "🧾",
+    "title": "Checklisten",
+    "category": "Praxis",
+    "note": "Kurze Merkblätter und SOP-nahe Checklisten."
+  },
+  {
+    "id": "m3",
+    "icon": "🖼️",
+    "title": "Präsentationen & Handouts",
+    "category": "Ausbildung",
+    "note": "Materialien für Unterricht und Übungsabende."
+  }
+]

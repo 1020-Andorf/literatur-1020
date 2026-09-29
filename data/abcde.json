@@ -1,144 +1,107 @@
-{
-  "version": 1,
-  "sections": [
-    {
-      "key": "A",
-      "title": "Airway",
-      "subtitle": "Atemweg beurteilen und sichern",
-      "color": "#ef3340",
-      "look": [
-        "Ansprechbarkeit beurteilen",
-        "Atemweg frei?",
-        "Mund-/Rachenraum beurteilen",
-        "Fremdkörper / Sekret erkennen"
-      ],
-      "listen": [
-        "Atemgeräusche beachten",
-        "Hinweise auf Atemwegsverlegung erkennen"
-      ],
-      "measure": [],
-      "act": [
-        "Atemweg freimachen",
-        "Absaugbereitschaft herstellen",
-        "Atemwegshilfen vorbereiten"
-      ],
-      "critical": [
-        "Gefährdeter oder verlegter Atemweg",
-        "Zunehmende Atemwegsproblematik",
-        "Fehlende Schutzreflexe"
-      ],
-      "remember": "Probleme bei A haben im strukturierten Ablauf höchste Priorität."
-    },
-    {
-      "key": "B",
-      "title": "Breathing",
-      "subtitle": "Atmung und Oxygenierung beurteilen",
-      "color": "#0874d1",
-      "look": [
-        "Atemarbeit beurteilen",
-        "Thoraxbewegung beobachten",
-        "Hautfarbe / Zyanose beachten"
-      ],
-      "listen": [
-        "Atemgeräusche beurteilen",
-        "Seitengleichheit beachten"
-      ],
-      "measure": [
-        "Atemfrequenz erfassen",
-        "SpO₂ erfassen",
-        "EtCO₂ erfassen, wenn verfügbar"
-      ],
-      "act": [
-        "Sauerstoffgabe nach Ausbildungsstandard",
-        "Geeignete Lagerung",
-        "Beatmung vorbereiten, wenn erforderlich"
-      ],
-      "critical": [
-        "Zunehmende Atemnot",
-        "Deutlich eingeschränkte Oxygenierung",
-        "Erschöpfungszeichen"
-      ],
-      "remember": "Beurteilung und Maßnahmen laufend wiederholen und Wirkung kontrollieren."
-    },
-    {
-      "key": "C",
-      "title": "Circulation",
-      "subtitle": "Kreislauf und Perfusion beurteilen",
-      "color": "#18a566",
-      "look": [
-        "Hautkolorit und Hautzustand beurteilen",
-        "Blutungen suchen"
-      ],
-      "listen": [],
-      "measure": [
-        "Puls beurteilen",
-        "Blutdruck erfassen",
-        "Kapillarfüllung beurteilen"
-      ],
-      "act": [
-        "Blutungen kontrollieren",
-        "Kreislaufgerechte Lagerung erwägen",
-        "Weitere Maßnahmen nach Ausbildungsstandard vorbereiten"
-      ],
-      "critical": [
-        "Hinweise auf Schock",
-        "Starke Blutung",
-        "Zunehmende Kreislaufinstabilität"
-      ],
-      "remember": "Ursachen erkennen, behandeln und die Wirkung der Maßnahmen kontrollieren."
-    },
-    {
-      "key": "D",
-      "title": "Disability",
-      "subtitle": "Neurologischen Status beurteilen",
-      "color": "#f2b632",
-      "look": [
-        "Bewusstseinslage beurteilen",
-        "Pupillen beurteilen",
-        "Neurologische Auffälligkeiten beachten"
-      ],
-      "listen": [
-        "Orientierung / Sprache beurteilen"
-      ],
-      "measure": [
-        "Blutzucker erfassen, wenn angezeigt"
-      ],
-      "act": [
-        "Ursachen nach Ausbildungsstandard behandeln",
-        "Engmaschige Verlaufskontrolle"
-      ],
-      "critical": [
-        "Bewusstseinsverschlechterung",
-        "Krampfanfall",
-        "Neue fokale Auffälligkeiten"
-      ],
-      "remember": "Neurologische Veränderungen im Verlauf dokumentieren und erneut beurteilen."
-    },
-    {
-      "key": "E",
-      "title": "Exposure",
-      "subtitle": "Ganzkörperbeurteilung und Umfeld",
-      "color": "#6942d6",
-      "look": [
-        "Ganzkörpercheck durchführen",
-        "Verletzungen / Auffälligkeiten suchen",
-        "Umgebung und Anamnese berücksichtigen"
-      ],
-      "listen": [],
-      "measure": [
-        "Körpertemperatur erfassen, wenn relevant"
-      ],
-      "act": [
-        "Patient schützen und Wärmeerhalt beachten",
-        "Verletzungen nach Ausbildungsstandard versorgen",
-        "Privatsphäre und Umgebungssicherheit beachten"
-      ],
-      "critical": [
-        "Übersehene Verletzungen",
-        "Ausgeprägte Temperaturproblematik",
-        "Gefahren im Umfeld"
-      ],
-      "remember": "Nach E beginnt die strukturierte Reevaluation wieder bei A."
-    }
-  ]
-}
+[
+  {
+    "id": "a",
+    "key": "A",
+    "title": "Airway",
+    "checks": [
+      "Spricht der Patient frei?",
+      "Atemweg frei oder verlegt?",
+      "Stridor, Schnarchen, Gurgeln oder Fremdkörper?",
+      "Bei Trauma HWS-Schutz berücksichtigen"
+    ],
+    "actions": [
+      "Atemweg freimachen und absaugen",
+      "Kopfposition / Esmarch-Handgriff nach Situation",
+      "Guedel/Wendl nach Indikation",
+      "Erweiterte Atemwegshilfe vorbereiten"
+    ],
+    "pitfalls": [
+      "Atemweg nicht früh genug priorisiert",
+      "Absaugung oder Hilfsmittel nicht vorbereitet"
+    ]
+  },
+  {
+    "id": "b",
+    "key": "B",
+    "title": "Breathing",
+    "checks": [
+      "Atemfrequenz und Atemmuster",
+      "Thoraxexkursion und Atemarbeit",
+      "SpO₂ und Hautkolorit",
+      "Auskultation / Atemgeräusche"
+    ],
+    "actions": [
+      "Sauerstoffgabe nach Indikation",
+      "Beutel-Maskenbeatmung vorbereiten",
+      "Lagerung optimieren",
+      "Ventilation und Oxygenierung reevaluieren"
+    ],
+    "pitfalls": [
+      "Sauerstoffgabe nicht angepasst",
+      "Erschöpfung oder stille Lunge übersehen"
+    ]
+  },
+  {
+    "id": "c",
+    "key": "C",
+    "title": "Circulation",
+    "checks": [
+      "Puls, Blutdruck und Rekap-Zeit",
+      "Starke Blutung?",
+      "Hauttemperatur und Perfusion",
+      "Schockzeichen / Rhythmus"
+    ],
+    "actions": [
+      "Blutstillung",
+      "Wärmeerhalt und Lagerung",
+      "i.v./i.o.-Zugang nach Standard",
+      "Monitoring und Reevaluation"
+    ],
+    "pitfalls": [
+      "Blutung übersehen",
+      "Schockzeichen nicht erkannt"
+    ]
+  },
+  {
+    "id": "d",
+    "key": "D",
+    "title": "Disability",
+    "checks": [
+      "AVPU / GCS",
+      "Pupillen",
+      "Blutzucker",
+      "FAST / neurologische Defizite / Krampfaktivität"
+    ],
+    "actions": [
+      "Blutzucker korrigieren nach Standard",
+      "Stroke-Screening",
+      "Krampfmanagement",
+      "Neurologischen Verlauf reevaluieren"
+    ],
+    "pitfalls": [
+      "Hypoglykämie nicht ausgeschlossen",
+      "Neurologische Verschlechterung zu spät erkannt"
+    ]
+  },
+  {
+    "id": "e",
+    "key": "E",
+    "title": "Exposure",
+    "checks": [
+      "Ganzkörperinspektion",
+      "SAMPLE(R) / OPQRST",
+      "Temperatur und Umfeld",
+      "Verletzungen, Haut und Schmerz"
+    ],
+    "actions": [
+      "Ganzkörperuntersuchung",
+      "Wärmeerhalt",
+      "Gezielte Anamnese",
+      "Befunde dokumentieren und reevaluieren"
+    ],
+    "pitfalls": [
+      "Wärmeerhalt vergessen",
+      "Verdeckte Verletzungen übersehen"
+    ]
+  }
+]

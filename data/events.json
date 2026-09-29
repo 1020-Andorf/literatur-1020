@@ -1,0 +1,29 @@
+[
+  {
+    "id": "e1",
+    "title": "Monatsübung – Reanimation",
+    "date": "2026-10-03",
+    "time": "18:30",
+    "location": "Schulungsraum Andorf",
+    "category": "Übung",
+    "description": "Szenarientraining Reanimation und Teamkommunikation."
+  },
+  {
+    "id": "e2",
+    "title": "Traumatraining",
+    "date": "2026-10-17",
+    "time": "18:30",
+    "location": "Schulungsraum Andorf",
+    "category": "Übung",
+    "description": "ABCDE, Immobilisation und Transportentscheidung."
+  },
+  {
+    "id": "e3",
+    "title": "VitaSim-Ausbilderabend",
+    "date": "2026-11-07",
+    "time": "18:00",
+    "location": "Andorf",
+    "category": "VitaSim",
+    "description": "Geräteprofile, Fallsteuerung und Debriefing."
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "willkommen",
+    "title": "Willkommen in der OST 1020 Wissenssammlung",
+    "date": "2026-09-29",
+    "text": "Das Dashboard bündelt Literatur, Skills, ABCDE und Differentialdiagnostik als mobile Ergänzung zu VitaSim.",
+    "link": "",
+    "active": true,
+    "category": "Ausbildung",
+    "priority": "normal"
+  },
+  {
+    "id": "redaktion",
+    "title": "Inhalte gemeinsam aktuell halten",
+    "date": "2026-09-29",
+    "text": "Redakteur:innen können News, Literatur und Lerninhalte direkt über die geschützte Redaktion pflegen.",
+    "link": "editor.html",
+    "active": true,
+    "category": "Organisation",
+    "priority": "normal"
+  }
+]
