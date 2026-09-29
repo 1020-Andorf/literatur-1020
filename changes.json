@@ -1,0 +1,22 @@
+[
+  {
+    "id": "oxygen-acs",
+    "category": "Internistisch",
+    "title": "Sauerstoff bei ACS",
+    "date": "2026-09-01",
+    "old": "Routinemäßige Sauerstoffgabe bei ACS.",
+    "new": "Sauerstoffgabe gezielt bei Hypoxämie bzw. nach lokaler SOP.",
+    "source": "Leitlinie / lokale Lehrmeinung",
+    "active": true
+  },
+  {
+    "id": "cpr-feedback",
+    "category": "Reanimation",
+    "title": "CPR-Qualität stärker fokussieren",
+    "date": "2026-08-15",
+    "old": "Fokus primär auf Algorithmusschritte.",
+    "new": "Unterbrechungsarme HDM, Frequenz, Tiefe und vollständige Entlastung werden explizit mitbewertet.",
+    "source": "ERC / Ausbildungskonzept",
+    "active": true
+  }
+]

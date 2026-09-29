@@ -1,0 +1,63 @@
+[
+  {
+    "id": "reanimation",
+    "icon": "❤️",
+    "title": "Reanimation Erwachsene",
+    "category": "Reanimation",
+    "stand": "ERC 2025",
+    "steps": [
+      "Kreislaufstillstand erkennen und Hilfe rufen",
+      "CPR 30:2 beginnen / Defibrillator anschließen",
+      "Rhythmus analysieren",
+      "Schockbarer Rhythmus: Defibrillieren und sofort CPR fortsetzen",
+      "Nicht schockbarer Rhythmus: CPR fortsetzen, Ursachen behandeln",
+      "Alle 2 Minuten Rhythmus und ROSC prüfen"
+    ],
+    "source": "ERC Guidelines / lokale SOP beachten"
+  },
+  {
+    "id": "anaphylaxie",
+    "icon": "💉",
+    "title": "Anaphylaxie",
+    "category": "Internistisch",
+    "stand": "lokale SOP",
+    "steps": [
+      "ABCDE und Trigger entfernen",
+      "Adrenalin i.m. nach Standard",
+      "Sauerstoff / Atemwegsmanagement",
+      "i.v. Zugang und Volumen nach Standard",
+      "Reevaluation und frühzeitiger Transport"
+    ],
+    "source": "Lokale SOP / Leitlinie"
+  },
+  {
+    "id": "stroke",
+    "icon": "🧠",
+    "title": "Schlaganfall",
+    "category": "Neurologie",
+    "stand": "aktuell",
+    "steps": [
+      "FAST / neurologisches Defizit erkennen",
+      "Last seen well erheben",
+      "BZ ausschließen",
+      "Monitoring und Transportpriorität",
+      "Stroke Unit voranmelden"
+    ],
+    "source": "Lokale SOP / aktuelle Schlaganfall-Leitlinie"
+  },
+  {
+    "id": "trauma",
+    "icon": "🩹",
+    "title": "Trauma",
+    "category": "Trauma",
+    "stand": "aktuell",
+    "steps": [
+      "kritische Blutung stoppen",
+      "ABCDE mit Trauma-Fokus",
+      "MILS / Immobilisation indikationsbezogen",
+      "Wärmeerhalt und Analgesie",
+      "Transportziel und Zeitkritik festlegen"
+    ],
+    "source": "Lokale SOP / Trauma-Leitlinie"
+  }
+]

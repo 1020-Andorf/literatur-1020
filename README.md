@@ -1,13 +1,22 @@
-# OST 1020 – Wissenssammlung v2.5
+# OST 1020 – Wissenssammlung v2.6
 
-Dashboard-Version als mobile Ergänzung zu VitaSim.
+Neues immersives Dashboard als Ergänzung zu VitaSim.
 
-Neu:
-- Immersives Start-Dashboard ohne doppelten Titel
-- Aktuelles/News durch Redaktion pflegbar
-- Neueste Literatur direkt auf dem Dashboard
-- Schnellzugriff auf Literatur, ABCDE, Diagnostik und Skills
-- Redaktion bleibt PIN-geschützt; Menü fordert den PIN bereits vor dem Öffnen an
-- Worker unterstützt zusätzlich `data/news.json` über `/content/news`
+## Bereiche
+- Dashboard / Aktuelles
+- Literatursammlung
+- ABCDE
+- Differentialdiagnostik
+- Skilltraining
+- Algorithmen & Leitlinien
+- Lehrmeinungsänderungen
+- Termine mit Kalenderansicht
+- VitaSim Anleitung
+- Materialien
+- PIN-geschützte Redaktion
 
-Standard-Fallback-PIN lokal: `1020`. Für Worker-Synchronisation muss derselbe PIN-Hash im Worker hinterlegt sein.
+## Redaktion
+Fallback-PIN ohne Worker: `1020`. Bei Worker-Nutzung gilt `ADMIN_PIN_SHA256`.
+
+## Upload
+Den gesamten Inhalt dieses Ordners in die Wurzel des GitHub-Pages-Repositories kopieren. Den Worker für die neuen Datenbereiche ebenfalls aktualisieren.
