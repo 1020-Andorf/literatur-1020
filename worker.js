@@ -1,15 +1,25 @@
 
 export default {
  async fetch(request, env) {
-  const cors={"Access-Control-Allow-Origin":env.ALLOWED_ORIGIN||"*","Vary":"Origin","Access-Control-Allow-Headers":"Content-Type, X-Admin-Pin","Access-Control-Allow-Methods":"GET, POST, PUT, DELETE, OPTIONS"};
+  const cors={"Access-Control-Allow-Origin":env.ALLOWED_ORIGIN||"*","Vary":"Origin","Access-Control-Allow-Headers":"Content-Type","Access-Control-Allow-Methods":"GET, POST, PUT, DELETE, OPTIONS"};
   if(request.method==="OPTIONS")return new Response(null,{headers:cors});
   const url=new URL(request.url);
   try{
    if(url.pathname==="/articles"&&request.method==="GET")return json(await getJson(env,"data/articles.json"),200,cors);
-   const m=url.pathname.match(/^\/content\/(abcde|differential|skills|news|algorithms|changes|events|guide|materials)$/);
+   const m=url.pathname.match(/^\/content\/(articles|abcde|differential|skills|news|algorithms|changes|events|guide|materials)$/);
    if(m&&request.method==="GET")return json(await getJson(env,`data/${m[1]}.json`),200,cors);
-   if(url.pathname==="/auth"&&request.method==="POST")return await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);
-   if(!await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256))return json({error:"PIN ungültig"},401,cors);
+   if(url.pathname==="/auth"&&request.method==="POST")return json({ok:true},200,cors);
+   const rsvp=url.pathname.match(/^\/events\/rsvp\/([^/]+)$/);
+   if(rsvp&&request.method==="POST"){
+    const id=decodeURIComponent(rsvp[1]);const body=await request.json();const clientId=String(body.clientId||"").trim();
+    if(!clientId||clientId.length>120)return json({error:"Ungültige Teilnehmer-ID"},400,cors);
+    const cur=await getJson(env,"data/events.json",true);const items=cur.items;const ev=items.find(x=>x.id===id);
+    if(!ev)return json({error:"Termin nicht gefunden"},404,cors);
+    ev.attendees=Array.isArray(ev.attendees)?ev.attendees:[];const i=ev.attendees.indexOf(clientId);
+    if(i>=0)ev.attendees.splice(i,1);else if(ev.attendees.length<(Number(ev.capacity)||10))ev.attendees.push(clientId);
+    await putJson(env,"data/events.json",items,cur.sha,`Termin Teilnahme: ${id}`);
+    return json({ok:true,events:items,count:ev.attendees.length,capacity:Number(ev.capacity)||10,joined:ev.attendees.includes(clientId)},200,cors);
+   }
    if(url.pathname==="/articles"&&(request.method==="POST"||request.method==="PUT")){
     const article=await request.json();if(!article.title)return json({error:"Titel fehlt"},400,cors);
     const cur=await getJson(env,"data/articles.json",true);let items=cur.items;

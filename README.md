@@ -1,20 +1,15 @@
-# OST 1020 – Wissenssammlung v2.9
+# OST 1020 – Wissenssammlung v3.0
 
-Design- und UX-Version auf Basis des freigegebenen Mockups.
+## Änderungen
+- Startseite ohne doppelte Kopfzeile; Hero heißt „Wissenssammlung 1020“
+- Hamburger-Menü direkt in der Hero-Kachel
+- zentrierte Menüs und Overlays, Klick außerhalb schließt
+- keine sichtbaren Scrollbars
+- Differentialdiagnostik mit Emojis
+- Literatur: Kategorie „Neuerscheinungen“ für Artikel der letzten 30 Tage
+- Literaturredaktion wieder ausführlicher mit DOI, Quelle, Kategorien, Zielgruppe, Zugriff, Links usw.
+- Crossref-DOI-Abruf im Literatur-Editor
+- Redaktion ohne PIN-Abfrage
+- Menü neu strukturiert und übersichtlicher gestaltet
 
-## Neu
-- Modernes helles Dashboard mit einheitlichen Vektor-Symbolen
-- Die Simulationssoftware wird im Portal einheitlich **Simulationstraining** genannt
-- Literatursammlung vollständig im neuen Karten-/Accordion-Design
-- ABCDE mit A–E-Navigation und interaktiven Unter-Overlays
-- Skilltraining mit funktionalen Tabs im Overlay
-- Kalender mit Monatsnavigation vor/zurück
-- Teilnahmefunktion mit Teilnehmerzahl und Kapazität
-- Redaktion kann Termin-Kapazität pflegen
-- Menü ohne sichtbare Scrollbar
-
-## Redaktion
-PIN-Fallback: `1020`. Bei aktivem Worker wird dessen `ADMIN_PIN_SHA256` verwendet.
-
-## RSVP / Teilnahme
-Der mitgelieferte Worker unterstützt `/events/rsvp/:id`. Teilnehmer werden anhand einer anonymen Browser-ID gezählt.
+Hinweis: Weil die Redaktion bewusst ohne PIN arbeitet, sind Schreibzugriffe des Workers nicht mehr durch den bisherigen PIN geschützt.

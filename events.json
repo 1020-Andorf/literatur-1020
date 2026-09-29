@@ -6,7 +6,9 @@
     "time": "18:30",
     "location": "Schulungsraum Andorf",
     "category": "Übung",
-    "description": "Szenarientraining Reanimation und Teamkommunikation."
+    "description": "Szenarientraining Reanimation und Teamkommunikation.",
+    "capacity": 10,
+    "attendees": []
   },
   {
     "id": "e2",
@@ -15,15 +17,19 @@
     "time": "18:30",
     "location": "Schulungsraum Andorf",
     "category": "Übung",
-    "description": "ABCDE, Immobilisation und Transportentscheidung."
+    "description": "ABCDE, Immobilisation und Transportentscheidung.",
+    "capacity": 12,
+    "attendees": []
   },
   {
     "id": "e3",
-    "title": "VitaSim-Ausbilderabend",
+    "title": "Simulationstraining-Ausbilderabend",
     "date": "2026-11-07",
     "time": "18:00",
     "location": "Andorf",
-    "category": "VitaSim",
-    "description": "Geräteprofile, Fallsteuerung und Debriefing."
+    "category": "Simulationstraining",
+    "description": "Geräteprofile, Fallsteuerung und Debriefing.",
+    "capacity": 10,
+    "attendees": []
   }
 ]
