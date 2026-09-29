@@ -1,353 +1,177 @@
 [
   {
-    "id": "s1",
-    "name": "Blutstillung (Druckverband / Tourniquet)",
-    "group": "EE",
-    "indication": [
-      "Starke äußere Blutung"
-    ],
-    "material": [
-      "PSA / Handschuhe",
-      "Kompressen / Druckverband",
-      "Tourniquet"
-    ],
-    "steps": [
-      "Blutung lokalisieren",
-      "Direkten Druck ausüben",
-      "Druckverband oder Tourniquet nach Indikation anlegen",
-      "Wirksamkeit kontrollieren"
+    "name": "Basiskenntnisse Rettungsdienst",
+    "skills": [
+      {
+        "name": "Fahrzeugcheck",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Umgang mit Tragsessel",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Umgang mit Fahrtrage",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Lagerungen (Grundlagerungen / Patientenorientiert)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Einsatzprotokoll",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      }
     ]
   },
   {
-    "id": "s2",
-    "name": "MILS",
-    "group": "EE",
-    "indication": [
-      "Verdacht auf HWS-Verletzung"
-    ],
-    "material": [
-      "Helfer/in",
-      "ggf. HWS-Schiene"
-    ],
-    "steps": [
-      "Kopf manuell stabilisieren",
-      "Neutralposition soweit möglich",
-      "Stabilisierung bei weiteren Maßnahmen halten"
+    "name": "Patientenbeurteilung",
+    "skills": [
+      {
+        "name": "ABCDE / SAMPLE",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Patientenbetreuung",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Übergabe",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      }
     ]
   },
   {
-    "id": "s3",
-    "name": "Helmabnahme",
-    "group": "A",
-    "indication": [
-      "Atemweg / Reanimation / Untersuchung erfordert Helmabnahme"
-    ],
-    "material": [
-      "Zwei Helfer/innen"
-    ],
-    "steps": [
-      "Rollen absprechen",
-      "HWS manuell stabilisieren",
-      "Kinnriemen öffnen",
-      "Helm achsengerecht entfernen"
-    ]
-  },
-  {
-    "id": "s4",
-    "name": "Atemwege freimachen",
-    "group": "A",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s5",
-    "name": "Atemwege freihalten",
-    "group": "A",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s6",
-    "name": "Sauerstoffgabe",
-    "group": "B",
-    "indication": [
-      "Hypoxämie / Dyspnoe / Schock nach Indikation"
-    ],
-    "material": [
-      "O₂-Quelle",
-      "Passendes Applikationssystem"
-    ],
-    "steps": [
-      "Indikation prüfen",
-      "System wählen",
-      "Flow einstellen",
-      "SpO₂ und klinische Wirkung reevaluieren"
-    ]
-  },
-  {
-    "id": "s7",
-    "name": "Beutel-Maskenbeatmung",
-    "group": "B",
-    "indication": [
-      "Apnoe oder insuffiziente Spontanatmung"
-    ],
-    "material": [
-      "Beatmungsbeutel",
-      "Maske",
-      "Sauerstoff"
-    ],
-    "steps": [
-      "Atemweg positionieren",
-      "Maske abdichten",
-      "Adäquat beatmen",
-      "Thoraxhub und SpO₂ kontrollieren"
-    ]
-  },
-  {
-    "id": "s8",
-    "name": "LTS-D",
-    "group": "B",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s9",
-    "name": "Herzdruckmassage",
-    "group": "C",
-    "indication": [
-      "Kreislaufstillstand"
-    ],
-    "material": [
-      "Feste Unterlage",
-      "ggf. Reanimationshilfe"
-    ],
-    "steps": [
-      "Druckpunkt mittleres Sternum",
-      "100–120/min",
-      "5–6 cm Drucktiefe",
-      "Unterbrechungen minimieren"
-    ]
-  },
-  {
-    "id": "s10",
-    "name": "Defibrillation",
-    "group": "C",
-    "indication": [
-      "VF / pVT"
-    ],
-    "material": [
-      "Defibrillator",
-      "Pads"
-    ],
-    "steps": [
-      "Pads korrekt kleben",
-      "Rhythmus analysieren",
-      "Sicherheitscheck",
-      "Schock abgeben und CPR sofort fortsetzen"
-    ]
-  },
-  {
-    "id": "s11",
-    "name": "Lagerung",
-    "group": "C",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s12",
-    "name": "Extremitätenschienung",
-    "group": "E",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s13",
-    "name": "HWS - Schienung",
-    "group": "E",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s14",
-    "name": "Ganzkörperimmobilisation",
-    "group": "E",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s15",
-    "name": "Schaufeltrage / 5 Helfer Methode",
-    "group": "E",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s16",
-    "name": "Wundversorgung",
-    "group": "E",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s17",
-    "name": "EKG",
-    "group": "NFS",
-    "indication": [
-      "Rhythmusdiagnostik / ACS / Monitoring"
-    ],
-    "material": [
-      "EKG-Gerät",
-      "Elektroden"
-    ],
-    "steps": [
-      "Elektrodenpositionen vorbereiten",
-      "Artefakte minimieren",
-      "Ableitung erstellen",
-      "Befund weitergeben"
-    ]
-  },
-  {
-    "id": "s18",
-    "name": "i.v. Zugang",
-    "group": "NFS",
-    "indication": [
-      "Vaskulärer Zugang erforderlich"
-    ],
-    "material": [
-      "Kanüle",
-      "Stauschlauch",
-      "Desinfektion",
-      "Verband"
-    ],
-    "steps": [
-      "Punktionsstelle wählen",
-      "Aseptisch punktieren",
-      "Lage prüfen",
-      "Fixieren und spülen"
-    ]
-  },
-  {
-    "id": "s19",
-    "name": "AML Vorbereitung",
-    "group": "NFS",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
-    ]
-  },
-  {
-    "id": "s20",
-    "name": "AML Applikation",
-    "group": "NFS",
-    "indication": [
-      "Indikation nach Ausbildungsvorgabe"
-    ],
-    "material": [
-      "Benötigtes Material laut Standard"
-    ],
-    "steps": [
-      "Vorbereiten",
-      "Durchführen",
-      "Wirksamkeit / Ergebnis kontrollieren",
-      "Dokumentieren"
+    "name": "Sanitätshilfe Anwendungen",
+    "skills": [
+      {
+        "name": "Blutdruck / Puls / Atemfrequenz / AVPU / ZOPS",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "O₂ (Anwendung, Berechnen, Flaschenwechsel), SpO₂",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Absaugen, Technik, Geräte (AkkuVac, AMBU Twin, Magillz.)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Aufbereitung aller Geräte lt. MPG (Desinfektion, etc.)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Extremitätenschienung u. Ruhigstellung / MDS",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Rettungstechniken (Rettungstuch, Rautengriff, Umheben, etc.)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Sturzhelmabnahme durch 2 Helfer (inkl. MILS oder HWS)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Traumaversorgung (MILS, Schaufeltrage, Vakuummatr., HWS)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Patiententransfer (Bett/Rollstuhl - Trage/Tragsessel, Rollboard ...)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Bewusstloser Patient (Esmarch, Wendl, stab. Seitenlage, BZ)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Wiederbelebung Säugling (inkl. Defi)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      },
+      {
+        "name": "Wiederbelebung Kind (inkl. Defi)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
+        ]
+      }
     ]
   }
 ]
