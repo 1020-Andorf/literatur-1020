@@ -6,7 +6,7 @@ export default {
   const url=new URL(request.url);
   try{
    if(url.pathname==="/articles"&&request.method==="GET")return json(await getJson(env,"data/articles.json"),200,cors);
-   const m=url.pathname.match(/^\/content\/(abcde|differential|skills)$/);
+   const m=url.pathname.match(/^\/content\/(abcde|differential|skills|news)$/);
    if(m&&request.method==="GET")return json(await getJson(env,`data/${m[1]}.json`),200,cors);
    if(url.pathname==="/auth"&&request.method==="POST")return await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);
    if(!await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256))return json({error:"PIN ungültig"},401,cors);

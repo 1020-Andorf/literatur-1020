@@ -3,7 +3,7 @@
 const page=document.body.dataset.page||'home';
 const API=(window.WISSEN_API_URL||'').replace(/\/$/,'');
 const LS='ost1020-v24-';
-const DEFAULT=window.OST1020_DATA||{articles:[],abcde:[],differential:[],skills:[]};
+const DEFAULT=window.OST1020_DATA||{articles:[],abcde:[],differential:[],skills:[],news:[]};
 let editorPin=sessionStorage.getItem('ost1020-pin')||'';
 const $=(s,r=document)=>r.querySelector(s);const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
@@ -15,6 +15,7 @@ function chrome(){
    ['literatur.html','📚','Literatursammlung','literature','lit'],['abcde.html','🩺','ABCDE-Schema','abcde','abc'],['differential.html','🔎','Differentialdiagnostik','differential','diff'],['skilltraining.html','🎓','Skilltraining','skills','skill'],['editor.html','🔐','Redaktion','editor','edit']
   ];
   document.body.insertAdjacentHTML('beforeend',`<div class="menu" data-menu><div class="shade" data-menu-close></div><aside class="menu-sheet"><div class="menu-head"><strong>Bereiche</strong><button class="close" data-menu-close>✕</button></div><nav class="nav">${nav.map(x=>`<a href="${x[0]}" class="${x[4]} ${page===x[3]?'active':''}"><span class="nav-icon">${x[1]}</span><span>${x[2]}</span><span class="nav-arrow">›</span></a>`).join('')}</nav></aside></div><div class="overlay" data-overlay><div class="shade" data-overlay-close></div><section class="overlay-panel"><div class="overlay-head"><h2 data-overlay-title></h2><button class="close" data-overlay-close>✕</button></div><div class="overlay-body" data-overlay-body></div></section></div>`);
+  const redLink=$('.nav a[href="editor.html"]');if(redLink)redLink.onclick=async(e)=>{e.preventDefault();document.body.classList.remove('menu-open');$('[data-menu]').classList.remove('show');const pin=prompt('Redaktions-PIN eingeben');if(pin===null)return;if(await authPin(pin)){sessionStorage.setItem('ost1020-pin',pin);location.href='editor.html';}else alert('PIN nicht korrekt.');};
   $('[data-menu-btn]').onclick=()=>{$('[data-menu]').classList.add('show');document.body.classList.add('menu-open')};
   $$('[data-menu-close]').forEach(b=>b.onclick=()=>{$('[data-menu]').classList.remove('show');document.body.classList.remove('menu-open')});
   $$('[data-overlay-close]').forEach(b=>b.onclick=closeOverlay);
@@ -40,7 +41,33 @@ function articleHtml(a){const authors=Array.isArray(a.authors)?a.authors.join(',
 function topicDefs(){return [
  ['reanimation','Reanimation','⚡',['Reanimation','Kreislaufstillstand']],['simulation','Simulation & Debriefing','🎯',['Simulation','Debriefing','Ausbildung']],['crm','CRM & Human Factors','👥',['CRM','Human Factors','Entscheidungsfindung']],['neuro','Neurologie / Schlaganfall','🧠',['Neurologie','Schlaganfall']],['quality','Qualität & Sicherheit','🛡️',['Qualität','Patientensicherheit','System']],['critical','Critical Care','🫁',['Critical Care','Diagnostik']],['pharma','Pharmakologie & Schmerz','💊',['Pharmakologie','Schmerz']],['hems','HEMS & Präklinik','🚁',['HEMS','Versorgung','Österreich']]
 ]}
-function renderHome(){$('[data-main]').innerHTML=`<div class="home-title">OST 1020 -<br>Wissenssammlung</div><div class="home-grid"><a class="home-tile lit" href="literatur.html"><span class="home-icon">📚</span><span class="home-label">Literatursammlung</span></a><a class="home-tile abc" href="abcde.html"><span class="home-icon">🩺</span><span class="home-label">ABCDE-Schema</span></a><a class="home-tile diff" href="differential.html"><span class="home-icon">🔎</span><span class="home-label">Differentialdiagnostik</span></a><a class="home-tile skill" href="skilltraining.html"><span class="home-icon">🎓</span><span class="home-label">Skilltraining</span></a></div>`}
+async function renderHome(){
+ const [news,articles]=await Promise.all([getData('news'),getArticles()]);
+ const activeNews=(news||[]).filter(n=>n.active!==false).slice(0,4);
+ const newest=(articles||[]).slice().sort((a,b)=>String(b.added||'').localeCompare(String(a.added||''))).slice(0,3);
+ $('[data-main]').innerHTML=`
+   <section class="dashboard-hero">
+     <div class="dash-badge">OST 1020</div>
+     <div class="dash-hero-row"><div><h1>Wissenssammlung</h1><p>Die mobile Ergänzung zu VitaSim.</p></div><div class="pulse-dot" aria-hidden="true"></div></div>
+   </section>
+   <section class="dashboard-section">
+     <div class="dash-head"><h2>Aktuelles</h2><span>${activeNews.length} Meldungen</span></div>
+     <div class="news-strip">${activeNews.map(n=>`<article class="news-card"><div class="news-date">${esc(n.date||'')}</div><h3>${esc(n.title)}</h3><p>${esc(n.text||'')}</p>${n.link?`<a href="${esc(n.link)}">Öffnen ›</a>`:''}</article>`).join('')||'<div class="empty-state">Keine Meldungen vorhanden.</div>'}</div>
+   </section>
+   <section class="dashboard-section">
+     <div class="dash-head"><h2>Schnellzugriff</h2></div>
+     <div class="quick-grid">
+       <a class="quick-card lit" href="literatur.html"><span>📚</span><strong>Literatur</strong></a>
+       <a class="quick-card abc" href="abcde.html"><span>🩺</span><strong>ABCDE</strong></a>
+       <a class="quick-card diff" href="differential.html"><span>🔎</span><strong>Diagnostik</strong></a>
+       <a class="quick-card skill" href="skilltraining.html"><span>🎓</span><strong>Skills</strong></a>
+     </div>
+   </section>
+   <section class="dashboard-section">
+     <div class="dash-head"><h2>Neu in der Literatur</h2><a href="literatur.html">Alle anzeigen</a></div>
+     <div class="latest-list">${newest.map(a=>`<a class="latest-item" href="literatur.html"><div><div class="latest-topic">${esc(arr(a.topics)[0]||'Literatur')}</div><strong>${esc(a.title)}</strong><span>${esc(a.journal||'')}${a.year?' · '+esc(a.year):''}</span></div><b>›</b></a>`).join('')}</div>
+   </section>`;
+}
 async function renderLiterature(){
  const articles=await getArticles();const groups=topicDefs().map(d=>({id:d[0],title:d[1],emoji:d[2],items:articles.filter(a=>arr(a.topics).some(t=>d[3].includes(t)))})).filter(g=>g.items.length);
  $('[data-main]').innerHTML=`<section class="card"><div class="searchbar"><input type="search" data-lit-search placeholder="Artikel oder Thema suchen …"><select data-lit-filter><option value="all">Alle Themen</option>${groups.map(g=>`<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select></div><div class="literature-list" data-lit-list></div></section>`;
@@ -65,8 +92,8 @@ async function saveArticle(article,exists){
 async function deleteArticle(id){if(API&&editorPin){const r=await fetch(`${API}/articles/${encodeURIComponent(id)}`,{method:'DELETE',headers:{'X-Admin-Pin':editorPin}});if(!r.ok){const d=await r.json().catch(()=>({}));throw new Error(d.error||'Löschen fehlgeschlagen');}}const arts=(await getArticles()).filter(a=>a.id!==id);localStorage.setItem(LS+'articles',JSON.stringify(arts));}
 async function renderEditor(){
  const main=$('[data-main]');if(!editorPin){main.innerHTML=`<section class="pin-card"><h2>Redaktion</h2><div class="pin-row"><input class="field" type="password" inputmode="numeric" placeholder="PIN" data-pin><button class="btn primary" data-unlock>Öffnen</button></div><div class="status" data-auth-msg></div></section>`;$('[data-unlock]').onclick=async()=>{const pin=$('[data-pin]').value.trim();if(await authPin(pin)){editorPin=pin;sessionStorage.setItem('ost1020-pin',pin);renderEditor()}else $('[data-auth-msg]').textContent='PIN nicht korrekt.'};return}
- let active='articles';let datasets={articles:await getArticles(),abcde:await getData('abcde'),differential:await getData('differential'),skills:await getData('skills')};
- main.innerHTML=`<section class="card"><div class="editor-tabs"><button class="editor-tab active" data-tab="articles">Literatur</button><button class="editor-tab" data-tab="abcde">ABCDE</button><button class="editor-tab" data-tab="differential">Leitsymptome</button><button class="editor-tab" data-tab="skills">Skills</button></div><div data-edit-list></div><div class="editor-actions"><button class="btn primary" data-save-all>Speichern</button><button class="btn" data-lock>Schließen</button></div><div class="status" data-status></div></section>`;
+ let active='news';let datasets={news:await getData('news'),articles:await getArticles(),abcde:await getData('abcde'),differential:await getData('differential'),skills:await getData('skills')};
+ main.innerHTML=`<section class="card"><div class="editor-tabs"><button class="editor-tab active" data-tab="news">News</button><button class="editor-tab" data-tab="articles">Literatur</button><button class="editor-tab" data-tab="abcde">ABCDE</button><button class="editor-tab" data-tab="differential">Leitsymptome</button><button class="editor-tab" data-tab="skills">Skills</button></div><div data-edit-list></div><div class="editor-actions"><button class="btn primary" data-save-all>Speichern</button><button class="btn" data-lock>Schließen</button></div><div class="status" data-status></div></section>`;
  let selectedArticle='';
  function renderArticles(){const list=$('[data-edit-list]');const arts=datasets.articles;const a=arts.find(x=>x.id===selectedArticle)||null;list.innerHTML=`<div class="article-picker"><select data-article-select><option value="">Neuen Artikel anlegen</option>${arts.map(x=>`<option value="${esc(x.id)}" ${a&&a.id===x.id?'selected':''}>${esc(x.title)}</option>`).join('')}</select><button class="btn" data-new-article>+ Neu</button></div><div class="edit-card"><div class="edit-body article-editor-grid">${editField('Titel',a?.title||'','title',false,'span2')}${editField('Autor:innen',Array.isArray(a?.authors)?a.authors.join(', '):(a?.authors||''),'authors',false,'span2')}${editField('Journal / Quelle',a?.journal||'','journal')}${editField('Jahr',a?.year||'','year')}${editField('DOI',a?.doi||'','doi')}${editField('Dokumenttyp',a?.type||'','type')}${editField('Themen (mit Komma trennen)',arr(a?.topics).join(', '),'topics',false,'span2')}${editField('Warum lesenswert?',a?.why||'','why',true,'span2')}${editField('Original-/Verlagslink',a?.publisherUrl||'','publisherUrl',false,'span2')}${editField('Freier Volltext',a?.freeUrl||'','freeUrl',false,'span2')}<div class="edit-field"><label>Zugriff</label><select data-key="access"><option value="oa" ${a?.access==='oa'?'selected':''}>Open Access</option><option value="free" ${a?.access==='free'?'selected':''}>Freie Version</option><option value="paywall" ${a?.access==='paywall'?'selected':''}>Paywall</option></select></div><div class="edit-field"><label>Level</label><select data-key="level"><option value="rs" ${a?.level==='rs'?'selected':''}>RS</option><option value="rs-nfs" ${(!a||a?.level==='rs-nfs')?'selected':''}>RS–NFS</option><option value="nfs" ${a?.level==='nfs'?'selected':''}>NFS</option></select></div><label class="checkline span2"><input type="checkbox" data-key="featured" ${a?.featured?'checked':''}> Aktueller Lesetipp</label><div class="row-actions span2"><button class="btn primary" data-save-article>${a?'Artikel aktualisieren':'Artikel anlegen'}</button>${a?'<button class="btn danger" data-delete-article>Artikel löschen</button>':''}</div></div></div>`;
  $('[data-article-select]').onchange=e=>{selectedArticle=e.target.value;renderArticles()};$('[data-new-article]').onclick=()=>{selectedArticle='';renderArticles()};
@@ -75,6 +102,10 @@ async function renderEditor(){
  }
  function renderTab(){
   $$('.editor-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===active));if(active==='articles'){renderArticles();return}const list=$('[data-edit-list]');const data=datasets[active];
+  if(active==='news'){
+    list.innerHTML=`<div class="add-row"><button class="btn" data-add-news>+ Meldung</button></div><div class="editor-list">${data.map((x,i)=>`<details class="edit-card" data-idx="${i}"><summary><span>${esc(x.title||'Neue Meldung')}</span><span>⌄</span></summary><div class="edit-body">${editField('Titel',x.title||'','title')}${editField('Datum',x.date||'','date')}${editField('Text',x.text||'','text',true)}${editField('Link (optional)',x.link||'','link')}<label class="checkline"><input type="checkbox" data-key="active" ${x.active!==false?'checked':''}> Auf Dashboard anzeigen</label><button class="btn danger" data-delete>Meldung löschen</button></div></details>`).join('')}</div>`;
+    $$('[data-idx]',list).forEach(card=>{const idx=+card.dataset.idx;$$('[data-key]',card).forEach(inp=>inp.oninput=()=>{const k=inp.dataset.key;datasets.news[idx][k]=inp.type==='checkbox'?inp.checked:inp.value});const del=$('[data-delete]',card);if(del)del.onclick=()=>{datasets.news.splice(idx,1);renderTab()}});const add=$('[data-add-news]');if(add)add.onclick=()=>{datasets.news.unshift({id:'news-'+Date.now(),title:'Neue Meldung',date:new Date().toISOString().slice(0,10),text:'',link:'',active:true});renderTab()};return;
+  }
   if(active==='abcde')list.innerHTML=`<div class="editor-list">${data.map((x,i)=>`<details class="edit-card" data-idx="${i}"><summary><span>${esc(x.key)} · ${esc(x.title)}</span><span>⌄</span></summary><div class="edit-body">${editField('Titel',x.title,'title')}${editField('Beurteilung',lines(x.checks),'checks',true)}${editField('Maßnahmen',lines(x.actions),'actions',true)}${editField('Häufige Fehler',lines(x.pitfalls),'pitfalls',true)}</div></details>`).join('')}</div>`;
   if(active==='differential')list.innerHTML=`<div class="add-row"><button class="btn" data-add>+ Leitsymptom</button></div><div class="editor-list">${data.map((x,i)=>`<details class="edit-card" data-idx="${i}"><summary><span>${esc(x.title)}</span><span>⌄</span></summary><div class="edit-body">${editField('Titel',x.title,'title')}${editField('Mögliche Ursachen',lines(x.causes),'causes',true)}${editField('Wichtige Fragen',lines(x.questions),'questions',true)}${editField('Red Flags',lines(x.redflags),'redflags',true)}<button class="btn danger" data-delete>Leitsymptom löschen</button></div></details>`).join('')}</div>`;
   if(active==='skills')list.innerHTML=`<div class="add-row"><button class="btn" data-add-group>+ Bereich</button></div><div class="editor-list">${data.map((g,gi)=>`<details class="edit-card" data-group-idx="${gi}"><summary><span>${esc(g.name)}</span><span>⌄</span></summary><div class="edit-body">${editField('Bereichsname',g.name,'group-name')}<div class="section-tools"><button class="btn" data-add-skill>+ Skill</button><button class="btn danger" data-delete-group>Bereich löschen</button></div>${(g.skills||[]).map((s,si)=>`<details class="edit-card" data-skill-idx="${si}"><summary><span>${esc(s.name)}</span><span>⌄</span></summary><div class="edit-body">${editField('Skill',s.name,'skill-name')}${editField('Checkpunkte (eine Zeile pro Punkt)',lines(s.items),'items',true)}<button class="btn danger" data-delete-skill>Skill löschen</button></div></details>`).join('')}</div></details>`).join('')}</div>`;
@@ -85,6 +116,6 @@ async function renderEditor(){
  }
  $$('.editor-tab').forEach(b=>b.onclick=()=>{active=b.dataset.tab;renderTab()});$('[data-save-all]').onclick=async()=>{if(active==='articles'){$('[data-status]').textContent='Literaturartikel werden über den Button im Formular gespeichert.';return}const result=await saveData(active,datasets[active]);$('[data-status]').textContent=result.remote?'Gespeichert und synchronisiert.':'Gespeichert. Ohne Worker-Synchronisation nur lokal auf diesem Gerät.'};$('[data-lock]').onclick=()=>{editorPin='';sessionStorage.removeItem('ost1020-pin');renderEditor()};renderTab();
 }
-async function init(){chrome();if(page==='home')renderHome();if(page==='literature')await renderLiterature();if(page==='abcde')await renderAbc();if(page==='differential')await renderDiff();if(page==='skills')await renderSkills();if(page==='editor')await renderEditor();}
+async function init(){chrome();if(page==='home')await renderHome();if(page==='literature')await renderLiterature();if(page==='abcde')await renderAbc();if(page==='differential')await renderDiff();if(page==='skills')await renderSkills();if(page==='editor')await renderEditor();}
 window.addEventListener('DOMContentLoaded',()=>init().catch(err=>{console.error(err);const m=$('[data-main]');if(m)m.innerHTML='<section class="card"><strong>Inhalte konnten nicht geladen werden.</strong></section>';}));
 })();
