@@ -1,31 +1,22 @@
-# Wissensportal Rettungsdienst – GitHub Pages
+# Wissensportal Rettungsdienst – V3
 
-Dieses Paket ist die überarbeitete mobile Wissensplattform für das Trainingsnetzwerk OST Andorf.
+Überarbeiteter GitHub-Pages-Entwurf im einheitlichen VitaSim-nahen Design.
 
-## Bereiche
-- Literatursammlung
-- ABCDE-Schema
-- Differentialdiagnostik / Leitsymptome
-- Skilltraining
-- Redaktionsseite für ABCDE, Leitsymptome und Skill-Checklisten
+## Seiten
+- `index.html` – Startseite
+- `literatur.html` – mobile Literatursammlung
+- `abcde.html` – ABCDE-Schema mit Overlay-Details
+- `differential.html` – Differentialdiagnostik mit Overlay-Details
+- `skilltraining.html` – Skilltraining mit Overlay-Checklisten
+- `editor.html` – lokale Bearbeitung der Checklisten
 
-## Bedienkonzept
-Alle Ansichten verwenden ein gemeinsames Hamburger-Menü. ABCDE, Leitsymptome und Skills werden als große touchfreundliche Kacheln dargestellt; Detailinhalte öffnen sich in einem abgedunkelten Overlay. Die Literatursammlung wurde für Smartphones verdichtet.
+## Bearbeitung
+Die Checklisten werden in `localStorage` gespeichert. Damit kann direkt auf GitHub Pages ohne Backend gearbeitet werden.
 
-## Checklisten und Inhalte bearbeiten
-`editor.html` öffnet die Redaktionsansicht. Sie nutzt dieselbe PIN und denselben Worker wie die Literatursammlung. Damit Änderungen dauerhaft in GitHub gespeichert werden, muss der mitgelieferte `worker/worker.js` beim bestehenden Cloudflare Worker aktualisiert werden.
+### Backup / Gerätewechsel
+- Im Editor den gewünschten Bereich exportieren.
+- Auf einem anderen Gerät den Bereich importieren.
 
-Der Worker unterstützt zusätzlich:
-- `GET /content/abcde`
-- `PUT /content/abcde`
-- `GET /content/differential`
-- `PUT /content/differential`
-- `GET /content/skilltraining`
-- `PUT /content/skilltraining`
-
-Schreibzugriffe sind weiterhin über `X-Admin-Pin` geschützt.
-
-## GitHub Pages
-Den Inhalt dieses Ordners in die Wurzel des bestehenden GitHub-Pages-Repositories kopieren. Die bestehende Literaturkonfiguration in `literatur/config.js` bleibt erhalten.
-
-Nach einem Commit kann GitHub Pages Änderungen an JSON-Dateien kurz zwischenspeichern. Die Wissensseiten fragen bei konfiguriertem Worker deshalb bevorzugt die aktuelle Worker-Version ab und fallen sonst auf die statischen JSON-Dateien zurück.
+## Dateien
+- `portal.css` / `portal.js` / `portal-content.js`
+- `data/articles.json` für die Literatursammlung
