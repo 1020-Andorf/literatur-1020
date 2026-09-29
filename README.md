@@ -1,14 +1,16 @@
-# OST 1020 - Wissenssammlung v2
+# OST 1020 - Wissenssammlung v2.2
 
-Statische GitHub-Pages-Version im VitaSim-nahen Design.
+Änderungen:
+- Hamburger links, Home rechts
+- Untertitel/Infotexte entfernt
+- mobile Kacheln ohne horizontales Überlaufen
+- einheitliche Overlays
+- Literatursammlung: klickbare Themenkacheln
+- Fehler behoben: `authors` war in articles.json ein String und wurde fälschlich mit `.join()` behandelt
+- benutzerfreundliche PIN-geschützte Redaktion ohne JSON/HTML
+- Skillliste entspricht der bisherigen VitaSim-Skillliste
 
-## Enthalten
-- Startseite mit aufgeräumten Kacheln
-- Literatursammlung mit Themen-Kacheln und einheitlichem Overlay
-- ABCDE-Schema in verbesserter Mobilansicht
-- Differentialdiagnostik mit Leitsymptom-Kacheln
-- Skilltraining mit kleineren Kacheln im VitaSim-Stil
-- Redaktion mit PIN-Schutz (`1020`) und lokaler Speicherung im Browser
+## Worker
+Das Öffnen der Literaturkacheln benötigt keinen Worker. Der Fehler lag im JavaScript der Artikelansicht.
 
-## Hinweis
-Änderungen aus der Redaktion werden per `localStorage` im Browser gespeichert und können exportiert/importiert werden.
+Für dauerhaftes Speichern der Redaktion in GitHub den enthaltenen `worker/worker.js` im bestehenden Cloudflare Worker aktualisieren. Ohne Worker-Update werden Änderungen lokal im Browser gespeichert.

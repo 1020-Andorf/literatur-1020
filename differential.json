@@ -1,0 +1,193 @@
+[
+  {
+    "id": "dyspnoe",
+    "icon": "lungs",
+    "title": "Dyspnoe",
+    "causes": [
+      "Asthma / COPD",
+      "Anaphylaxie",
+      "Lungenödem",
+      "Pneumothorax",
+      "Lungenembolie",
+      "Pneumonie"
+    ],
+    "questions": [
+      "Seit wann bestehen die Beschwerden?",
+      "Plötzlicher oder schleichender Beginn?",
+      "Thoraxschmerz, Allergie oder Fieber?",
+      "Bekannte kardiale oder pulmonale Vorerkrankungen?"
+    ],
+    "redflags": [
+      "Stille Lunge",
+      "Zyanose",
+      "SpO₂-Abfall trotz Sauerstoff",
+      "Erschöpfung / Vigilanzminderung"
+    ]
+  },
+  {
+    "id": "thorax",
+    "icon": "heart",
+    "title": "Thoraxschmerz",
+    "causes": [
+      "ACS",
+      "Aortensyndrom",
+      "Lungenembolie",
+      "Pneumothorax",
+      "Perikarditis",
+      "Muskuloskelettal"
+    ],
+    "questions": [
+      "Druck, Enge oder Stechen?",
+      "Ausstrahlung?",
+      "Belastungsabhängig?",
+      "Dyspnoe, Übelkeit oder Synkope?"
+    ],
+    "redflags": [
+      "Hypotonie",
+      "Kaltschweißigkeit",
+      "Neurologische Defizite",
+      "Schwere Dyspnoe"
+    ]
+  },
+  {
+    "id": "bewusstsein",
+    "icon": "brain",
+    "title": "Bewusstseinsstörung",
+    "causes": [
+      "Hypoglykämie",
+      "Intoxikation",
+      "Krampfanfall",
+      "Schlaganfall",
+      "Sepsis",
+      "Trauma"
+    ],
+    "questions": [
+      "Letzter normaler Zustand?",
+      "Blutzucker?",
+      "Medikamente oder Substanzen?",
+      "Krampf oder Trauma beobachtet?"
+    ],
+    "redflags": [
+      "GCS sinkt",
+      "Ateminsuffizienz",
+      "Pupillendifferenz",
+      "Neurologische Herdzeichen"
+    ]
+  },
+  {
+    "id": "synkope",
+    "icon": "bolt",
+    "title": "Synkope",
+    "causes": [
+      "Vasovagal",
+      "Kardial",
+      "Orthostatisch",
+      "Hypovolämie",
+      "Metabolisch"
+    ],
+    "questions": [
+      "Belastungsabhängig?",
+      "Prodromi?",
+      "Palpitationen?",
+      "Verletzungen durch Sturz?"
+    ],
+    "redflags": [
+      "Ohne Vorwarnung",
+      "Bei Belastung",
+      "Thoraxschmerz",
+      "Pathologisches EKG"
+    ]
+  },
+  {
+    "id": "bauch",
+    "icon": "stethoscope",
+    "title": "Bauchschmerz",
+    "causes": [
+      "Akutes Abdomen",
+      "GI-Blutung",
+      "AAA",
+      "Galle",
+      "Appendizitis",
+      "Renale Kolik"
+    ],
+    "questions": [
+      "Lokalisation und OPQRST?",
+      "Erbrechen oder Diarrhoe?",
+      "Blutung?",
+      "Schwangerschaft möglich?"
+    ],
+    "redflags": [
+      "Abwehrspannung",
+      "Schockzeichen",
+      "Blutiges Erbrechen / Teerstuhl",
+      "Synkope"
+    ]
+  },
+  {
+    "id": "allergie",
+    "icon": "syringe",
+    "title": "Allergische Reaktion",
+    "causes": [
+      "Anaphylaxie",
+      "Lokale Reaktion",
+      "Medikamentenreaktion"
+    ],
+    "questions": [
+      "Möglicher Auslöser?",
+      "Haut, Atmung oder Kreislauf betroffen?",
+      "Autoinjektor vorhanden?"
+    ],
+    "redflags": [
+      "Stridor",
+      "Hypotonie",
+      "Rasche Progression",
+      "Bewusstseinsstörung"
+    ]
+  },
+  {
+    "id": "stroke",
+    "icon": "clock",
+    "title": "Schlaganfall",
+    "causes": [
+      "Ischämischer Insult",
+      "Hämorrhagie",
+      "Stroke Mimic"
+    ],
+    "questions": [
+      "Last seen well?",
+      "FAST positiv?",
+      "Antikoagulation?",
+      "Krampfanfall?"
+    ],
+    "redflags": [
+      "Progrediente Defizite",
+      "Bewusstseinsstörung",
+      "Starker Kopfschmerz",
+      "Aspirationsgefahr"
+    ]
+  },
+  {
+    "id": "trauma",
+    "icon": "bandage",
+    "title": "Trauma",
+    "causes": [
+      "SHT",
+      "Thoraxtrauma",
+      "Abdominaltrauma",
+      "Fraktur",
+      "Starke Blutung"
+    ],
+    "questions": [
+      "Unfallmechanismus?",
+      "Höhe / Geschwindigkeit?",
+      "Schutzsysteme?",
+      "Schmerzlokalisation?"
+    ],
+    "redflags": [
+      "Instabiler Kreislauf",
+      "Atemnot",
+      "Bewusstseinsstörung",
+      "Starke Blutung"
+    ]
+  }
+]
