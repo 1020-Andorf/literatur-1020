@@ -1,12 +1,20 @@
-# OST 1020 – Wissenssammlung v2.8
+# OST 1020 – Wissenssammlung v2.9
 
-Komplettes UI-Redesign nach dem modernen Mockup-Konzept.
+Design- und UX-Version auf Basis des freigegebenen Mockups.
 
-- heller, minimalistischer Companion-Look zu VitaSim
-- neues Dashboard mit Statuskarten, Wissenskacheln und Schnellzugriff
-- neue Literatursammlung mit Suche, Themenchips und Bottom-Sheet-Details
-- neu gestaltetes ABCDE mit A–E-Navigation und Detailkarten
-- neu gestaltetes Skilltraining mit kompakten Skillkarten und einheitlichen Detail-Sheets
-- alle bestehenden Inhalte, Worker-Synchronisation und PIN-Redaktion bleiben erhalten
+## Neu
+- Modernes helles Dashboard mit einheitlichen Vektor-Symbolen
+- Die Simulationssoftware wird im Portal einheitlich **Simulationstraining** genannt
+- Literatursammlung vollständig im neuen Karten-/Accordion-Design
+- ABCDE mit A–E-Navigation und interaktiven Unter-Overlays
+- Skilltraining mit funktionalen Tabs im Overlay
+- Kalender mit Monatsnavigation vor/zurück
+- Teilnahmefunktion mit Teilnehmerzahl und Kapazität
+- Redaktion kann Termin-Kapazität pflegen
+- Menü ohne sichtbare Scrollbar
 
-Cache-Version: v28
+## Redaktion
+PIN-Fallback: `1020`. Bei aktivem Worker wird dessen `ADMIN_PIN_SHA256` verwendet.
+
+## RSVP / Teilnahme
+Der mitgelieferte Worker unterstützt `/events/rsvp/:id`. Teilnehmer werden anhand einer anonymen Browser-ID gezählt.
