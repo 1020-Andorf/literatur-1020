@@ -4,12 +4,30 @@
     "icon": "lungs",
     "title": "Dyspnoe",
     "causes": [
-      "Asthma / COPD",
-      "Anaphylaxie",
-      "Lungenödem",
-      "Pneumothorax",
-      "Lungenembolie",
-      "Pneumonie"
+      {
+        "name": "Asthma / COPD",
+        "info": "Asthma / COPD ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Anaphylaxie",
+        "info": "Anaphylaxie ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Lungenödem",
+        "info": "Lungenödem ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Pneumothorax",
+        "info": "Pneumothorax ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Lungenembolie",
+        "info": "Lungenembolie ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Pneumonie",
+        "info": "Pneumonie ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Seit wann bestehen die Beschwerden?",
@@ -29,12 +47,30 @@
     "icon": "heart",
     "title": "Thoraxschmerz",
     "causes": [
-      "ACS",
-      "Aortensyndrom",
-      "Lungenembolie",
-      "Pneumothorax",
-      "Perikarditis",
-      "Muskuloskelettal"
+      {
+        "name": "ACS",
+        "info": "ACS ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Aortensyndrom",
+        "info": "Aortensyndrom ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Lungenembolie",
+        "info": "Lungenembolie ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Pneumothorax",
+        "info": "Pneumothorax ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Perikarditis",
+        "info": "Perikarditis ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Muskuloskelettal",
+        "info": "Muskuloskelettal ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Druck, Enge oder Stechen?",
@@ -54,12 +90,30 @@
     "icon": "brain",
     "title": "Bewusstseinsstörung",
     "causes": [
-      "Hypoglykämie",
-      "Intoxikation",
-      "Krampfanfall",
-      "Schlaganfall",
-      "Sepsis",
-      "Trauma"
+      {
+        "name": "Hypoglykämie",
+        "info": "Hypoglykämie ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Intoxikation",
+        "info": "Intoxikation ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Krampfanfall",
+        "info": "Krampfanfall ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Schlaganfall",
+        "info": "Schlaganfall ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Sepsis",
+        "info": "Sepsis ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Trauma",
+        "info": "Trauma ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Letzter normaler Zustand?",
@@ -79,11 +133,26 @@
     "icon": "bolt",
     "title": "Synkope",
     "causes": [
-      "Vasovagal",
-      "Kardial",
-      "Orthostatisch",
-      "Hypovolämie",
-      "Metabolisch"
+      {
+        "name": "Vasovagal",
+        "info": "Vasovagal ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Kardial",
+        "info": "Kardial ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Orthostatisch",
+        "info": "Orthostatisch ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Hypovolämie",
+        "info": "Hypovolämie ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Metabolisch",
+        "info": "Metabolisch ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Belastungsabhängig?",
@@ -103,12 +172,30 @@
     "icon": "stethoscope",
     "title": "Bauchschmerz",
     "causes": [
-      "Akutes Abdomen",
-      "GI-Blutung",
-      "AAA",
-      "Galle",
-      "Appendizitis",
-      "Renale Kolik"
+      {
+        "name": "Akutes Abdomen",
+        "info": "Akutes Abdomen ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "GI-Blutung",
+        "info": "GI-Blutung ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "AAA",
+        "info": "AAA ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Galle",
+        "info": "Galle ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Appendizitis",
+        "info": "Appendizitis ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Renale Kolik",
+        "info": "Renale Kolik ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Lokalisation und OPQRST?",
@@ -128,9 +215,18 @@
     "icon": "syringe",
     "title": "Allergische Reaktion",
     "causes": [
-      "Anaphylaxie",
-      "Lokale Reaktion",
-      "Medikamentenreaktion"
+      {
+        "name": "Anaphylaxie",
+        "info": "Anaphylaxie ist eine mögliche Differentialdiagnose bei Allergische Reaktion. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Lokale Reaktion",
+        "info": "Lokale Reaktion ist eine mögliche Differentialdiagnose bei Allergische Reaktion. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Medikamentenreaktion",
+        "info": "Medikamentenreaktion ist eine mögliche Differentialdiagnose bei Allergische Reaktion. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Möglicher Auslöser?",
@@ -149,9 +245,18 @@
     "icon": "clock",
     "title": "Schlaganfall",
     "causes": [
-      "Ischämischer Insult",
-      "Hämorrhagie",
-      "Stroke Mimic"
+      {
+        "name": "Ischämischer Insult",
+        "info": "Ischämischer Insult ist eine mögliche Differentialdiagnose bei Schlaganfall. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Hämorrhagie",
+        "info": "Hämorrhagie ist eine mögliche Differentialdiagnose bei Schlaganfall. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Stroke Mimic",
+        "info": "Stroke Mimic ist eine mögliche Differentialdiagnose bei Schlaganfall. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Last seen well?",
@@ -171,11 +276,26 @@
     "icon": "bandage",
     "title": "Trauma",
     "causes": [
-      "SHT",
-      "Thoraxtrauma",
-      "Abdominaltrauma",
-      "Fraktur",
-      "Starke Blutung"
+      {
+        "name": "SHT",
+        "info": "SHT ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Thoraxtrauma",
+        "info": "Thoraxtrauma ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Abdominaltrauma",
+        "info": "Abdominaltrauma ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Fraktur",
+        "info": "Fraktur ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      },
+      {
+        "name": "Starke Blutung",
+        "info": "Starke Blutung ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
+      }
     ],
     "questions": [
       "Unfallmechanismus?",

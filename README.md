@@ -1,5 +1,7 @@
-# OST 1020 – Wissenssammlung v3.3
+# OST 1020 – Wissenssammlung v3.4
 
-UX-Update: Zurück/Home-Navigation statt Hamburger-Menü, kompakter Kalender mit Termin-Hover, detailorientierte Ansichten für Aktuelles, Differentialdiagnostik, Algorithmen und Lehrmeinungsänderungen, Flowchart für Simulationstraining, vereinfachte Skill-Overlays und Materialien integriert in Algorithmen & Leitlinien.
+UX-/Redaktionsupdate.
 
-Für Bild/PDF-Uploads den aktualisierten `worker/worker.js` deployen.
+Neu: kompakterer Kalender, farbig markierte Termintage, größere Skill-Unterpunkte, vollständig strukturierte Skill-Redaktion, bearbeitbare Krankheitsbilder mit Kurzinfos, Algorithmen inklusive Flowchart/Leitlinie und eigener Materialsektion mit Hintergrundinfos/Checklisten.
+
+Für Uploads und zentrale Speicherung den enthaltenen `worker/worker.js` deployen.

@@ -4,42 +4,127 @@
     "skills": [
       {
         "name": "Fahrzeugcheck",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Umgang mit Tragsessel",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Umgang mit Fahrtrage",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Lagerungen (Grundlagerungen / Patientenorientiert)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Einsatzprotokoll",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       }
     ]
@@ -49,26 +134,77 @@
     "skills": [
       {
         "name": "ABCDE / SAMPLE",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Patientenbetreuung",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Übergabe",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       }
     ]
@@ -78,98 +214,302 @@
     "skills": [
       {
         "name": "Blutdruck / Puls / Atemfrequenz / AVPU / ZOPS",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "O₂ (Anwendung, Berechnen, Flaschenwechsel), SpO₂",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Absaugen, Technik, Geräte (AkkuVac, AMBU Twin, Magillz.)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Aufbereitung aller Geräte lt. MPG (Desinfektion, etc.)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Extremitätenschienung u. Ruhigstellung / MDS",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Rettungstechniken (Rettungstuch, Rautengriff, Umheben, etc.)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Sturzhelmabnahme durch 2 Helfer (inkl. MILS oder HWS)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Traumaversorgung (MILS, Schaufeltrage, Vakuummatr., HWS)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Patiententransfer (Bett/Rollstuhl - Trage/Tragsessel, Rollboard ...)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Bewusstloser Patient (Esmarch, Wendl, stab. Seitenlage, BZ)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Wiederbelebung Säugling (inkl. Defi)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       },
       {
         "name": "Wiederbelebung Kind (inkl. Defi)",
-        "items": [
-          "Unterpunkt 1 – noch definieren",
-          "Unterpunkt 2 – noch definieren",
-          "Unterpunkt 3 – noch definieren"
+        "sections": [
+          {
+            "title": "Ablauf",
+            "items": [
+              "Unterpunkt 1 – noch definieren",
+              "Unterpunkt 2 – noch definieren",
+              "Unterpunkt 3 – noch definieren"
+            ]
+          },
+          {
+            "title": "Material",
+            "items": [
+              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+            ]
+          },
+          {
+            "title": "Praxis-Tipps",
+            "items": [
+              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+            ]
+          }
         ]
       }
     ]

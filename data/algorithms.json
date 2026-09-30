@@ -11,12 +11,15 @@
       "Rhythmus analysieren",
       "Schockbarer Rhythmus: Defibrillieren und sofort CPR fortsetzen",
       "Nicht schockbarer Rhythmus: CPR fortsetzen, Ursachen behandeln",
-      "Alle 2 Minuten Rhythmus und ROSC prüfen",
-      "nICHTS tun"
+      "Alle 2 Minuten Rhythmus und ROSC prüfen"
     ],
     "source": "ERC Guidelines / lokale SOP beachten",
     "sourceUrl": "",
-    "embedUrl": ""
+    "embedUrl": "",
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
   },
   {
     "id": "anaphylaxie",
@@ -33,7 +36,11 @@
     ],
     "source": "Lokale SOP / Leitlinie",
     "sourceUrl": "",
-    "embedUrl": ""
+    "embedUrl": "",
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
   },
   {
     "id": "stroke",
@@ -50,7 +57,11 @@
     ],
     "source": "Lokale SOP / aktuelle Schlaganfall-Leitlinie",
     "sourceUrl": "",
-    "embedUrl": ""
+    "embedUrl": "",
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
   },
   {
     "id": "trauma",
@@ -67,6 +78,10 @@
     ],
     "source": "Lokale SOP / Trauma-Leitlinie",
     "sourceUrl": "",
-    "embedUrl": ""
+    "embedUrl": "",
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
   }
 ]
