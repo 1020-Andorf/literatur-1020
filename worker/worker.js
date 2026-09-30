@@ -23,10 +23,10 @@ export default {
    if(url.pathname==="/media"&&request.method==="POST"){
     if(!(await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)))return json({error:"Unauthorized"},401,cors);
     const body=await request.json();const rawName=String(body.name||"datei").replace(/[^a-zA-Z0-9._-]+/g,"-").slice(-100);const data=String(body.data||"");
-    if(!data)return json({error:"Datei fehlt"},400,cors);if(data.length>10_000_000)return json({error:"Datei zu groß"},413,cors);
+    if(!data)return json({error:"Datei fehlt"},400,cors);if(data.length>28_000_000)return json({error:"Datei zu groß (max. ca. 20 MB)"},413,cors);
     const file=`assets/uploads/${Date.now()}-${rawName}`;await putBase64(env,file,data,`Upload: ${rawName}`);
-    const branch=env.GITHUB_BRANCH||"main";const publicUrl=`https://raw.githubusercontent.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/${branch}/${file}`;
-    return json({ok:true,url:publicUrl,path:file},200,cors);
+    const branch=env.GITHUB_BRANCH||"main";const rawUrl=`https://raw.githubusercontent.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/${branch}/${file}`;const pagesBase=String(env.PUBLIC_BASE_URL||"").replace(/\/$/,"");const publicUrl=pagesBase?`${pagesBase}/${file}`:rawUrl;
+    return json({ok:true,url:publicUrl,rawUrl,path:file},200,cors);
    }
    if(url.pathname==="/articles"&&(request.method==="POST"||request.method==="PUT")){
     if(!(await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)))return json({error:"Unauthorized"},401,cors);
