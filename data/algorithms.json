@@ -17,7 +17,13 @@
     "sourceUrl": "",
     "embedUrl": "",
     "materials": {
-      "background": [],
+      "background": [
+        {
+          "title": "RK Checkliste",
+          "note": "",
+          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1790797665839-akutes-Abdomen-Training.pptx.pdf"
+        }
+      ],
       "checklists": []
     }
   },
