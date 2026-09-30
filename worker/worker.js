@@ -8,7 +8,7 @@ export default {
    if(url.pathname==="/articles"&&request.method==="GET")return json(await getJson(env,"data/articles.json"),200,cors);
    const m=url.pathname.match(/^\/content\/(articles|abcde|differential|skills|news|algorithms|changes|events|guide|materials)$/);
    if(m&&request.method==="GET")return json(await getJson(env,`data/${m[1]}.json`),200,cors);
-   if(url.pathname==="/auth"&&request.method==="POST")return await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);
+   if(url.pathname==="/auth"&&request.method==="POST"){const body=await request.json().catch(()=>({}));return (await validPin(String(body.pin||""),env.ADMIN_PIN_SHA256))?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);}
    const rsvp=url.pathname.match(/^\/events\/rsvp\/([^/]+)$/);
    if(rsvp&&request.method==="POST"){
     const id=decodeURIComponent(rsvp[1]);const body=await request.json();const clientId=String(body.clientId||"").trim();
@@ -20,8 +20,16 @@ export default {
     await putJson(env,"data/events.json",items,cur.sha,`Termin Teilnahme: ${id}`);
     return json({ok:true,events:items,count:ev.attendees.length,capacity:Number(ev.capacity)||10,joined:ev.attendees.includes(clientId)},200,cors);
    }
-   if(!await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256))return json({error:"PIN ungültig"},401,cors);
+   if(url.pathname==="/media"&&request.method==="POST"){
+    if(!(await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)))return json({error:"Unauthorized"},401,cors);
+    const body=await request.json();const rawName=String(body.name||"datei").replace(/[^a-zA-Z0-9._-]+/g,"-").slice(-100);const data=String(body.data||"");
+    if(!data)return json({error:"Datei fehlt"},400,cors);if(data.length>10_000_000)return json({error:"Datei zu groß"},413,cors);
+    const file=`assets/uploads/${Date.now()}-${rawName}`;await putBase64(env,file,data,`Upload: ${rawName}`);
+    const branch=env.GITHUB_BRANCH||"main";const publicUrl=`https://raw.githubusercontent.com/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/${branch}/${file}`;
+    return json({ok:true,url:publicUrl,path:file},200,cors);
+   }
    if(url.pathname==="/articles"&&(request.method==="POST"||request.method==="PUT")){
+    if(!(await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)))return json({error:"Unauthorized"},401,cors);
     const article=await request.json();if(!article.title)return json({error:"Titel fehlt"},400,cors);
     const cur=await getJson(env,"data/articles.json",true);let items=cur.items;
     if(article.featured)items=items.map(x=>({...x,featured:false}));
@@ -29,9 +37,11 @@ export default {
     await putJson(env,"data/articles.json",items,cur.sha,`Literatur: ${article.title}`);return json({ok:true},200,cors);
    }
    if(url.pathname.startsWith("/articles/")&&request.method==="DELETE"){
+    if(!(await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)))return json({error:"Unauthorized"},401,cors);
     const id=decodeURIComponent(url.pathname.split("/").pop());const cur=await getJson(env,"data/articles.json",true);const items=cur.items.filter(x=>x.id!==id);await putJson(env,"data/articles.json",items,cur.sha,`Literatur löschen: ${id}`);return json({ok:true},200,cors);
    }
    if(m&&request.method==="PUT"){
+    if(!(await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)))return json({error:"Unauthorized"},401,cors);
     const next=await request.json();const cur=await getJson(env,`data/${m[1]}.json`,true);await putJson(env,`data/${m[1]}.json`,next,cur.sha,`Wissenssammlung: ${m[1]} aktualisiert`);return json({ok:true},200,cors);
    }
    return json({error:"Not found"},404,cors);
@@ -43,3 +53,5 @@ async function validPin(pin,expected){if(!expected)return false;const d=await cr
 async function gh(env,path,init={}){const r=await fetch(`https://api.github.com${path}`,{...init,headers:{"Authorization":`Bearer ${env.GITHUB_TOKEN}`,"Accept":"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28","User-Agent":"ost-1020-wissenssammlung",...(init.headers||{})}});if(!r.ok)throw new Error(`GitHub API ${r.status}: ${await r.text()}`);return r}
 async function getJson(env,file,withSha=false){const p=`/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${file}?ref=${env.GITHUB_BRANCH||"main"}`;const d=await(await gh(env,p)).json();const text=decodeURIComponent(escape(atob(d.content.replace(/\n/g,""))));const items=JSON.parse(text);return withSha?{items,sha:d.sha}:items}
 async function putJson(env,file,obj,sha,message){const text=JSON.stringify(obj,null,2);const b64=btoa(unescape(encodeURIComponent(text)));const p=`/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${file}`;await gh(env,p,{method:"PUT",body:JSON.stringify({message,content:b64,sha,branch:env.GITHUB_BRANCH||"main"})})}
+
+async function putBase64(env,file,b64,message){const p=`/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${file}`;await gh(env,p,{method:"PUT",body:JSON.stringify({message,content:b64,branch:env.GITHUB_BRANCH||"main"})})}

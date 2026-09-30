@@ -13,7 +13,9 @@
       "Nicht schockbarer Rhythmus: CPR fortsetzen, Ursachen behandeln",
       "Alle 2 Minuten Rhythmus und ROSC prüfen"
     ],
-    "source": "ERC Guidelines / lokale SOP beachten"
+    "source": "ERC Guidelines / lokale SOP beachten",
+    "sourceUrl": "",
+    "embedUrl": ""
   },
   {
     "id": "anaphylaxie",
@@ -28,7 +30,9 @@
       "i.v. Zugang und Volumen nach Standard",
       "Reevaluation und frühzeitiger Transport"
     ],
-    "source": "Lokale SOP / Leitlinie"
+    "source": "Lokale SOP / Leitlinie",
+    "sourceUrl": "",
+    "embedUrl": ""
   },
   {
     "id": "stroke",
@@ -43,7 +47,9 @@
       "Monitoring und Transportpriorität",
       "Stroke Unit voranmelden"
     ],
-    "source": "Lokale SOP / aktuelle Schlaganfall-Leitlinie"
+    "source": "Lokale SOP / aktuelle Schlaganfall-Leitlinie",
+    "sourceUrl": "",
+    "embedUrl": ""
   },
   {
     "id": "trauma",
@@ -58,6 +64,8 @@
       "Wärmeerhalt und Analgesie",
       "Transportziel und Zeitkritik festlegen"
     ],
-    "source": "Lokale SOP / Trauma-Leitlinie"
+    "source": "Lokale SOP / Trauma-Leitlinie",
+    "sourceUrl": "",
+    "embedUrl": ""
   }
 ]
