@@ -1,15 +1,10 @@
-# OST 1020 – Wissenssammlung v3.0
+# OST 1020 – Wissenssammlung v3.1
 
-## Änderungen
-- Startseite ohne doppelte Kopfzeile; Hero heißt „Wissenssammlung 1020“
-- Hamburger-Menü direkt in der Hero-Kachel
-- zentrierte Menüs und Overlays, Klick außerhalb schließt
-- keine sichtbaren Scrollbars
-- Differentialdiagnostik mit Emojis
-- Literatur: Kategorie „Neuerscheinungen“ für Artikel der letzten 30 Tage
-- Literaturredaktion wieder ausführlicher mit DOI, Quelle, Kategorien, Zielgruppe, Zugriff, Links usw.
-- Crossref-DOI-Abruf im Literatur-Editor
-- Redaktion ohne PIN-Abfrage
-- Menü neu strukturiert und übersichtlicher gestaltet
-
-Hinweis: Weil die Redaktion bewusst ohne PIN arbeitet, sind Schreibzugriffe des Workers nicht mehr durch den bisherigen PIN geschützt.
+Änderungen gegenüber v3.0:
+- Dashboard kompakter aufgebaut
+- Aktuelle Meldungen vor dem Schnellzugriff
+- Wochenansicht für Termine direkt im Dashboard
+- Hero ohne Untertitel und ohne Simulationstraining-Button
+- Startseiten-Kacheln mobil gegen abgeschnittene Texte optimiert
+- ABCDE vereinfacht: Auswahl A–E, darunter Beurteilung, Maßnahmen und Warnzeichen direkt sichtbar
+- Cache-Version v31
