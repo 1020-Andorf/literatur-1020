@@ -1,5 +1,5 @@
 (()=>{
-const page=document.body.dataset.page||'home',API=(window.WISSEN_API_URL||'').replace(/\/$/,''),LS='ost1020-v34-',D=window.OST1020_DATA||{};
+const page=document.body.dataset.page||'home',API=(window.WISSEN_API_URL||'').replace(/\/$/,''),LS='ost1020-v341-',D=window.OST1020_DATA||{};
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)],esc=s=>String(s??'').replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
 const clone=v=>JSON.parse(JSON.stringify(v??[])),arr=v=>Array.isArray(v)?v:String(v||'').split(/\n|;/).map(s=>s.trim()).filter(Boolean);
 const svg={
@@ -7,9 +7,22 @@ const svg={
  home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>`,
  back:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>`,
  books:`<svg viewBox="0 0 64 64"><rect x="10" y="38" width="44" height="10" rx="3" fill="#2f80ed"/><rect x="14" y="27" width="40" height="9" rx="3" fill="#68adf8"/><rect x="10" y="15" width="39" height="10" rx="3" fill="#8bc4ff"/><path d="M18 18h24M20 30h27M17 41h30" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>`,
- abcde:`<svg viewBox="0 0 64 64"><rect x="7" y="9" width="50" height="46" rx="14" fill="#eef6ff"/><path d="M14 17h17M14 25h17M14 33h17M14 41h17M14 49h17" stroke-width="6" stroke-linecap="round"/><path d="M40 17c6 5 8 11 8 19 0 7-2 12-8 17" fill="none" stroke="#73aef0" stroke-width="4"/></svg>`,
+ abcde:`<svg viewBox="0 0 64 64" aria-hidden="true">
+<rect x="7" y="8" width="50" height="48" rx="15" fill="#f4f9ff"/>
+<rect x="12" y="13" width="40" height="7" rx="3.5" fill="#3b82f6"/><text x="16" y="19" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">A</text>
+<rect x="12" y="21" width="35" height="7" rx="3.5" fill="#ef4444"/><text x="16" y="27" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">B</text>
+<rect x="12" y="29" width="31" height="7" rx="3.5" fill="#f59e0b"/><text x="16" y="35" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">C</text>
+<rect x="12" y="37" width="27" height="7" rx="3.5" fill="#10b981"/><text x="16" y="43" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">D</text>
+<rect x="12" y="45" width="23" height="7" rx="3.5" fill="#8b5cf6"/><text x="16" y="51" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">E</text>
+<circle cx="49" cy="34" r="7" fill="#dbeafe"/><path d="M49 25v18M44.5 30.5c2-3 7-3 9 0M45 39c2.5 2.2 5.5 2.2 8 0" fill="none" stroke="#3979c9" stroke-width="1.8" stroke-linecap="round"/>
+</svg>`,
  diag:`<svg viewBox="0 0 64 64" fill="none"><path d="M16 17v14c0 10 7 16 16 16s16-6 16-16V17" stroke="#2f80ed" stroke-width="4" stroke-linecap="round"/><circle cx="16" cy="15" r="5" fill="#2f80ed"/><circle cx="48" cy="15" r="5" fill="#2f80ed"/><circle cx="32" cy="48" r="8" stroke="#2f80ed" stroke-width="4"/></svg>`,
- skill:`<svg viewBox="0 0 64 64" fill="none"><path d="M14 36c8-8 9-16 10-21 1-4 7-4 8 1l1 9 4-12c1-4 7-4 8 0l2 13" stroke="#2f80ed" stroke-width="5" stroke-linecap="round"/><path d="M14 45h36" stroke="#7bb9ff" stroke-width="5" stroke-linecap="round"/></svg>`,
+ skill:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+<rect x="7" y="8" width="50" height="48" rx="15" fill="#eef8ff"/>
+<path d="M20 36V23c0-2.2 3.4-2.2 3.4 0v8-12c0-2.2 3.5-2.2 3.5 0v12-14c0-2.2 3.5-2.2 3.5 0v14-11c0-2.2 3.5-2.2 3.5 0v14l4.6-5.2c1.7-1.9 4.7.4 3.3 2.6l-7.1 11.1A11 11 0 0 1 25.4 48H25A5 5 0 0 1 20 43v-7Z" fill="#80bfff" stroke="#2f80ed" stroke-width="2.2" stroke-linejoin="round"/>
+<circle cx="45.5" cy="43.5" r="8.5" fill="#20b486"/>
+<path d="m41.5 43.5 2.5 2.5 5-5.5" stroke="#fff" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`,
  alg:`<svg viewBox="0 0 64 64" fill="none"><rect x="13" y="8" width="38" height="48" rx="8" fill="#eef6ff" stroke="#2f80ed" stroke-width="3"/><path d="M21 20h20M21 29h13M21 38h18" stroke="#2f80ed" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="42" r="9" fill="#24b47e"/><path d="m42 42 3 3 5-6" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
  sim:`<svg viewBox="0 0 64 64" fill="none"><rect x="7" y="10" width="50" height="34" rx="9" fill="#29455f"/><path d="M12 29h8l5-10 7 18 6-13 5 5h8" stroke="#43d3c6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="49" r="9" fill="#2f80ed"/><path d="m22 44 7 5-7 5z" fill="#fff"/></svg>`,
  calendar:`<svg viewBox="0 0 64 64" fill="none"><rect x="9" y="13" width="46" height="42" rx="10" fill="#efe7ff" stroke="#7b55df" stroke-width="3"/><path d="M9 25h46M20 8v10M44 8v10" stroke="#7b55df" stroke-width="4" stroke-linecap="round"/><circle cx="22" cy="35" r="3" fill="#7b55df"/><circle cx="32" cy="35" r="3" fill="#7b55df"/><circle cx="42" cy="35" r="3" fill="#7b55df"/></svg>`,
@@ -37,7 +50,7 @@ async function save(name,data){
  return false
 }
 
-function coreCard(href,ico,title,sub){const fav=favorites().includes(href);return `<div class="core-card-wrap"><a class="core-card" href="${href}"><div class="core-visual">${ico}</div><div><h3>${title}</h3><p>${sub}</p></div><span class="core-arrow">›</span></a><button class="fav-btn ${fav?'active':''}" data-fav="${href}" aria-label="Favorit">${fav?'★':'☆'}</button></div>`}
+function coreCard(href,ico,title,sub){const fav=favorites().includes(href);return `<div class="core-card-wrap"><a class="core-card" href="${href}"><div class="core-visual">${ico}</div><div class="core-card-copy"><h3>${title}</h3></div><span class="core-arrow">›</span></a><button class="fav-btn ${fav?'active':''}" data-fav="${href}" aria-label="Favorit">${fav?'★':'☆'}</button></div>`}
 function newsHtml(n,i=''){const map={Lehrmeinung:'🔄',Leitlinie:'📋',Ausbildung:'🎓',Termin:'📅',Simulationstraining:'🖥️',Organisation:'📣',Literatur:'📚'};const c=n.category||'Organisation';return `<button class="news-item" data-news="${i}"><span class="news-icon">${map[c]||'📣'}</span><div><span class="cat-pill">${esc(c)}</span><h3>${esc(n.title)}</h3><div class="news-meta">${esc(n.date||'')}</div></div><span class="arrow">›</span></button>`}
 const RECENT_KEY='ost1020-recent-pages',FAV_KEY='ost1020-favorites';
 function rememberPage(){if(page==='home'||page==='editor')return;const labels={news:'Aktuelles',literature:'Literatursammlung',abcde:'ABCDE-Schema',differential:'Differentialdiagnostik',skills:'Skilltraining',algorithms:'Algorithmen & Leitlinien',changes:'Lehrmeinungsänderungen',events:'Termine',guide:'Simulationstraining',materials:'Materialien'};const href=location.pathname.split('/').pop()||'index.html';let r=[];try{r=JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){}r=[{page,label:labels[page]||document.title,href},...r.filter(x=>x.page!==page)].slice(0,4);localStorage.setItem(RECENT_KEY,JSON.stringify(r))}
