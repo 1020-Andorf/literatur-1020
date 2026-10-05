@@ -6,7 +6,7 @@
     "checks": [
       "Spricht der Patient?",
       "Atemweg frei oder verlegt?",
-      "Fremdkörper oder Aspiratio?"
+      "Fremdkörper oder Aspiration?"
     ],
     "actions": [
       "Atemweg freimachen und absaugen",
