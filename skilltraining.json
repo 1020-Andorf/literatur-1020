@@ -1,0 +1,180 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "name": "Basiskenntnisse Rettungsdienst",
+      "skills": [
+        {
+          "name": "Fahrzeugcheck",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Umgang mit Tragsessel",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Umgang mit Fahrtrage",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Lagerungen (Grundlagerungen / Patientenorientiert)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Einsatzprotokoll",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Patientenbeurteilung",
+      "skills": [
+        {
+          "name": "ABCDE / SAMPLE",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Patientenbetreuung",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Übergabe",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sanitätshilfe Anwendungen",
+      "skills": [
+        {
+          "name": "Blutdruck / Puls / Atemfrequenz / AVPU / ZOPS",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "O₂ (Anwendung, Berechnen, Flaschenwechsel), SpO₂",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Absaugen, Technik, Geräte (AkkuVac, AMBU Twin, Magillz.)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Aufbereitung aller Geräte lt. MPG (Desinfektion, etc.)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Extremitätenschienung u. Ruhigstellung / MDS",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Rettungstechniken (Rettungstuch, Rautengriff, Umheben, etc.)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Sturzhelmabnahme durch 2 Helfer (inkl. MILS oder HWS)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Traumaversorgung (MILS, Schaufeltrage, Vakuummatr., HWS)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Patiententransfer (Bett/Rollstuhl - Trage/Tragsessel, Rollboard ...)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Bewusstloser Patient (Esmarch, Wendl, stab. Seitenlage, BZ)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Wiederbelebung Säugling (inkl. Defi)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        },
+        {
+          "name": "Wiederbelebung Kind (inkl. Defi)",
+          "items": [
+            "Unterpunkt 1 – noch definieren",
+            "Unterpunkt 2 – noch definieren",
+            "Unterpunkt 3 – noch definieren"
+          ]
+        }
+      ]
+    }
+  ]
+}

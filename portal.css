@@ -164,3 +164,51 @@ body[data-page="home"]{min-height:0}
 @media(min-width:900px){
   .core-card{grid-template-columns:82px minmax(0,1fr) 34px}
 }
+
+
+/* v3.4.3 – Smartphone-Header + Rotkreuz-inspiriertes Farbsystem */
+:root{
+  --bg:#fbf7f8;
+  --surface2:#fff8f8;
+  --line:#eadfe1;
+  --blue:#d71920;
+  --blue2:#ef6b70;
+  --red:#d71920;
+  --shadow:0 14px 36px rgba(116,31,40,.09);
+  --soft:0 6px 20px rgba(116,31,40,.055);
+}
+body{background:linear-gradient(180deg,#fff 0,#fbf7f8 100%)}
+.topbar{border-bottom-color:#f0e4e6}
+.topbar-inner{grid-template-columns:52px 52px minmax(0,1fr);gap:10px}
+.topbar .brand{margin-left:0;text-align:right;justify-self:end;max-width:100%;padding-left:8px}
+.top-action{background:#f8f1f2;color:#6f3b43}
+.dashboard-hero{background:linear-gradient(120deg,#fff0f1 0%,#fff8f8 52%,#f8eeee 100%);border-color:#f0dadd}
+.dashboard-hero::before{background:radial-gradient(circle,rgba(215,25,32,.16),rgba(215,25,32,0) 68%)}
+.hero-kicker{color:#aa3038}
+.dashboard-hero p{color:#765d62}
+.hero-cta{background:linear-gradient(135deg,#bd1017,#e22931)}
+.core-visual,.row-icon,.detail-big-icon,.news-icon,.status-icon,.doc-icon,.lit-topic-icon,.abcde-action .i,.sim-flow-title span,.disease-card>span:first-child,.material-card>span:first-child{background:linear-gradient(135deg,#fff1f2,#fffafa)}
+.core-arrow,.circle-arrow{background:#fff0f1;color:#d71920}
+.arrow{color:#d71920}
+.cat-pill{background:#fff0f1;color:#b9141b}
+.page-banner{background:linear-gradient(135deg,#fff5f5,#fbeff0);border-color:#eadbdd}
+.filter-chip.active{background:#d71920;border-color:#d71920}
+.global-search:focus-within{border-color:#e38b90;box-shadow:0 0 0 3px rgba(215,25,32,.08)}
+.editor-shortcut{color:#9e252d}
+.fav-btn.active{color:#d71920;background:#fff5f5;border-color:#f0c9cc}
+.week-day.today,.cal-day.selected{background:#d71920!important;color:#fff!important}
+.cal-day.has{background:#fff0f1!important;color:#a9151c!important;box-shadow:inset 0 0 0 1px #e9a8ac}
+.editor-nav-btn.active{background:#fff0f1;color:#b9141b}
+.small-add{border-color:#e0a3a7;background:#fff7f7;color:#ad2028}
+
+@media(max-width:760px){
+  .topbar-inner{height:76px;padding:0 16px;grid-template-columns:48px 48px minmax(0,1fr);gap:10px}
+  .topbar .brand{margin-left:0!important;justify-self:end;text-align:right;min-width:0;padding-left:6px}
+  .topbar .brand strong{font-size:18px;overflow:visible;text-overflow:clip;white-space:nowrap}
+  .top-action{width:46px;height:46px}
+  .main{padding-top:18px}
+}
+@media(max-width:390px){
+  .topbar-inner{padding-left:12px;padding-right:12px;grid-template-columns:46px 46px minmax(0,1fr);gap:8px}
+  .topbar .brand strong{font-size:17px}
+}

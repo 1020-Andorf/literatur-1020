@@ -6,7 +6,14 @@ const svg={
  menu:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>`,
  home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>`,
  back:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>`,
- books:`<svg viewBox="0 0 64 64"><rect x="10" y="38" width="44" height="10" rx="3" fill="#2f80ed"/><rect x="14" y="27" width="40" height="9" rx="3" fill="#68adf8"/><rect x="10" y="15" width="39" height="10" rx="3" fill="#8bc4ff"/><path d="M18 18h24M20 30h27M17 41h30" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+ books:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+<rect x="7" y="8" width="50" height="48" rx="15" fill="#fff3f4"/>
+<path d="M14 18.5c6.5-2.8 12.4-2.4 18 1.2v29.1c-5.6-3.6-11.5-4-18-1.2V18.5Z" fill="#fff" stroke="#d71920" stroke-width="2.8" stroke-linejoin="round"/>
+<path d="M50 18.5c-6.5-2.8-12.4-2.4-18 1.2v29.1c5.6-3.6 11.5-4 18-1.2V18.5Z" fill="#fff" stroke="#d71920" stroke-width="2.8" stroke-linejoin="round"/>
+<path d="M19 25h8M19 31h8M37 25h8M37 31h8" stroke="#ef6b70" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M32 19.7v29.1" stroke="#d71920" stroke-width="2.8" stroke-linecap="round"/>
+<path d="M42 35v9l3-2 3 2v-9" fill="#d71920"/>
+</svg>`,
  abcde:`<svg viewBox="0 0 64 64" aria-hidden="true">
 <rect x="7" y="8" width="50" height="48" rx="15" fill="#f4f9ff"/>
 <rect x="12" y="13" width="40" height="7" rx="3.5" fill="#3b82f6"/><text x="16" y="19" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">A</text>
@@ -16,7 +23,13 @@ const svg={
 <rect x="12" y="45" width="23" height="7" rx="3.5" fill="#8b5cf6"/><text x="16" y="51" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">E</text>
 <circle cx="49" cy="34" r="7" fill="#dbeafe"/><path d="M49 25v18M44.5 30.5c2-3 7-3 9 0M45 39c2.5 2.2 5.5 2.2 8 0" fill="none" stroke="#3979c9" stroke-width="1.8" stroke-linecap="round"/>
 </svg>`,
- diag:`<svg viewBox="0 0 64 64" fill="none"><path d="M16 17v14c0 10 7 16 16 16s16-6 16-16V17" stroke="#2f80ed" stroke-width="4" stroke-linecap="round"/><circle cx="16" cy="15" r="5" fill="#2f80ed"/><circle cx="48" cy="15" r="5" fill="#2f80ed"/><circle cx="32" cy="48" r="8" stroke="#2f80ed" stroke-width="4"/></svg>`,
+ diag:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+<rect x="7" y="8" width="50" height="48" rx="15" fill="#fff3f4"/>
+<circle cx="27" cy="28" r="12" fill="#fff" stroke="#d71920" stroke-width="3.5"/>
+<path d="m36 37 10 10" stroke="#d71920" stroke-width="4" stroke-linecap="round"/>
+<circle cx="22" cy="27" r="2.6" fill="#d71920"/><circle cx="31" cy="22" r="2.6" fill="#d71920"/><circle cx="31" cy="33" r="2.6" fill="#d71920"/>
+<path d="M24.5 26l4-3M24.5 28.5l4.2 3" stroke="#ef6b70" stroke-width="2" stroke-linecap="round"/>
+</svg>`,
  skill:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
 <rect x="7" y="8" width="50" height="48" rx="15" fill="#eef8ff"/>
 <path d="M20 36V23c0-2.2 3.4-2.2 3.4 0v8-12c0-2.2 3.5-2.2 3.5 0v12-14c0-2.2 3.5-2.2 3.5 0v14-11c0-2.2 3.5-2.2 3.5 0v14l4.6-5.2c1.7-1.9 4.7.4 3.3 2.6l-7.1 11.1A11 11 0 0 1 25.4 48H25A5 5 0 0 1 20 43v-7Z" fill="#80bfff" stroke="#2f80ed" stroke-width="2.2" stroke-linejoin="round"/>
@@ -70,7 +83,7 @@ async function home(){
  $('[data-main]').innerHTML=`<section class="dashboard-hero compact-hero"><div class="hero-kicker">OST 1020</div><h1>Wissenssammlung 1020</h1></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen, Skills, Literatur …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
  <section class="section section-first"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle anzeigen</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
- <section class="section"><div class="section-head"><h2>Schnellzugriff</h2></div><div class="core-grid">${coreCard('literatur.html',svg.books,'Literatursammlung','Lehrbücher, Artikel und Leitlinien')}${coreCard('abcde.html',svg.abcde,'ABCDE-Schema','Systematisch beurteilen und handeln')}${coreCard('differential.html',svg.diag,'Differentialdiagnostik','Symptome einordnen und abgrenzen')}${coreCard('skilltraining.html',svg.skill,'Skilltraining','Praktische Fertigkeiten Schritt für Schritt')}${coreCard('algorithmen.html',svg.alg,'Algorithmen & Leitlinien','Handlungssicherheit in jeder Situation')}${coreCard('simulation.html',svg.sim,'Simulationstraining','Szenarien, Funktionen und Tipps')}${coreCard('termine.html',svg.calendar,'Termine','Übungen und Fortbildungen')}${coreCard('lehrmeinung.html',svg.change,'Lehrmeinungsänderungen','Neue Empfehlungen kompakt')}</div></section>
+ <section class="section"><div class="section-head"><h2>Menü</h2></div><div class="core-grid">${coreCard('literatur.html',svg.books,'Literatursammlung','Lehrbücher, Artikel und Leitlinien')}${coreCard('abcde.html',svg.abcde,'ABCDE-Schema','Systematisch beurteilen und handeln')}${coreCard('differential.html',svg.diag,'Differentialdiagnostik','Symptome einordnen und abgrenzen')}${coreCard('skilltraining.html',svg.skill,'Skilltraining','Praktische Fertigkeiten Schritt für Schritt')}${coreCard('algorithmen.html',svg.alg,'Algorithmen & Leitlinien','Handlungssicherheit in jeder Situation')}${coreCard('simulation.html',svg.sim,'Simulationstraining','Szenarien, Funktionen und Tipps')}${coreCard('termine.html',svg.calendar,'Termine','Übungen und Fortbildungen')}${coreCard('lehrmeinung.html',svg.change,'Lehrmeinungsänderungen','Neue Empfehlungen kompakt')}</div></section>
  <section class="section"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Kalender öffnen</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section>
  ${recent.length?`<section class="section recent-section"><div class="section-head"><h2>Zuletzt angesehen</h2></div><div class="recent-list">${recent.map(r=>`<a href="${esc(r.href)}"><span>↗</span><strong>${esc(r.label)}</strong></a>`).join('')}</div></section>`:''}`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
