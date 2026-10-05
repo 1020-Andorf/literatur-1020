@@ -11,14 +11,15 @@ export default {
    if(url.pathname==="/auth"&&request.method==="POST"){const body=await request.json().catch(()=>({}));return (await validPin(String(body.pin||""),env.ADMIN_PIN_SHA256))?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);}
    const rsvp=url.pathname.match(/^\/events\/rsvp\/([^/]+)$/);
    if(rsvp&&request.method==="POST"){
-    const id=decodeURIComponent(rsvp[1]);const body=await request.json();const clientId=String(body.clientId||"").trim();
+    const id=decodeURIComponent(rsvp[1]);const body=await request.json();const clientId=String(body.clientId||"").trim();const name=String(body.name||"").trim();
     if(!clientId||clientId.length>120)return json({error:"Ungültige Teilnehmer-ID"},400,cors);
+    if(name.length>100)return json({error:"Name zu lang"},400,cors);
     const cur=await getJson(env,"data/events.json",true);const items=cur.items;const ev=items.find(x=>x.id===id);
     if(!ev)return json({error:"Termin nicht gefunden"},404,cors);
-    ev.attendees=Array.isArray(ev.attendees)?ev.attendees:[];const i=ev.attendees.indexOf(clientId);
-    if(i>=0)ev.attendees.splice(i,1);else if(ev.attendees.length<(Number(ev.capacity)||10))ev.attendees.push(clientId);
+    ev.attendees=Array.isArray(ev.attendees)?ev.attendees:[];ev.attendees=ev.attendees.map(a=>typeof a==="string"?{clientId:a,name:"",registeredAt:""}:a).filter(a=>a&&a.clientId);const i=ev.attendees.findIndex(a=>a.clientId===clientId);
+    if(i>=0)ev.attendees.splice(i,1);else{if(!name)return json({error:"Name fehlt"},400,cors);if(ev.attendees.length<(Number(ev.capacity)||10))ev.attendees.push({clientId,name,registeredAt:new Date().toISOString()});}
     await putJson(env,"data/events.json",items,cur.sha,`Termin Teilnahme: ${id}`);
-    return json({ok:true,events:items,count:ev.attendees.length,capacity:Number(ev.capacity)||10,joined:ev.attendees.includes(clientId)},200,cors);
+    return json({ok:true,events:items,count:ev.attendees.length,capacity:Number(ev.capacity)||10,joined:ev.attendees.some(a=>a.clientId===clientId)},200,cors);
    }
    if(url.pathname==="/articles"&&(request.method==="POST"||request.method==="PUT")){
     if(!(await validPin(request.headers.get("X-Admin-Pin")||"",env.ADMIN_PIN_SHA256)))return json({error:"Unauthorized"},401,cors);
