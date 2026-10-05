@@ -1,5 +1,13 @@
 [
   {
+    "id": "x-1791234520234",
+    "key": "EE",
+    "title": "Erster Eindruck",
+    "checks": [],
+    "actions": [],
+    "pitfalls": []
+  },
+  {
     "id": "a",
     "key": "A",
     "title": "Airway",
