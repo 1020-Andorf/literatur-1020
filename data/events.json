@@ -22,11 +22,7 @@
     "description": "ABCDE, Immobilisation und Transportentscheidung.",
     "capacity": 12,
     "attendees": [
-      {
-        "clientId": "c-kqxarypj0eimun798wb",
-        "name": "Simon Halas",
-        "registeredAt": "2026-10-05T14:46:27.786Z"
-      }
+      "c-c8kx1sy2rkwmuqh6veo"
     ]
   },
   {
@@ -38,17 +34,6 @@
     "category": "Simulationstraining",
     "description": "Geräteprofile, Fallsteuerung und Debriefing.",
     "capacity": 10,
-    "attendees": [
-      {
-        "clientId": "c-kqxarypj0eimun798wb",
-        "name": "Simon Halas",
-        "registeredAt": "2026-10-05T14:46:33.265Z"
-      },
-      {
-        "clientId": "c-c8kx1sy2rkwmuqh6veo",
-        "name": "Hsj",
-        "registeredAt": "2026-10-05T14:46:56.770Z"
-      }
-    ]
+    "attendees": []
   }
 ]
