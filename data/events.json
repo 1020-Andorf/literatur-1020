@@ -43,6 +43,12 @@
     "category": "Simulationstraining",
     "description": "Geräteprofile, Fallsteuerung und Debriefing.",
     "capacity": 10,
-    "attendees": []
+    "attendees": [
+      {
+        "clientId": "c-kqxarypj0eimun798wb",
+        "name": "Simon Halas",
+        "registeredAt": "2026-10-05T15:01:02.698Z"
+      }
+    ]
   }
 ]
