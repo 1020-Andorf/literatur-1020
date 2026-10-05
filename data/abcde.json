@@ -4,9 +4,9 @@
     "key": "A",
     "title": "Airway",
     "checks": [
-      "Spricht der Patient frei?",
+      "Spricht der Patient?",
       "Atemweg frei oder verlegt?",
-      "Stridor, Schnarchen, Gurgeln oder Fremdkörper?"
+      "Fremdkörper oder Aspiratio?"
     ],
     "actions": [
       "Atemweg freimachen und absaugen",
