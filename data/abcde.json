@@ -3,9 +3,22 @@
     "id": "x-1791234520234",
     "key": "EE",
     "title": "Erster Eindruck",
-    "checks": [],
-    "actions": [],
-    "pitfalls": []
+    "checks": [
+      "Unfallmechanismus",
+      "Bewusstseinszustand",
+      "Starke Blutungen nach außen"
+    ],
+    "actions": [
+      "MILS (manuelle in-line Stabilisation)",
+      "Blutungskontrolle - Tourniquet oder Druckverband"
+    ],
+    "pitfalls": [
+      "Sturz > 3 m oder 1.5 fache Körpergröße",
+      "VU mit > 30 km/h",
+      "VU Fußgänger",
+      "AVPU < A",
+      "Spritzende oder schwallartige Blutung"
+    ]
   },
   {
     "id": "a",
