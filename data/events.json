@@ -23,11 +23,6 @@
     "capacity": 12,
     "attendees": [
       {
-        "clientId": "c-c8kx1sy2rkwmuqh6veo",
-        "name": "",
-        "registeredAt": ""
-      },
-      {
         "clientId": "c-kqxarypj0eimun798wb",
         "name": "Simon Halas",
         "registeredAt": "2026-10-05T14:46:27.786Z"
