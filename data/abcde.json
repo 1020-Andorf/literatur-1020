@@ -6,14 +6,11 @@
     "checks": [
       "Spricht der Patient frei?",
       "Atemweg frei oder verlegt?",
-      "Stridor, Schnarchen, Gurgeln oder Fremdkörper?",
-      "Bei Trauma HWS-Schutz berücksichtigen"
+      "Stridor, Schnarchen, Gurgeln oder Fremdkörper?"
     ],
     "actions": [
       "Atemweg freimachen und absaugen",
-      "Kopfposition / Esmarch-Handgriff nach Situation",
-      "Guedel/Wendl nach Indikation",
-      "Erweiterte Atemwegshilfe vorbereiten"
+      "Kopfposition / Esmarch-Handgriff nach Situation"
     ],
     "pitfalls": [
       "Atemweg nicht früh genug priorisiert",
