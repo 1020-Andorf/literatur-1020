@@ -7,34 +7,27 @@ const svg={
  home:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>`,
  back:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/><path d="M9 12h10"/></svg>`,
  books:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-<rect x="7" y="8" width="50" height="48" rx="15" fill="#fff3f4"/>
-<path d="M14 18.5c6.5-2.8 12.4-2.4 18 1.2v29.1c-5.6-3.6-11.5-4-18-1.2V18.5Z" fill="#fff" stroke="#d71920" stroke-width="2.8" stroke-linejoin="round"/>
-<path d="M50 18.5c-6.5-2.8-12.4-2.4-18 1.2v29.1c5.6-3.6 11.5-4 18-1.2V18.5Z" fill="#fff" stroke="#d71920" stroke-width="2.8" stroke-linejoin="round"/>
-<path d="M19 25h8M19 31h8M37 25h8M37 31h8" stroke="#ef6b70" stroke-width="2.2" stroke-linecap="round"/>
-<path d="M32 19.7v29.1" stroke="#d71920" stroke-width="2.8" stroke-linecap="round"/>
-<path d="M42 35v9l3-2 3 2v-9" fill="#d71920"/>
+<path d="M13 17.5c6.8-2.9 13-2.4 19 1.4v29.4c-6-3.8-12.2-4.3-19-1.4V17.5Z" stroke="#c92a32" stroke-width="3.4" stroke-linejoin="round"/>
+<path d="M51 17.5c-6.8-2.9-13-2.4-19 1.4v29.4c6-3.8 12.2-4.3 19-1.4V17.5Z" stroke="#c92a32" stroke-width="3.4" stroke-linejoin="round"/>
+<path d="M20 25h7M20 31h7M37 25h7M37 31h7" stroke="#e05d64" stroke-width="2.4" stroke-linecap="round"/>
+<path d="M32 18.9v29.4" stroke="#c92a32" stroke-width="3.4" stroke-linecap="round"/>
+<path d="M42 35v10l3-2.2 3 2.2V35" fill="#c92a32"/>
 </svg>`,
  abcde:`<svg viewBox="0 0 64 64" aria-hidden="true">
-<rect x="7" y="8" width="50" height="48" rx="15" fill="#f4f9ff"/>
-<rect x="12" y="13" width="40" height="7" rx="3.5" fill="#3b82f6"/><text x="16" y="19" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">A</text>
-<rect x="12" y="21" width="35" height="7" rx="3.5" fill="#ef4444"/><text x="16" y="27" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">B</text>
-<rect x="12" y="29" width="31" height="7" rx="3.5" fill="#f59e0b"/><text x="16" y="35" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">C</text>
-<rect x="12" y="37" width="27" height="7" rx="3.5" fill="#10b981"/><text x="16" y="43" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">D</text>
-<rect x="12" y="45" width="23" height="7" rx="3.5" fill="#8b5cf6"/><text x="16" y="51" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">E</text>
-<circle cx="49" cy="34" r="7" fill="#dbeafe"/><path d="M49 25v18M44.5 30.5c2-3 7-3 9 0M45 39c2.5 2.2 5.5 2.2 8 0" fill="none" stroke="#3979c9" stroke-width="1.8" stroke-linecap="round"/>
+<rect x="9" y="10" width="42" height="7" rx="3.5" fill="#3b82f6"/><text x="13" y="16" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">A</text>
+<rect x="9" y="19" width="37" height="7" rx="3.5" fill="#ef4444"/><text x="13" y="25" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">B</text>
+<rect x="9" y="28" width="33" height="7" rx="3.5" fill="#f59e0b"/><text x="13" y="34" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">C</text>
+<rect x="9" y="37" width="29" height="7" rx="3.5" fill="#10b981"/><text x="13" y="43" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">D</text>
+<rect x="9" y="46" width="25" height="7" rx="3.5" fill="#8b5cf6"/><text x="13" y="52" font-size="7" font-family="Arial,sans-serif" font-weight="700" fill="#fff">E</text>
+<path d="M51 23v27M45.5 29c2.5-3 8.5-3 11 0M46 44c3 2.4 7 2.4 10 0" fill="none" stroke="#3979c9" stroke-width="2.5" stroke-linecap="round"/>
 </svg>`,
  diag:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-<rect x="7" y="8" width="50" height="48" rx="15" fill="#fff3f4"/>
-<circle cx="27" cy="28" r="12" fill="#fff" stroke="#d71920" stroke-width="3.5"/>
-<path d="m36 37 10 10" stroke="#d71920" stroke-width="4" stroke-linecap="round"/>
-<circle cx="22" cy="27" r="2.6" fill="#d71920"/><circle cx="31" cy="22" r="2.6" fill="#d71920"/><circle cx="31" cy="33" r="2.6" fill="#d71920"/>
-<path d="M24.5 26l4-3M24.5 28.5l4.2 3" stroke="#ef6b70" stroke-width="2" stroke-linecap="round"/>
+<circle cx="27" cy="27" r="13" stroke="#c92a32" stroke-width="4"/>
+<path d="m37 37 12 12" stroke="#c92a32" stroke-width="4.8" stroke-linecap="round"/>
 </svg>`,
  skill:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
-<rect x="7" y="8" width="50" height="48" rx="15" fill="#eef8ff"/>
-<path d="M20 36V23c0-2.2 3.4-2.2 3.4 0v8-12c0-2.2 3.5-2.2 3.5 0v12-14c0-2.2 3.5-2.2 3.5 0v14-11c0-2.2 3.5-2.2 3.5 0v14l4.6-5.2c1.7-1.9 4.7.4 3.3 2.6l-7.1 11.1A11 11 0 0 1 25.4 48H25A5 5 0 0 1 20 43v-7Z" fill="#80bfff" stroke="#2f80ed" stroke-width="2.2" stroke-linejoin="round"/>
-<circle cx="45.5" cy="43.5" r="8.5" fill="#20b486"/>
-<path d="m41.5 43.5 2.5 2.5 5-5.5" stroke="#fff" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M42.7 12.2a15 15 0 0 0-17.4 18.9L12.2 44.2a5.4 5.4 0 0 0 7.6 7.6l13.1-13.1a15 15 0 0 0 18.9-17.4l-8.7 8.7-8.1-1.8-1.8-8.1 9.5-7.9Z" fill="#3b82f6"/>
+<circle cx="17.1" cy="46.9" r="2.2" fill="#fff"/>
 </svg>`,
  alg:`<svg viewBox="0 0 64 64" fill="none"><rect x="13" y="8" width="38" height="48" rx="8" fill="#eef6ff" stroke="#2f80ed" stroke-width="3"/><path d="M21 20h20M21 29h13M21 38h18" stroke="#2f80ed" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="42" r="9" fill="#24b47e"/><path d="m42 42 3 3 5-6" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
  sim:`<svg viewBox="0 0 64 64" fill="none"><rect x="7" y="10" width="50" height="34" rx="9" fill="#29455f"/><path d="M12 29h8l5-10 7 18 6-13 5 5h8" stroke="#43d3c6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="49" r="9" fill="#2f80ed"/><path d="m22 44 7 5-7 5z" fill="#fff"/></svg>`,

@@ -212,3 +212,79 @@ body{background:linear-gradient(180deg,#fff 0,#fbf7f8 100%)}
   .topbar-inner{padding-left:12px;padding-right:12px;grid-template-columns:46px 46px minmax(0,1fr);gap:8px}
   .topbar .brand strong{font-size:17px}
 }
+
+
+/* v3.4.4 – minimalistisches Weiß-Theme */
+:root{
+  --bg:#ffffff;
+  --surface:#ffffff;
+  --surface2:#ffffff;
+  --text:#0b2342;
+  --muted:#6f8194;
+  --line:#e5e9ee;
+  --navy:#0b2f4f;
+  --blue:#c92a32;
+  --blue2:#e05d64;
+  --red:#c92a32;
+  --shadow:0 10px 28px rgba(11,35,66,.055);
+  --soft:0 4px 16px rgba(11,35,66,.045);
+}
+html,body{background:#fff}
+body{background:#fff}
+.topbar{background:rgba(255,255,255,.97);border-bottom:1px solid #eceff2}
+.top-action{background:#fff;border:1px solid #e3e8ed;color:#365a78;box-shadow:none}
+.dashboard-hero{background:#fff;border:1px solid #ecd6d9;box-shadow:var(--soft)}
+.dashboard-hero::before,.dashboard-hero::after{display:none!important;content:none!important}
+.hero-kicker{color:#b9252d}
+.dashboard-hero h1{color:var(--text)}
+.dashboard-search .global-search{background:#fff;border-color:#dfe5ea;box-shadow:var(--soft)}
+.global-search:focus-within{border-color:#d9969b;box-shadow:0 0 0 3px rgba(201,42,50,.055)}
+.section-head a{color:#516e88}
+
+/* Startseite: weiße Karten, Akzent nur über Linien/Symbole */
+.core-card{background:#fff;border:1px solid #ead7d9;box-shadow:var(--soft)}
+.core-card:hover{box-shadow:0 12px 30px rgba(11,35,66,.07)}
+.core-visual{background:transparent!important;border:0!important;border-radius:0;overflow:visible}
+.core-visual svg{overflow:visible}
+.core-arrow,.circle-arrow{background:#fff;border:1px solid #eccfd2;color:#c92a32}
+.fav-btn{background:#fff;border-color:#d9e1e8;color:#8298aa;box-shadow:none}
+.fav-btn.active{color:#c92a32;background:#fff;border-color:#e1aeb2}
+.news-item{background:#fff!important;border:1px solid #e5e9ee!important;box-shadow:var(--soft)}
+.news-icon{background:transparent!important;border:0!important;border-radius:0!important}
+.cat-pill{background:#fff!important;color:#b9252d;border:1px solid #e7b7bb;padding:3px 8px}
+.arrow{color:#c92a32}
+
+/* Unterseiten ebenso weiß und reduziert */
+.page-banner{background:#fff;border:1px solid #ead7d9;box-shadow:var(--soft)}
+.searchbar input,.searchbar select{background:#fff;border-color:#dfe5ea}
+.filter-chip{background:#fff;border-color:#dfe5ea;color:#405d76}
+.filter-chip.active{background:#fff;color:#b9252d;border-color:#d9969b;box-shadow:inset 0 0 0 1px #d9969b}
+.row-card,.card,.lit-topic,.detail-lead,.detail-section,.skill-card,.calendar,.week-card,.sim-flow-group,.compare-card{background:#fff}
+.row-card,.lit-topic,.detail-lead,.detail-section,.skill-card,.calendar,.week-card,.sim-flow-group{border-color:#e5e9ee}
+.row-icon,.detail-big-icon,.news-icon,.status-icon,.doc-icon,.lit-topic-icon,.abcde-action .i,.sim-flow-title span,.disease-card>span:first-child,.material-card>span:first-child,.skill-icon{background:transparent!important;border:0!important}
+.lit-topic.expanded .lit-topic-head{background:#fff}
+.lit-topic-head{background:#fff}
+.doc-icon{font-size:22px}
+.editor-shortcut{background:#fff;border-color:#e2e7ec;color:#7b4146}
+.abcde-main{background:#fff;border-color:#e5e9ee}
+.abcde-tab{background:#fff}
+.abcde-tab.active{background:#fff;box-shadow:inset 0 0 0 2px #7daee8}
+.abcde-action{background:#fff}
+.guideline-box{background:#fff;border-color:#dfe5ea}
+.week-day{background:#fff}
+.week-event{background:#fff;border:1px solid #edf0f3}
+.overlay-section{background:#fff}
+.disease-card,.material-card{background:#fff}
+.btn.primary{background:#c92a32;border-color:#c92a32}
+.editor-tab.active,.editor-nav-btn.active{background:#fff;color:#b9252d;border-color:#e0a3a7}
+.small-add{background:#fff;color:#9e252d}
+.cal-day.has{background:#fff!important;color:#a9151c!important;box-shadow:inset 0 0 0 1px #d9969b}
+.week-day.today,.cal-day.selected{background:#c92a32!important;color:#fff!important}
+
+@media(max-width:760px){
+  .compact-hero{padding:18px 18px}
+  .core-card-wrap .core-card{min-height:156px}
+  .core-visual{height:70px}
+  .core-visual svg{width:50px;height:50px}
+  .news-icon{width:40px;height:40px}
+}
