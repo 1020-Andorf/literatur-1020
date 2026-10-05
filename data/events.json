@@ -22,7 +22,16 @@
     "description": "ABCDE, Immobilisation und Transportentscheidung.",
     "capacity": 12,
     "attendees": [
-      "c-c8kx1sy2rkwmuqh6veo"
+      {
+        "clientId": "c-c8kx1sy2rkwmuqh6veo",
+        "name": "",
+        "registeredAt": ""
+      },
+      {
+        "clientId": "c-kqxarypj0eimun798wb",
+        "name": "Simon Halas",
+        "registeredAt": "2026-10-05T15:00:57.959Z"
+      }
     ]
   },
   {
