@@ -29,11 +29,23 @@ const svg={
 <path d="M42.7 12.2a15 15 0 0 0-17.4 18.9L12.2 44.2a5.4 5.4 0 0 0 7.6 7.6l13.1-13.1a15 15 0 0 0 18.9-17.4l-8.7 8.7-8.1-1.8-1.8-8.1 9.5-7.9Z" fill="#3b82f6"/>
 <circle cx="17.1" cy="46.9" r="2.2" fill="#fff"/>
 </svg>`,
- alg:`<svg viewBox="0 0 64 64" fill="none"><rect x="13" y="8" width="38" height="48" rx="8" fill="#eef6ff" stroke="#2f80ed" stroke-width="3"/><path d="M21 20h20M21 29h13M21 38h18" stroke="#2f80ed" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="42" r="9" fill="#24b47e"/><path d="m42 42 3 3 5-6" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+ alg:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+<path d="M18 13.5h18l10 10v27H18c-3.3 0-6-2.7-6-6v-25c0-3.3 2.7-6 6-6Z" stroke="#2f80ed" stroke-width="3.4" stroke-linejoin="round"/>
+<path d="M36 13.5v10h10" stroke="#2f80ed" stroke-width="3.4" stroke-linejoin="round"/>
+<path d="M22 27h18M22 35h14M22 43h10" stroke="#6aa8f4" stroke-width="3.2" stroke-linecap="round"/>
+<path d="m41.5 40.5 4 4 7-8" stroke="#20b77a" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`,
  sim:`<svg viewBox="0 0 64 64" fill="none"><rect x="7" y="10" width="50" height="34" rx="9" fill="#29455f"/><path d="M12 29h8l5-10 7 18 6-13 5 5h8" stroke="#43d3c6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="25" cy="49" r="9" fill="#2f80ed"/><path d="m22 44 7 5-7 5z" fill="#fff"/></svg>`,
- calendar:`<svg viewBox="0 0 64 64" fill="none"><rect x="9" y="13" width="46" height="42" rx="10" fill="#efe7ff" stroke="#7b55df" stroke-width="3"/><path d="M9 25h46M20 8v10M44 8v10" stroke="#7b55df" stroke-width="4" stroke-linecap="round"/><circle cx="22" cy="35" r="3" fill="#7b55df"/><circle cx="32" cy="35" r="3" fill="#7b55df"/><circle cx="42" cy="35" r="3" fill="#7b55df"/></svg>`,
- change:`<svg viewBox="0 0 64 64" fill="none"><rect x="12" y="8" width="40" height="48" rx="8" fill="#f7edff" stroke="#c257c8" stroke-width="3"/><path d="M21 20h22M21 29h18M21 38h20" stroke="#c257c8" stroke-width="3" stroke-linecap="round"/></svg>`
-};
+ calendar:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+<rect x="12" y="15" width="40" height="34" rx="9" stroke="#7b55df" stroke-width="3.4"/>
+<path d="M12 25.5h40M22 10v10M42 10v10" stroke="#7b55df" stroke-width="3.4" stroke-linecap="round"/>
+<circle cx="24" cy="34.5" r="2.2" fill="#b390ff"/><circle cx="32" cy="34.5" r="2.2" fill="#b390ff"/><circle cx="40" cy="34.5" r="2.2" fill="#b390ff"/>
+</svg>`,
+ change:`<svg viewBox="0 0 64 64" fill="none" aria-hidden="true">
+<rect x="16" y="10" width="32" height="44" rx="8" stroke="#c257c8" stroke-width="3.4"/>
+<path d="M23 22h18M23 30h14M23 38h18" stroke="#c257c8" stroke-width="3.2" stroke-linecap="round"/>
+<path d="M36 16h6" stroke="#de8be1" stroke-width="3.2" stroke-linecap="round"/>
+</svg>`};
 function icon(name){return svg[name]||svg.books}
 function chrome(){
  const bb=$('[data-back-btn]'),hb=$('[data-home-btn]');
@@ -56,7 +68,7 @@ async function save(name,data){
  return false
 }
 
-function coreCard(href,ico,title,sub){const fav=favorites().includes(href);return `<div class="core-card-wrap"><a class="core-card" href="${href}"><div class="core-visual">${ico}</div><div class="core-card-copy"><h3>${title}</h3></div><span class="core-arrow">›</span></a><button class="fav-btn ${fav?'active':''}" data-fav="${href}" aria-label="Favorit">${fav?'★':'☆'}</button></div>`}
+function coreCard(href,ico,title,sub){return `<a class="core-card" href="${href}"><div class="core-visual">${ico}</div><div class="core-card-copy"><h3>${title}</h3></div></a>`}
 function newsHtml(n,i=''){const map={Lehrmeinung:'🔄',Leitlinie:'📋',Ausbildung:'🎓',Termin:'📅',Simulationstraining:'🖥️',Organisation:'📣',Literatur:'📚'};const c=n.category||'Organisation';return `<button class="news-item" data-news="${i}"><span class="news-icon">${map[c]||'📣'}</span><div><span class="cat-pill">${esc(c)}</span><h3>${esc(n.title)}</h3><div class="news-meta">${esc(n.date||'')}</div></div><span class="arrow">›</span></button>`}
 const RECENT_KEY='ost1020-recent-pages',FAV_KEY='ost1020-favorites';
 function rememberPage(){if(page==='home'||page==='editor')return;const labels={news:'Aktuelles',literature:'Literatursammlung',abcde:'ABCDE-Schema',differential:'Differentialdiagnostik',skills:'Skilltraining',algorithms:'Algorithmen & Leitlinien',changes:'Lehrmeinungsänderungen',events:'Termine',guide:'Simulationstraining',materials:'Materialien'};const href=location.pathname.split('/').pop()||'index.html';let r=[];try{r=JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){}r=[{page,label:labels[page]||document.title,href},...r.filter(x=>x.page!==page)].slice(0,4);localStorage.setItem(RECENT_KEY,JSON.stringify(r))}
@@ -81,7 +93,7 @@ async function home(){
  ${recent.length?`<section class="section recent-section"><div class="section-head"><h2>Zuletzt angesehen</h2></div><div class="recent-list">${recent.map(r=>`<a href="${esc(r.href)}"><span>↗</span><strong>${esc(r.label)}</strong></a>`).join('')}</div></section>`:''}`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
  const drawSearch=()=>{const term=q.value.trim().toLowerCase();if(!term){results.classList.add('hidden');results.innerHTML='';return}const hits=index.filter(x=>(x.label+' '+x.sub).toLowerCase().includes(term)).slice(0,8);results.innerHTML=hits.map(x=>`<a href="${x.href}"><span><strong>${esc(x.label)}</strong><small>${esc(x.sub)}</small></span><b>›</b></a>`).join('')||'<div class="empty compact">Keine Treffer.</div>';results.classList.remove('hidden')};q.oninput=drawSearch;$('[data-search-clear]').onclick=()=>{q.value='';drawSearch();q.focus()};
- $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><span class="cat-pill">${esc(x.category||'Organisation')}</span><div class="news-meta">${esc(x.date||'')}</div><p>${esc(x.text||'')}</p></section>`);return}const b=e.target.closest('[data-fav]');if(!b)return;e.preventDefault();const activeFav=toggleFavorite(b.dataset.fav);b.classList.toggle('active',activeFav);b.textContent=activeFav?'★':'☆'});
+ $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><span class="cat-pill">${esc(x.category||'Organisation')}</span><div class="news-meta">${esc(x.date||'')}</div><p>${esc(x.text||'')}</p></section>`);}});
 }
 async function newsPage(){
  const d=await get('news');
@@ -106,7 +118,7 @@ async function abcdePage(){
  const d=await get('abcde'),labels={A:'Airway',B:'Breathing',C:'Circulation',D:'Disability',E:'Exposure'},sub={A:'Atemweg',B:'Atmung',C:'Kreislauf',D:'Neurologie',E:'Umgebung'},vis={A:'🫁',B:'🫁',C:'❤️',D:'🧠',E:'🌡️'};let current=0;
  $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>ABCDE-Schema</h1></section><section class="abcde-wrap"><div class="abcde-tabs" data-tabs></div><div class="abcde-main simplified" data-detail></div></section>`;
  function block(title,ico,items,klass=''){return `<section class="abcde-block ${klass}"><div class="abcde-block-head"><span>${ico}</span><strong>${title}</strong></div><ul>${arr(items).map(it=>`<li>${esc(it)}</li>`).join('')}</ul></section>`}
- function render(){const x=d[current];$('[data-tabs]').innerHTML=d.map((a,i)=>`<button class="abcde-tab ${a.key.toLowerCase()} ${i===current?'active':''}" data-abc="${i}"><strong>${esc(a.key)}</strong><span>${esc(labels[a.key]||a.title)}</span></button>`).join('');$('[data-detail]').innerHTML=`<div class="abcde-head"><span class="abcde-letter">${esc(x.key)}</span><span><h2>${esc(x.key)} – ${esc(labels[x.key]||x.title)}</h2><p>${esc(sub[x.key]||x.title)}</p></span><span class="abcde-visual">${vis[x.key]||'🩺'}</span></div><div class="abcde-direct">${block('Beurteilung','🔎',x.checks)}${block('Maßnahmen','⚙️',x.actions)}${block('Warnzeichen','⚠️',x.pitfalls,'warning')}</div>`}
+ function render(){const x=d[current];$('[data-tabs]').innerHTML=d.map((a,i)=>`<button class="abcde-tab ${a.key.toLowerCase()} ${i===current?'active':''}" data-abc="${i}"><strong>${esc(a.key)}</strong><span>${esc(labels[a.key]||a.title)}</span></button>`).join('');$('[data-detail]').innerHTML=`<div class="abcde-head"><span class="abcde-letter ${esc((x.key||'').toLowerCase())}">${esc(x.key)}</span><span><h2>${esc(x.key)} – ${esc(labels[x.key]||x.title)}</h2><p>${esc(sub[x.key]||x.title)}</p></span><span class="abcde-visual">${vis[x.key]||'🩺'}</span></div><div class="abcde-direct">${block('Beurteilung','🔎',x.checks)}${block('Maßnahmen','⚙️',x.actions)}${block('Warnzeichen','⚠️',x.pitfalls,'warning')}</div>`}
  $('[data-main]').onclick=e=>{const a=e.target.closest('[data-abc]');if(a){current=+a.dataset.abc;render()}};render()
 }
 async function differentialPage(){
