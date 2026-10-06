@@ -6,11 +6,11 @@
     "checks": [
       "Unfallmechanismus",
       "Bewusstseinszustand",
-      "Starke Blutungen nach außen"
+      "(Äußere) starke Blutung"
     ],
     "actions": [
       "MILS (manuelle in-line Stabilisation)",
-      "Blutungskontrolle - Tourniquet oder Druckverband"
+      "Blutungskontrolle - Tourniquet / Druckverband"
     ],
     "pitfalls": [
       "Sturz > 3 m oder 1.5 fache Körpergröße",
