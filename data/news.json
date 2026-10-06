@@ -8,22 +8,12 @@
   },
   {
     "id": "willkommen",
-    "title": "Willkommen in der OST 1020 Wissenssammlung",
-    "date": "2026-09-29",
-    "text": "Das Dashboard bündelt Literatur, Skills, ABCDE und Differentialdiagnostik als mobile Ergänzung zu Simulationstraining.",
+    "title": "Willkommen",
+    "date": "2026-10-06",
+    "text": "Dieses Dashboard bündelt Literatur, Skills, ABCDE und Differentialdiagnostik als mobile Ergänzung zu Simulationstraining und Fortbildung auf unserer Dienststelle.\n\nFeedback ist herzlichst willkommen!",
     "link": "",
     "active": true,
-    "category": "Ausbildung",
-    "priority": "normal"
-  },
-  {
-    "id": "redaktion",
-    "title": "Inhalte gemeinsam aktuell halten",
-    "date": "2026-09-29",
-    "text": "Redakteur:innen können News, Literatur und Lerninhalte direkt über die geschützte Redaktion pflegen.",
-    "link": "editor.html",
-    "active": true,
-    "category": "Organisation",
+    "category": "Allgemeines",
     "priority": "normal"
   }
 ]
