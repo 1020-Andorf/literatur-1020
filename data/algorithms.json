@@ -2,9 +2,9 @@
   {
     "id": "reanimation",
     "icon": "❤️",
-    "title": "Reanimation Erwachsene",
+    "title": "Reanimation Erwachsener",
     "category": "Reanimation",
-    "stand": "ERC 2025",
+    "stand": "OÖRK Lehrmeinung",
     "steps": [
       "Kreislaufstillstand erkennen und Hilfe rufen",
       "CPR 30:2 beginnen / Defibrillator anschließen",
@@ -23,10 +23,10 @@
   },
   {
     "id": "anaphylaxie",
-    "icon": "💉",
-    "title": "Anaphylaxie",
-    "category": "Internistisch",
-    "stand": "lokale SOP",
+    "icon": "❤️",
+    "title": "Reanimation Kind",
+    "category": "Reanimation",
+    "stand": "OÖRK Lehrmeinung",
     "steps": [
       "ABCDE und Trigger entfernen",
       "Adrenalin i.m. nach Standard",
@@ -44,10 +44,10 @@
   },
   {
     "id": "stroke",
-    "icon": "🧠",
-    "title": "Schlaganfall",
-    "category": "Neurologie",
-    "stand": "aktuell",
+    "icon": "❤️",
+    "title": "Reanimation Säugling",
+    "category": "Reanimation",
+    "stand": "OÖRK Lehrmeinung",
     "steps": [
       "FAST / neurologisches Defizit erkennen",
       "Last seen well erheben",
@@ -56,27 +56,6 @@
       "Stroke Unit voranmelden"
     ],
     "source": "Lokale SOP / aktuelle Schlaganfall-Leitlinie",
-    "sourceUrl": "",
-    "embedUrl": "",
-    "materials": {
-      "background": [],
-      "checklists": []
-    }
-  },
-  {
-    "id": "trauma",
-    "icon": "🩹",
-    "title": "Trauma",
-    "category": "Trauma",
-    "stand": "aktuell",
-    "steps": [
-      "kritische Blutung stoppen",
-      "ABCDE mit Trauma-Fokus",
-      "MILS / Immobilisation indikationsbezogen",
-      "Wärmeerhalt und Analgesie",
-      "Transportziel und Zeitkritik festlegen"
-    ],
-    "source": "Lokale SOP / Trauma-Leitlinie",
     "sourceUrl": "",
     "embedUrl": "",
     "materials": {
