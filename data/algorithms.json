@@ -90,7 +90,13 @@
           "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
         }
       ],
-      "checklists": []
+      "checklists": [
+        {
+          "title": "Checkliste OÖRK - CPR Säugling",
+          "note": "aktuelle Checkliste",
+          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832611900-RS-Trainingscheckliste-HLW-DEFI-Sgl-V8.pdf"
+        }
+      ]
     }
   }
 ]
