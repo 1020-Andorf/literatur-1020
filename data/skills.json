@@ -6,23 +6,26 @@
         "name": "Fahrzeugcheck",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Fahrzeug laut Ausstattungsrichtlinie kontrollieren",
+              "Rucksäcke laut Ausstattungsrichtlinie kontrollieren",
+              "korrekte Funktionskontrolle bei allen Geräten",
+              "Pagerprobe und Anmelden am m-pad"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "SEW (mit gesamter Ausstattung)",
+              "m-pad (Token)"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Bei Dienstbeginn immer abwechselnd Rucksäcke und Fahrzeug kontrollieren lassen",
+              "Für G-Eintrag einmal alles kontrollieren lassen und mitschauen."
             ]
           }
         ]
@@ -31,24 +34,23 @@
         "name": "Umgang mit Tragsessel",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Patienten mit Tragsessel über eine Stiege tragen",
+              "Tragsessel korrekt im Auto verriegeln und herausnehmen",
+              "Funktionen und Aufbereitung erklären"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "Tragsessel",
+              "SEW"
             ]
           },
           {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
-            ]
+            "title": "",
+            "items": []
           }
         ]
       },
@@ -56,24 +58,28 @@
         "name": "Umgang mit Fahrtrage",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Patienten auf der Fahrtrage befördern",
+              "Alle Lagerungen auf der Trage erklären können",
+              "Korrektes Entnehmen und Laden der Fahrtrage",
+              "Aufbereitung und Sicherheitsaspekte erklären können"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "Fahrtrage (Stryker M1)",
+              "SEW"
             ]
           },
           {
             "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
-            ]
+            "items": []
+          },
+          {
+            "title": "Neuer Abschnitt",
+            "items": []
           }
         ]
       },
@@ -127,7 +133,8 @@
           }
         ]
       }
-    ]
+    ],
+    "id": "basiskenntnisse-rettungsdienst-1791828778597"
   },
   {
     "name": "Patientenbeurteilung",
@@ -207,7 +214,8 @@
           }
         ]
       }
-    ]
+    ],
+    "id": "patientenbeurteilung-1791828778598"
   },
   {
     "name": "Sanitätshilfe Anwendungen",
@@ -512,6 +520,7 @@
           }
         ]
       }
-    ]
+    ],
+    "id": "sanitätshilfe-anwendungen-1791828778598"
   }
 ]
