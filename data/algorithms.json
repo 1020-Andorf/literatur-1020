@@ -46,11 +46,17 @@
     "category": "Reanimation",
     "stand": "OÖRK Lehrmeinung",
     "steps": [
-      "ABCDE und Trigger entfernen",
-      "Adrenalin i.m. nach Standard",
-      "Sauerstoff / Atemwegsmanagement",
-      "i.v. Zugang und Volumen nach Standard",
-      "Reevaluation und frühzeitiger Transport"
+      "Szene sicher?",
+      "lautes Ansprechen + Atemwege kontrollieren",
+      "Atemkontrolle durchführen und Gerätemanagement beachten (Sauerstoff mit Ambu Beutel vorbereiten)",
+      "keine Lebenszeichen --> 5 Initialbeatmungen",
+      "keine Lebenszeichen --> CPR, sofort 15:2",
+      "qualitativ hochwertige Herzdruckmassage und zeitgerechtes Verwenden des Defis",
+      "Defipad Position beachten (Mindestabstand bei antero-lateraler Verwendung)",
+      "Sicherheitshinweise des Defis beachten",
+      "Wechsel in der Analysephase",
+      "Absaugbereitschaft herstellen",
+      "Generell auf qualitativ hochwertige CPR und wenig Hands-off Zeiten achten"
     ],
     "source": "Lokale SOP / Leitlinie",
     "sourceUrl": "",
