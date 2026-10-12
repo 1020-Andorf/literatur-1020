@@ -43,20 +43,21 @@
     "key": "B",
     "title": "Breathing",
     "checks": [
-      "Atemfrequenz und Atemmuster",
+      "Atemfrequenz (qualitativ und quantitativ)",
       "Thoraxexkursion und Atemarbeit",
-      "SpO₂ und Hautkolorit",
-      "Auskultation / Atemgeräusche"
+      "SpO₂ (Zyanose?)",
+      "Atemgeräusche"
     ],
     "actions": [
       "Sauerstoffgabe nach Indikation",
-      "Beutel-Maskenbeatmung vorbereiten",
-      "Lagerung optimieren",
-      "Ventilation und Oxygenierung reevaluieren"
+      "Zielsättigungsbereiche beachten (94% bzw. 90% bei COPD)",
+      "Zum Einsetzen der Atemhilfsmuskulatur anleiten"
     ],
     "pitfalls": [
-      "Sauerstoffgabe nicht angepasst",
-      "Erschöpfung oder stille Lunge übersehen"
+      "Zyanose",
+      "Ringen um Luft",
+      "Pfeifende Atemgeräusche (in- und exspiratorischer Stridor)",
+      "Brodelndes / Rasselndes Atemgeräusch"
     ]
   },
   {
@@ -64,20 +65,22 @@
     "key": "C",
     "title": "Circulation",
     "checks": [
-      "Puls, Blutdruck und Rekap-Zeit",
-      "Starke Blutung?",
-      "Hauttemperatur und Perfusion",
-      "Schockzeichen / Rhythmus"
+      "Hautkolorit und Hauttemperatur (kaltschweißig, blass, ...)",
+      "Puls (qualitativ und quantitativ)",
+      "Blutdruck",
+      "Rekap - Zeit (Achtung im Freien oder bei kalten Gliedmaßen --> zentrale Rekap - Zeit)"
     ],
     "actions": [
-      "Blutstillung",
-      "Wärmeerhalt und Lagerung",
-      "i.v./i.o.-Zugang nach Standard",
-      "Monitoring und Reevaluation"
+      "Lagerung optimieren (Patientenorientiert, OK hoch, Beine hoch)",
+      "Wärmeerhalt!"
     ],
     "pitfalls": [
-      "Blutung übersehen",
-      "Schockzeichen nicht erkannt"
+      "Kaltschweißigkeit, Blässe",
+      "Tachykardie (>140 Schläge / min)",
+      "Bradykardie (<40 Schläge / min)",
+      "Arrhythmischer Puls",
+      "sehr hoher Blutdruck (+ Symptomatik)",
+      "sehr niedriger Blutdruck"
     ]
   },
   {
