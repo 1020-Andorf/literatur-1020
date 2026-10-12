@@ -183,23 +183,18 @@
         "name": "RR / HF / AF / AVPU / ZOPS",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "RR messen (auskultatorisch und palpatorisch)",
+              "HF an verschiedenen Stellen tasten und auszählen",
+              "AF beurteilen und auszählen",
+              "neurologischen Status erheben"
             ]
           },
           {
-            "title": "Material",
+            "title": "Praxis-Tipp",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "So viel wie möglich am realen Patienten üben / beurteilen"
             ]
           }
         ]
@@ -208,23 +203,26 @@
         "name": "O₂ und SpO₂",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Flascheninhalt berechnen",
+              "Flaschentausch durchführen",
+              "Sicherheitshinweises des Sauerstoffs nennen",
+              "Anwendung von Sauerstoff erklären",
+              "Sättigungsbereiche und Sauerstoffgabe erklären"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "Sauerstoffflasche + Druckminderer",
+              "Pulsoxymeter"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Am beste durchmachen, wenn im Dienst eine Flasche getauscht werde muss"
             ]
           }
         ]
@@ -233,23 +231,18 @@
         "name": "Absaugen (Technik und Geräte)",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Absaugtechnik erklären (+ Abmessung Katheter und Sogstärken)",
+              "Ausräumen mit Magillzange erklären",
+              "AccuVac Funktionskontrolle und Aufbereitung vorzeigen"
             ]
           },
           {
             "title": "Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "AccuVac",
+              "Magillzange"
             ]
           }
         ]
@@ -258,23 +251,19 @@
         "name": "Aufbereitung aller Geräte lt. MPG",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Die Aufbereitung aller Geräte erklären können",
+              "Herstellen einer Desinfektionslösung erklären bzw. zeigen",
+              "Schutzausrüstung kennen",
+              "Was darf man wie reinigen / desinfizieren?"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Desinfektionswanne + Desinfektionsmittel",
+              "Schutzausrüstung"
             ]
           }
         ]
@@ -283,23 +272,26 @@
         "name": "Schienungen / MDS",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Schnitzler Schiene anlegen",
+              "Sam-Splint anlegen",
+              "MDS Kontrolle erklären und durchführen",
+              "Armtragetuch anlegen"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "Schnitzler Schiene",
+              "Sam-Splint + Mullbinde",
+              "Dreiecktuch"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Kann ganz leicht im Dienst beübt werden"
             ]
           }
         ]
@@ -308,23 +300,25 @@
         "name": "Rettungstechniken",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Rautekgriff und Bergung aus einem PKW erklären und zeigen",
+              "Verwendung des Rettungstuchs erklären und zeigen",
+              "Schaufeltrage richtig verwenden"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "Rettungstuch",
+              "Schaufeltrage + Gurte"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Kann man auch gut im Dienst beüben",
+              "Immer alle Sicherheitsgurte verwenden!"
             ]
           }
         ]
@@ -333,23 +327,24 @@
         "name": "Sturzhelmabnahme / MILS oder HWS",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Sturzhelmabnahme durch 2 Helfer zeigen",
+              "MILS zeigen und erklären",
+              "Anlegen der HWS erklären und zeigen"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "Sturzhelm",
+              "HWS Schiene (Stifneck)"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Kann man gut mit den Traumabeispielen bei den Übungsabenden kombinieren."
             ]
           }
         ]
@@ -358,23 +353,27 @@
         "name": "Traumaversorgung",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Traumapatient nach ABCDE Schema beurteilen",
+              "Korrekte Verdachtsdiagnose stellen",
+              "Korrekte Rettung / Umlagerung eines Traumapatienten",
+              "Auf Situationsveränderungen angemessen reagieren"
             ]
           },
           {
             "title": "Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "Schaufeltrage",
+              "Vakuummatratze",
+              "Decken",
+              "SEW Rucksäcke"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Wird meist im Zuge der Übungsabende trainiert."
             ]
           }
         ]
@@ -383,23 +382,19 @@
         "name": "Patiententransfer",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Patienten korrekt umlagern (Bett-Trage, Rollstuhl-Tragsessel, ...)",
+              "Hilfsmittel korrekt einsetzen können (Rollboard)",
+              "Ergonomisches Arbeiten erklären können"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Rollboard",
+              "Fahrtrage",
+              "Tragsessel"
             ]
           }
         ]
@@ -408,23 +403,25 @@
         "name": "Bewusstloser Patient",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Bewusstlosen Patienten nach ABCDE Schema versorgen",
+              "Korrekten Notfallcheck machen",
+              "Laufende Reevaluierung sicherstellen",
+              "Erarbeitung einer Verdachtsdiagnose"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "SEW Rucksäcke",
+              "Decken"
             ]
           },
           {
             "title": "Praxis-Tipps",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Wird meist im Zuge der Übungsabende trainiert."
             ]
           }
         ]
@@ -433,23 +430,29 @@
         "name": "Wiederbelebung Säugling (inkl. Defi)",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "CPR Säugling lt. aktuell gültiger Checkliste",
+              "Wenig Hands-off Zeiten",
+              "Alle Sicherheitshinweise beachten",
+              "Qualitativ hochwertige Herzdruckmassage",
+              "Alle Beatmungen sollten funktionieren"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "SEW Rucksäcke",
+              "Q-CPR Übungspuppen",
+              "AccuVac",
+              "Übungsdefibrillator",
+              "HRT"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Wird meist im Zuge der Übungsabende trainiert."
             ]
           }
         ]
@@ -458,23 +461,29 @@
         "name": "Wiederbelebung Kind (inkl. Defi)",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "CPR Säugling lt. aktuell gültiger Checkliste",
+              "Wenig Hands-off Zeiten",
+              "Alle Sicherheitshinweise beachten",
+              "Qualitativ hochwertige Herzdruckmassage",
+              "Alle Beatmungen sollten funktionieren"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "SEW Rucksäcke",
+              "Q-CPR Übungspuppen",
+              "AccuVac",
+              "Übungsdefibrillator",
+              "HRT"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Wird meist im Zuge der Übungsabende trainiert."
             ]
           }
         ]
