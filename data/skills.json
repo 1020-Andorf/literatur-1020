@@ -72,51 +72,45 @@
         ]
       },
       {
-        "name": "Lagerungen (Grundlagerungen / Patientenorientiert)",
+        "name": "Lagerungen",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Welche Lagerungen gibt es?",
+              "Welche Krankheitsbilder verlangen besondere Lagerungen",
+              "Lagerungen vorzeigen"
             ]
           },
           {
-            "title": "Material",
+            "title": "Praxis-Tipp",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Kann man gut mit Fahrtrage kombinieren"
             ]
           }
         ]
       },
       {
-        "name": "Einsatzprotokoll",
+        "name": "Einsatzprotokoll / m-pad",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Anmeldung und Dienst übernehmen",
+              "Transportprotokoll selbstständig und korrekt ausfüllen",
+              "Einsatzprotokoll selbstständig und korrekt ausfüllen"
             ]
           },
           {
-            "title": "Material",
+            "title": "Benötigtes Material",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
+              "m-pad mit Token"
             ]
           },
           {
-            "title": "Praxis-Tipps",
+            "title": "Praxis-Tipp",
             "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Möglichst viel im Dienst dokumentieren lassen"
             ]
           }
         ]
