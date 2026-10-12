@@ -17,8 +17,20 @@
     "sourceUrl": "",
     "embedUrl": "",
     "materials": {
-      "background": [],
-      "checklists": []
+      "background": [
+        {
+          "title": "ERC Guidelines",
+          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
+          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
+        }
+      ],
+      "checklists": [
+        {
+          "title": "Checkliste OÖRK - CPR Erwachsener",
+          "note": "aktuelle Checkliste",
+          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832421246-RS-Pr-fungscheckliste-Erfolgskontrolle-HLW-DEFI-Erw-V8.pdf"
+        }
+      ]
     }
   },
   {
@@ -38,7 +50,13 @@
     "sourceUrl": "",
     "embedUrl": "",
     "materials": {
-      "background": [],
+      "background": [
+        {
+          "title": "ERC Guidelines",
+          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
+          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
+        }
+      ],
       "checklists": []
     }
   },
@@ -59,7 +77,13 @@
     "sourceUrl": "",
     "embedUrl": "",
     "materials": {
-      "background": [],
+      "background": [
+        {
+          "title": "ERC Guidelines",
+          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
+          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
+        }
+      ],
       "checklists": []
     }
   }
