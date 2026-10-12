@@ -180,7 +180,7 @@
     "name": "Sanitätshilfe Anwendungen",
     "skills": [
       {
-        "name": "Blutdruck / Puls / Atemfrequenz / AVPU / ZOPS",
+        "name": "RR / HF / AF / AVPU / ZOPS",
         "sections": [
           {
             "title": "Ablauf",
@@ -205,7 +205,7 @@
         ]
       },
       {
-        "name": "O₂ (Anwendung, Berechnen, Flaschenwechsel), SpO₂",
+        "name": "O₂ und SpO₂",
         "sections": [
           {
             "title": "Ablauf",
@@ -230,7 +230,7 @@
         ]
       },
       {
-        "name": "Absaugen, Technik, Geräte (AkkuVac, AMBU Twin, Magillz.)",
+        "name": "Absaugen (Technik und Geräte)",
         "sections": [
           {
             "title": "Ablauf",
@@ -255,7 +255,7 @@
         ]
       },
       {
-        "name": "Aufbereitung aller Geräte lt. MPG (Desinfektion, etc.)",
+        "name": "Aufbereitung aller Geräte lt. MPG",
         "sections": [
           {
             "title": "Ablauf",
@@ -280,7 +280,7 @@
         ]
       },
       {
-        "name": "Extremitätenschienung u. Ruhigstellung / MDS",
+        "name": "Schienungen / MDS",
         "sections": [
           {
             "title": "Ablauf",
@@ -305,7 +305,7 @@
         ]
       },
       {
-        "name": "Rettungstechniken (Rettungstuch, Rautengriff, Umheben, etc.)",
+        "name": "Rettungstechniken",
         "sections": [
           {
             "title": "Ablauf",
@@ -330,7 +330,7 @@
         ]
       },
       {
-        "name": "Sturzhelmabnahme durch 2 Helfer (inkl. MILS oder HWS)",
+        "name": "Sturzhelmabnahme / MILS oder HWS",
         "sections": [
           {
             "title": "Ablauf",
@@ -355,7 +355,7 @@
         ]
       },
       {
-        "name": "Traumaversorgung (MILS, Schaufeltrage, Vakuummatr., HWS)",
+        "name": "Traumaversorgung",
         "sections": [
           {
             "title": "Ablauf",
@@ -380,7 +380,7 @@
         ]
       },
       {
-        "name": "Patiententransfer (Bett/Rollstuhl - Trage/Tragsessel, Rollboard ...)",
+        "name": "Patiententransfer",
         "sections": [
           {
             "title": "Ablauf",
@@ -405,7 +405,7 @@
         ]
       },
       {
-        "name": "Bewusstloser Patient (Esmarch, Wendl, stab. Seitenlage, BZ)",
+        "name": "Bewusstloser Patient",
         "sections": [
           {
             "title": "Ablauf",
