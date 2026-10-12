@@ -125,23 +125,17 @@
         "name": "ABCDE / SAMPLE",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "ABCDE erklären und im Einsatz anwenden",
+              "SAMPLE erklären und im Einsatz anwenden",
+              "Verdachtsdiagnosen aus ABCDE und SAMPLE erarbeiten"
             ]
           },
           {
-            "title": "Material",
+            "title": "Praxis-Tipp",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "So viel wie möglich am realen Patienten üben!"
             ]
           }
         ]
@@ -150,23 +144,11 @@
         "name": "Patientenbetreuung",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
-            ]
-          },
-          {
-            "title": "Material",
-            "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "Patienten bei einem Transport gut betreuen",
+              "Patienten bei einem Einsatz richtig betreuen / reevaluieren",
+              "Angepasstes / höfliches Auftreten und guter Umgang"
             ]
           }
         ]
@@ -175,23 +157,18 @@
         "name": "Übergabe",
         "sections": [
           {
-            "title": "Ablauf",
+            "title": "Was muss man können?",
             "items": [
-              "Unterpunkt 1 – noch definieren",
-              "Unterpunkt 2 – noch definieren",
-              "Unterpunkt 3 – noch definieren"
+              "Übergabe an das Krankenhauspersonal machen (ZNA, ZAE)",
+              "Übergabe an ein SRM machen",
+              "Übergabe in einem Pflegeheim machen"
             ]
           },
           {
-            "title": "Material",
+            "title": "Praxis-Tipp",
             "items": [
-              "Material gemäß lokalem Ausbildungsstandard vorbereiten."
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Strukturiert arbeiten, Teamkommunikation beachten und Ergebnis kontrollieren."
+              "So früh wie möglich im Dienst beüben",
+              "Übergabe soll standardisierten Schemata folgen"
             ]
           }
         ]
