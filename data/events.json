@@ -1,1 +1,13 @@
-[]
+[
+  {
+    "id": "event-1791867912201",
+    "title": "Neuer Termin",
+    "date": "2026-10-14",
+    "time": "18:00",
+    "location": "OST Andorf",
+    "category": "Übungsabend RS Kurs",
+    "capacity": 10,
+    "attendees": [],
+    "description": ""
+  }
+]
