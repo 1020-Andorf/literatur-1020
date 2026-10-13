@@ -7,7 +7,13 @@
     "location": "OST Andorf",
     "category": "Übungen",
     "capacity": 10,
-    "attendees": [],
+    "attendees": [
+      {
+        "clientId": "c-kqxarypj0eimun798wb",
+        "name": "Simon Halas",
+        "registeredAt": "2026-10-13T05:06:20.398Z"
+      }
+    ],
     "description": ""
   }
 ]
