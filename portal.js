@@ -63,6 +63,8 @@ function open(title,html){
 function mergeDiagnostics(remote){
  const base=clone(D.differential||[]),incoming=Array.isArray(remote)?remote:[];
  const ids=new Map(incoming.map(x=>[x.id,x]));
+ const lockedTitles=new Set(['allergie','stroke','trauma']);
+ const lockedGroups=new Set(['allergie']);
  const result=base.map(b=>{
   const old=ids.get(b.id);if(!old)return b;
   const oldCauses=arr(old.causes).map(c=>typeof c==='string'?{name:c}:c);
@@ -72,9 +74,10 @@ function mergeDiagnostics(remote){
    return generic?{...existing,physiology:c.physiology,findings:c.findings,cave:c.cave,info:c.info,sourceUrl:c.sourceUrl,sourceLabel:c.sourceLabel}: {...c,...existing,sourceUrl:existing.sourceUrl||c.sourceUrl,sourceLabel:existing.sourceLabel||c.sourceLabel};
   });
   const newNames=new Set(mergedCauses.map(c=>c.name));
-  return {...b,...old,group:b.id==='allergie'?b.group:(old.group||b.group),causes:[...mergedCauses,...(b.id==='allergie'?[]:oldCauses.filter(c=>!newNames.has(c.name))) ]};
+  return {...b,...old,title:lockedTitles.has(b.id)?b.title:(old.title||b.title),group:lockedGroups.has(b.id)?b.group:(old.group||b.group),causes:[...mergedCauses,...(b.id==='allergie'?[]:oldCauses.filter(c=>!newNames.has(c.name)))]};
  });
- const known=new Set(base.map(x=>x.id));return [...result,...incoming.filter(x=>!known.has(x.id))];
+ const known=new Set(base.map(x=>x.id));
+ return [...result,...incoming.filter(x=>!known.has(x.id))];
 }
 async function get(name){if(API){try{const r=await fetch(`${API}/content/${name}`,{cache:'no-store'});if(r.ok){const data=await r.json();return name==='differential'?mergeDiagnostics(data):data}}catch(e){}}try{const l=localStorage.getItem(LS+name);if(l){const data=JSON.parse(l);return name==='differential'?mergeDiagnostics(data):data}}catch(e){}return clone(D[name]||[])}
 async function articles(){if(API){try{const r=await fetch(`${API}/articles`,{cache:'no-store'});if(r.ok)return await r.json()}catch(e){}}return clone(D.articles||[])}
@@ -138,33 +141,77 @@ async function abcdePage(){
  $('[data-main]').onclick=e=>{const a=e.target.closest('[data-abc]');if(a){current=+a.dataset.abc;render()}};render()
 }
 async function differentialPage(){
- const d=await get('differential'),emoji={lungs:'🫁',heart:'❤️',brain:'🧠',abdomen:'🩺',syringe:'💉',bolt:'⚡',bandage:'🩹',clock:'🕒'};
- const iconFor=x=>emoji[x.icon]||x.icon||'🩺';
+ const d=await get('differential');
+ const iconMap={lungs:'🫁',heart:'❤️',brain:'🧠',abdomen:'🩺',syringe:'💉',bolt:'⚡',bandage:'🩹',clock:'🕒',stethoscope:'🩺'};
+ const iconFor=x=>iconMap[x.icon]||x.icon||'🩺';
  const params=new URLSearchParams(location.search),id=params.get('id'),idx=params.get('disease');
  const symptom=d.find(x=>x.id===id),causes=symptom?arr(symptom.causes).map(c=>typeof c==='string'?{name:c}:c):[];
  const link=(x,i)=>`differential.html?id=${encodeURIComponent(x.id)}${i===undefined?'':'&disease='+i}`;
- const back=href=>`<a class="diag-back" href="${href}">← Zurück zur ${href==='differential.html'?'Übersicht':'Symptomübersicht'}</a>`;
- const intro='<p class="diag-hint">Lernmaterial, keine Diagnose- oder Therapieanweisung. Bei Instabilität ABCDE und lokale SOPs priorisieren. Externe Recherchel inks ersetzen keine geprüften Leitlinien.</p>'.replace('Recherchel inks','Recherchelinks');
- const breadcrumbs=(xs)=>`<nav class="diag-breadcrumb"><a href="differential.html">Diagnostik</a>${xs.map(it=>`<span>›</span>${it.href?`<a href="${it.href}">${esc(it.name)}</a>`:`<strong>${esc(it.name)}</strong>`}`).join('')}</nav>`;
+ const intro='<p class="diag-hint">Lernmaterial, keine Diagnose- oder Therapieanweisung. Bei Instabilität ABCDE und lokale SOPs priorisieren. Externe Recherchelinks ersetzen keine geprüften Leitlinien.</p>';
+ const breadcrumbs=xs=>`<nav class="diag-breadcrumb"><a href="differential.html">Diagnostik</a>${xs.map(it=>`<span>›</span>${it.href?`<a href="${it.href}">${esc(it.name)}</a>`:`<strong>${esc(it.name)}</strong>`}`).join('')}</nav>`;
  const safeUrl=url=>{try{const u=new URL(url);return ['https:','http:'].includes(u.protocol)?u.href:''}catch(e){return ''}};
+ const clip=(v,n=170)=>{const t=String(v||'').trim();return t.length>n?`${t.slice(0,n-1).trim()}…`:t};
+ const groupMeta={
+  'Atemweg':{label:'Atmung & Atemweg',tone:'breath',icon:'🫁',sub:'Dyspnoe, Husten, Stridor, obere Atemwege'},
+  'Atmung':{label:'Atmung & Atemweg',tone:'breath',icon:'🫁',sub:'Dyspnoe, Husten, Stridor, obere Atemwege'},
+  'Kreislauf':{label:'Herz & Kreislauf',tone:'heart',icon:'❤️',sub:'Thoraxschmerz, Rhythmus, Schock, Synkope'},
+  'Neurologie':{label:'Neurologie',tone:'brain',icon:'🧠',sub:'Bewusstsein, Ausfälle, Krampf, Schwindel'},
+  'Abdomen':{label:'Abdomen & Verdauung',tone:'abdomen',icon:'🩺',sub:'Bauchschmerz, GI-Blutung, Erbrechen, Stuhl'},
+  'Stoffwechsel':{label:'Stoffwechsel & Endokrinologie',tone:'metabolic',icon:'💉',sub:'Blutzucker, Elektrolyte, metabolische Krisen'},
+  'Infektion':{label:'Infektion & Allgemein',tone:'infection',icon:'🦠',sub:'Fieber, Infektzeichen, Allgemeinzustand'},
+  'Allgemein / Allergie':{label:'Allergie & Haut',tone:'allergy',icon:'🌿',sub:'Allergische Reaktion, Hautveränderungen'},
+  'Urologie':{label:'Urologie / Gyn / Geburt',tone:'uro',icon:'🩸',sub:'Harnwege, gynäkologische und geburtshilfliche Beschwerden'},
+  'Geburtshilfe':{label:'Urologie / Gyn / Geburt',tone:'uro',icon:'🩸',sub:'Harnwege, gynäkologische und geburtshilfliche Beschwerden'},
+  'Trauma':{label:'Trauma & Umwelt',tone:'trauma',icon:'🩹',sub:'Verletzungen, Blutung, Kälte/Hitze, SHT'},
+  'Umwelt':{label:'Trauma & Umwelt',tone:'trauma',icon:'🩹',sub:'Verletzungen, Blutung, Kälte/Hitze, SHT'},
+  'Psychiatrie / Toxikologie':{label:'Psyche & Intoxikation',tone:'psyche',icon:'🧩',sub:'Angst, Agitation, Intoxikation, Somnolenz'},
+  'Pädiatrie':{label:'Pädiatrie',tone:'kids',icon:'🧒',sub:'Kinderleitsymptome und Besonderheiten'}
+ };
+ const order=['Atmung & Atemweg','Herz & Kreislauf','Neurologie','Abdomen & Verdauung','Stoffwechsel & Endokrinologie','Infektion & Allgemein','Allergie & Haut','Urologie / Gyn / Geburt','Trauma & Umwelt','Psyche & Intoxikation','Pädiatrie','Weitere'];
+ const resolveGroup=g=>groupMeta[g]||{label:g||'Weitere',tone:'default',icon:'🩺',sub:'Weitere Leitsymptome'};
+ const diseaseIcon=name=>{
+  const n=String(name||'').toLocaleLowerCase('de');
+  if(/schlaganfall|blutung|infarkt|meningitis|epilep|krampfanfall|parese|migraene|migräne|schwindel|delir|hirn/.test(n))return '🧠';
+  if(/koronar|kardio|rhythm|tachykard|bradykard|herz|synkope|aorta|perikard|vorhofflimmern|av-block/.test(n))return '❤️';
+  if(/lunge|pneumo|asthma|copd|bronch|embolie|stridor|atem|epiglott|krupp/.test(n))return '🫁';
+  if(/anaphyl|allerg|urtikaria|angioödem|exanthem/.test(n))return '🌿';
+  if(/diabet|gluk|hypokal|hyperkal|hyponatr|elektrolyt|metabol|thyreo/.test(n))return '💉';
+  if(/sepsis|infekt|virus|bakter|fieber|erysipel/.test(n))return '🦠';
+  if(/ileus|abdomen|append|gastro|pankreat|kolik|ulku|divertikel|chole|mesenteri/.test(n))return '🩺';
+  if(/schwanger|präeklam|ektop|abort|plazenta|uterus|ovarial/.test(n))return '🤰';
+  if(/fraktur|trauma|hämatom|verletz|luxation/.test(n))return '🩹';
+  if(/intox|medikament|alkohol|opioid|benzodiazepin/.test(n))return '⚗️';
+  if(/niere|harn|ureter|zystit|pyeloneph/.test(n))return '🩸';
+  return '🩺';
+ };
+ const symptomCard=x=>`<a class="diag-result diag-symptom-card" href="${link(x)}"><span class="diag-result-icon">${iconFor(x)}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></a>`;
+ const diseaseCard=(c,i)=>`<a class="diag-disease-card diag-disease-compact" href="${link(symptom,i)}"><div class="diag-disease-head"><span class="diag-result-icon">${diseaseIcon(c.name)}</span><span class="diag-disease-title"><strong>${esc(c.name)}</strong><small>${esc(clip(c.physiology||'Beschreibung anzeigen',100))}</small></span><b>›</b></div></a>`;
  if(symptom&&idx!==null){
   const c=causes[Number(idx)];if(!c){location.replace(link(symptom));return}
-  const parts=[['Pathophysiologie',c.physiology],['Typische Befunde / Messwerte',c.findings],['CAVE / Warnzeichen',c.cave],['Ergänzende Hinweise',c.info]].filter(y=>y[1]);
+  const parts=[['Pathophysiologie / physiologische Änderung',c.physiology],['Typische Befunde / auffällige Werte',c.findings],['Präklinische Einordnung',c.info],['CAVE / Warnzeichen',c.cave]].filter(y=>y[1]);
   const url=safeUrl(c.sourceUrl);
-  $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>Krankheitsbild</h1></section>${breadcrumbs([{name:symptom.title,href:link(symptom)},{name:c.name}])}<article class="diag-detail"><div class="diag-kicker">${esc(symptom.title)}</div><h2>${esc(c.name)}</h2>${parts.map(([t,v])=>`<section class="diag-info-section ${t.startsWith('CAVE')?'diag-cave':''}"><h3>${esc(t)}</h3><p>${esc(v)}</p></section>`).join('')}${url?`<section class="diag-info-section"><h3>Weiterlesen</h3><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">↗ ${esc(c.sourceLabel||'Externe Fachliteratur')}</a><p class="diag-hint">Recherchelink – Inhalte und Aktualität der Quelle eigenständig prüfen.</p></section>`:''}${back(link(symptom))}</article>${intro}`;return;
+  $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>Krankheitsbild</h1></section>${breadcrumbs([{name:symptom.title,href:link(symptom)},{name:c.name}])}<article class="diag-detail"><div class="diag-kicker">${esc(symptom.title)}</div><h2>${esc(c.name)}</h2><div class="diag-detail-grid">${parts.map(([t,v])=>`<section class="diag-info-section ${t.startsWith('CAVE')?'diag-cave':''}"><h3>${esc(t)}</h3><p>${esc(v)}</p></section>`).join('')}</div>${url?`<section class="diag-info-section diag-source-box"><h3>Weiterlesen</h3><a href="${esc(url)}" target="_blank" rel="noopener noreferrer">↗ ${esc(c.sourceLabel||'Externe Fachliteratur')}</a><p class="diag-hint">Recherchelink – Inhalte und Aktualität der Quelle eigenständig prüfen.</p></section>`:''}</article>${intro}`;return;
  }
  if(symptom){
-  $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(symptom.title)}</h1></section>${breadcrumbs([{name:symptom.title}])}<div class="diag-summary"><span class="diag-big-icon">${iconFor(symptom)}</span><div><h2>${esc(symptom.title)}</h2><p>${causes.length} mögliche Krankheitsbilder</p></div></div><section class="diag-assess"><details><summary>🗣️ Wichtige Fragen</summary><ul>${arr(symptom.questions).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></details><details class="diag-alert"><summary>⚠️ Red Flags</summary><ul>${arr(symptom.redflags).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></details></section><h2 class="diag-section-title">Krankheitsbilder</h2><div class="diag-results">${causes.map((c,i)=>`<a class="diag-result" href="${link(symptom,i)}"><span class="diag-result-icon">🩺</span><span><strong>${esc(c.name)}</strong><small>${esc((c.physiology||'Beschreibung anzeigen').slice(0,125))}</small></span><b>›</b></a>`).join('')}</div>${back('differential.html')}${intro}`;return;
+  $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(symptom.title)}</h1></section>${breadcrumbs([{name:symptom.title}])}<div class="diag-summary"><span class="diag-big-icon">${iconFor(symptom)}</span><div><div class="diag-summary-kicker">Leitsymptom / Beschwerdebild</div><h2>${esc(symptom.title)}</h2><p>${causes.length} häufige Krankheitsbilder</p></div></div><section class="diag-assess-grid"><section class="diag-assess-box"><h3>🗣️ Wichtige Fragen</h3><ul>${arr(symptom.questions).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></section><section class="diag-assess-box diag-alert-box"><h3>⚠️ Red Flags</h3><ul>${arr(symptom.redflags).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></section></section><h2 class="diag-section-title">Krankheitsbilder</h2><div class="diag-disease-list">${causes.map((c,i)=>diseaseCard(c,i)).join('')}</div>${intro}`;return;
  }
- // Category headings expand on this page. No category-only pages or history-dependent back stack.
- const grouping={'Atemweg':'Atmung & Atemweg','Atmung':'Atmung & Atemweg','Kreislauf':'Herz & Kreislauf','Neurologie':'Neurologie','Abdomen':'Bauch & Verdauung','Stoffwechsel':'Stoffwechsel & Infektion','Infektion':'Stoffwechsel & Infektion','Urologie':'Urologie & Geburtshilfe','Geburtshilfe':'Urologie & Geburtshilfe','Trauma':'Trauma & Umwelt','Umwelt':'Trauma & Umwelt','Psychiatrie / Toxikologie':'Psyche & Intoxikation','Pädiatrie':'Kinder','Allgemein / Allergie':'Allergie & Haut'};
- const groups=new Map();for(const x of d){const g=grouping[x.group]||x.group||'Weitere';if(!groups.has(g))groups.set(g,[]);groups.get(g).push(x)}
- const order=['Atmung & Atemweg','Herz & Kreislauf','Neurologie','Bauch & Verdauung','Stoffwechsel & Infektion','Allergie & Haut','Urologie & Geburtshilfe','Trauma & Umwelt','Psyche & Intoxikation','Kinder'];
- const sorted=[...groups].sort((a,b)=>(order.indexOf(a[0])<0?100:order.indexOf(a[0]))-(order.indexOf(b[0])<0?100:order.indexOf(b[0])));
- const rows=items=>items.map(x=>`<a class="diag-result" href="${link(x)}"><span class="diag-result-icon">${iconFor(x)}</span><span><strong>${esc(x.title)}</strong><small>${arr(x.causes).length} Krankheitsbilder</small></span><b>›</b></a>`).join('');
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Diagnostik</h1><p>Leitsymptom direkt auswählen oder Krankheitsbild suchen.</p></section><div class="diag-search-wrap"><input class="diag-search" data-diag-search placeholder="Symptom oder Krankheitsbild suchen …" aria-label="Diagnostik durchsuchen"></div><div data-diag-categories class="diag-sections">${sorted.map(([g,items],i)=>`<details class="diag-group" ${i<2?'open':''}><summary><strong>${esc(g)}</strong><small>${items.length} Leitsymptome</small><span>⌄</span></summary><div class="diag-results">${rows(items)}</div></details>`).join('')}</div><div data-diag-search-results class="diag-results" hidden></div>${intro}`;
+ const groups=new Map();
+ d.forEach(x=>{const meta=resolveGroup(x.group);if(!groups.has(meta.label))groups.set(meta.label,{meta,items:[]});groups.get(meta.label).items.push(x)});
+ const sorted=[...groups.values()].sort((a,b)=>(order.indexOf(a.meta.label)<0?999:order.indexOf(a.meta.label))-(order.indexOf(b.meta.label)<0?999:order.indexOf(b.meta.label)));
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Diagnostik</h1><p>Leitsymptome und führende Beschwerdebilder direkt auswählen oder Krankheitsbild suchen.</p></section><div class="diag-search-wrap"><input class="diag-search" data-diag-search placeholder="Symptom oder Krankheitsbild suchen …" aria-label="Diagnostik durchsuchen"></div><div data-diag-categories class="diag-sections">${sorted.map(({meta,items})=>`<details class="diag-group" data-tone="${meta.tone}"><summary><span class="diag-group-badge">${meta.icon}</span><span class="diag-group-copy"><strong>${esc(meta.label)}</strong><small>${esc(meta.sub)}</small></span><span class="diag-group-chevron">⌄</span></summary><div class="diag-results">${items.map(symptomCard).join('')}</div></details>`).join('')}</div><div data-diag-search-results class="diag-results" hidden></div>${intro}`;
  const input=$('[data-diag-search]'),categories=$('[data-diag-categories]'),results=$('[data-diag-search-results]');
- input.oninput=()=>{const q=input.value.trim().toLocaleLowerCase('de');categories.hidden=!!q;results.hidden=!q;if(!q)return;const found=[];for(const x of d){if(x.title.toLocaleLowerCase('de').includes(q))found.push({x});arr(x.causes).forEach((c,i)=>{const name=typeof c==='string'?c:c.name;if(name.toLocaleLowerCase('de').includes(q))found.push({x,name,i})})}results.innerHTML=found.slice(0,80).map(r=>`<a class="diag-result" href="${link(r.x,r.i)}"><span class="diag-result-icon">${iconFor(r.x)}</span><span><strong>${esc(r.name||r.x.title)}</strong><small>${esc(r.x.title)} · ${esc(r.x.group||'Weitere')}</small></span><b>›</b></a>`).join('')||'<p class="diag-lead">Keine Treffer gefunden.</p>'};
+ input.oninput=()=>{
+  const q=input.value.trim().toLocaleLowerCase('de');
+  categories.hidden=!!q;results.hidden=!q;
+  if(!q)return;
+  const found=[];
+  d.forEach(x=>{
+   const meta=resolveGroup(x.group);
+   if(String(x.title||'').toLocaleLowerCase('de').includes(q))found.push({type:'symptom',x,meta});
+   arr(x.causes).forEach((c,i)=>{const obj=typeof c==='string'?{name:c}:c;if(String(obj.name||'').toLocaleLowerCase('de').includes(q))found.push({type:'disease',x,meta,i,obj})});
+  });
+  results.innerHTML=found.slice(0,80).map(r=>r.type==='symptom'?`<a class="diag-result diag-symptom-card" href="${link(r.x)}"><span class="diag-result-icon">${iconFor(r.x)}</span><span><strong>${esc(r.x.title)}</strong><small>${esc(r.meta.label)}</small></span><b>›</b></a>`:`<a class="diag-disease-card diag-disease-compact" href="${link(r.x,r.i)}"><div class="diag-disease-head"><span class="diag-result-icon">${diseaseIcon(r.obj.name)}</span><span class="diag-disease-title"><strong>${esc(r.obj.name)}</strong><small>${esc(r.x.title)} · ${esc(r.meta.label)}</small></span><b>›</b></div></a>`).join('')||'<p class="diag-lead">Keine Treffer gefunden.</p>';
+ };
 }
 
 async function simpleCards(name,title,mode){
@@ -325,7 +372,7 @@ async function editor(){
    } else if(name==='skills'){
      body=`${field('Kategorie',x.name,'name')}<div class="skill-editor-list">${(x.skills||[]).map((sk,si)=>`<section class="skill-editor-card" data-skill-index="${si}">${field('Skillname',sk.name,'skillName')}<div class="section-editor-list">${(sk.sections||[]).map((sec,sci)=>`<div class="section-editor-card" data-section-index="${sci}"><div class="section-editor-head"><strong>Unterüberschrift ${sci+1}</strong><button type="button" class="section-remove-btn" data-remove-section="${sci}" aria-label="Unterüberschrift entfernen">✕ Entfernen</button></div>${field('Unterüberschrift',sec.title,'sectionTitle')}${listEditor(sec.items,'sectionItems','Inhalt')}</div>`).join('')}</div><button class="small-add" type="button" data-add-section data-skill-index="${si}">+ Unterüberschrift</button></section>`).join('')}</div><button class="btn" type="button" data-add-skill>+ Skill hinzufügen</button>`;
    } else if(name==='differential'){
-     body=`<div class="editor-grid two">${field('Leitsymptom',x.title,'title')}${field('Bereich / Organsystem',x.group||'Weitere','group')}${field('Symbol / Emoji',x.icon,'icon')}</div><section class="editor-subsection"><h3>Wichtige Fragen</h3>${listEditor(x.questions,'questions','Frage')}</section><section class="editor-subsection"><h3>Red Flags</h3>${listEditor(x.redflags,'redflags','Red Flag')}</section><section class="editor-subsection"><h3>Krankheitsbilder</h3><div class="disease-editor-list">${arr(x.causes).map((c,ci)=>{const o=typeof c==='string'?{name:c,info:''}:c;return `<div class="disease-editor-card" data-disease-index="${ci}">${field('Name',o.name,'diseaseName')}${field('Physiologie / Pathophysiologie',o.physiology,'diseasePhysiology','textarea')}${field('Typische Befunde / auffällige Werte',o.findings,'diseaseFindings','textarea')}${field('CAVE / Warnzeichen',o.cave,'diseaseCave','textarea')}${field('Weitere Informationen (optional)',o.info,'diseaseInfo','textarea')}${field('Quellenlink (https://…)',o.sourceUrl,'diseaseSourceUrl')}${field('Linktext',o.sourceLabel,'diseaseSourceLabel')}</div>`}).join('')}</div><button class="small-add" type="button" data-add-disease>+ Krankheitsbild</button></section>`;
+     body=`<div class="editor-grid two">${field('Symptom / führendes Beschwerdebild',x.title,'title')}${field('Fachbereich / Gruppe',x.group||'Weitere','group')}${field('Symbol / Emoji',x.icon,'icon')}</div><section class="editor-subsection"><h3>Wichtige Fragen</h3>${listEditor(x.questions,'questions','Frage')}</section><section class="editor-subsection"><h3>Red Flags</h3>${listEditor(x.redflags,'redflags','Red Flag')}</section><section class="editor-subsection"><h3>Krankheitsbilder</h3><div class="disease-editor-list">${arr(x.causes).map((c,ci)=>{const o=typeof c==='string'?{name:c,info:''}:c;return `<div class="disease-editor-card" data-disease-index="${ci}">${field('Name',o.name,'diseaseName')}${field('Physiologie / Pathophysiologie',o.physiology,'diseasePhysiology','textarea')}${field('Typische Befunde / auffällige Werte',o.findings,'diseaseFindings','textarea')}${field('CAVE / Warnzeichen',o.cave,'diseaseCave','textarea')}${field('Weitere Informationen (optional)',o.info,'diseaseInfo','textarea')}${field('Quellenlink (https://…)',o.sourceUrl,'diseaseSourceUrl')}${field('Linktext',o.sourceLabel,'diseaseSourceLabel')}</div>`}).join('')}</div><button class="small-add" type="button" data-add-disease>+ Krankheitsbild</button></section>`;
    } else if(name==='articles'){
      body=`<div class="editor-grid two">${field('Titel',x.title,'title')}${field('DOI',x.doi,'doi')}${field('Autor:innen',x.authors,'authors')}${field('Journal / Quelle',x.journal,'journal')}${field('Jahr',x.year,'year')}${field('Dokumenttyp',x.type,'type')}${field('Themen / Kategorien',Array.isArray(x.topics)?x.topics.join(', '):x.topics,'topics')}${field('Zielgruppe',x.level,'level')}${field('Sprache',x.language,'language')}${field('Lizenz',x.license,'license')}${field('Lesezeit',x.read,'read')}${field('Zugriff',x.access,'access')}${field('Original-/Verlagslink',x.publisherUrl,'publisherUrl')}${field('Freier Volltext',x.freeUrl,'freeUrl')}${field('Hinzugefügt am',x.added,'added','date')}</div>${field('Warum lesenswert?',x.why,'why','textarea')}<button class="btn" type="button" data-doi-lookup>DOI-Daten abrufen</button>`;
    } else if(name==='news') body=field('Titel',x.title,'title')+field('Kategorie',x.category,'category')+field('Datum',x.date,'date','date')+field('Beschreibung',x.text,'text','textarea');
