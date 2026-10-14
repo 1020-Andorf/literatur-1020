@@ -2,70 +2,237 @@
   {
     "id": "reanimation",
     "icon": "❤️",
-    "title": "Reanimation Erwachsene",
+    "title": "Reanimation Erwachsener",
     "category": "Reanimation",
-    "stand": "ERC 2025",
+    "stand": "OÖRK Lehrmeinung",
     "steps": [
-      "Kreislaufstillstand erkennen und Hilfe rufen",
-      "CPR 30:2 beginnen / Defibrillator anschließen",
-      "Rhythmus analysieren",
-      "Schockbarer Rhythmus: Defibrillieren und sofort CPR fortsetzen",
-      "Nicht schockbarer Rhythmus: CPR fortsetzen, Ursachen behandeln",
-      "Alle 2 Minuten Rhythmus und ROSC prüfen"
+      "Szene sicher?",
+      "lautes Ansprechen + Atemwege kontrollieren",
+      "Atemkontrolle durchführen und Gerätemanagement beachten",
+      "Diagnose: Atem-Kreislaufstillstand --> Lagemeldung zeitnah machen",
+      "CPR beginnen (qualitativ hochwertige Herzdruckmassage)",
+      "Defi Elektroden korrekt kleben und Analyse des Rhythmus (+ Schock / kein Schock)",
+      "LTS-D setzen und Probebeatmung durchführen",
+      "nach erfolgreicher Probebeatmung --> 30:2",
+      "Fixierung des LTS-D + Einführen des Abaugkatheters",
+      "Absaugbereitschaft herstellen",
+      "Alle 2 Minuten wechseln der Positionen",
+      "Achten auf Defi-Anweisungen und geringe Hands-off Zeiten"
     ],
     "source": "ERC Guidelines / lokale SOP beachten",
     "sourceUrl": "",
-    "embedUrl": ""
+    "embedUrl": "",
+    "materials": {
+      "background": [
+        {
+          "title": "ERC Guidelines",
+          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
+          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
+        }
+      ],
+      "checklists": [
+        {
+          "title": "Checkliste OÖRK - CPR Erwachsener",
+          "note": "aktuelle Checkliste",
+          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832421246-RS-Pr-fungscheckliste-Erfolgskontrolle-HLW-DEFI-Erw-V8.pdf"
+        }
+      ]
+    }
   },
   {
     "id": "anaphylaxie",
-    "icon": "💉",
-    "title": "Anaphylaxie",
-    "category": "Internistisch",
-    "stand": "lokale SOP",
+    "icon": "❤️",
+    "title": "Reanimation Kind",
+    "category": "Reanimation",
+    "stand": "OÖRK Lehrmeinung",
     "steps": [
-      "ABCDE und Trigger entfernen",
-      "Adrenalin i.m. nach Standard",
-      "Sauerstoff / Atemwegsmanagement",
-      "i.v. Zugang und Volumen nach Standard",
-      "Reevaluation und frühzeitiger Transport"
+      "Szene sicher?",
+      "lautes Ansprechen + Atemwege kontrollieren",
+      "Atemkontrolle durchführen und Gerätemanagement beachten (Sauerstoff mit Ambu Beutel vorbereiten)",
+      "keine Lebenszeichen --> 5 Initialbeatmungen",
+      "keine Lebenszeichen --> sofort CPR mit 15:2 Rythmus",
+      "qualitativ hochwertige Herzdruckmassage und zeitgerechtes Verwenden des Defis",
+      "Defipad Position beachten (Mindestabstand bei antero-lateraler Verwendung)",
+      "Sicherheitshinweise des Defis beachten",
+      "Wechsel in der Analysephase",
+      "Absaugbereitschaft herstellen",
+      "Generell auf qualitativ hochwertige CPR und wenig Hands-off Zeiten achten"
     ],
     "source": "Lokale SOP / Leitlinie",
     "sourceUrl": "",
-    "embedUrl": ""
+    "embedUrl": "",
+    "materials": {
+      "background": [
+        {
+          "title": "ERC Guidelines",
+          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
+          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
+        }
+      ],
+      "checklists": [
+        {
+          "title": "Checkliste OÖRK - CPR Kind",
+          "note": "aktuelle Checkliste",
+          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832578875-RS-Trainingscheckliste-HLW-DEFI-Kind-V8.pdf"
+        }
+      ]
+    }
   },
   {
     "id": "stroke",
-    "icon": "🧠",
-    "title": "Schlaganfall",
-    "category": "Neurologie",
-    "stand": "aktuell",
+    "icon": "❤️",
+    "title": "Reanimation Säugling",
+    "category": "Reanimation",
+    "stand": "OÖRK Lehrmeinung",
     "steps": [
-      "FAST / neurologisches Defizit erkennen",
-      "Last seen well erheben",
-      "BZ ausschließen",
-      "Monitoring und Transportpriorität",
-      "Stroke Unit voranmelden"
+      "Szene sicher?",
+      "lautes Ansprechen + Atemwege kontrollieren",
+      "Atemkontrolle durchführen und Gerätemanagement beachten (Sauerstoff mit Ambu Beutel vorbereiten)",
+      "keine Lebenszeichen --> 5 Initialbeatmungen",
+      "keine Lebenszeichen --> sofort CPR mit 15:2 Rythmus",
+      "qualitativ hochwertige Herzdruckmassage und zeitgerechtes Verwenden des Defis",
+      "Defipad Position beachten (bei Säugling immer anterior-posterior Position)",
+      "Sicherheitshinweise des Defis beachten",
+      "Wechsel in der Analysephase",
+      "Absaugbereitschaft herstellen",
+      "Generell auf qualitativ hochwertige CPR und wenig Hands-off Zeiten achten"
     ],
     "source": "Lokale SOP / aktuelle Schlaganfall-Leitlinie",
     "sourceUrl": "",
-    "embedUrl": ""
+    "embedUrl": "",
+    "materials": {
+      "background": [
+        {
+          "title": "ERC Guidelines",
+          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
+          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
+        }
+      ],
+      "checklists": [
+        {
+          "title": "Checkliste OÖRK - CPR Säugling",
+          "note": "aktuelle Checkliste",
+          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832611900-RS-Trainingscheckliste-HLW-DEFI-Sgl-V8.pdf"
+        }
+      ]
+    }
   },
   {
-    "id": "trauma",
-    "icon": "🩹",
-    "title": "Trauma",
-    "category": "Trauma",
-    "stand": "aktuell",
+    "id": "schema-ticls",
+    "icon": "👶",
+    "title": "TICLS – Pädiatrischer Ersteindruck",
+    "category": "Schema · Pädiatrie",
+    "stand": "Lernschema – lokale SOP maßgeblich",
+    "source": "TICLS ist eine strukturierte Merkhilfe zur Beurteilung des Erscheinungsbildes im pädiatrischen Beurteilungsdreieck (PAT).",
     "steps": [
-      "kritische Blutung stoppen",
-      "ABCDE mit Trauma-Fokus",
-      "MILS / Immobilisation indikationsbezogen",
-      "Wärmeerhalt und Analgesie",
-      "Transportziel und Zeitkritik festlegen"
+      "T – Tone: Haltung, Muskeltonus und spontane Bewegungen beurteilen.",
+      "I – Interactiveness: Blickkontakt, Aufmerksamkeit und Reaktion auf Ansprache.",
+      "C – Consolability: Lässt sich das Kind durch Bezugsperson beruhigen?",
+      "L – Look / Gaze: Blickverhalten, Fixation und altersentsprechendes Interesse.",
+      "S – Speech / Cry: Stimme, Schreien und altersgerechte Lautäußerung."
     ],
-    "source": "Lokale SOP / Trauma-Leitlinie",
-    "sourceUrl": "",
-    "embedUrl": ""
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-pat",
+    "icon": "🔺",
+    "title": "Pädiatrisches Beurteilungsdreieck (PAT)",
+    "category": "Schema · Pädiatrie",
+    "stand": "Ersteindruck – ohne technische Hilfsmittel",
+    "source": "Schneller pädiatrischer Ersteindruck: Erscheinungsbild, Atemarbeit und Hautdurchblutung. Das PAT ersetzt nicht das ABCDE-Schema.",
+    "steps": [
+      "Erscheinungsbild: Tonus, Interaktion, Beruhigbarkeit, Blick und Schreien (TICLS).",
+      "Atemarbeit: auffällige Atemgeräusche, Einziehungen, Nasenflügeln, Körperhaltung.",
+      "Hautdurchblutung: Blässe, Marmorierung, Zyanose; Gesamteindruck beachten.",
+      "Bei auffälligem Ersteindruck unmittelbar ABCDE und wiederholte Re-Evaluation."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-opqrst",
+    "icon": "🗣️",
+    "title": "OPQRST – strukturierte Symptomanamnese",
+    "category": "Schema · Anamnese",
+    "stand": "Anamnesemerkhilfe",
+    "source": "Merkschema für Schmerzanamnese und weitere akute Beschwerden.",
+    "steps": [
+      "O – Onset: Wann hat es begonnen? Plötzlich oder schleichend?",
+      "P – Provocation / Palliation: Was löst es aus, verstärkt oder bessert es?",
+      "Q – Quality: Wie fühlt es sich an – stechend, drückend, brennend?",
+      "R – Region / Radiation: Wo genau, mit welcher Ausstrahlung?",
+      "S – Severity: Wie stark (z. B. NRS 0–10)?",
+      "T – Time: Wie verläuft es seit Beginn – konstant, zunehmend, episodisch?"
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-sampler",
+    "icon": "📋",
+    "title": "SAMPLER – strukturierte Anamnese",
+    "category": "Schema · Anamnese",
+    "stand": "Anamnesemerkhilfe",
+    "source": "Die genaue Bezeichnung einzelner Buchstaben kann je nach Ausbildung leicht variieren.",
+    "steps": [
+      "S – Signs / Symptoms: Beschwerden und beobachtete Symptome.",
+      "A – Allergies: Allergien und Unverträglichkeiten.",
+      "M – Medications: Regelmäßige und neu eingenommene Medikamente.",
+      "P – Past medical history: Vorerkrankungen, frühere Eingriffe.",
+      "L – Last oral intake: Letzte Nahrungs- und Flüssigkeitsaufnahme.",
+      "E – Events: Ereignisse vor Symptombeginn.",
+      "R – Risk factors: Relevante Risikofaktoren (regional auch andere Bedeutung)."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-xabcde",
+    "icon": "🩺",
+    "title": "XABCDE – strukturierte Erstbeurteilung",
+    "category": "Schema · Erstbeurteilung",
+    "stand": "Lokale SOPs beachten",
+    "source": "Prioritätenorientiertes Untersuchungsschema; X steht für unmittelbar lebensbedrohliche äußere Blutung.",
+    "steps": [
+      "X – Kritische externe Blutungen erkennen und kontrollieren.",
+      "A – Airway: Atemweg prüfen und sichern.",
+      "B – Breathing: Atemmechanik, Frequenz, Auskultation und Oxygenierung.",
+      "C – Circulation: Puls, Perfusion, Blutdruck, Blutungszeichen.",
+      "D – Disability: Bewusstsein, Pupillen, BZ, fokale Neurologie.",
+      "E – Exposure / Environment: Ganzkörperuntersuchung und Wärmeerhalt."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-fast",
+    "icon": "🧠",
+    "title": "FAST / BE-FAST – Schlaganfall-Screening",
+    "category": "Schema · Neurologie",
+    "stand": "Screening – regionale Schlaganfallpfade beachten",
+    "source": "Screeningtools können insbesondere Schlaganfälle der hinteren Strombahn nicht sicher ausschließen.",
+    "steps": [
+      "B – Balance: Neue Gang- oder Gleichgewichtsstörung.",
+      "E – Eyes: Plötzliche Sehstörung oder Doppelbilder.",
+      "F – Face: Asymmetrie beim Lächeln.",
+      "A – Arms: Einseitige Arm- oder Beinschwäche.",
+      "S – Speech: Sprach-/Sprechstörung.",
+      "T – Time: Symptombeginn oder Zeitpunkt zuletzt symptomfrei dokumentieren."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
   }
 ]

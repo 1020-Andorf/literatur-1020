@@ -167,15 +167,6 @@
         "info": "Rückfluss von Magensäure in die Speiseröhre brennender retrosternaler Schmerz, nach Essen/Liegen CAVE: ACS nicht allein anhand Sodbrennen ausschließen.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=%C3%96sophagealer%20Reflux%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
-      },
-      {
-        "name": "Akutes Koronarsyndrom",
-        "physiology": "Akute Myokardischämie durch Plaqueruptur und thrombotische Koronarobstruktion. Dadurch sinken myokardiale Sauerstoffversorgung und Pumpfunktion, was arrhythmische und hämodynamische Folgen haben kann.",
-        "findings": "Typisch sind retrosternaler Druck oder Enge, Ausstrahlung, Dyspnoe, Übelkeit und Kaltschweißigkeit. Ein 12-Kanal-EKG kann ST-Veränderungen zeigen, initial aber auch unauffällig sein.",
-        "cave": "Atypische oder schmerzfreie Verläufe kommen vor. Bei Dyspnoe, Oberbauchbeschwerden oder Schwäche ACS mitdenken.",
-        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=ACS%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen",
-        "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
       }
     ],
     "questions": [
@@ -335,15 +326,6 @@
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
-        "name": "Arrhythmogene Synkope",
-        "physiology": "Vorübergehendes Absinken des Herzzeitvolumens durch schnelle oder langsame Rhythmusstörung.",
-        "findings": "Plötzlicher Bewusstseinsverlust, oft ohne längere Prodromi; Palpitationen, Thoraxschmerz oder pathologisches EKG können hinweisend sein.",
-        "cave": "Belastungssynkope, bekannte Herzerkrankung oder Familienanamnese plötzlicher Herztod erhöhen das Risiko deutlich.",
-        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kardial%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen",
-        "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
-      },
-      {
         "name": "Hypovolämischer Schock",
         "physiology": "Verlust von intravasalem Volumen durch Blutung oder Flüssigkeitsdefizit vermindert Vorlast, Schlagvolumen und Organperfusion.",
         "findings": "Tachykardie, Blässe, kalte Haut, verlängerte Rekapillarisierung, Hypotonie und reduzierte Urinproduktion sind typisch.",
@@ -486,24 +468,6 @@
         "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
         "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=GI-Blutung%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen",
-        "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
-      },
-      {
-        "name": "Rupturiertes Aortenaneurysma",
-        "physiology": "Ruptur eines Aneurysmas – meist der Bauchaorta – mit innerer Blutung und rasch zunehmender Kreislaufdekompensation.",
-        "findings": "Plötzlicher Bauch-, Flanken- oder Rückenschmerz, Synkope, Hypotonie, Blässe; manchmal tastbare pulsierende Resistenz.",
-        "cave": "Häufig initial noch kurz kompensiert. Ältere Patient:innen mit Schock und Bauch-/Rückenschmerz besonders verdächtig.",
-        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=AAA%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen",
-        "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
-      },
-      {
-        "name": "Nierenkolik",
-        "physiology": "Meist steinbedingte Harnleiterobstruktion führt zu akutem Druckanstieg im Harntrakt und spastischen Schmerzen.",
-        "findings": "Wellenförmiger Flanken- oder Unterbauchschmerz, Ausstrahlung in Leiste/Genitale, Unruhe, Übelkeit, ggf. Hämaturie.",
-        "cave": "Fieber oder Schüttelfrost bei Harnstau sprechen für einen urologischen Notfall.",
-        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Renale%20Kolik%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen",
         "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
       }
@@ -690,24 +654,6 @@
         "info": "Vorübergehende fokale Schwäche nach Anfall postiktale Anamnese CAVE: paralleler Schlaganfall möglich.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Todd-Parese%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
-      },
-      {
-        "name": "Ischämischer Schlaganfall",
-        "physiology": "Akuter Gefäßverschluss mit umschriebener Hirnischämie. Um das Infarktzentrum liegt oft penumbrales, potenziell rettbares Gewebe.",
-        "findings": "Plötzliche FAST-Defizite, Aphasie, Hemiparese, Neglect oder Hemianopsie; je nach Stromgebiet weitere fokale Zeichen.",
-        "cave": "Zeitfenster und letzte Symptomfreiheit dokumentieren. Antikoagulation und Schlaganfall-Mimics erfragen.",
-        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Isch%C3%A4mischer%20Insult%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen",
-        "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
-      },
-      {
-        "name": "Intrazerebrale Blutung",
-        "physiology": "Blutung in das Hirnparenchym mit Masseneffekt und potenziellem intrakraniellem Druckanstieg. Klinisch oft nicht sicher von einer Ischämie zu unterscheiden.",
-        "findings": "Fokale Defizite, Kopfschmerz, Erbrechen, Vigilanzminderung oder Blutdruckspitzen können vorkommen.",
-        "cave": "Antikoagulation, Trauma und rasche Verschlechterung sind relevante Warnzeichen.",
-        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=H%C3%A4morrhagie%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen",
-        "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
       },
       {
         "name": "Schlaganfall-Mimic",

@@ -6,7 +6,7 @@ export default {
   const url=new URL(request.url);
   try{
    if(url.pathname==="/articles"&&request.method==="GET")return json(await getJson(env,"data/articles.json"),200,cors);
-   const m=url.pathname.match(/^\/content\/(articles|abcde|differential|skills|news|algorithms|changes|events|guide|materials)$/);
+   const m=url.pathname.match(/^\/content\/(articles|abcde|differential|skills|news|algorithms|changes|events|guide|materials|meetings)$/);
    if(m&&request.method==="GET")return json(await getJson(env,`data/${m[1]}.json`),200,cors);
    if(url.pathname==="/auth"&&request.method==="POST"){const body=await request.json().catch(()=>({}));return (await validPin(String(body.pin||""),env.ADMIN_PIN_SHA256))?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);}
    const rsvp=url.pathname.match(/^\/events\/rsvp\/([^/]+)$/);

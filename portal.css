@@ -438,3 +438,59 @@ body{background:#fff}
 .diag-group>.diag-results{gap:10px}
 .diag-group>summary{min-height:75px}
 @media(max-width:680px){.diag-disease-list{grid-template-columns:1fr}.diag-disease-compact .diag-disease-head{min-height:76px}}
+
+/* Typography and information hierarchy */
+.page-banner h1{font-weight:850;letter-spacing:-.035em;line-height:1.13}
+.page-banner p{font-weight:450;line-height:1.65}
+.diag-group-copy strong,.diag-disease-title strong,.diag-result strong,.scheme-tile h2,.meeting-tile h2{font-weight:800;letter-spacing:-.018em;color:#162741}
+.diag-group-copy small,.diag-disease-title small,.diag-result small{font-weight:450;line-height:1.6}
+.diag-assess-box h3,.diag-info-section h3,.diag-section-title,.scheme-section>h2,.meeting-detail h2{font-weight:800;letter-spacing:-.02em;color:#183352}
+.diag-info-section p,.diag-assess-box li{font-size:.98rem;line-height:1.76}
+.diag-kicker,.diag-summary-kicker{font-weight:850;letter-spacing:.08em}
+
+/* Dienstbesprechungen: material library */
+.meeting-grid,.scheme-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));margin:20px 0 32px}
+.meeting-tile,.scheme-tile{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid #e3e9f1;border-radius:20px;padding:23px;box-shadow:0 5px 20px rgba(20,40,70,.05);transition:transform .16s,box-shadow .16s}
+.meeting-tile:hover,.scheme-tile:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(20,40,70,.12)}
+.meeting-tile-icon,.scheme-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:16px;font-size:1.65rem;background:#edf5ff;margin-bottom:16px}
+.meeting-date,.scheme-kind{display:block;font-size:.77rem;font-weight:800;letter-spacing:.045em;color:#61768d;text-transform:uppercase}
+.meeting-tile h2,.scheme-tile h2{font-size:1.14rem;margin:9px 0}
+.meeting-tile p,.scheme-tile p{margin:0 0 16px;color:#60738c;line-height:1.6;font-size:.9rem}
+.meeting-tile-cta,.scheme-more{font-size:.88rem;font-weight:800;color:#bb2a37}
+.meeting-detail{background:#fff;border:1px solid #e7eaf0;border-radius:22px;padding:25px}
+.meeting-meta{display:flex;flex-wrap:wrap;gap:9px}.meeting-meta span{padding:6px 11px;border-radius:999px;background:#f0f5fb;color:#52657e;font-weight:650;font-size:.84rem}
+.meeting-summary{line-height:1.8;white-space:pre-line;font-size:1.03rem;margin:22px 0 30px}
+.meeting-resources{display:grid;gap:13px;margin-top:17px}
+.meeting-resource{display:flex;gap:15px;padding:18px;border:1px solid #e6ebf3;border-radius:16px;background:#fbfdff}
+.meeting-resource>div{min-width:0;flex:1}.meeting-resource strong{font-weight:800}.meeting-resource p{color:#60738c;line-height:1.6;margin:6px 0 9px;white-space:pre-line}.meeting-resource a{font-weight:750;color:#b52a37;overflow-wrap:anywhere}
+.meeting-resource img{display:block;max-width:min(100%,580px);max-height:320px;object-fit:contain;margin:12px 0;border-radius:12px;border:1px solid #e6ebf3}
+.meeting-file-icon{font-size:1.6rem;width:44px;height:44px;border-radius:12px;background:#edf5ff;display:grid;place-items:center;flex:none}
+/* Visible schema diagrams */
+.scheme-section{margin:29px 0}.scheme-section>h2{font-size:1.35rem;margin:0 0 15px}
+.scheme-tile .scheme-icon{background:#f2efff}.scheme-visual{display:grid;gap:12px;margin:25px 0}.scheme-visual .flow-node{background:#f4f8ff;border:1px solid #d8e6f5;border-radius:15px;padding:16px;display:flex;gap:14px;align-items:center;min-height:60px}.scheme-visual .flow-node span{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#325f9c;color:#fff;flex:none;font-weight:800}.scheme-visual .flow-node strong{font-weight:680;line-height:1.55}.schema-visual .flow-arrow{display:none}
+.pat-visual{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 14px}
+.pat-visual>div{background:#f5f5ff;border:2px solid #dad8f7;border-radius:17px;display:grid;justify-items:center;text-align:center;gap:7px;padding:18px 8px;font-size:1.4rem}
+.pat-visual strong{font-size:.93rem;color:#1b3150}.pat-visual span{font-size:.75rem;color:#5f738b}
+@media(max-width:580px){.pat-visual{grid-template-columns:1fr}.meeting-detail{padding:17px}.meeting-resource{padding:14px}}
+
+/* Home hubs: four large entry cards */
+.section-subtle{font-size:.86rem;color:#748399}
+.hub-grid{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.hub-card{display:flex;flex-direction:column;gap:16px;padding:22px;border-radius:24px;border:1px solid #e6ebf2;background:#fff;box-shadow:0 8px 30px rgba(17,33,55,.05)}
+.hub-icon{width:68px;height:68px;display:grid;place-items:center;border-radius:20px;background:#f5f8fb;color:#17324f}.hub-icon svg{width:48px;height:48px}
+.hub-kicker{display:inline-block;font-size:.78rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#c92a32;margin-bottom:6px}
+.hub-card h3{margin:0 0 8px;font-size:1.3rem;line-height:1.2;color:#14263a}.hub-card p{margin:0;color:#5f7288;line-height:1.6}
+.hub-copy{display:block}
+.hub-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+.hub-links a{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 14px;border-radius:999px;background:#f5f7fb;border:1px solid #e4e9f0;color:#17324f;text-decoration:none;font-weight:700;font-size:.94rem;transition:transform .15s,box-shadow .15s,background .15s}
+.hub-links a:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(17,33,55,.08);background:#fff}
+.hub-medical{background:linear-gradient(180deg,#fcfeff 0%,#f7fbff 100%)}
+.hub-medical .hub-icon{background:#e8f2ff}.hub-medical .hub-kicker{color:#2f80ed}
+.hub-training{background:linear-gradient(180deg,#fffefd 0%,#fbfaf5 100%)}
+.hub-training .hub-icon{background:#eef6ff}.hub-training .hub-kicker{color:#3b82f6}
+.hub-service{background:linear-gradient(180deg,#fffdfd 0%,#fff7fb 100%)}
+.hub-service .hub-icon{background:#f5ebff}.hub-service .hub-kicker{color:#7b55df}
+.hub-update{background:linear-gradient(180deg,#fffdfd 0%,#fff8f8 100%)}
+.hub-update .hub-icon{background:#fdeef0}.hub-update .hub-kicker{color:#c257c8}
+@media(max-width:900px){.hub-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.hub-card{padding:18px;border-radius:20px}.hub-card h3{font-size:1.15rem}.hub-links a{width:100%;justify-content:flex-start}}

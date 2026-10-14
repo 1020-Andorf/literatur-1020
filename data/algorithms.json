@@ -116,5 +116,123 @@
         }
       ]
     }
+  },
+  {
+    "id": "schema-ticls",
+    "icon": "👶",
+    "title": "TICLS – Pädiatrischer Ersteindruck",
+    "category": "Schema · Pädiatrie",
+    "stand": "Lernschema – lokale SOP maßgeblich",
+    "source": "TICLS ist eine strukturierte Merkhilfe zur Beurteilung des Erscheinungsbildes im pädiatrischen Beurteilungsdreieck (PAT).",
+    "steps": [
+      "T – Tone: Haltung, Muskeltonus und spontane Bewegungen beurteilen.",
+      "I – Interactiveness: Blickkontakt, Aufmerksamkeit und Reaktion auf Ansprache.",
+      "C – Consolability: Lässt sich das Kind durch Bezugsperson beruhigen?",
+      "L – Look / Gaze: Blickverhalten, Fixation und altersentsprechendes Interesse.",
+      "S – Speech / Cry: Stimme, Schreien und altersgerechte Lautäußerung."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-pat",
+    "icon": "🔺",
+    "title": "Pädiatrisches Beurteilungsdreieck (PAT)",
+    "category": "Schema · Pädiatrie",
+    "stand": "Ersteindruck – ohne technische Hilfsmittel",
+    "source": "Schneller pädiatrischer Ersteindruck: Erscheinungsbild, Atemarbeit und Hautdurchblutung. Das PAT ersetzt nicht das ABCDE-Schema.",
+    "steps": [
+      "Erscheinungsbild: Tonus, Interaktion, Beruhigbarkeit, Blick und Schreien (TICLS).",
+      "Atemarbeit: auffällige Atemgeräusche, Einziehungen, Nasenflügeln, Körperhaltung.",
+      "Hautdurchblutung: Blässe, Marmorierung, Zyanose; Gesamteindruck beachten.",
+      "Bei auffälligem Ersteindruck unmittelbar ABCDE und wiederholte Re-Evaluation."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-opqrst",
+    "icon": "🗣️",
+    "title": "OPQRST – strukturierte Symptomanamnese",
+    "category": "Schema · Anamnese",
+    "stand": "Anamnesemerkhilfe",
+    "source": "Merkschema für Schmerzanamnese und weitere akute Beschwerden.",
+    "steps": [
+      "O – Onset: Wann hat es begonnen? Plötzlich oder schleichend?",
+      "P – Provocation / Palliation: Was löst es aus, verstärkt oder bessert es?",
+      "Q – Quality: Wie fühlt es sich an – stechend, drückend, brennend?",
+      "R – Region / Radiation: Wo genau, mit welcher Ausstrahlung?",
+      "S – Severity: Wie stark (z. B. NRS 0–10)?",
+      "T – Time: Wie verläuft es seit Beginn – konstant, zunehmend, episodisch?"
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-sampler",
+    "icon": "📋",
+    "title": "SAMPLER – strukturierte Anamnese",
+    "category": "Schema · Anamnese",
+    "stand": "Anamnesemerkhilfe",
+    "source": "Die genaue Bezeichnung einzelner Buchstaben kann je nach Ausbildung leicht variieren.",
+    "steps": [
+      "S – Signs / Symptoms: Beschwerden und beobachtete Symptome.",
+      "A – Allergies: Allergien und Unverträglichkeiten.",
+      "M – Medications: Regelmäßige und neu eingenommene Medikamente.",
+      "P – Past medical history: Vorerkrankungen, frühere Eingriffe.",
+      "L – Last oral intake: Letzte Nahrungs- und Flüssigkeitsaufnahme.",
+      "E – Events: Ereignisse vor Symptombeginn.",
+      "R – Risk factors: Relevante Risikofaktoren (regional auch andere Bedeutung)."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-xabcde",
+    "icon": "🩺",
+    "title": "XABCDE – strukturierte Erstbeurteilung",
+    "category": "Schema · Erstbeurteilung",
+    "stand": "Lokale SOPs beachten",
+    "source": "Prioritätenorientiertes Untersuchungsschema; X steht für unmittelbar lebensbedrohliche äußere Blutung.",
+    "steps": [
+      "X – Kritische externe Blutungen erkennen und kontrollieren.",
+      "A – Airway: Atemweg prüfen und sichern.",
+      "B – Breathing: Atemmechanik, Frequenz, Auskultation und Oxygenierung.",
+      "C – Circulation: Puls, Perfusion, Blutdruck, Blutungszeichen.",
+      "D – Disability: Bewusstsein, Pupillen, BZ, fokale Neurologie.",
+      "E – Exposure / Environment: Ganzkörperuntersuchung und Wärmeerhalt."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
+  },
+  {
+    "id": "schema-fast",
+    "icon": "🧠",
+    "title": "FAST / BE-FAST – Schlaganfall-Screening",
+    "category": "Schema · Neurologie",
+    "stand": "Screening – regionale Schlaganfallpfade beachten",
+    "source": "Screeningtools können insbesondere Schlaganfälle der hinteren Strombahn nicht sicher ausschließen.",
+    "steps": [
+      "B – Balance: Neue Gang- oder Gleichgewichtsstörung.",
+      "E – Eyes: Plötzliche Sehstörung oder Doppelbilder.",
+      "F – Face: Asymmetrie beim Lächeln.",
+      "A – Arms: Einseitige Arm- oder Beinschwäche.",
+      "S – Speech: Sprach-/Sprechstörung.",
+      "T – Time: Symptombeginn oder Zeitpunkt zuletzt symptomfrei dokumentieren."
+    ],
+    "materials": {
+      "background": [],
+      "checklists": []
+    }
   }
 ]
