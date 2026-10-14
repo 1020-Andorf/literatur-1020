@@ -4,12 +4,86 @@
     "icon": "lungs",
     "title": "Dyspnoe",
     "causes": [
-      "Asthma / COPD",
-      "Anaphylaxie",
-      "Lungenödem",
-      "Pneumothorax",
-      "Lungenembolie",
-      "Pneumonie"
+      {
+        "name": "Asthma bronchiale",
+        "physiology": "Chronisch entzündliche Atemwegserkrankung mit variabler, meist reversibler bronchialer Obstruktion und erhöhter Reagibilität.",
+        "findings": "Anfallsweise Dyspnoe, exspiratorisches Giemen, verlängertes Exspirium, erhöhte Atemarbeit und Atemfrequenz.",
+        "cave": "Eine „stille Lunge“, Bewusstseinsminderung oder Erschöpfung sind kritische Zeichen; fehlendes Giemen ist keine Entwarnung.",
+        "info": "Reversible bronchiale Obstruktion durch Entzündung und Bronchospasmus exspiratorisches Giemen, verlängertes Exspirium, erhöhte Atemfrequenz CAVE: stille Lunge, Erschöpfung und Bewusstseinsstörung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Asthma%20bronchiale%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "COPD-Exazerbation",
+        "physiology": "Akute Verschlechterung einer chronischen, überwiegend nicht vollständig reversiblen Atemwegsobstruktion, häufig durch Infekt getriggert.",
+        "findings": "Mehr Dyspnoe, Husten, Sputum, Giemen, verlängertes Exspirium; CO₂-Retention und Azidose möglich.",
+        "cave": "Normale SpO₂ schließt Hyperkapnie nicht aus; mentale Veränderungen und Erschöpfung beachten.",
+        "info": "Akute Verschlechterung chronischer Atemwegsobstruktion Giemen, vermehrtes Sputum, Hyperkapnie möglich CAVE: Normale SpO₂ schließt Hyperkapnie nicht aus",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=COPD-Exazerbation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Kardiales Lungenödem",
+        "physiology": "Erhöhter hydrostatischer Druck im pulmonalen Gefäßbett führt zur Flüssigkeitsansammlung im Interstitium und in den Alveolen.",
+        "findings": "Orthopnoe, Tachypnoe, feuchte Rasselgeräusche, Hypoxämie, ggf. schaumiger Auswurf; oft Hypertonie.",
+        "cave": "Kann innerhalb kurzer Zeit in respiratorisches Versagen übergehen; ACS als Auslöser bedenken.",
+        "info": "Erhöhter pulmonaler Kapillardruck führt zu Flüssigkeit in Alveolen Rasselgeräusche, Orthopnoe, Hypoxämie, oft Hypertonie CAVE: rasches respiratorisches Versagen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kardiales%20Lungen%C3%B6dem%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Verschluss einer Lungenarterie durch meist venöses thromboembolisches Material; führt zu Perfusionsstörung und möglicher Rechtsherzbelastung.",
+        "findings": "Akute Dyspnoe, Tachykardie, Tachypnoe, pleuritischer Thoraxschmerz, Synkope; SpO₂ kann normal sein.",
+        "cave": "Hypotonie, Synkope und Schockzeichen sprechen für eine besonders kritische Konstellation.",
+        "info": "Thrombotischer Verschluss einer Pulmonalarterie mit gestörtem Gasaustausch Tachypnoe, Tachykardie, pleuritischer Schmerz, eventuell Hypoxämie CAVE: normale SpO₂ schließt LAE nicht aus",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Lungenembolie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Infektiöse Entzündung des Lungenparenchyms",
+        "findings": "Fieber, Husten, fokale Rasselgeräusche, Tachypnoe",
+        "cave": "ältere Menschen teils ohne Fieber",
+        "info": "Infektiöse Entzündung des Lungenparenchyms Fieber, Husten, fokale Rasselgeräusche, Tachypnoe CAVE: ältere Menschen teils ohne Fieber",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pneumonie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pneumothorax",
+        "physiology": "Luft im Pleuraspalt hebt den negativen intrapleuralen Druck auf und verursacht einen teilweisen oder vollständigen Lungenkollaps.",
+        "findings": "Plötzlicher einseitiger Thoraxschmerz, Dyspnoe, abgeschwächtes Atemgeräusch; bei ausgeprägter Form Hypoxämie.",
+        "cave": "Spannungspneumothorax bei zunehmender respiratorischer Insuffizienz oder Schock klinisch sofort bedenken.",
+        "info": "Luft im Pleuraspalt führt zum Lungenkollaps plötzliche einseitige Schmerzen, abgeschwächtes Atemgeräusch CAVE: Schockzeichen bei Spannungspneumothorax",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pneumothorax%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akutes Koronarsyndrom",
+        "physiology": "Akute Minderdurchblutung des Myokards durch Plaqueruptur und thrombotische Koronarobstruktion; Spektrum von instabiler Angina bis Infarkt.",
+        "findings": "Druck/Enge retrosternal, Ausstrahlung, Dyspnoe, Übelkeit, Kaltschweißigkeit; 12-Kanal-EKG kann ST-Veränderungen zeigen, initial jedoch auch unauffällig sein.",
+        "cave": "Atypische oder schmerzfreie Verläufe sind möglich, insbesondere bei älteren Menschen, Diabetes und Frauen.",
+        "info": "Myokardischämie durch Koronarverschluss/-verengung Dyspnoe, Brustdruck, Kaltschweißigkeit, EKG-Veränderungen möglich CAVE: auch ohne Thoraxschmerz",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Anaphylaxie",
+        "physiology": "Systemische allergische Reaktion mit Bronchospasmus und Gefäßweitstellung",
+        "findings": "Dyspnoe, Schwellung, Hypotonie, ggf. Urtikaria",
+        "cave": "rascher Kreislaufkollaps",
+        "info": "Systemische allergische Reaktion mit Bronchospasmus und Gefäßweitstellung Dyspnoe, Schwellung, Hypotonie, ggf. Urtikaria CAVE: rascher Kreislaufkollaps",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Anaphylaxie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Asthma / COPD",
+        "physiology": "Asthma / COPD: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Asthma%20/%20COPD%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Seit wann bestehen die Beschwerden?",
@@ -22,19 +96,85 @@
       "Zyanose",
       "SpO₂-Abfall trotz Sauerstoff",
       "Erschöpfung / Vigilanzminderung"
-    ]
+    ],
+    "group": "Atmung"
   },
   {
     "id": "thorax",
     "icon": "heart",
     "title": "Thoraxschmerz",
     "causes": [
-      "ACS",
-      "Aortensyndrom",
-      "Lungenembolie",
-      "Pneumothorax",
-      "Perikarditis",
-      "Muskuloskelettal"
+      {
+        "name": "Akutes Koronarsyndrom",
+        "physiology": "Akute Minderdurchblutung des Myokards durch Plaqueruptur und thrombotische Koronarobstruktion; Spektrum von instabiler Angina bis Infarkt.",
+        "findings": "Druck/Enge retrosternal, Ausstrahlung, Dyspnoe, Übelkeit, Kaltschweißigkeit; 12-Kanal-EKG kann ST-Veränderungen zeigen, initial jedoch auch unauffällig sein.",
+        "cave": "Atypische oder schmerzfreie Verläufe sind möglich, insbesondere bei älteren Menschen, Diabetes und Frauen.",
+        "info": "Myokardischämie meist durch Plaqueruptur und Thrombus Druck/Enge, Ausstrahlung, Übelkeit, EKG kann initial unauffällig sein CAVE: 12-Kanal-EKG und serieller Verlauf, atypische Symptome",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akutes Aortensyndrom",
+        "physiology": "Einriss der Aortenintima oder intramurales Hämatom",
+        "findings": "plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich",
+        "cave": "Schock und Organischämie",
+        "info": "Einriss der Aortenintima oder intramurales Hämatom plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich CAVE: Schock und Organischämie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Aortensyndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Verschluss einer Lungenarterie durch meist venöses thromboembolisches Material; führt zu Perfusionsstörung und möglicher Rechtsherzbelastung.",
+        "findings": "Akute Dyspnoe, Tachykardie, Tachypnoe, pleuritischer Thoraxschmerz, Synkope; SpO₂ kann normal sein.",
+        "cave": "Hypotonie, Synkope und Schockzeichen sprechen für eine besonders kritische Konstellation.",
+        "info": "Pulmonalarterieller Gefäßverschluss atemabhängiger Schmerz, Tachykardie, Dyspnoe CAVE: Synkope und Hypotonie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Lungenembolie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pneumothorax",
+        "physiology": "Luft im Pleuraspalt hebt den negativen intrapleuralen Druck auf und verursacht einen teilweisen oder vollständigen Lungenkollaps.",
+        "findings": "Plötzlicher einseitiger Thoraxschmerz, Dyspnoe, abgeschwächtes Atemgeräusch; bei ausgeprägter Form Hypoxämie.",
+        "cave": "Spannungspneumothorax bei zunehmender respiratorischer Insuffizienz oder Schock klinisch sofort bedenken.",
+        "info": "Luft im Pleuraspalt abrupt einsetzender einseitiger pleuritischer Schmerz und Dyspnoe CAVE: Spannungskomponente",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pneumothorax%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Perikarditis",
+        "physiology": "Entzündung des Herzbeutels",
+        "findings": "lage- und atemabhängiger Schmerz, Besserung im Sitzen, ggf. diffuse ST-Hebungen",
+        "cave": "Tamponadezeichen",
+        "info": "Entzündung des Herzbeutels lage- und atemabhängiger Schmerz, Besserung im Sitzen, ggf. diffuse ST-Hebungen CAVE: Tamponadezeichen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Perikarditis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Muskuloskelettaler Thoraxschmerz",
+        "physiology": "Reizung von Muskeln, Rippen oder Gelenken",
+        "findings": "oft bewegungs-/druckabhängig",
+        "cave": "Druckschmerz schließt ACS nicht sicher aus",
+        "info": "Reizung von Muskeln, Rippen oder Gelenken oft bewegungs-/druckabhängig CAVE: Druckschmerz schließt ACS nicht sicher aus",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Muskuloskelettaler%20Thoraxschmerz%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ösophagealer Reflux",
+        "physiology": "Rückfluss von Magensäure in die Speiseröhre",
+        "findings": "brennender retrosternaler Schmerz, nach Essen/Liegen",
+        "cave": "ACS nicht allein anhand Sodbrennen ausschließen",
+        "info": "Rückfluss von Magensäure in die Speiseröhre brennender retrosternaler Schmerz, nach Essen/Liegen CAVE: ACS nicht allein anhand Sodbrennen ausschließen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=%C3%96sophagealer%20Reflux%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "ACS",
+        "physiology": "ACS: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=ACS%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Druck, Enge oder Stechen?",
@@ -47,19 +187,84 @@
       "Kaltschweißigkeit",
       "Neurologische Defizite",
       "Schwere Dyspnoe"
-    ]
+    ],
+    "group": "Kreislauf"
   },
   {
     "id": "bewusstsein",
     "icon": "brain",
     "title": "Bewusstseinsstörung",
     "causes": [
-      "Hypoglykämie",
-      "Intoxikation",
-      "Krampfanfall",
-      "Schlaganfall",
-      "Sepsis",
-      "Trauma"
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Ein zu niedriger Blutzucker führt zu sympathoadrenergen und neuroglykopenischen Symptomen.",
+        "findings": "Schwitzen, Tremor, Hunger, Tachykardie, Verwirrtheit, Krampf, Koma; BZ-Messung entscheidend, häufig klinisch relevant <70 mg/dl (3,9 mmol/l).",
+        "cave": "Kann Schlaganfall imitieren. Einmalige Normalisierung schließt erneutes Absinken bei langwirksamen Arzneien nicht aus.",
+        "info": "Glukosemangel im Gehirn BZ typischerweise unter 70 mg/dl (3,9 mmol/l), neuroglykopenische Zeichen CAVE: sofort BZ messen, Schwellen individuell",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypoglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Intoxikation",
+        "physiology": "Stoffwirkung auf ZNS oder Atmung",
+        "findings": "Pupillen-/Atemauffälligkeiten, unterschiedliche Vitalwerte",
+        "cave": "Mischintoxikation und Hypoglykämie",
+        "info": "Stoffwirkung auf ZNS oder Atmung Pupillen-/Atemauffälligkeiten, unterschiedliche Vitalwerte CAVE: Mischintoxikation und Hypoglykämie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Intoxikation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Schlaganfall",
+        "physiology": "Akute fokale zerebrale Funktionsstörung durch ischämischen Gefäßverschluss oder Hirnblutung.",
+        "findings": "Akute Sprachstörung, Fazialisparese, Arm-/Beinschwäche, Sehstörung oder Ataxie; neurologisches Screening und BZ.",
+        "cave": "Auch bei rascher Besserung TIA bedenken; Beginn bzw. „last known well“ dokumentieren.",
+        "info": "Zerebrale Minderperfusion oder Blutung fokale Defizite, Vigilanzstörung bei großer Läsion CAVE: Zeitpunkt zuletzt gesund erheben",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Schlaganfall%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Postiktaler Zustand",
+        "physiology": "Vorübergehende neuronale Erschöpfung nach epileptischem Anfall",
+        "findings": "Somnolenz, Verwirrtheit, ggf. Todd-Parese",
+        "cave": "persistierende Ausfälle auch auf Schlaganfall prüfen",
+        "info": "Vorübergehende neuronale Erschöpfung nach epileptischem Anfall Somnolenz, Verwirrtheit, ggf. Todd-Parese CAVE: persistierende Ausfälle auch auf Schlaganfall prüfen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Postiktaler%20Zustand%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Sepsis",
+        "physiology": "Lebensbedrohliche Organdysfunktion durch dysregulierte Wirtsreaktion auf eine Infektion.",
+        "findings": "Mögliche Zeichen: veränderte Vigilanz, Tachypnoe, Tachykardie, Hypotonie, Fieber oder Hypothermie, verminderte Urinmenge.",
+        "cave": "Fieber ist nicht obligat. Normale Blutdruckwerte schließen frühe Organdysfunktion nicht aus.",
+        "info": "Infektionsbedingte systemische Dysregulation mit Organversagen Verwirrtheit, Tachypnoe, mögliche Hypotonie CAVE: Fieber kann fehlen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Sepsis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hyperkapnie / Hypoxie",
+        "physiology": "Störung der Oxygenierung oder CO₂-Elimination",
+        "findings": "pathologische SpO₂/AF, ggf. Somnolenz",
+        "cave": "SpO₂ allein misst kein CO₂",
+        "info": "Störung der Oxygenierung oder CO₂-Elimination pathologische SpO₂/AF, ggf. Somnolenz CAVE: SpO₂ allein misst kein CO₂",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hyperkapnie%20/%20Hypoxie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Krampfanfall",
+        "physiology": "Krampfanfall: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Krampfanfall%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Trauma",
+        "physiology": "Trauma: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Trauma%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Letzter normaler Zustand?",
@@ -72,18 +277,83 @@
       "Ateminsuffizienz",
       "Pupillendifferenz",
       "Neurologische Herdzeichen"
-    ]
+    ],
+    "group": "Neurologie"
   },
   {
     "id": "synkope",
     "icon": "bolt",
     "title": "Synkope",
     "causes": [
-      "Vasovagal",
-      "Kardial",
-      "Orthostatisch",
-      "Hypovolämie",
-      "Metabolisch"
+      {
+        "name": "Vasovagale Synkope",
+        "physiology": "Reflexbedingte Bradykardie und Vasodilatation",
+        "findings": "Prodromi mit Schwitzen, Übelkeit, rasche Erholung",
+        "cave": "Sturzfolgen",
+        "info": "Reflexbedingte Bradykardie und Vasodilatation Prodromi mit Schwitzen, Übelkeit, rasche Erholung CAVE: Sturzfolgen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Vasovagale%20Synkope%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Orthostatische Hypotonie",
+        "physiology": "Unzureichende Blutdruckregulation beim Aufstehen",
+        "findings": "Schwindel nach Lagewechsel, niedriger RR",
+        "cave": "Dehydratation oder Blutverlust",
+        "info": "Unzureichende Blutdruckregulation beim Aufstehen Schwindel nach Lagewechsel, niedriger RR CAVE: Dehydratation oder Blutverlust",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Orthostatische%20Hypotonie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Arrhythmogene Synkope",
+        "physiology": "Vorübergehend zu geringes Herzzeitvolumen durch Rhythmusstörung",
+        "findings": "plötzlich ohne Vorzeichen, Palpitationen, pathologisches EKG möglich",
+        "cave": "hohe Gefährdung",
+        "info": "Vorübergehend zu geringes Herzzeitvolumen durch Rhythmusstörung plötzlich ohne Vorzeichen, Palpitationen, pathologisches EKG möglich CAVE: hohe Gefährdung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Arrhythmogene%20Synkope%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Verschluss einer Lungenarterie durch meist venöses thromboembolisches Material; führt zu Perfusionsstörung und möglicher Rechtsherzbelastung.",
+        "findings": "Akute Dyspnoe, Tachykardie, Tachypnoe, pleuritischer Thoraxschmerz, Synkope; SpO₂ kann normal sein.",
+        "cave": "Hypotonie, Synkope und Schockzeichen sprechen für eine besonders kritische Konstellation.",
+        "info": "Große Embolie beeinträchtigt rechten Ventrikel und Kreislauf Dyspnoe, Tachykardie, Synkope CAVE: hypotensiver Schock",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Lungenembolie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akuter Blutverlust",
+        "physiology": "Hypovolämie senkt zerebrale Perfusion",
+        "findings": "Tachykardie, Blässe, Schweiß",
+        "cave": "okkulte Blutung",
+        "info": "Hypovolämie senkt zerebrale Perfusion Tachykardie, Blässe, Schweiß CAVE: okkulte Blutung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akuter%20Blutverlust%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Kardial",
+        "physiology": "Kardial: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kardial%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hypovolämie",
+        "physiology": "Hypovolämie: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypovol%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Metabolisch",
+        "physiology": "Metabolisch: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Metabolisch%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Belastungsabhängig?",
@@ -96,19 +366,136 @@
       "Bei Belastung",
       "Thoraxschmerz",
       "Pathologisches EKG"
-    ]
+    ],
+    "group": "Kreislauf"
   },
   {
     "id": "bauch",
     "icon": "stethoscope",
     "title": "Bauchschmerz",
     "causes": [
-      "Akutes Abdomen",
-      "GI-Blutung",
-      "AAA",
-      "Galle",
-      "Appendizitis",
-      "Renale Kolik"
+      {
+        "name": "Gastroenteritis",
+        "physiology": "Infektiöse Entzündung von Magen und Darm",
+        "findings": "diffuse Krämpfe, Erbrechen, Diarrhö",
+        "cave": "Dehydratation und atypische schwere Ursache",
+        "info": "Infektiöse Entzündung von Magen und Darm diffuse Krämpfe, Erbrechen, Diarrhö CAVE: Dehydratation und atypische schwere Ursache",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Gastroenteritis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Appendizitis",
+        "physiology": "Entzündlicher Prozess des Wurmfortsatzes, häufig infolge luminaler Obstruktion.",
+        "findings": "Anfangs periumbilikaler Schmerz, später häufig rechter Unterbauch, Übelkeit, Appetitverlust, eventuell Fieber.",
+        "cave": "Atypische Verläufe bei Kindern, älteren Menschen und Schwangeren; Peritonitis-/Sepsiszeichen beachten.",
+        "info": "Entzündung der Appendix periumbilikaler Schmerz mit Wanderung nach rechts unten, Fieber möglich CAVE: atypische Lokalisation",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Appendizitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Cholezystitis / Gallenkolik",
+        "physiology": "Gallensteinbedingte Obstruktion und ggf. Entzündung",
+        "findings": "rechter Oberbauch, Übelkeit, Murphy-Zeichen",
+        "cave": "Cholangitis bei Fieber/Ikterus",
+        "info": "Gallensteinbedingte Obstruktion und ggf. Entzündung rechter Oberbauch, Übelkeit, Murphy-Zeichen CAVE: Cholangitis bei Fieber/Ikterus",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Cholezystitis%20/%20Gallenkolik%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pankreatitis",
+        "physiology": "Entzündung des Pankreas durch Enzymaktivierung",
+        "findings": "gürtelförmiger Oberbauchschmerz, Erbrechen",
+        "cave": "Organversagen bei schwerem Verlauf",
+        "info": "Entzündung des Pankreas durch Enzymaktivierung gürtelförmiger Oberbauchschmerz, Erbrechen CAVE: Organversagen bei schwerem Verlauf",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pankreatitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Nierenkolik",
+        "physiology": "Harnleiterobstruktion meist durch Stein",
+        "findings": "kolikartiger Flankenschmerz, Ausstrahlung Leiste, Hämaturie",
+        "cave": "Fieber + Harnstau ist urologischer Notfall",
+        "info": "Harnleiterobstruktion meist durch Stein kolikartiger Flankenschmerz, Ausstrahlung Leiste, Hämaturie CAVE: Fieber + Harnstau ist urologischer Notfall",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Nierenkolik%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ileus",
+        "physiology": "Mechanische oder funktionelle Darmpassagestörung",
+        "findings": "kolikartige Schmerzen, Erbrechen, Distension, fehlender Wind",
+        "cave": "Strangulation/Perforation",
+        "info": "Mechanische oder funktionelle Darmpassagestörung kolikartige Schmerzen, Erbrechen, Distension, fehlender Wind CAVE: Strangulation/Perforation",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Ileus%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Mesenterialischämie",
+        "physiology": "Akute Minderdurchblutung des Darms",
+        "findings": "starker Schmerz oft bei zunächst wenig Befund",
+        "cave": "rasche Nekrose",
+        "info": "Akute Minderdurchblutung des Darms starker Schmerz oft bei zunächst wenig Befund CAVE: rasche Nekrose",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Mesenterialisch%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Rupturiertes Aortenaneurysma",
+        "physiology": "Gefäßwandruptur mit innerer Blutung",
+        "findings": "Abdomen-/Rückenschmerz, Synkope, Hypotonie",
+        "cave": "Schockgefahr",
+        "info": "Gefäßwandruptur mit innerer Blutung Abdomen-/Rückenschmerz, Synkope, Hypotonie CAVE: Schockgefahr",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Rupturiertes%20Aortenaneurysma%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Extrauteringravidität",
+        "physiology": "Schwangerschaft außerhalb des Uterus",
+        "findings": "Unterbauchschmerz, vaginale Blutung, Synkope",
+        "cave": "bei gebärfähigen Patientinnen Schwangerschaft erfragen",
+        "info": "Schwangerschaft außerhalb des Uterus Unterbauchschmerz, vaginale Blutung, Synkope CAVE: bei gebärfähigen Patientinnen Schwangerschaft erfragen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Extrauteringravidit%C3%A4t%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akutes Koronarsyndrom",
+        "physiology": "Akute Minderdurchblutung des Myokards durch Plaqueruptur und thrombotische Koronarobstruktion; Spektrum von instabiler Angina bis Infarkt.",
+        "findings": "Druck/Enge retrosternal, Ausstrahlung, Dyspnoe, Übelkeit, Kaltschweißigkeit; 12-Kanal-EKG kann ST-Veränderungen zeigen, initial jedoch auch unauffällig sein.",
+        "cave": "Atypische oder schmerzfreie Verläufe sind möglich, insbesondere bei älteren Menschen, Diabetes und Frauen.",
+        "info": "Myokardischämie kann Oberbauchbeschwerden auslösen Übelkeit, Druck, Kaltschweißigkeit CAVE: atypischer Infarkt",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akutes Abdomen",
+        "physiology": "Akutes Abdomen: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Abdomen%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "GI-Blutung",
+        "physiology": "GI-Blutung: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=GI-Blutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "AAA",
+        "physiology": "AAA: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=AAA%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Renale Kolik",
+        "physiology": "Renale Kolik: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Renale%20Kolik%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Lokalisation und OPQRST?",
@@ -121,16 +508,54 @@
       "Schockzeichen",
       "Blutiges Erbrechen / Teerstuhl",
       "Synkope"
-    ]
+    ],
+    "group": "Abdomen"
   },
   {
     "id": "allergie",
     "icon": "syringe",
     "title": "Allergische Reaktion",
     "causes": [
-      "Anaphylaxie",
-      "Lokale Reaktion",
-      "Medikamentenreaktion"
+      {
+        "name": "Lokale allergische Reaktion",
+        "physiology": "Lokal begrenzte Mastzellaktivierung nach Kontakt mit einem Allergen. Histamin führt zu Vasodilatation, Rötung, Juckreiz und lokaler Schwellung.",
+        "findings": "Umschriebene Quaddel, Rötung oder Juckreiz; stabile Atmung und Hämodynamik, keine systemische Beteiligung.",
+        "cave": "Wiederholte Untersuchung: zunächst lokale Zeichen können einer systemischen Reaktion vorausgehen.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Lokale%20allergische%20Reaktion%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Urtikaria (Nesselsucht)",
+        "physiology": "Histaminvermittelte vorübergehende Quaddelbildung in der Dermis; Auslöser können Allergien, Infekte oder Medikamente sein.",
+        "findings": "Flüchtige juckende Quaddeln, teils Angioödem; bei isolierter Urtikaria keine Kreislauf- oder Atemwegsbeteiligung.",
+        "cave": "Urtikaria alleine beweist keine Anaphylaxie; Atemnot, Hypotonie oder Schleimhautschwellung sofort beachten.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Urtikaria%20%28Nesselsucht%29%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Anaphylaxie",
+        "physiology": "Akute systemische Mediatorfreisetzung (oft IgE-vermittelt) führt zu Vasodilatation, erhöhter Gefäßpermeabilität, Bronchospasmus und Schleimhautödem.",
+        "findings": "Plötzlicher Beginn nach möglichem Auslöser; Urtikaria/Flush, Schleimhautschwellung, Giemen/Stridor, Blutdruckabfall, gastrointestinale Symptome.",
+        "cave": "Lebensbedrohlicher Atemwegs- oder Kreislaufverlauf auch OHNE Hautsymptome; unverzügliche Behandlung nach lokalen Anaphylaxie-Standards.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Anaphylaxie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Angioödem (histamin- oder bradykininvermittelt)",
+        "physiology": "Schwellung tiefer Haut- und Schleimhautschichten durch erhöhte Gefäßpermeabilität; ACE-Hemmer können ein bradykininvermitteltes Angioödem auslösen.",
+        "findings": "Lippen-, Zungen-, Mundboden- oder Kehlkopfschwellung; histaminerge Formen oft mit Juckreiz/Urtikaria, bradykininvermittelte häufig ohne.",
+        "cave": "Progrediente Zungenschwellung/Stridor: drohende Atemwegsverlegung. Bradykininvermittelte Formen sprechen auf übliche antiallergische Medikamente oft nicht an.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Angio%C3%B6dem%20%28histamin-%20oder%20bradykininvermittelt%29%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Arzneimittelreaktion",
+        "physiology": "Immunologische oder nichtimmunologische Unverträglichkeit nach Medikamenteneinnahme, vom milden Exanthem bis zur systemischen Anaphylaxie.",
+        "findings": "Zeitbezug zu neuem Medikament; Juckreiz, Exanthem, Quaddeln, gegebenenfalls Atem- oder Kreislaufsymptome.",
+        "cave": "Schleimhauterosionen, Hautablösung, Fieber oder Kreislaufbeteiligung sind Warnzeichen für schwere Reaktionen.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Arzneimittelreaktion%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Möglicher Auslöser?",
@@ -142,6 +567,65 @@
       "Hypotonie",
       "Rasche Progression",
       "Bewusstseinsstörung"
+    ],
+    "group": "Allgemein / Allergie"
+  },
+  {
+    "id": "diag-stridor",
+    "title": "Stridor / akute Atemwegsverlegung",
+    "group": "Atemweg",
+    "icon": "lungs",
+    "questions": [
+      "Plötzlicher Beginn beim Essen oder Spielen?",
+      "Schluckstörung, Fieber, Speichelfluss?",
+      "Schwellung nach Allergen- oder Medikamentenkontakt?"
+    ],
+    "redflags": [
+      "Ruhe-Stridor, Sprechunfähigkeit",
+      "Zunehmende Erschöpfung, Zyanose",
+      "Bewusstseinsstörung oder völliges Verstummen der Atmung"
+    ],
+    "causes": [
+      {
+        "name": "Fremdkörperaspiration",
+        "physiology": "Ein aspirierter Gegenstand verlegt die oberen oder unteren Atemwege teilweise oder vollständig.",
+        "findings": "Abruptes Husten/Erstickungsgefühl nach Essen oder Spielen; Stridor, ungleiche Atemgeräusche, bei vollständiger Verlegung kein effektives Husten/Sprechen.",
+        "cave": "Vollständige Atemwegsverlegung ist unmittelbar lebensbedrohlich.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Fremdk%C3%B6rperaspiration%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Epiglottitis",
+        "physiology": "Entzündliche Schwellung der supraglottischen Strukturen verursacht eine potenziell rasch progrediente Verengung.",
+        "findings": "Schwere Schluckschmerzen, Speichelfluss, Fieber, kloßige Sprache, eventuell inspiratorischer Stridor.",
+        "cave": "Unnötige Manipulation am Rachen vermeiden; klinische Verschlechterung und Atemwegsverlegung möglich.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Epiglottitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pseudokrupp",
+        "physiology": "Virusbedingtes subglottisches Schleimhautödem bei meist kleinen Kindern.",
+        "findings": "Bellender Husten, Heiserkeit, inspiratorischer Stridor, häufig nachts.",
+        "cave": "Ruhe-Stridor, Einziehungen oder Erschöpfung sprechen für schwere Ausprägung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pseudokrupp%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Anaphylaxie",
+        "physiology": "Akute systemische Mediatorfreisetzung (oft IgE-vermittelt) führt zu Vasodilatation, erhöhter Gefäßpermeabilität, Bronchospasmus und Schleimhautödem.",
+        "findings": "Plötzlicher Beginn nach möglichem Auslöser; Urtikaria/Flush, Schleimhautschwellung, Giemen/Stridor, Blutdruckabfall, gastrointestinale Symptome.",
+        "cave": "Lebensbedrohlicher Atemwegs- oder Kreislaufverlauf auch OHNE Hautsymptome; unverzügliche Behandlung nach lokalen Anaphylaxie-Standards.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Anaphylaxie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Angioödem",
+        "physiology": "Schwellung tiefer Haut- und Schleimhautschichten durch erhöhte Gefäßpermeabilität; ACE-Hemmer können ein bradykininvermitteltes Angioödem auslösen.",
+        "findings": "Lippen-, Zungen-, Mundboden- oder Kehlkopfschwellung; histaminerge Formen oft mit Juckreiz/Urtikaria, bradykininvermittelte häufig ohne.",
+        "cave": "Progrediente Zungenschwellung/Stridor: drohende Atemwegsverlegung. Bradykininvermittelte Formen sprechen auf übliche antiallergische Medikamente oft nicht an.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Angio%C3%B6dem%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ]
   },
   {
@@ -149,9 +633,66 @@
     "icon": "clock",
     "title": "Schlaganfall",
     "causes": [
-      "Ischämischer Insult",
-      "Hämorrhagie",
-      "Stroke Mimic"
+      {
+        "name": "Ischämischer Schlaganfall",
+        "physiology": "Akuter Gefäßverschluss mit Hirnischämie",
+        "findings": "FAST-Defizite, Aphasie, Hemiparese",
+        "cave": "Zeitkritik, ggf. große Gefäßokklusion",
+        "info": "Akuter Gefäßverschluss mit Hirnischämie FAST-Defizite, Aphasie, Hemiparese CAVE: Zeitkritik, ggf. große Gefäßokklusion",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Isch%C3%A4mischer%20Schlaganfall%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Intrazerebrale Blutung",
+        "physiology": "Blutung in Hirngewebe",
+        "findings": "fokale Defizite, Kopfschmerz, Vigilanzabfall möglich",
+        "cave": "klinisch nicht sicher von Ischämie unterscheidbar",
+        "info": "Blutung in Hirngewebe fokale Defizite, Kopfschmerz, Vigilanzabfall möglich CAVE: klinisch nicht sicher von Ischämie unterscheidbar",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Intrazerebrale%20Blutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Ein zu niedriger Blutzucker führt zu sympathoadrenergen und neuroglykopenischen Symptomen.",
+        "findings": "Schwitzen, Tremor, Hunger, Tachykardie, Verwirrtheit, Krampf, Koma; BZ-Messung entscheidend, häufig klinisch relevant <70 mg/dl (3,9 mmol/l).",
+        "cave": "Kann Schlaganfall imitieren. Einmalige Normalisierung schließt erneutes Absinken bei langwirksamen Arzneien nicht aus.",
+        "info": "Glukosemangel kann fokale Ausfälle imitieren niedriger BZ, neurologische Symptome CAVE: rasche Messung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypoglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Todd-Parese",
+        "physiology": "Vorübergehende fokale Schwäche nach Anfall",
+        "findings": "postiktale Anamnese",
+        "cave": "paralleler Schlaganfall möglich",
+        "info": "Vorübergehende fokale Schwäche nach Anfall postiktale Anamnese CAVE: paralleler Schlaganfall möglich",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Todd-Parese%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ischämischer Insult",
+        "physiology": "Ischämischer Insult: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Isch%C3%A4mischer%20Insult%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hämorrhagie",
+        "physiology": "Hämorrhagie: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=H%C3%A4morrhagie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Stroke Mimic",
+        "physiology": "Stroke Mimic: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Stroke%20Mimic%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Last seen well?",
@@ -164,18 +705,81 @@
       "Bewusstseinsstörung",
       "Starker Kopfschmerz",
       "Aspirationsgefahr"
-    ]
+    ],
+    "group": "Neurologie"
   },
   {
     "id": "trauma",
     "icon": "bandage",
     "title": "Trauma",
     "causes": [
-      "SHT",
-      "Thoraxtrauma",
-      "Abdominaltrauma",
-      "Fraktur",
-      "Starke Blutung"
+      {
+        "name": "Commotio cerebri",
+        "physiology": "Traumatisch bedingte vorübergehende Hirnfunktionsstörung",
+        "findings": "Kopfschmerz, Amnesie, Übelkeit",
+        "cave": "zunehmende Bewusstseinsstörung",
+        "info": "Traumatisch bedingte vorübergehende Hirnfunktionsstörung Kopfschmerz, Amnesie, Übelkeit CAVE: zunehmende Bewusstseinsstörung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Commotio%20cerebri%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Subduralhämatom",
+        "physiology": "Blutung zwischen Dura und Arachnoidea",
+        "findings": "Kopfschmerz, Vigilanzabfall, fokale Zeichen",
+        "cave": "verzögerte Verschlechterung, Antikoagulation",
+        "info": "Blutung zwischen Dura und Arachnoidea Kopfschmerz, Vigilanzabfall, fokale Zeichen CAVE: verzögerte Verschlechterung, Antikoagulation",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Subduralh%C3%A4matom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Epiduralhämatom",
+        "physiology": "Arterielle/venöse Blutung zwischen Schädel und Dura",
+        "findings": "Bewusstseinsstörung, eventuell freies Intervall",
+        "cave": "rasche Einklemmung",
+        "info": "Arterielle/venöse Blutung zwischen Schädel und Dura Bewusstseinsstörung, eventuell freies Intervall CAVE: rasche Einklemmung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Epiduralh%C3%A4matom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "SHT",
+        "physiology": "SHT: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=SHT%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Thoraxtrauma",
+        "physiology": "Thoraxtrauma: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Thoraxtrauma%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Abdominaltrauma",
+        "physiology": "Abdominaltrauma: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Abdominaltrauma%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Fraktur",
+        "physiology": "Fraktur: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Fraktur%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Starke Blutung",
+        "physiology": "Starke Blutung: Die genaue zugrunde liegende Ursache und klinische Einordnung ergeben sich aus Anamnese und fokussiertem Untersuchungsbefund.",
+        "findings": "Leitsymptom, Vitalparameter, Begleitbeschwerden und situationsbezogene Diagnostik gemeinsam beurteilen; kein einzelner Wert beweist die Diagnose.",
+        "cave": "Instabile Vitalparameter oder rasche Verschlechterung erfordern prioritäre ABCDE-Beurteilung.",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Starke%20Blutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ],
     "questions": [
       "Unfallmechanismus?",
@@ -188,6 +792,1596 @@
       "Atemnot",
       "Bewusstseinsstörung",
       "Starke Blutung"
+    ],
+    "group": "Trauma"
+  },
+  {
+    "id": "diag-schluckstoerung-halsanschwellung",
+    "group": "Atemweg",
+    "icon": "🗣️",
+    "title": "Schluckstörung / Halsanschwellung",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Angioödem",
+        "physiology": "Tiefes Ödem von Haut oder Schleimhaut, histamin- oder bradykininvermittelt",
+        "findings": "Zungen-/Lippenschwellung, Dysphagie, ggf. Stridor",
+        "cave": "ACE-Hemmer-Angioödem oft ohne Urtikaria",
+        "info": "Tiefes Ödem von Haut oder Schleimhaut, histamin- oder bradykininvermittelt Zungen-/Lippenschwellung, Dysphagie, ggf. Stridor CAVE: ACE-Hemmer-Angioödem oft ohne Urtikaria",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Angio%C3%B6dem%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Peritonsillarabszess",
+        "physiology": "Eitrige Infektion im Tonsillenumfeld",
+        "findings": "einseitige Halsschmerzen, kloßige Sprache, Trismus",
+        "cave": "Atemweg und tiefe Ausbreitung",
+        "info": "Eitrige Infektion im Tonsillenumfeld einseitige Halsschmerzen, kloßige Sprache, Trismus CAVE: Atemweg und tiefe Ausbreitung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Peritonsillarabszess%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Schlaganfall",
+        "physiology": "Akute fokale zerebrale Funktionsstörung durch ischämischen Gefäßverschluss oder Hirnblutung.",
+        "findings": "Akute Sprachstörung, Fazialisparese, Arm-/Beinschwäche, Sehstörung oder Ataxie; neurologisches Screening und BZ.",
+        "cave": "Auch bei rascher Besserung TIA bedenken; Beginn bzw. „last known well“ dokumentieren.",
+        "info": "Zentrale Schluckstörung durch zerebrale Ischämie/Blutung Dysarthrie, Fazialisparese, Aspirationsgefahr CAVE: plötzlicher Beginn ist zeitkritisch",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Schlaganfall%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-husten-produktiver-husten",
+    "group": "Atmung",
+    "icon": "🫁",
+    "title": "Husten / produktiver Husten",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Akute Bronchitis",
+        "physiology": "Meist virale Entzündung der Bronchialschleimhaut",
+        "findings": "Husten, Auswurf, oft normale SpO₂",
+        "cave": "Dyspnoe oder schlechte Vitalwerte sprechen für schwere Ursache",
+        "info": "Meist virale Entzündung der Bronchialschleimhaut Husten, Auswurf, oft normale SpO₂ CAVE: Dyspnoe oder schlechte Vitalwerte sprechen für schwere Ursache",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akute%20Bronchitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Infektion von Alveolen und Interstitium",
+        "findings": "Fieber, produktiver Husten, Tachypnoe, fokale Auskultation",
+        "cave": "Sepsisgefahr",
+        "info": "Infektion von Alveolen und Interstitium Fieber, produktiver Husten, Tachypnoe, fokale Auskultation CAVE: Sepsisgefahr",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pneumonie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "COPD-Exazerbation",
+        "physiology": "Akute Verschlechterung einer chronischen, überwiegend nicht vollständig reversiblen Atemwegsobstruktion, häufig durch Infekt getriggert.",
+        "findings": "Mehr Dyspnoe, Husten, Sputum, Giemen, verlängertes Exspirium; CO₂-Retention und Azidose möglich.",
+        "cave": "Normale SpO₂ schließt Hyperkapnie nicht aus; mentale Veränderungen und Erschöpfung beachten.",
+        "info": "Akute Verschlechterung bestehender COPD mehr Husten, Dyspnoe und/oder Sputum CAVE: Hyperkapnie und Atemerschöpfung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=COPD-Exazerbation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Kardiales Lungenödem",
+        "physiology": "Erhöhter hydrostatischer Druck im pulmonalen Gefäßbett führt zur Flüssigkeitsansammlung im Interstitium und in den Alveolen.",
+        "findings": "Orthopnoe, Tachypnoe, feuchte Rasselgeräusche, Hypoxämie, ggf. schaumiger Auswurf; oft Hypertonie.",
+        "cave": "Kann innerhalb kurzer Zeit in respiratorisches Versagen übergehen; ACS als Auslöser bedenken.",
+        "info": "Flüssigkeitsübertritt in Lungengewebe Husten, Orthopnoe, feuchte Rasselgeräusche, teils schaumiger Auswurf CAVE: schwere Hypoxämie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kardiales%20Lungen%C3%B6dem%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-bluthusten-haemoptyse",
+    "group": "Atmung",
+    "icon": "🫁",
+    "title": "Bluthusten / Hämoptyse",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Bronchitis / Bronchiektasen",
+        "physiology": "Entzündliche oder strukturelle Bronchialschäden mit Schleimhautblutung",
+        "findings": "blutiger Auswurf, Husten",
+        "cave": "echte Hämoptyse von Hämatemesis unterscheiden",
+        "info": "Entzündliche oder strukturelle Bronchialschäden mit Schleimhautblutung blutiger Auswurf, Husten CAVE: echte Hämoptyse von Hämatemesis unterscheiden",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Bronchitis%20/%20Bronchiektasen%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Verschluss einer Lungenarterie durch meist venöses thromboembolisches Material; führt zu Perfusionsstörung und möglicher Rechtsherzbelastung.",
+        "findings": "Akute Dyspnoe, Tachykardie, Tachypnoe, pleuritischer Thoraxschmerz, Synkope; SpO₂ kann normal sein.",
+        "cave": "Hypotonie, Synkope und Schockzeichen sprechen für eine besonders kritische Konstellation.",
+        "info": "Gefäßverschluss mit möglichem Lungeninfarkt Dyspnoe, pleuritischer Schmerz, Hämoptyse CAVE: Synkope/Hypotonie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Lungenembolie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Entzündungsbedingte Gefäßschädigung",
+        "findings": "Fieber, Husten, blutiges Sputum",
+        "cave": "schwere Infektion",
+        "info": "Entzündungsbedingte Gefäßschädigung Fieber, Husten, blutiges Sputum CAVE: schwere Infektion",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pneumonie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pulmonale Blutung",
+        "physiology": "Blut tritt in die Atemwege ein",
+        "findings": "größere Blutmengen, Hypoxämie",
+        "cave": "Erstickungsgefahr auch ohne erheblichen Blutverlust",
+        "info": "Blut tritt in die Atemwege ein größere Blutmengen, Hypoxämie CAVE: Erstickungsgefahr auch ohne erheblichen Blutverlust",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pulmonale%20Blutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-palpitationen-herzrasen",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Palpitationen / Herzrasen",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Vorhofflimmern",
+        "physiology": "Ungeordnete atriale Erregung mit unregelmäßiger Kammeraktion",
+        "findings": "absolut arrhythmischer Puls, variable HF",
+        "cave": "Instabilität und thromboembolisches Risiko",
+        "info": "Ungeordnete atriale Erregung mit unregelmäßiger Kammeraktion absolut arrhythmischer Puls, variable HF CAVE: Instabilität und thromboembolisches Risiko",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Vorhofflimmern%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Supraventrikuläre Tachykardie",
+        "physiology": "Reentry oder fokale atriale Tachykardie",
+        "findings": "meist regelmäßige schmale Tachykardie, plötzlich einsetzend",
+        "cave": "Hypotonie, Thoraxschmerz, Synkope",
+        "info": "Reentry oder fokale atriale Tachykardie meist regelmäßige schmale Tachykardie, plötzlich einsetzend CAVE: Hypotonie, Thoraxschmerz, Synkope",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Supraventrikul%C3%A4re%20Tachykardie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ventrikuläre Tachykardie",
+        "physiology": "Tachykarder Ursprung aus den Kammern",
+        "findings": "breite regelmäßige QRS-Komplexe häufig, Schock/Synkope",
+        "cave": "breite Tachykardie zunächst als VT bewerten",
+        "info": "Tachykarder Ursprung aus den Kammern breite regelmäßige QRS-Komplexe häufig, Schock/Synkope CAVE: breite Tachykardie zunächst als VT bewerten",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Ventrikul%C3%A4re%20Tachykardie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Sinustachykardie",
+        "physiology": "Physiologische Reaktion auf Stressoren",
+        "findings": "regelmäßiger Rhythmus mit P-Wellen",
+        "cave": "Ursache wie Sepsis, Blutung oder LAE suchen",
+        "info": "Physiologische Reaktion auf Stressoren regelmäßiger Rhythmus mit P-Wellen CAVE: Ursache wie Sepsis, Blutung oder LAE suchen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Sinustachykardie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-bradykardie",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Bradykardie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "AV-Block",
+        "physiology": "Gestörte atrioventrikuläre Überleitung",
+        "findings": "langsame HF, EKG mit Überleitungsstörung",
+        "cave": "höhergradige Blöcke können instabil werden",
+        "info": "Gestörte atrioventrikuläre Überleitung langsame HF, EKG mit Überleitungsstörung CAVE: höhergradige Blöcke können instabil werden",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=AV-Block%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hyperkaliämie",
+        "physiology": "Erhöhtes Serumkalium beeinträchtigt kardiale Erregung",
+        "findings": "Bradykardie, Leitungsstörungen, teils spitze T-Wellen",
+        "cave": "EKG kann trotz schwerer Hyperkaliämie wenig auffällig sein",
+        "info": "Erhöhtes Serumkalium beeinträchtigt kardiale Erregung Bradykardie, Leitungsstörungen, teils spitze T-Wellen CAVE: EKG kann trotz schwerer Hyperkaliämie wenig auffällig sein",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hyperkali%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Medikamentenwirkung",
+        "physiology": "Betablocker, Calciumantagonisten oder Digitalis reduzieren Frequenz/Überleitung",
+        "findings": "Bradykardie, Hypotonie",
+        "cave": "Intoxikation beachten",
+        "info": "Betablocker, Calciumantagonisten oder Digitalis reduzieren Frequenz/Überleitung Bradykardie, Hypotonie CAVE: Intoxikation beachten",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Medikamentenwirkung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Vagale Reaktion",
+        "physiology": "Reflektorische Frequenz- und Blutdrucksenkung",
+        "findings": "Übelkeit, Schwitzen, kurzzeitige Bradykardie",
+        "cave": "kardiale Ursachen ausschließen",
+        "info": "Reflektorische Frequenz- und Blutdrucksenkung Übelkeit, Schwitzen, kurzzeitige Bradykardie CAVE: kardiale Ursachen ausschließen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Vagale%20Reaktion%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-hypotonie-schock",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Hypotonie / Schock",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hypovolämischer Schock",
+        "physiology": "Verminderte zirkulierende Blutmenge",
+        "findings": "Tachykardie, kalte Haut, verlängerte Rekapillarisierung",
+        "cave": "Normotonie schließt kompensierten Schock nicht aus",
+        "info": "Verminderte zirkulierende Blutmenge Tachykardie, kalte Haut, verlängerte Rekapillarisierung CAVE: Normotonie schließt kompensierten Schock nicht aus",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypovol%C3%A4mischer%20Schock%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Kardiogener Schock",
+        "physiology": "Pumpversagen des Herzens",
+        "findings": "Hypotonie, kalte Extremitäten, Stauungszeichen möglich",
+        "cave": "ACS und Rhythmusstörungen",
+        "info": "Pumpversagen des Herzens Hypotonie, kalte Extremitäten, Stauungszeichen möglich CAVE: ACS und Rhythmusstörungen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kardiogener%20Schock%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Septischer Schock",
+        "physiology": "Infektionsbedingte Vasodilatation, Kapillarleck und Organminderperfusion",
+        "findings": "veränderte Vigilanz, Tachypnoe, ggf. warme Haut initial",
+        "cave": "Fieber kann fehlen",
+        "info": "Infektionsbedingte Vasodilatation, Kapillarleck und Organminderperfusion veränderte Vigilanz, Tachypnoe, ggf. warme Haut initial CAVE: Fieber kann fehlen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Septischer%20Schock%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Anaphylaktischer Schock",
+        "physiology": "Systemische Mediatorfreisetzung mit Vasodilatation und Kapillarleck",
+        "findings": "Hypotonie, Bronchospasmus, Hautsymptome möglich",
+        "cave": "ohne Exanthem möglich",
+        "info": "Systemische Mediatorfreisetzung mit Vasodilatation und Kapillarleck Hypotonie, Bronchospasmus, Hautsymptome möglich CAVE: ohne Exanthem möglich",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Anaphylaktischer%20Schock%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Obstruktiver Schock",
+        "physiology": "Mechanische Füllungs-/Auswurfbehinderung des Herzens",
+        "findings": "Hypotonie bei LAE, Tamponade oder Spannungspneumothorax",
+        "cave": "unmittelbar reversible Ursachen",
+        "info": "Mechanische Füllungs-/Auswurfbehinderung des Herzens Hypotonie bei LAE, Tamponade oder Spannungspneumothorax CAVE: unmittelbar reversible Ursachen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Obstruktiver%20Schock%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-bluthochdruck-hypertensiver-notfall",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Bluthochdruck / hypertensiver Notfall",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hypertensiver Notfall",
+        "physiology": "Akut stark erhöhter RR mit Endorganschaden",
+        "findings": "neurologische Defizite, Dyspnoe, Thoraxschmerz oder Nierenfunktionsstörung",
+        "cave": "Endorganschaden ist entscheidend, nicht nur RR-Zahl",
+        "info": "Akut stark erhöhter RR mit Endorganschaden neurologische Defizite, Dyspnoe, Thoraxschmerz oder Nierenfunktionsstörung CAVE: Endorganschaden ist entscheidend, nicht nur RR-Zahl",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypertensiver%20Notfall%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hypertensive Entgleisung ohne akuten Organschaden",
+        "physiology": "Erhöhter arterieller Widerstand",
+        "findings": "oft wenige oder keine Beschwerden",
+        "cave": "keine rasche RR-Senkung ohne Indikation",
+        "info": "Erhöhter arterieller Widerstand oft wenige oder keine Beschwerden CAVE: keine rasche RR-Senkung ohne Indikation",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypertensive%20Entgleisung%20ohne%20akuten%20Organschaden%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Präeklampsie",
+        "physiology": "Schwangerschaftsassoziierte Endotheldysfunktion mit Hypertonie",
+        "findings": "Kopfschmerz, Sehstörung, Oberbauchschmerz",
+        "cave": "Eklampsie/HELLP",
+        "info": "Schwangerschaftsassoziierte Endotheldysfunktion mit Hypertonie Kopfschmerz, Sehstörung, Oberbauchschmerz CAVE: Eklampsie/HELLP",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pr%C3%A4eklampsie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-kopfschmerz",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Kopfschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Migräne",
+        "physiology": "Neurovaskuläre Kopfschmerzerkrankung",
+        "findings": "pulsierend, Übelkeit, Lichtempfindlichkeit, ggf. Aura",
+        "cave": "erstmaliger/atypischer Kopfschmerz",
+        "info": "Neurovaskuläre Kopfschmerzerkrankung pulsierend, Übelkeit, Lichtempfindlichkeit, ggf. Aura CAVE: erstmaliger/atypischer Kopfschmerz",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Migr%C3%A4ne%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Spannungskopfschmerz",
+        "physiology": "Primärer Kopfschmerz mit muskulärer und zentraler Schmerzverarbeitung",
+        "findings": "bilateral drückend",
+        "cave": "neue Red Flags hinterfragen",
+        "info": "Primärer Kopfschmerz mit muskulärer und zentraler Schmerzverarbeitung bilateral drückend CAVE: neue Red Flags hinterfragen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Spannungskopfschmerz%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Subarachnoidalblutung",
+        "physiology": "Blutung in Subarachnoidalraum, häufig Aneurysmaruptur",
+        "findings": "schlagartiger Vernichtungskopfschmerz",
+        "cave": "neurologischer Status kann anfangs normal sein",
+        "info": "Blutung in Subarachnoidalraum, häufig Aneurysmaruptur schlagartiger Vernichtungskopfschmerz CAVE: neurologischer Status kann anfangs normal sein",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Subarachnoidalblutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Meningitis",
+        "physiology": "Entzündung der Hirnhäute",
+        "findings": "Fieber, Kopfschmerz, Meningismus möglich",
+        "cave": "klassische Trias kann fehlen",
+        "info": "Entzündung der Hirnhäute Fieber, Kopfschmerz, Meningismus möglich CAVE: klassische Trias kann fehlen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Meningitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Clusterkopfschmerz",
+        "physiology": "Trigeminus-autonome Kopfschmerzerkrankung",
+        "findings": "stärkster einseitiger orbitaler Schmerz, Tränenfluss, Unruhe",
+        "cave": "neue Ausfälle abklären",
+        "info": "Trigeminus-autonome Kopfschmerzerkrankung stärkster einseitiger orbitaler Schmerz, Tränenfluss, Unruhe CAVE: neue Ausfälle abklären",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Clusterkopfschmerz%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-schwindel-ataxie",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Schwindel / Ataxie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Benigner Lagerungsschwindel",
+        "physiology": "Otolithen im Bogengang lösen lageabhängigen Drehschwindel aus",
+        "findings": "Sekunden dauernde Attacken bei Lagewechsel",
+        "cave": "persistierende neurologische Symptome sprechen dagegen",
+        "info": "Otolithen im Bogengang lösen lageabhängigen Drehschwindel aus Sekunden dauernde Attacken bei Lagewechsel CAVE: persistierende neurologische Symptome sprechen dagegen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Benigner%20Lagerungsschwindel%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Vestibularisneuritis",
+        "physiology": "Akuter einseitiger Vestibularisausfall",
+        "findings": "anhaltender Schwindel, Nystagmus, Übelkeit",
+        "cave": "posteriorer Schlaganfall kann ähnlich sein",
+        "info": "Akuter einseitiger Vestibularisausfall anhaltender Schwindel, Nystagmus, Übelkeit CAVE: posteriorer Schlaganfall kann ähnlich sein",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Vestibularisneuritis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Kleinhirn-/Hirnstamminfarkt",
+        "physiology": "Unterbrechung der zerebellären/vertebrobasilären Durchblutung",
+        "findings": "akute Ataxie, Dysarthrie, Doppelbilder, teils isolierter Schwindel",
+        "cave": "FAST kann negativ sein",
+        "info": "Unterbrechung der zerebellären/vertebrobasilären Durchblutung akute Ataxie, Dysarthrie, Doppelbilder, teils isolierter Schwindel CAVE: FAST kann negativ sein",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kleinhirn-/Hirnstamminfarkt%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Orthostatische Hypotonie",
+        "physiology": "Abfall der zerebralen Perfusion beim Aufstehen",
+        "findings": "präsynkopaler Schwindel",
+        "cave": "Blutverlust und Arrhythmie ausschließen",
+        "info": "Abfall der zerebralen Perfusion beim Aufstehen präsynkopaler Schwindel CAVE: Blutverlust und Arrhythmie ausschließen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Orthostatische%20Hypotonie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-krampfanfall",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Krampfanfall",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Epileptischer Anfall",
+        "physiology": "Vorübergehende synchronisierte neuronale Übererregung",
+        "findings": "tonisch-klonische Bewegung, postiktale Phase möglich",
+        "cave": "Atemwegsgefährdung",
+        "info": "Vorübergehende synchronisierte neuronale Übererregung tonisch-klonische Bewegung, postiktale Phase möglich CAVE: Atemwegsgefährdung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Epileptischer%20Anfall%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Status epilepticus",
+        "physiology": "Anhaltende oder rasch wiederholte Anfälle ohne Erholung",
+        "findings": "konvulsiver Anfall ab ca. 5 Minuten behandlungsbedürftig",
+        "cave": "Hypoxie und Folgeschäden",
+        "info": "Anhaltende oder rasch wiederholte Anfälle ohne Erholung konvulsiver Anfall ab ca. 5 Minuten behandlungsbedürftig CAVE: Hypoxie und Folgeschäden",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Status%20epilepticus%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Fieberkrampf",
+        "physiology": "Anfall im Zusammenhang mit Fieber im Kindesalter",
+        "findings": "generalisierte Krämpfe möglich",
+        "cave": "Meningitis und komplexe Verläufe",
+        "info": "Anfall im Zusammenhang mit Fieber im Kindesalter generalisierte Krämpfe möglich CAVE: Meningitis und komplexe Verläufe",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Fieberkrampf%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Ein zu niedriger Blutzucker führt zu sympathoadrenergen und neuroglykopenischen Symptomen.",
+        "findings": "Schwitzen, Tremor, Hunger, Tachykardie, Verwirrtheit, Krampf, Koma; BZ-Messung entscheidend, häufig klinisch relevant <70 mg/dl (3,9 mmol/l).",
+        "cave": "Kann Schlaganfall imitieren. Einmalige Normalisierung schließt erneutes Absinken bei langwirksamen Arzneien nicht aus.",
+        "info": "Schwere neuroglykopenische Störung niedriger BZ, Krämpfe CAVE: rasch reversible Ursache",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypoglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-sehstoerung-sehverlust",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Sehstörung / Sehverlust",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Retinaler Arterienverschluss",
+        "physiology": "Akute Netzhautischämie",
+        "findings": "plötzlicher schmerzloser monokularer Visusverlust",
+        "cave": "vaskulärer Zeitnotfall",
+        "info": "Akute Netzhautischämie plötzlicher schmerzloser monokularer Visusverlust CAVE: vaskulärer Zeitnotfall",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Retinaler%20Arterienverschluss%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Migräne mit Aura",
+        "physiology": "Vorübergehende kortikale Funktionsstörung",
+        "findings": "flimmernde Skotome, meist graduelle Ausbreitung",
+        "cave": "erstmalige Aura/TIA abgrenzen",
+        "info": "Vorübergehende kortikale Funktionsstörung flimmernde Skotome, meist graduelle Ausbreitung CAVE: erstmalige Aura/TIA abgrenzen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Migr%C3%A4ne%20mit%20Aura%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akutes Winkelblockglaukom",
+        "physiology": "Plötzlicher Abflussstau des Kammerwassers",
+        "findings": "rotes schmerzhaftes Auge, Visusminderung, Übelkeit",
+        "cave": "Sehverlust droht",
+        "info": "Plötzlicher Abflussstau des Kammerwassers rotes schmerzhaftes Auge, Visusminderung, Übelkeit CAVE: Sehverlust droht",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Winkelblockglaukom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Schlaganfall",
+        "physiology": "Akute fokale zerebrale Funktionsstörung durch ischämischen Gefäßverschluss oder Hirnblutung.",
+        "findings": "Akute Sprachstörung, Fazialisparese, Arm-/Beinschwäche, Sehstörung oder Ataxie; neurologisches Screening und BZ.",
+        "cave": "Auch bei rascher Besserung TIA bedenken; Beginn bzw. „last known well“ dokumentieren.",
+        "info": "Okzipitale oder Hirnstammischämie homonyme Gesichtsfeldausfälle, Doppelbilder CAVE: begleitende Hirnstammzeichen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Schlaganfall%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-uebelkeit-erbrechen",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Übelkeit / Erbrechen",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Gastroenteritis",
+        "physiology": "Magen-Darm-Infekt führt zu Schleimhautreizung",
+        "findings": "Erbrechen und Durchfall",
+        "cave": "Volumenmangel",
+        "info": "Magen-Darm-Infekt führt zu Schleimhautreizung Erbrechen und Durchfall CAVE: Volumenmangel",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Gastroenteritis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ileus",
+        "physiology": "Blockierte Darmpassage",
+        "findings": "Erbrechen, zunehmende Distension, Stuhlverhalt",
+        "cave": "Aspirations- und Ischämiegefahr",
+        "info": "Blockierte Darmpassage Erbrechen, zunehmende Distension, Stuhlverhalt CAVE: Aspirations- und Ischämiegefahr",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Ileus%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Migräne",
+        "physiology": "Neurovaskuläre Störung mit vegetativer Aktivierung",
+        "findings": "Übelkeit, Lichtscheu, Kopfschmerz",
+        "cave": "atypische neurologische Zeichen",
+        "info": "Neurovaskuläre Störung mit vegetativer Aktivierung Übelkeit, Lichtscheu, Kopfschmerz CAVE: atypische neurologische Zeichen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Migr%C3%A4ne%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Diabetische Ketoazidose",
+        "physiology": "Insulinmangel verursacht Ketogenese und metabolische Azidose",
+        "findings": "Bauchschmerz, Erbrechen, vertiefte Atmung, hoher BZ oft >250 mg/dl",
+        "cave": "euglykämische DKA möglich",
+        "info": "Insulinmangel verursacht Ketogenese und metabolische Azidose Bauchschmerz, Erbrechen, vertiefte Atmung, hoher BZ oft >250 mg/dl CAVE: euglykämische DKA möglich",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Diabetische%20Ketoazidose%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Myokardinfarkt",
+        "physiology": "Akute Myokardischämie mit vegetativen Symptomen",
+        "findings": "Übelkeit, Kaltschweißigkeit, ggf. Oberbauchdruck",
+        "cave": "ohne Brustschmerz möglich",
+        "info": "Akute Myokardischämie mit vegetativen Symptomen Übelkeit, Kaltschweißigkeit, ggf. Oberbauchdruck CAVE: ohne Brustschmerz möglich",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Myokardinfarkt%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-bluterbrechen-haematemesis",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Bluterbrechen / Hämatemesis",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Ulkusblutung",
+        "physiology": "Arrosion eines Gefäßes in Magen/Duodenum",
+        "findings": "frisches Blut oder Kaffeesatzerbrechen",
+        "cave": "hämorrhagischer Schock",
+        "info": "Arrosion eines Gefäßes in Magen/Duodenum frisches Blut oder Kaffeesatzerbrechen CAVE: hämorrhagischer Schock",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Ulkusblutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ösophagusvarizenblutung",
+        "physiology": "Ruptur portaler Kollateralen meist bei Leberzirrhose",
+        "findings": "starke Hämatemesis",
+        "cave": "rascher Blutverlust und Aspirationsrisiko",
+        "info": "Ruptur portaler Kollateralen meist bei Leberzirrhose starke Hämatemesis CAVE: rascher Blutverlust und Aspirationsrisiko",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=%C3%96sophagusvarizenblutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Mallory-Weiss-Läsion",
+        "physiology": "Schleimhautriss nach starkem Würgen",
+        "findings": "Blut nach Erbrechensattacke",
+        "cave": "Ausmaß der Blutung beachten",
+        "info": "Schleimhautriss nach starkem Würgen Blut nach Erbrechensattacke CAVE: Ausmaß der Blutung beachten",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Mallory-Weiss-L%C3%A4sion%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-blut-im-stuhl-melaena",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Blut im Stuhl / Meläna",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Obere gastrointestinale Blutung",
+        "physiology": "Blutung proximal des Treitz-Bands führt häufig zu Teerstuhl",
+        "findings": "schwarze klebrige Stühle, ggf. Schock",
+        "cave": "massive Blutung kann auch rot erscheinen",
+        "info": "Blutung proximal des Treitz-Bands führt häufig zu Teerstuhl schwarze klebrige Stühle, ggf. Schock CAVE: massive Blutung kann auch rot erscheinen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Obere%20gastrointestinale%20Blutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Divertikelblutung",
+        "physiology": "Blutung aus Dickdarmdivertikel",
+        "findings": "meist schmerzlose Hämatochezie",
+        "cave": "erheblicher Volumenverlust",
+        "info": "Blutung aus Dickdarmdivertikel meist schmerzlose Hämatochezie CAVE: erheblicher Volumenverlust",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Divertikelblutung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ischämische Kolitis",
+        "physiology": "Darmwand-Minderperfusion",
+        "findings": "Bauchschmerzen und blutiger Stuhl",
+        "cave": "Mesenterialischämie ausschließen",
+        "info": "Darmwand-Minderperfusion Bauchschmerzen und blutiger Stuhl CAVE: Mesenterialischämie ausschließen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Isch%C3%A4mische%20Kolitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hämorrhoiden",
+        "physiology": "Blutung erweiterter Gefäßpolster",
+        "findings": "hellrotes Blut am Papier",
+        "cave": "nicht vorschnell als harmlose Ursache werten",
+        "info": "Blutung erweiterter Gefäßpolster hellrotes Blut am Papier CAVE: nicht vorschnell als harmlose Ursache werten",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=H%C3%A4morrhoiden%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-durchfall-dehydratation",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Durchfall / Dehydratation",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Akute Gastroenteritis",
+        "physiology": "Infektiöse Flüssigkeitssekretion oder Malabsorption",
+        "findings": "Diarrhö, Erbrechen, trockene Schleimhäute",
+        "cave": "Hypovolämie",
+        "info": "Infektiöse Flüssigkeitssekretion oder Malabsorption Diarrhö, Erbrechen, trockene Schleimhäute CAVE: Hypovolämie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akute%20Gastroenteritis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Clostridioides-difficile-Kolitis",
+        "physiology": "Toxinvermittelte Darmentzündung oft nach Antibiotika",
+        "findings": "wässrige Diarrhö, Fieber",
+        "cave": "toxisches Megakolon/Sepsis",
+        "info": "Toxinvermittelte Darmentzündung oft nach Antibiotika wässrige Diarrhö, Fieber CAVE: toxisches Megakolon/Sepsis",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Clostridioides-difficile-Kolitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ischämische Kolitis",
+        "physiology": "Minderdurchblutung der Kolonschleimhaut",
+        "findings": "krampfartiger Schmerz, ggf. blutige Diarrhö",
+        "cave": "vaskuläre Ursache",
+        "info": "Minderdurchblutung der Kolonschleimhaut krampfartiger Schmerz, ggf. blutige Diarrhö CAVE: vaskuläre Ursache",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Isch%C3%A4mische%20Kolitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-hypoglykaemiezeichen",
+    "group": "Stoffwechsel",
+    "icon": "🧪",
+    "title": "Hypoglykämiezeichen",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Medikamentenbedingte Hypoglykämie",
+        "physiology": "Insulin oder Sulfonylharnstoffe senken Glukose",
+        "findings": "Schwitzen, Tremor, Verwirrtheit, BZ <70 mg/dl",
+        "cave": "Rezidiv insbesondere bei Sulfonylharnstoffen",
+        "info": "Insulin oder Sulfonylharnstoffe senken Glukose Schwitzen, Tremor, Verwirrtheit, BZ <70 mg/dl CAVE: Rezidiv insbesondere bei Sulfonylharnstoffen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Medikamentenbedingte%20Hypoglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Sepsisassoziierte Hypoglykämie",
+        "physiology": "Erhöhter Verbrauch/gestörte Glukosebereitstellung",
+        "findings": "Verwirrtheit, niedriger BZ",
+        "cave": "schwerer Infekt",
+        "info": "Erhöhter Verbrauch/gestörte Glukosebereitstellung Verwirrtheit, niedriger BZ CAVE: schwerer Infekt",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Sepsisassoziierte%20Hypoglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Alkoholassoziierte Hypoglykämie",
+        "physiology": "Hemmung der Glukoneogenese bei eingeschränkten Reserven",
+        "findings": "Bewusstseinsstörung, erniedrigter BZ",
+        "cave": "Intoxikation überdeckt Hypoglykämie",
+        "info": "Hemmung der Glukoneogenese bei eingeschränkten Reserven Bewusstseinsstörung, erniedrigter BZ CAVE: Intoxikation überdeckt Hypoglykämie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Alkoholassoziierte%20Hypoglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-hyperglykaemie-polyurie",
+    "group": "Stoffwechsel",
+    "icon": "🧪",
+    "title": "Hyperglykämie / Polyurie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Diabetische Ketoazidose",
+        "physiology": "Insulinmangel führt zu Ketonkörperbildung und Azidose",
+        "findings": "hoher BZ, Kussmaul-Atmung, Dehydratation, Ketone",
+        "cave": "auch bei geringer BZ-Erhöhung möglich",
+        "info": "Insulinmangel führt zu Ketonkörperbildung und Azidose hoher BZ, Kussmaul-Atmung, Dehydratation, Ketone CAVE: auch bei geringer BZ-Erhöhung möglich",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Diabetische%20Ketoazidose%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hyperosmolares hyperglykämisches Syndrom",
+        "physiology": "Ausgeprägte Hyperglykämie und Hyperosmolarität ohne ausgeprägte Ketose",
+        "findings": "oft BZ >600 mg/dl (33,3 mmol/l), Exsikkose, Vigilanzminderung",
+        "cave": "Thrombose-/Schockrisiko",
+        "info": "Ausgeprägte Hyperglykämie und Hyperosmolarität ohne ausgeprägte Ketose oft BZ >600 mg/dl (33,3 mmol/l), Exsikkose, Vigilanzminderung CAVE: Thrombose-/Schockrisiko",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hyperosmolares%20hyperglyk%C3%A4misches%20Syndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Stresshyperglykämie",
+        "physiology": "Katecholamin-/Kortisolanstieg bei akuter Erkrankung",
+        "findings": "erhöhter BZ ohne zwingende DKA",
+        "cave": "BZ allein unterscheidet Krisen nicht",
+        "info": "Katecholamin-/Kortisolanstieg bei akuter Erkrankung erhöhter BZ ohne zwingende DKA CAVE: BZ allein unterscheidet Krisen nicht",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Stresshyperglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-muskelkraempfe-tetanie",
+    "group": "Stoffwechsel",
+    "icon": "🧪",
+    "title": "Muskelkrämpfe / Tetanie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hypokalzämie",
+        "physiology": "Niedriges ionisiertes Calcium erhöht neuromuskuläre Erregbarkeit",
+        "findings": "Pfötchenstellung, Parästhesien, QT-Verlängerung",
+        "cave": "Laryngospasmus/Arrhythmie",
+        "info": "Niedriges ionisiertes Calcium erhöht neuromuskuläre Erregbarkeit Pfötchenstellung, Parästhesien, QT-Verlängerung CAVE: Laryngospasmus/Arrhythmie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypokalz%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hyperventilation",
+        "physiology": "Respiratorische Alkalose senkt ionisiertes Calcium vorübergehend",
+        "findings": "periorales Kribbeln, Tetanie",
+        "cave": "somatische Ursache der Tachypnoe ausschließen",
+        "info": "Respiratorische Alkalose senkt ionisiertes Calcium vorübergehend periorales Kribbeln, Tetanie CAVE: somatische Ursache der Tachypnoe ausschließen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hyperventilation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Elektrolytverlust",
+        "physiology": "Verlust von Magnesium/Kalium etwa durch Diarrhö oder Diuretika",
+        "findings": "Krämpfe, Schwäche",
+        "cave": "Arrhythmiegefahr",
+        "info": "Verlust von Magnesium/Kalium etwa durch Diarrhö oder Diuretika Krämpfe, Schwäche CAVE: Arrhythmiegefahr",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Elektrolytverlust%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-fieber-schuettelfrost",
+    "group": "Infektion",
+    "icon": "🌡️",
+    "title": "Fieber / Schüttelfrost",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Virusinfekt",
+        "physiology": "Immunreaktion mit pyrogener Sollwerterhöhung",
+        "findings": "Fieber, Abgeschlagenheit, respiratorische Beschwerden",
+        "cave": "klinische Verschlechterung",
+        "info": "Immunreaktion mit pyrogener Sollwerterhöhung Fieber, Abgeschlagenheit, respiratorische Beschwerden CAVE: klinische Verschlechterung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Virusinfekt%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Alveoläre Infektion",
+        "findings": "Fieber, Husten, Tachypnoe, Hypoxämie",
+        "cave": "Sepsis",
+        "info": "Alveoläre Infektion Fieber, Husten, Tachypnoe, Hypoxämie CAVE: Sepsis",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pneumonie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pyelonephritis",
+        "physiology": "Aufsteigende bakterielle Nierenbeckeninfektion",
+        "findings": "Fieber, Flankenschmerz, Dysurie",
+        "cave": "infizierter Harnstau",
+        "info": "Aufsteigende bakterielle Nierenbeckeninfektion Fieber, Flankenschmerz, Dysurie CAVE: infizierter Harnstau",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pyelonephritis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Sepsis",
+        "physiology": "Lebensbedrohliche Organdysfunktion durch dysregulierte Wirtsreaktion auf eine Infektion.",
+        "findings": "Mögliche Zeichen: veränderte Vigilanz, Tachypnoe, Tachykardie, Hypotonie, Fieber oder Hypothermie, verminderte Urinmenge.",
+        "cave": "Fieber ist nicht obligat. Normale Blutdruckwerte schließen frühe Organdysfunktion nicht aus.",
+        "info": "Lebensbedrohliche Organdysfunktion infolge fehlregulierter Infektionsantwort veränderte Vigilanz, Tachypnoe, Hypotonie möglich CAVE: fehlendes Fieber schließt nicht aus",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Sepsis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Meningitis",
+        "physiology": "Hirnhautentzündung",
+        "findings": "Fieber, Kopfschmerz, Nackensteife möglich",
+        "cave": "rascher Verlauf",
+        "info": "Hirnhautentzündung Fieber, Kopfschmerz, Nackensteife möglich CAVE: rascher Verlauf",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Meningitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-hautausschlag-purpura",
+    "group": "Infektion",
+    "icon": "🌡️",
+    "title": "Hautausschlag / Purpura",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Urtikaria",
+        "physiology": "Mastzellvermittelte oberflächliche Quaddelbildung",
+        "findings": "juckende flüchtige Quaddeln",
+        "cave": "Atemwegs- oder Kreislaufbeteiligung weist auf Anaphylaxie",
+        "info": "Mastzellvermittelte oberflächliche Quaddelbildung juckende flüchtige Quaddeln CAVE: Atemwegs- oder Kreislaufbeteiligung weist auf Anaphylaxie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Urtikaria%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Arzneimittelexanthem",
+        "physiology": "Immunreaktion auf Medikament",
+        "findings": "makulopapulöse Hautveränderungen",
+        "cave": "Schleimhautbeteiligung/Blasen als Warnzeichen",
+        "info": "Immunreaktion auf Medikament makulopapulöse Hautveränderungen CAVE: Schleimhautbeteiligung/Blasen als Warnzeichen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Arzneimittelexanthem%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Meningokokkensepsis",
+        "physiology": "Invasive bakterielle Infektion mit Gerinnungsaktivierung",
+        "findings": "Petechien/Purpura, Fieber, rascher Schock",
+        "cave": "zeitkritisch",
+        "info": "Invasive bakterielle Infektion mit Gerinnungsaktivierung Petechien/Purpura, Fieber, rascher Schock CAVE: zeitkritisch",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Meningokokkensepsis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Erysipel",
+        "physiology": "Akute bakterielle Hautinfektion",
+        "findings": "scharf begrenzte Rötung, Wärme, Fieber",
+        "cave": "systemische Sepsiszeichen",
+        "info": "Akute bakterielle Hautinfektion scharf begrenzte Rötung, Wärme, Fieber CAVE: systemische Sepsiszeichen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Erysipel%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-flankenschmerz",
+    "group": "Urologie",
+    "icon": "🫘",
+    "title": "Flankenschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Ureterstein",
+        "physiology": "Obstruktion mit Harnstau und Dehnung",
+        "findings": "wellenförmiger Schmerz, Unruhe, ggf. Hämaturie",
+        "cave": "infizierte Obstruktion",
+        "info": "Obstruktion mit Harnstau und Dehnung wellenförmiger Schmerz, Unruhe, ggf. Hämaturie CAVE: infizierte Obstruktion",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Ureterstein%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Pyelonephritis",
+        "physiology": "Bakterielle Entzündung des Nierenbeckens",
+        "findings": "Flankenschmerz, Fieber, Klopfschmerz",
+        "cave": "Urosepsis",
+        "info": "Bakterielle Entzündung des Nierenbeckens Flankenschmerz, Fieber, Klopfschmerz CAVE: Urosepsis",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pyelonephritis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Niereninfarkt",
+        "physiology": "Akuter Verschluss einer Nierenarterie",
+        "findings": "plötzlicher Flankenschmerz, Hämaturie möglich",
+        "cave": "bei Emboliequellen bedenken",
+        "info": "Akuter Verschluss einer Nierenarterie plötzlicher Flankenschmerz, Hämaturie möglich CAVE: bei Emboliequellen bedenken",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Niereninfarkt%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-dysurie-harnverhalt",
+    "group": "Urologie",
+    "icon": "🫘",
+    "title": "Dysurie / Harnverhalt",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Zystitis",
+        "physiology": "Infektion der Harnblase",
+        "findings": "Dysurie, Pollakisurie, suprapubischer Schmerz",
+        "cave": "systemische Infektzeichen",
+        "info": "Infektion der Harnblase Dysurie, Pollakisurie, suprapubischer Schmerz CAVE: systemische Infektzeichen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Zystitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akuter Harnverhalt",
+        "physiology": "Gestörter Harnabfluss, häufig Prostataobstruktion oder Medikamente",
+        "findings": "schmerzhafte volle Blase, fehlende Miktion",
+        "cave": "Nierenstau",
+        "info": "Gestörter Harnabfluss, häufig Prostataobstruktion oder Medikamente schmerzhafte volle Blase, fehlende Miktion CAVE: Nierenstau",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akuter%20Harnverhalt%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Cauda-equina-Syndrom",
+        "physiology": "Kompression lumbosakraler Nervenwurzeln",
+        "findings": "Harnverhalt, Sattelanästhesie, Beinschwäche",
+        "cave": "dringende neurochirurgische Abklärung",
+        "info": "Kompression lumbosakraler Nervenwurzeln Harnverhalt, Sattelanästhesie, Beinschwäche CAVE: dringende neurochirurgische Abklärung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Cauda-equina-Syndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-vaginale-blutung-unterbauchschmerz",
+    "group": "Geburtshilfe",
+    "icon": "🤰",
+    "title": "Vaginale Blutung / Unterbauchschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Extrauteringravidität",
+        "physiology": "Implantation außerhalb des Uterus",
+        "findings": "einseitiger Unterbauchschmerz, vaginale Blutung, Synkope",
+        "cave": "innere Blutung nach Ruptur",
+        "info": "Implantation außerhalb des Uterus einseitiger Unterbauchschmerz, vaginale Blutung, Synkope CAVE: innere Blutung nach Ruptur",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Extrauteringravidit%C3%A4t%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Abort / Fehlgeburt",
+        "physiology": "Vorzeitiges Schwangerschaftsende",
+        "findings": "Blutung, Unterbauchkrämpfe",
+        "cave": "hoher Blutverlust",
+        "info": "Vorzeitiges Schwangerschaftsende Blutung, Unterbauchkrämpfe CAVE: hoher Blutverlust",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Abort%20/%20Fehlgeburt%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Vorzeitige Plazentalösung",
+        "physiology": "Plazenta trennt sich vor Geburt",
+        "findings": "Bauchschmerz, harter Uterus, teils vaginale Blutung",
+        "cave": "Blutung kann verborgen sein",
+        "info": "Plazenta trennt sich vor Geburt Bauchschmerz, harter Uterus, teils vaginale Blutung CAVE: Blutung kann verborgen sein",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Vorzeitige%20Plazental%C3%B6sung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Ovarialtorsion",
+        "physiology": "Verdrehung des Ovars beeinträchtigt Durchblutung",
+        "findings": "abrupt einseitiger Unterbauchschmerz, Übelkeit",
+        "cave": "Organverlust",
+        "info": "Verdrehung des Ovars beeinträchtigt Durchblutung abrupt einseitiger Unterbauchschmerz, Übelkeit CAVE: Organverlust",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Ovarialtorsion%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-schwangerschaft-kopfschmerz-oberbauchschmerz",
+    "group": "Geburtshilfe",
+    "icon": "🤰",
+    "title": "Schwangerschaft: Kopfschmerz / Oberbauchschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Präeklampsie",
+        "physiology": "Schwangerschaftsassoziierte Gefäß-/Plazentadysfunktion",
+        "findings": "Hypertonie ab 140/90 mmHg nach 20. SSW, Kopfschmerz, Sehstörung",
+        "cave": "Organschaden und Eklampsie",
+        "info": "Schwangerschaftsassoziierte Gefäß-/Plazentadysfunktion Hypertonie ab 140/90 mmHg nach 20. SSW, Kopfschmerz, Sehstörung CAVE: Organschaden und Eklampsie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pr%C3%A4eklampsie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "HELLP-Syndrom",
+        "physiology": "Hämolyse, erhöhte Leberenzyme und Thrombozytopenie",
+        "findings": "rechter Oberbauchschmerz, Übelkeit, Krankheitsgefühl",
+        "cave": "auch ohne ausgeprägte Hypertonie",
+        "info": "Hämolyse, erhöhte Leberenzyme und Thrombozytopenie rechter Oberbauchschmerz, Übelkeit, Krankheitsgefühl CAVE: auch ohne ausgeprägte Hypertonie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=HELLP-Syndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Eklampsie",
+        "physiology": "Krampfanfall im Rahmen einer hypertensiven Schwangerschaftserkrankung",
+        "findings": "tonisch-klonische Krämpfe",
+        "cave": "auch postpartal",
+        "info": "Krampfanfall im Rahmen einer hypertensiven Schwangerschaftserkrankung tonisch-klonische Krämpfe CAVE: auch postpartal",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Eklampsie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-rueckenschmerz-neurologische-ausfaelle",
+    "group": "Trauma",
+    "icon": "🩹",
+    "title": "Rückenschmerz / neurologische Ausfälle",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Bandscheibenbedingte Radikulopathie",
+        "physiology": "Nervenwurzelreizung durch Bandscheibe",
+        "findings": "dermatomale Schmerzen, Parästhesien",
+        "cave": "progrediente Paresen",
+        "info": "Nervenwurzelreizung durch Bandscheibe dermatomale Schmerzen, Parästhesien CAVE: progrediente Paresen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Bandscheibenbedingte%20Radikulopathie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Cauda-equina-Syndrom",
+        "physiology": "Druck auf sakrale Nervenwurzeln",
+        "findings": "Blasen-/Mastdarmstörung, Sattelanästhesie",
+        "cave": "zeitkritisch",
+        "info": "Druck auf sakrale Nervenwurzeln Blasen-/Mastdarmstörung, Sattelanästhesie CAVE: zeitkritisch",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Cauda-equina-Syndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Wirbelsäulenfraktur",
+        "physiology": "Knochenverletzung nach Trauma/Osteoporose",
+        "findings": "fokaler Schmerz, evtl. Neurologie",
+        "cave": "Instabilität",
+        "info": "Knochenverletzung nach Trauma/Osteoporose fokaler Schmerz, evtl. Neurologie CAVE: Instabilität",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Wirbels%C3%A4ulenfraktur%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Aortensyndrom",
+        "physiology": "Akute Aortenwandpathologie",
+        "findings": "starker Rücken-/Brustschmerz",
+        "cave": "Gefäß-/neurologische Komplikationen",
+        "info": "Akute Aortenwandpathologie starker Rücken-/Brustschmerz CAVE: Gefäß-/neurologische Komplikationen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Aortensyndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-extremitaetenschmerz-schwellung",
+    "group": "Trauma",
+    "icon": "🩹",
+    "title": "Extremitätenschmerz / Schwellung",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Fraktur",
+        "physiology": "Unterbrechung der Knochenkontinuität",
+        "findings": "Fehlstellung, Schwellung, Schmerz",
+        "cave": "distal DMS prüfen",
+        "info": "Unterbrechung der Knochenkontinuität Fehlstellung, Schwellung, Schmerz CAVE: distal DMS prüfen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Fraktur%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Tiefe Venenthrombose",
+        "physiology": "Thrombus im tiefen Venensystem",
+        "findings": "einseitige Schwellung, Schmerz, Überwärmung",
+        "cave": "Lungenembolie",
+        "info": "Thrombus im tiefen Venensystem einseitige Schwellung, Schmerz, Überwärmung CAVE: Lungenembolie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Tiefe%20Venenthrombose%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Akuter arterieller Verschluss",
+        "physiology": "Akute Ischämie der Extremität",
+        "findings": "Schmerz, Blässe, Pulslosigkeit, Parästhesie, Parese, Kälte",
+        "cave": "drohender Extremitätenverlust",
+        "info": "Akute Ischämie der Extremität Schmerz, Blässe, Pulslosigkeit, Parästhesie, Parese, Kälte CAVE: drohender Extremitätenverlust",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akuter%20arterieller%20Verschluss%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Kompartmentsyndrom",
+        "physiology": "Erhöhter Druck in Muskelloge senkt Gewebeperfusion",
+        "findings": "disproportionaler Schmerz, Schmerz bei passiver Dehnung",
+        "cave": "Pulse können erhalten bleiben",
+        "info": "Erhöhter Druck in Muskelloge senkt Gewebeperfusion disproportionaler Schmerz, Schmerz bei passiver Dehnung CAVE: Pulse können erhalten bleiben",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kompartmentsyndrom%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-agitation-angst-hyperventilation",
+    "group": "Psychiatrie / Toxikologie",
+    "icon": "💊",
+    "title": "Agitation / Angst / Hyperventilation",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Panikattacke",
+        "physiology": "Akute Angstreaktion mit vegetativer Aktivierung",
+        "findings": "Herzrasen, Atemnot, Kribbeln",
+        "cave": "Ausschluss gefährlicher somatischer Ursachen",
+        "info": "Akute Angstreaktion mit vegetativer Aktivierung Herzrasen, Atemnot, Kribbeln CAVE: Ausschluss gefährlicher somatischer Ursachen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Panikattacke%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Ein zu niedriger Blutzucker führt zu sympathoadrenergen und neuroglykopenischen Symptomen.",
+        "findings": "Schwitzen, Tremor, Hunger, Tachykardie, Verwirrtheit, Krampf, Koma; BZ-Messung entscheidend, häufig klinisch relevant <70 mg/dl (3,9 mmol/l).",
+        "cave": "Kann Schlaganfall imitieren. Einmalige Normalisierung schließt erneutes Absinken bei langwirksamen Arzneien nicht aus.",
+        "info": "Adrenerge Aktivierung durch Glukosemangel Unruhe, Schwitzen, Tremor CAVE: BZ messen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypoglyk%C3%A4mie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Stimulanzienintoxikation",
+        "physiology": "Sympathomimetische Überaktivierung",
+        "findings": "Mydriasis, Tachykardie, Hypertonie, Hyperthermie",
+        "cave": "Arrhythmie/Hyperthermie",
+        "info": "Sympathomimetische Überaktivierung Mydriasis, Tachykardie, Hypertonie, Hyperthermie CAVE: Arrhythmie/Hyperthermie",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Stimulanzienintoxikation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Delir",
+        "physiology": "Akute fluktuierende Hirnfunktionsstörung",
+        "findings": "Aufmerksamkeitsstörung, Desorientierung, Unruhe",
+        "cave": "Infekt, Hypoxie, Entzug",
+        "info": "Akute fluktuierende Hirnfunktionsstörung Aufmerksamkeitsstörung, Desorientierung, Unruhe CAVE: Infekt, Hypoxie, Entzug",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Delir%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-somnolenz-verdacht-auf-intoxikation",
+    "group": "Psychiatrie / Toxikologie",
+    "icon": "💊",
+    "title": "Somnolenz / Verdacht auf Intoxikation",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Opioidintoxikation",
+        "physiology": "Opioidrezeptorwirkung unterdrückt Atemantrieb",
+        "findings": "Miosis, Bradypnoe, Vigilanzminderung",
+        "cave": "Atemdepression und Rezidiv nach Antagonisierung",
+        "info": "Opioidrezeptorwirkung unterdrückt Atemantrieb Miosis, Bradypnoe, Vigilanzminderung CAVE: Atemdepression und Rezidiv nach Antagonisierung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Opioidintoxikation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Alkoholintoxikation",
+        "physiology": "Ethanol wirkt ZNS-dämpfend",
+        "findings": "Ataxie, Erbrechen, Somnolenz",
+        "cave": "Trauma, Hypoglykämie und Mischintoxikation",
+        "info": "Ethanol wirkt ZNS-dämpfend Ataxie, Erbrechen, Somnolenz CAVE: Trauma, Hypoglykämie und Mischintoxikation",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Alkoholintoxikation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Benzodiazepinintoxikation",
+        "physiology": "GABA-vermittelte ZNS-Depression",
+        "findings": "Müdigkeit, Ataxie, verwaschene Sprache",
+        "cave": "Mischintoxikation/Atemwegsrisiko",
+        "info": "GABA-vermittelte ZNS-Depression Müdigkeit, Ataxie, verwaschene Sprache CAVE: Mischintoxikation/Atemwegsrisiko",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Benzodiazepinintoxikation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Kohlenmonoxidvergiftung",
+        "physiology": "CO blockiert Hämoglobin und beeinträchtigt zelluläre Atmung",
+        "findings": "Kopfschmerz, Übelkeit, Verwirrtheit",
+        "cave": "gewöhnliche Pulsoxymetrie kann unauffällig sein",
+        "info": "CO blockiert Hämoglobin und beeinträchtigt zelluläre Atmung Kopfschmerz, Übelkeit, Verwirrtheit CAVE: gewöhnliche Pulsoxymetrie kann unauffällig sein",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kohlenmonoxidvergiftung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-atemnot-beim-kind",
+    "group": "Pädiatrie",
+    "icon": "🧸",
+    "title": "Atemnot beim Kind",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Pseudokrupp",
+        "physiology": "Virale subglottische Schwellung",
+        "findings": "bellender Husten, Stridor, Heiserkeit",
+        "cave": "Stridor in Ruhe",
+        "info": "Virale subglottische Schwellung bellender Husten, Stridor, Heiserkeit CAVE: Stridor in Ruhe",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pseudokrupp%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Bronchiolitis",
+        "physiology": "Virale Entzündung kleiner Atemwege vor allem im Säuglingsalter",
+        "findings": "Tachypnoe, Einziehungen, Giemen, Trinkschwäche",
+        "cave": "Apnoe bei jungen Säuglingen",
+        "info": "Virale Entzündung kleiner Atemwege vor allem im Säuglingsalter Tachypnoe, Einziehungen, Giemen, Trinkschwäche CAVE: Apnoe bei jungen Säuglingen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Bronchiolitis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Fremdkörperaspiration",
+        "physiology": "Mechanische Bronchus- oder Kehlkopfverlegung",
+        "findings": "plötzlicher Husten, einseitiges Giemen oder Stridor",
+        "cave": "vollständige Verlegung",
+        "info": "Mechanische Bronchus- oder Kehlkopfverlegung plötzlicher Husten, einseitiges Giemen oder Stridor CAVE: vollständige Verlegung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Fremdk%C3%B6rperaspiration%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Asthma",
+        "physiology": "Bronchospasmus und Schleimhautschwellung",
+        "findings": "Giemen, verlängertes Exspirium",
+        "cave": "Erschöpfung/stille Lunge",
+        "info": "Bronchospasmus und Schleimhautschwellung Giemen, verlängertes Exspirium CAVE: Erschöpfung/stille Lunge",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Asthma%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-fieber-apathie-beim-kind",
+    "group": "Pädiatrie",
+    "icon": "🧸",
+    "title": "Fieber / Apathie beim Kind",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Virale Infektion",
+        "physiology": "Immunreaktion auf viralen Erreger",
+        "findings": "Fieber, Husten, Rhinorrhö",
+        "cave": "Trinkmangel",
+        "info": "Immunreaktion auf viralen Erreger Fieber, Husten, Rhinorrhö CAVE: Trinkmangel",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Virale%20Infektion%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Meningitis / Sepsis",
+        "physiology": "Invasive Infektion mit systemischer Organstörung",
+        "findings": "Apathie, Rekapillarisierungsstörung, Fieber oder Hypothermie",
+        "cave": "junge Säuglinge können unspezifisch sein",
+        "info": "Invasive Infektion mit systemischer Organstörung Apathie, Rekapillarisierungsstörung, Fieber oder Hypothermie CAVE: junge Säuglinge können unspezifisch sein",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Meningitis%20/%20Sepsis%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Fieberkrampf",
+        "physiology": "Anfall bei fieberhafter Erkrankung im typischen Kindesalter",
+        "findings": "generalisierter Krampfanfall",
+        "cave": "prolongierte oder fokale Anfälle",
+        "info": "Anfall bei fieberhafter Erkrankung im typischen Kindesalter generalisierter Krampfanfall CAVE: prolongierte oder fokale Anfälle",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Fieberkrampf%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Dehydratation",
+        "physiology": "Flüssigkeitsdefizit nach Diarrhö/Erbrechen",
+        "findings": "trockene Schleimhäute, reduzierte Diurese",
+        "cave": "Kreislaufversagen",
+        "info": "Flüssigkeitsdefizit nach Diarrhö/Erbrechen trockene Schleimhäute, reduzierte Diurese CAVE: Kreislaufversagen",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Dehydratation%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-hitze-kaelteexposition",
+    "group": "Umwelt",
+    "icon": "🌡️",
+    "title": "Hitze / Kälteexposition",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hitzschlag",
+        "physiology": "Thermoregulatorisches Versagen mit ZNS-Dysfunktion",
+        "findings": "schwere Hyperthermie, Verwirrtheit, Kollaps",
+        "cave": "sofortige Kühlung ist zeitkritisch",
+        "info": "Thermoregulatorisches Versagen mit ZNS-Dysfunktion schwere Hyperthermie, Verwirrtheit, Kollaps CAVE: sofortige Kühlung ist zeitkritisch",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hitzschlag%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hitzeerschöpfung",
+        "physiology": "Volumen-/Salzverlust bei Hitze",
+        "findings": "Schwäche, Schwindel, Schwitzen",
+        "cave": "ZNS-Störung weist auf Hitzschlag",
+        "info": "Volumen-/Salzverlust bei Hitze Schwäche, Schwindel, Schwitzen CAVE: ZNS-Störung weist auf Hitzschlag",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hitzeersch%C3%B6pfung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "Hypothermie",
+        "physiology": "Körperkerntemperatur unter 35 °C",
+        "findings": "Zittern, später Bewusstseinseintrübung und Bradykardie",
+        "cave": "schonend bewegen, Arrhythmiegefahr",
+        "info": "Körperkerntemperatur unter 35 °C Zittern, später Bewusstseinseintrübung und Bradykardie CAVE: schonend bewegen, Arrhythmiegefahr",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypothermie%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      },
+      {
+        "name": "CO-Vergiftung",
+        "physiology": "Exposition durch Abgase/Heizgeräte",
+        "findings": "Kopfschmerz, Übelkeit, Synkope",
+        "cave": "Eigenschutz und normale SpO₂ trotz Vergiftung",
+        "info": "Exposition durch Abgase/Heizgeräte Kopfschmerz, Übelkeit, Synkope CAVE: Eigenschutz und normale SpO₂ trotz Vergiftung",
+        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=CO-Vergiftung%20review%20diagnosis",
+        "sourceLabel": "Fachliteratur auf PubMed suchen"
+      }
     ]
   }
 ]

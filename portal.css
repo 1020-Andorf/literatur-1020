@@ -357,3 +357,6 @@ body{background:#fff}
 .diag-categories[hidden],.diag-results[hidden]{display:none!important}
 @media(min-width:700px){.diag-categories{grid-template-columns:repeat(2,minmax(0,1fr))}.diag-results{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:420px){.diag-category,.diag-result{padding:14px;gap:12px}.diag-detail{padding:17px}}
+
+/* Diagnostik: flache Navigation, editierbare Inhalte */
+.diag-sections{display:grid;gap:12px;margin:16px 0 28px}.diag-sections[hidden]{display:none!important}.diag-group{background:var(--card,#fff);border:1px solid #e7eaf0;border-radius:17px;overflow:hidden}.diag-group>summary{display:flex;gap:12px;align-items:center;padding:17px 19px;cursor:pointer;list-style:none}.diag-group>summary::-webkit-details-marker{display:none}.diag-group>summary strong{flex:1;font-size:1.05rem}.diag-group>summary small{color:#64748b}.diag-group>summary span{color:#76879a}.diag-group[open]>summary{border-bottom:1px solid #edf0f4}.diag-group>.diag-results{padding:12px;margin:0;grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}.diag-group .diag-result{box-shadow:none}.diag-detail .diag-info-section a{color:#b52d37;font-weight:650;overflow-wrap:anywhere}.diag-back{display:inline-flex;min-height:36px;align-items:center}.diag-sections[hidden],.diag-results[hidden]{display:none!important}
