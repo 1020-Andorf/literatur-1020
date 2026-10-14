@@ -522,3 +522,15 @@ body{background:#fff}
 .change-validity{margin-top:12px}
 @media(max-width:760px){.calendar{padding:14px!important}.cal-head{margin-bottom:12px!important}.cal-head strong{font-size:1.1rem}.cal-week,.cal-grid{gap:5px!important}.cal-week span{font-size:.72rem!important}.cal-day{min-height:55px!important;padding:8px!important;border-radius:10px!important;font-size:.82rem!important}.cal-event-pips i{width:5px;height:5px}.cal-help{font-size:.72rem}}
 @media(max-width:390px){.cal-day{min-height:46px!important;padding:6px!important}.cal-week,.cal-grid{gap:3px!important}.cal-event-pips{gap:2px}}
+
+/* Redaktion: robuste, lesbare Navigation ohne Überlappungen */
+.editor-dashboard{grid-template-columns:minmax(236px,260px) minmax(0,1fr);gap:20px;min-width:0}
+.editor-nav{min-width:0;max-width:100%;box-sizing:border-box;padding:10px;gap:4px;align-self:start}
+.editor-nav-btn{box-sizing:border-box;min-width:0;width:100%;display:grid;grid-template-columns:27px minmax(0,1fr);gap:10px;align-items:center;text-align:left;padding:11px 12px;border:1px solid transparent;border-radius:13px;line-height:1.35;font-family:inherit;cursor:pointer}
+.editor-nav-btn span{display:flex;align-items:center;justify-content:center;font-size:19px;line-height:1.25;min-width:0}
+.editor-nav-btn strong{display:block;min-width:0;max-width:100%;font-family:inherit;font-weight:700;font-size:13px;line-height:1.4;white-space:normal;overflow-wrap:anywhere;word-break:normal;hyphens:auto}
+.editor-content,.editor-toolbar,.editor-toolbar h2{min-width:0}
+.editor-nav-btn.active{border-color:#e8c2c6;background:#fff5f5;color:#b9252d}
+@media(min-width:861px) and (max-width:1020px){.editor-dashboard{grid-template-columns:minmax(210px,235px) minmax(0,1fr);gap:14px}}
+@media(max-width:860px){.editor-dashboard{grid-template-columns:minmax(0,1fr);gap:14px}.editor-nav{position:static;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.editor-nav-btn{grid-template-columns:24px minmax(0,1fr);padding:10px;text-align:left;justify-items:stretch}.editor-nav-btn span{font-size:18px}.editor-nav-btn strong{font-size:12.5px}.editor-toolbar{top:70px}}
+@media(max-width:440px){.editor-nav{grid-template-columns:minmax(0,1fr)}.editor-nav-btn strong{font-size:13px}}
