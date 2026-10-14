@@ -1423,317 +1423,1931 @@ window.OST1020_DATA = {
   ],
   "differential": [
     {
-      "id": "dyspnoe",
-      "icon": "lungs",
-      "title": "Dyspnoe",
-      "causes": [
-        {
-          "name": "Asthma / COPD",
-          "info": "Asthma / COPD ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Anaphylaxie",
-          "info": "Anaphylaxie ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Lungenödem",
-          "info": "Lungenödem ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Pneumothorax",
-          "info": "Pneumothorax ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Lungenembolie",
-          "info": "Lungenembolie ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Pneumonie",
-          "info": "Pneumonie ist eine mögliche Differentialdiagnose bei Dyspnoe. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Seit wann bestehen die Beschwerden?",
-        "Plötzlicher oder schleichender Beginn?",
-        "Thoraxschmerz, Allergie oder Fieber?",
-        "Bekannte kardiale oder pulmonale Vorerkrankungen?"
-      ],
-      "redflags": [
-        "Stille Lunge",
-        "Zyanose",
-        "SpO₂-Abfall trotz Sauerstoff",
-        "Erschöpfung / Vigilanzminderung"
-      ]
-    },
-    {
-      "id": "thorax",
-      "icon": "heart",
-      "title": "Thoraxschmerz",
-      "causes": [
-        {
-          "name": "ACS",
-          "info": "ACS ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Aortensyndrom",
-          "info": "Aortensyndrom ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Lungenembolie",
-          "info": "Lungenembolie ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Pneumothorax",
-          "info": "Pneumothorax ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Perikarditis",
-          "info": "Perikarditis ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Muskuloskelettal",
-          "info": "Muskuloskelettal ist eine mögliche Differentialdiagnose bei Thoraxschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Druck, Enge oder Stechen?",
-        "Ausstrahlung?",
-        "Belastungsabhängig?",
-        "Dyspnoe, Übelkeit oder Synkope?"
-      ],
-      "redflags": [
-        "Hypotonie",
-        "Kaltschweißigkeit",
-        "Neurologische Defizite",
-        "Schwere Dyspnoe"
-      ]
-    },
-    {
-      "id": "bewusstsein",
-      "icon": "brain",
-      "title": "Bewusstseinsstörung",
-      "causes": [
-        {
-          "name": "Hypoglykämie",
-          "info": "Hypoglykämie ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Intoxikation",
-          "info": "Intoxikation ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Krampfanfall",
-          "info": "Krampfanfall ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Schlaganfall",
-          "info": "Schlaganfall ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Sepsis",
-          "info": "Sepsis ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Trauma",
-          "info": "Trauma ist eine mögliche Differentialdiagnose bei Bewusstseinsstörung. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Letzter normaler Zustand?",
-        "Blutzucker?",
-        "Medikamente oder Substanzen?",
-        "Krampf oder Trauma beobachtet?"
-      ],
-      "redflags": [
-        "GCS sinkt",
-        "Ateminsuffizienz",
-        "Pupillendifferenz",
-        "Neurologische Herdzeichen"
-      ]
-    },
-    {
-      "id": "synkope",
-      "icon": "bolt",
-      "title": "Synkope",
-      "causes": [
-        {
-          "name": "Vasovagal",
-          "info": "Vasovagal ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Kardial",
-          "info": "Kardial ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Orthostatisch",
-          "info": "Orthostatisch ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Hypovolämie",
-          "info": "Hypovolämie ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Metabolisch",
-          "info": "Metabolisch ist eine mögliche Differentialdiagnose bei Synkope. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Belastungsabhängig?",
-        "Prodromi?",
-        "Palpitationen?",
-        "Verletzungen durch Sturz?"
-      ],
-      "redflags": [
-        "Ohne Vorwarnung",
-        "Bei Belastung",
-        "Thoraxschmerz",
-        "Pathologisches EKG"
-      ]
-    },
-    {
-      "id": "bauch",
-      "icon": "stethoscope",
-      "title": "Bauchschmerz",
-      "causes": [
-        {
-          "name": "Akutes Abdomen",
-          "info": "Akutes Abdomen ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "GI-Blutung",
-          "info": "GI-Blutung ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "AAA",
-          "info": "AAA ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Galle",
-          "info": "Galle ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Appendizitis",
-          "info": "Appendizitis ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Renale Kolik",
-          "info": "Renale Kolik ist eine mögliche Differentialdiagnose bei Bauchschmerz. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Lokalisation und OPQRST?",
-        "Erbrechen oder Diarrhoe?",
-        "Blutung?",
-        "Schwangerschaft möglich?"
-      ],
-      "redflags": [
-        "Abwehrspannung",
-        "Schockzeichen",
-        "Blutiges Erbrechen / Teerstuhl",
-        "Synkope"
-      ]
-    },
-    {
-      "id": "allergie",
-      "icon": "syringe",
-      "title": "Allergische Reaktion",
-      "causes": [
-        {
-          "name": "Anaphylaxie",
-          "info": "Anaphylaxie ist eine mögliche Differentialdiagnose bei Allergische Reaktion. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Lokale Reaktion",
-          "info": "Lokale Reaktion ist eine mögliche Differentialdiagnose bei Allergische Reaktion. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Medikamentenreaktion",
-          "info": "Medikamentenreaktion ist eine mögliche Differentialdiagnose bei Allergische Reaktion. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Möglicher Auslöser?",
-        "Haut, Atmung oder Kreislauf betroffen?",
-        "Autoinjektor vorhanden?"
-      ],
-      "redflags": [
-        "Stridor",
-        "Hypotonie",
-        "Rasche Progression",
-        "Bewusstseinsstörung"
-      ]
-    },
-    {
-      "id": "stroke",
-      "icon": "clock",
-      "title": "Schlaganfall",
-      "causes": [
-        {
-          "name": "Ischämischer Insult",
-          "info": "Ischämischer Insult ist eine mögliche Differentialdiagnose bei Schlaganfall. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Hämorrhagie",
-          "info": "Hämorrhagie ist eine mögliche Differentialdiagnose bei Schlaganfall. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Stroke Mimic",
-          "info": "Stroke Mimic ist eine mögliche Differentialdiagnose bei Schlaganfall. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Last seen well?",
-        "FAST positiv?",
-        "Antikoagulation?",
-        "Krampfanfall?"
-      ],
-      "redflags": [
-        "Progrediente Defizite",
-        "Bewusstseinsstörung",
-        "Starker Kopfschmerz",
-        "Aspirationsgefahr"
-      ]
-    },
-    {
-      "id": "trauma",
-      "icon": "bandage",
-      "title": "Trauma",
-      "causes": [
-        {
-          "name": "SHT",
-          "info": "SHT ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Thoraxtrauma",
-          "info": "Thoraxtrauma ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Abdominaltrauma",
-          "info": "Abdominaltrauma ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Fraktur",
-          "info": "Fraktur ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        },
-        {
-          "name": "Starke Blutung",
-          "info": "Starke Blutung ist eine mögliche Differentialdiagnose bei Trauma. Klinische Einordnung anhand ABCDE, Anamnese, Vitalparametern und lokalen SOPs."
-        }
-      ],
-      "questions": [
-        "Unfallmechanismus?",
-        "Höhe / Geschwindigkeit?",
-        "Schutzsysteme?",
-        "Schmerzlokalisation?"
-      ],
-      "redflags": [
-        "Instabiler Kreislauf",
-        "Atemnot",
-        "Bewusstseinsstörung",
-        "Starke Blutung"
-      ]
-    }
-  ],
+    "id": "dyspnoe",
+    "icon": "lungs",
+    "title": "Dyspnoe",
+    "causes": [
+      {
+        "name": "Asthma bronchiale",
+        "physiology": "Reversible bronchiale Obstruktion durch Entzündung und Bronchospasmus",
+        "findings": "exspiratorisches Giemen, verlängertes Exspirium, erhöhte Atemfrequenz",
+        "cave": "stille Lunge, Erschöpfung und Bewusstseinsstörung",
+        "info": "Reversible bronchiale Obstruktion durch Entzündung und Bronchospasmus exspiratorisches Giemen, verlängertes Exspirium, erhöhte Atemfrequenz CAVE: stille Lunge, Erschöpfung und Bewusstseinsstörung"
+      },
+      {
+        "name": "COPD-Exazerbation",
+        "physiology": "Akute Verschlechterung chronischer Atemwegsobstruktion",
+        "findings": "Giemen, vermehrtes Sputum, Hyperkapnie möglich",
+        "cave": "Normale SpO₂ schließt Hyperkapnie nicht aus",
+        "info": "Akute Verschlechterung chronischer Atemwegsobstruktion Giemen, vermehrtes Sputum, Hyperkapnie möglich CAVE: Normale SpO₂ schließt Hyperkapnie nicht aus"
+      },
+      {
+        "name": "Kardiales Lungenödem",
+        "physiology": "Erhöhter pulmonaler Kapillardruck führt zu Flüssigkeit in Alveolen",
+        "findings": "Rasselgeräusche, Orthopnoe, Hypoxämie, oft Hypertonie",
+        "cave": "rasches respiratorisches Versagen",
+        "info": "Erhöhter pulmonaler Kapillardruck führt zu Flüssigkeit in Alveolen Rasselgeräusche, Orthopnoe, Hypoxämie, oft Hypertonie CAVE: rasches respiratorisches Versagen"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Thrombotischer Verschluss einer Pulmonalarterie mit gestörtem Gasaustausch",
+        "findings": "Tachypnoe, Tachykardie, pleuritischer Schmerz, eventuell Hypoxämie",
+        "cave": "normale SpO₂ schließt LAE nicht aus",
+        "info": "Thrombotischer Verschluss einer Pulmonalarterie mit gestörtem Gasaustausch Tachypnoe, Tachykardie, pleuritischer Schmerz, eventuell Hypoxämie CAVE: normale SpO₂ schließt LAE nicht aus"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Infektiöse Entzündung des Lungenparenchyms",
+        "findings": "Fieber, Husten, fokale Rasselgeräusche, Tachypnoe",
+        "cave": "ältere Menschen teils ohne Fieber",
+        "info": "Infektiöse Entzündung des Lungenparenchyms Fieber, Husten, fokale Rasselgeräusche, Tachypnoe CAVE: ältere Menschen teils ohne Fieber"
+      },
+      {
+        "name": "Pneumothorax",
+        "physiology": "Luft im Pleuraspalt führt zum Lungenkollaps",
+        "findings": "plötzliche einseitige Schmerzen, abgeschwächtes Atemgeräusch",
+        "cave": "Schockzeichen bei Spannungspneumothorax",
+        "info": "Luft im Pleuraspalt führt zum Lungenkollaps plötzliche einseitige Schmerzen, abgeschwächtes Atemgeräusch CAVE: Schockzeichen bei Spannungspneumothorax"
+      },
+      {
+        "name": "Akutes Koronarsyndrom",
+        "physiology": "Myokardischämie durch Koronarverschluss/-verengung",
+        "findings": "Dyspnoe, Brustdruck, Kaltschweißigkeit, EKG-Veränderungen möglich",
+        "cave": "auch ohne Thoraxschmerz",
+        "info": "Myokardischämie durch Koronarverschluss/-verengung Dyspnoe, Brustdruck, Kaltschweißigkeit, EKG-Veränderungen möglich CAVE: auch ohne Thoraxschmerz"
+      },
+      {
+        "name": "Anaphylaxie",
+        "physiology": "Systemische allergische Reaktion mit Bronchospasmus und Gefäßweitstellung",
+        "findings": "Dyspnoe, Schwellung, Hypotonie, ggf. Urtikaria",
+        "cave": "rascher Kreislaufkollaps",
+        "info": "Systemische allergische Reaktion mit Bronchospasmus und Gefäßweitstellung Dyspnoe, Schwellung, Hypotonie, ggf. Urtikaria CAVE: rascher Kreislaufkollaps"
+      },
+      {
+        "name": "Asthma / COPD",
+        "info": "Bei Dyspnoe als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Seit wann bestehen die Beschwerden?",
+      "Plötzlicher oder schleichender Beginn?",
+      "Thoraxschmerz, Allergie oder Fieber?",
+      "Bekannte kardiale oder pulmonale Vorerkrankungen?"
+    ],
+    "redflags": [
+      "Stille Lunge",
+      "Zyanose",
+      "SpO₂-Abfall trotz Sauerstoff",
+      "Erschöpfung / Vigilanzminderung"
+    ],
+    "group": "Atmung"
+  },
+  {
+    "id": "thorax",
+    "icon": "heart",
+    "title": "Thoraxschmerz",
+    "causes": [
+      {
+        "name": "Akutes Koronarsyndrom",
+        "physiology": "Myokardischämie meist durch Plaqueruptur und Thrombus",
+        "findings": "Druck/Enge, Ausstrahlung, Übelkeit, EKG kann initial unauffällig sein",
+        "cave": "12-Kanal-EKG und serieller Verlauf, atypische Symptome",
+        "info": "Myokardischämie meist durch Plaqueruptur und Thrombus Druck/Enge, Ausstrahlung, Übelkeit, EKG kann initial unauffällig sein CAVE: 12-Kanal-EKG und serieller Verlauf, atypische Symptome"
+      },
+      {
+        "name": "Akutes Aortensyndrom",
+        "physiology": "Einriss der Aortenintima oder intramurales Hämatom",
+        "findings": "plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich",
+        "cave": "Schock und Organischämie",
+        "info": "Einriss der Aortenintima oder intramurales Hämatom plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich CAVE: Schock und Organischämie"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Pulmonalarterieller Gefäßverschluss",
+        "findings": "atemabhängiger Schmerz, Tachykardie, Dyspnoe",
+        "cave": "Synkope und Hypotonie",
+        "info": "Pulmonalarterieller Gefäßverschluss atemabhängiger Schmerz, Tachykardie, Dyspnoe CAVE: Synkope und Hypotonie"
+      },
+      {
+        "name": "Pneumothorax",
+        "physiology": "Luft im Pleuraspalt",
+        "findings": "abrupt einsetzender einseitiger pleuritischer Schmerz und Dyspnoe",
+        "cave": "Spannungskomponente",
+        "info": "Luft im Pleuraspalt abrupt einsetzender einseitiger pleuritischer Schmerz und Dyspnoe CAVE: Spannungskomponente"
+      },
+      {
+        "name": "Perikarditis",
+        "physiology": "Entzündung des Herzbeutels",
+        "findings": "lage- und atemabhängiger Schmerz, Besserung im Sitzen, ggf. diffuse ST-Hebungen",
+        "cave": "Tamponadezeichen",
+        "info": "Entzündung des Herzbeutels lage- und atemabhängiger Schmerz, Besserung im Sitzen, ggf. diffuse ST-Hebungen CAVE: Tamponadezeichen"
+      },
+      {
+        "name": "Muskuloskelettaler Thoraxschmerz",
+        "physiology": "Reizung von Muskeln, Rippen oder Gelenken",
+        "findings": "oft bewegungs-/druckabhängig",
+        "cave": "Druckschmerz schließt ACS nicht sicher aus",
+        "info": "Reizung von Muskeln, Rippen oder Gelenken oft bewegungs-/druckabhängig CAVE: Druckschmerz schließt ACS nicht sicher aus"
+      },
+      {
+        "name": "Ösophagealer Reflux",
+        "physiology": "Rückfluss von Magensäure in die Speiseröhre",
+        "findings": "brennender retrosternaler Schmerz, nach Essen/Liegen",
+        "cave": "ACS nicht allein anhand Sodbrennen ausschließen",
+        "info": "Rückfluss von Magensäure in die Speiseröhre brennender retrosternaler Schmerz, nach Essen/Liegen CAVE: ACS nicht allein anhand Sodbrennen ausschließen"
+      },
+      {
+        "name": "ACS",
+        "info": "Bei Thoraxschmerz als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Druck, Enge oder Stechen?",
+      "Ausstrahlung?",
+      "Belastungsabhängig?",
+      "Dyspnoe, Übelkeit oder Synkope?"
+    ],
+    "redflags": [
+      "Hypotonie",
+      "Kaltschweißigkeit",
+      "Neurologische Defizite",
+      "Schwere Dyspnoe"
+    ],
+    "group": "Kreislauf"
+  },
+  {
+    "id": "bewusstsein",
+    "icon": "brain",
+    "title": "Bewusstseinsstörung",
+    "causes": [
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Glukosemangel im Gehirn",
+        "findings": "BZ typischerweise unter 70 mg/dl (3,9 mmol/l), neuroglykopenische Zeichen",
+        "cave": "sofort BZ messen, Schwellen individuell",
+        "info": "Glukosemangel im Gehirn BZ typischerweise unter 70 mg/dl (3,9 mmol/l), neuroglykopenische Zeichen CAVE: sofort BZ messen, Schwellen individuell"
+      },
+      {
+        "name": "Intoxikation",
+        "physiology": "Stoffwirkung auf ZNS oder Atmung",
+        "findings": "Pupillen-/Atemauffälligkeiten, unterschiedliche Vitalwerte",
+        "cave": "Mischintoxikation und Hypoglykämie",
+        "info": "Stoffwirkung auf ZNS oder Atmung Pupillen-/Atemauffälligkeiten, unterschiedliche Vitalwerte CAVE: Mischintoxikation und Hypoglykämie"
+      },
+      {
+        "name": "Schlaganfall",
+        "physiology": "Zerebrale Minderperfusion oder Blutung",
+        "findings": "fokale Defizite, Vigilanzstörung bei großer Läsion",
+        "cave": "Zeitpunkt zuletzt gesund erheben",
+        "info": "Zerebrale Minderperfusion oder Blutung fokale Defizite, Vigilanzstörung bei großer Läsion CAVE: Zeitpunkt zuletzt gesund erheben"
+      },
+      {
+        "name": "Postiktaler Zustand",
+        "physiology": "Vorübergehende neuronale Erschöpfung nach epileptischem Anfall",
+        "findings": "Somnolenz, Verwirrtheit, ggf. Todd-Parese",
+        "cave": "persistierende Ausfälle auch auf Schlaganfall prüfen",
+        "info": "Vorübergehende neuronale Erschöpfung nach epileptischem Anfall Somnolenz, Verwirrtheit, ggf. Todd-Parese CAVE: persistierende Ausfälle auch auf Schlaganfall prüfen"
+      },
+      {
+        "name": "Sepsis",
+        "physiology": "Infektionsbedingte systemische Dysregulation mit Organversagen",
+        "findings": "Verwirrtheit, Tachypnoe, mögliche Hypotonie",
+        "cave": "Fieber kann fehlen",
+        "info": "Infektionsbedingte systemische Dysregulation mit Organversagen Verwirrtheit, Tachypnoe, mögliche Hypotonie CAVE: Fieber kann fehlen"
+      },
+      {
+        "name": "Hyperkapnie / Hypoxie",
+        "physiology": "Störung der Oxygenierung oder CO₂-Elimination",
+        "findings": "pathologische SpO₂/AF, ggf. Somnolenz",
+        "cave": "SpO₂ allein misst kein CO₂",
+        "info": "Störung der Oxygenierung oder CO₂-Elimination pathologische SpO₂/AF, ggf. Somnolenz CAVE: SpO₂ allein misst kein CO₂"
+      },
+      {
+        "name": "Krampfanfall",
+        "info": "Bei Bewusstseinsstörung als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Trauma",
+        "info": "Bei Bewusstseinsstörung als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Letzter normaler Zustand?",
+      "Blutzucker?",
+      "Medikamente oder Substanzen?",
+      "Krampf oder Trauma beobachtet?"
+    ],
+    "redflags": [
+      "GCS sinkt",
+      "Ateminsuffizienz",
+      "Pupillendifferenz",
+      "Neurologische Herdzeichen"
+    ],
+    "group": "Neurologie"
+  },
+  {
+    "id": "synkope",
+    "icon": "bolt",
+    "title": "Synkope",
+    "causes": [
+      {
+        "name": "Vasovagale Synkope",
+        "physiology": "Reflexbedingte Bradykardie und Vasodilatation",
+        "findings": "Prodromi mit Schwitzen, Übelkeit, rasche Erholung",
+        "cave": "Sturzfolgen",
+        "info": "Reflexbedingte Bradykardie und Vasodilatation Prodromi mit Schwitzen, Übelkeit, rasche Erholung CAVE: Sturzfolgen"
+      },
+      {
+        "name": "Orthostatische Hypotonie",
+        "physiology": "Unzureichende Blutdruckregulation beim Aufstehen",
+        "findings": "Schwindel nach Lagewechsel, niedriger RR",
+        "cave": "Dehydratation oder Blutverlust",
+        "info": "Unzureichende Blutdruckregulation beim Aufstehen Schwindel nach Lagewechsel, niedriger RR CAVE: Dehydratation oder Blutverlust"
+      },
+      {
+        "name": "Arrhythmogene Synkope",
+        "physiology": "Vorübergehend zu geringes Herzzeitvolumen durch Rhythmusstörung",
+        "findings": "plötzlich ohne Vorzeichen, Palpitationen, pathologisches EKG möglich",
+        "cave": "hohe Gefährdung",
+        "info": "Vorübergehend zu geringes Herzzeitvolumen durch Rhythmusstörung plötzlich ohne Vorzeichen, Palpitationen, pathologisches EKG möglich CAVE: hohe Gefährdung"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Große Embolie beeinträchtigt rechten Ventrikel und Kreislauf",
+        "findings": "Dyspnoe, Tachykardie, Synkope",
+        "cave": "hypotensiver Schock",
+        "info": "Große Embolie beeinträchtigt rechten Ventrikel und Kreislauf Dyspnoe, Tachykardie, Synkope CAVE: hypotensiver Schock"
+      },
+      {
+        "name": "Akuter Blutverlust",
+        "physiology": "Hypovolämie senkt zerebrale Perfusion",
+        "findings": "Tachykardie, Blässe, Schweiß",
+        "cave": "okkulte Blutung",
+        "info": "Hypovolämie senkt zerebrale Perfusion Tachykardie, Blässe, Schweiß CAVE: okkulte Blutung"
+      },
+      {
+        "name": "Kardial",
+        "info": "Bei Synkope als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Hypovolämie",
+        "info": "Bei Synkope als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Metabolisch",
+        "info": "Bei Synkope als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Belastungsabhängig?",
+      "Prodromi?",
+      "Palpitationen?",
+      "Verletzungen durch Sturz?"
+    ],
+    "redflags": [
+      "Ohne Vorwarnung",
+      "Bei Belastung",
+      "Thoraxschmerz",
+      "Pathologisches EKG"
+    ],
+    "group": "Kreislauf"
+  },
+  {
+    "id": "bauch",
+    "icon": "stethoscope",
+    "title": "Bauchschmerz",
+    "causes": [
+      {
+        "name": "Gastroenteritis",
+        "physiology": "Infektiöse Entzündung von Magen und Darm",
+        "findings": "diffuse Krämpfe, Erbrechen, Diarrhö",
+        "cave": "Dehydratation und atypische schwere Ursache",
+        "info": "Infektiöse Entzündung von Magen und Darm diffuse Krämpfe, Erbrechen, Diarrhö CAVE: Dehydratation und atypische schwere Ursache"
+      },
+      {
+        "name": "Appendizitis",
+        "physiology": "Entzündung der Appendix",
+        "findings": "periumbilikaler Schmerz mit Wanderung nach rechts unten, Fieber möglich",
+        "cave": "atypische Lokalisation",
+        "info": "Entzündung der Appendix periumbilikaler Schmerz mit Wanderung nach rechts unten, Fieber möglich CAVE: atypische Lokalisation"
+      },
+      {
+        "name": "Cholezystitis / Gallenkolik",
+        "physiology": "Gallensteinbedingte Obstruktion und ggf. Entzündung",
+        "findings": "rechter Oberbauch, Übelkeit, Murphy-Zeichen",
+        "cave": "Cholangitis bei Fieber/Ikterus",
+        "info": "Gallensteinbedingte Obstruktion und ggf. Entzündung rechter Oberbauch, Übelkeit, Murphy-Zeichen CAVE: Cholangitis bei Fieber/Ikterus"
+      },
+      {
+        "name": "Pankreatitis",
+        "physiology": "Entzündung des Pankreas durch Enzymaktivierung",
+        "findings": "gürtelförmiger Oberbauchschmerz, Erbrechen",
+        "cave": "Organversagen bei schwerem Verlauf",
+        "info": "Entzündung des Pankreas durch Enzymaktivierung gürtelförmiger Oberbauchschmerz, Erbrechen CAVE: Organversagen bei schwerem Verlauf"
+      },
+      {
+        "name": "Nierenkolik",
+        "physiology": "Harnleiterobstruktion meist durch Stein",
+        "findings": "kolikartiger Flankenschmerz, Ausstrahlung Leiste, Hämaturie",
+        "cave": "Fieber + Harnstau ist urologischer Notfall",
+        "info": "Harnleiterobstruktion meist durch Stein kolikartiger Flankenschmerz, Ausstrahlung Leiste, Hämaturie CAVE: Fieber + Harnstau ist urologischer Notfall"
+      },
+      {
+        "name": "Ileus",
+        "physiology": "Mechanische oder funktionelle Darmpassagestörung",
+        "findings": "kolikartige Schmerzen, Erbrechen, Distension, fehlender Wind",
+        "cave": "Strangulation/Perforation",
+        "info": "Mechanische oder funktionelle Darmpassagestörung kolikartige Schmerzen, Erbrechen, Distension, fehlender Wind CAVE: Strangulation/Perforation"
+      },
+      {
+        "name": "Mesenterialischämie",
+        "physiology": "Akute Minderdurchblutung des Darms",
+        "findings": "starker Schmerz oft bei zunächst wenig Befund",
+        "cave": "rasche Nekrose",
+        "info": "Akute Minderdurchblutung des Darms starker Schmerz oft bei zunächst wenig Befund CAVE: rasche Nekrose"
+      },
+      {
+        "name": "Rupturiertes Aortenaneurysma",
+        "physiology": "Gefäßwandruptur mit innerer Blutung",
+        "findings": "Abdomen-/Rückenschmerz, Synkope, Hypotonie",
+        "cave": "Schockgefahr",
+        "info": "Gefäßwandruptur mit innerer Blutung Abdomen-/Rückenschmerz, Synkope, Hypotonie CAVE: Schockgefahr"
+      },
+      {
+        "name": "Extrauteringravidität",
+        "physiology": "Schwangerschaft außerhalb des Uterus",
+        "findings": "Unterbauchschmerz, vaginale Blutung, Synkope",
+        "cave": "bei gebärfähigen Patientinnen Schwangerschaft erfragen",
+        "info": "Schwangerschaft außerhalb des Uterus Unterbauchschmerz, vaginale Blutung, Synkope CAVE: bei gebärfähigen Patientinnen Schwangerschaft erfragen"
+      },
+      {
+        "name": "Akutes Koronarsyndrom",
+        "physiology": "Myokardischämie kann Oberbauchbeschwerden auslösen",
+        "findings": "Übelkeit, Druck, Kaltschweißigkeit",
+        "cave": "atypischer Infarkt",
+        "info": "Myokardischämie kann Oberbauchbeschwerden auslösen Übelkeit, Druck, Kaltschweißigkeit CAVE: atypischer Infarkt"
+      },
+      {
+        "name": "Akutes Abdomen",
+        "info": "Bei Bauchschmerz als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "GI-Blutung",
+        "info": "Bei Bauchschmerz als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "AAA",
+        "info": "Bei Bauchschmerz als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Renale Kolik",
+        "info": "Bei Bauchschmerz als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Lokalisation und OPQRST?",
+      "Erbrechen oder Diarrhoe?",
+      "Blutung?",
+      "Schwangerschaft möglich?"
+    ],
+    "redflags": [
+      "Abwehrspannung",
+      "Schockzeichen",
+      "Blutiges Erbrechen / Teerstuhl",
+      "Synkope"
+    ],
+    "group": "Abdomen"
+  },
+  {
+    "id": "allergie",
+    "icon": "syringe",
+    "title": "Allergische Reaktion",
+    "causes": [
+      {
+        "name": "Fremdkörperaspiration",
+        "physiology": "Mechanische Obstruktion der Atemwege",
+        "findings": "plötzlicher Husten, Stridor, Sprechunfähigkeit",
+        "cave": "stille vollständige Verlegung ist unmittelbar lebensbedrohlich",
+        "info": "Mechanische Obstruktion der Atemwege plötzlicher Husten, Stridor, Sprechunfähigkeit CAVE: stille vollständige Verlegung ist unmittelbar lebensbedrohlich"
+      },
+      {
+        "name": "Anaphylaxie",
+        "physiology": "Akute systemische Mastzellaktivierung mit Schleimhautödem und Bronchospasmus",
+        "findings": "Stridor, Urtikaria, Hypotonie",
+        "cave": "Hauterscheinungen können fehlen",
+        "info": "Akute systemische Mastzellaktivierung mit Schleimhautödem und Bronchospasmus Stridor, Urtikaria, Hypotonie CAVE: Hauterscheinungen können fehlen"
+      },
+      {
+        "name": "Epiglottitis",
+        "physiology": "Akute Entzündung der Epiglottis mit Ödem",
+        "findings": "Fieber, Dysphagie, Speichelfluss, inspiratorischer Stridor",
+        "cave": "Racheninspektion oder Agitation kann die Atemwegsverlegung verstärken",
+        "info": "Akute Entzündung der Epiglottis mit Ödem Fieber, Dysphagie, Speichelfluss, inspiratorischer Stridor CAVE: Racheninspektion oder Agitation kann die Atemwegsverlegung verstärken"
+      },
+      {
+        "name": "Pseudokrupp",
+        "physiology": "Virale subglottische Schleimhautschwellung bei Kleinkindern",
+        "findings": "bellender Husten, Heiserkeit, inspiratorischer Stridor",
+        "cave": "Ruhedyspnoe und Erschöpfung",
+        "info": "Virale subglottische Schleimhautschwellung bei Kleinkindern bellender Husten, Heiserkeit, inspiratorischer Stridor CAVE: Ruhedyspnoe und Erschöpfung"
+      },
+      {
+        "name": "Lokale Reaktion",
+        "info": "Bei Allergische Reaktion als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Medikamentenreaktion",
+        "info": "Bei Allergische Reaktion als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Möglicher Auslöser?",
+      "Haut, Atmung oder Kreislauf betroffen?",
+      "Autoinjektor vorhanden?"
+    ],
+    "redflags": [
+      "Stridor",
+      "Hypotonie",
+      "Rasche Progression",
+      "Bewusstseinsstörung"
+    ],
+    "group": "Atemweg"
+  },
+  {
+    "id": "stroke",
+    "icon": "clock",
+    "title": "Schlaganfall",
+    "causes": [
+      {
+        "name": "Ischämischer Schlaganfall",
+        "physiology": "Akuter Gefäßverschluss mit Hirnischämie",
+        "findings": "FAST-Defizite, Aphasie, Hemiparese",
+        "cave": "Zeitkritik, ggf. große Gefäßokklusion",
+        "info": "Akuter Gefäßverschluss mit Hirnischämie FAST-Defizite, Aphasie, Hemiparese CAVE: Zeitkritik, ggf. große Gefäßokklusion"
+      },
+      {
+        "name": "Intrazerebrale Blutung",
+        "physiology": "Blutung in Hirngewebe",
+        "findings": "fokale Defizite, Kopfschmerz, Vigilanzabfall möglich",
+        "cave": "klinisch nicht sicher von Ischämie unterscheidbar",
+        "info": "Blutung in Hirngewebe fokale Defizite, Kopfschmerz, Vigilanzabfall möglich CAVE: klinisch nicht sicher von Ischämie unterscheidbar"
+      },
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Glukosemangel kann fokale Ausfälle imitieren",
+        "findings": "niedriger BZ, neurologische Symptome",
+        "cave": "rasche Messung",
+        "info": "Glukosemangel kann fokale Ausfälle imitieren niedriger BZ, neurologische Symptome CAVE: rasche Messung"
+      },
+      {
+        "name": "Todd-Parese",
+        "physiology": "Vorübergehende fokale Schwäche nach Anfall",
+        "findings": "postiktale Anamnese",
+        "cave": "paralleler Schlaganfall möglich",
+        "info": "Vorübergehende fokale Schwäche nach Anfall postiktale Anamnese CAVE: paralleler Schlaganfall möglich"
+      },
+      {
+        "name": "Ischämischer Insult",
+        "info": "Bei Schlaganfall als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Hämorrhagie",
+        "info": "Bei Schlaganfall als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Stroke Mimic",
+        "info": "Bei Schlaganfall als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Last seen well?",
+      "FAST positiv?",
+      "Antikoagulation?",
+      "Krampfanfall?"
+    ],
+    "redflags": [
+      "Progrediente Defizite",
+      "Bewusstseinsstörung",
+      "Starker Kopfschmerz",
+      "Aspirationsgefahr"
+    ],
+    "group": "Neurologie"
+  },
+  {
+    "id": "trauma",
+    "icon": "bandage",
+    "title": "Trauma",
+    "causes": [
+      {
+        "name": "Commotio cerebri",
+        "physiology": "Traumatisch bedingte vorübergehende Hirnfunktionsstörung",
+        "findings": "Kopfschmerz, Amnesie, Übelkeit",
+        "cave": "zunehmende Bewusstseinsstörung",
+        "info": "Traumatisch bedingte vorübergehende Hirnfunktionsstörung Kopfschmerz, Amnesie, Übelkeit CAVE: zunehmende Bewusstseinsstörung"
+      },
+      {
+        "name": "Subduralhämatom",
+        "physiology": "Blutung zwischen Dura und Arachnoidea",
+        "findings": "Kopfschmerz, Vigilanzabfall, fokale Zeichen",
+        "cave": "verzögerte Verschlechterung, Antikoagulation",
+        "info": "Blutung zwischen Dura und Arachnoidea Kopfschmerz, Vigilanzabfall, fokale Zeichen CAVE: verzögerte Verschlechterung, Antikoagulation"
+      },
+      {
+        "name": "Epiduralhämatom",
+        "physiology": "Arterielle/venöse Blutung zwischen Schädel und Dura",
+        "findings": "Bewusstseinsstörung, eventuell freies Intervall",
+        "cave": "rasche Einklemmung",
+        "info": "Arterielle/venöse Blutung zwischen Schädel und Dura Bewusstseinsstörung, eventuell freies Intervall CAVE: rasche Einklemmung"
+      },
+      {
+        "name": "SHT",
+        "info": "Bei Trauma als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Thoraxtrauma",
+        "info": "Bei Trauma als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Abdominaltrauma",
+        "info": "Bei Trauma als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Fraktur",
+        "info": "Bei Trauma als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      },
+      {
+        "name": "Starke Blutung",
+        "info": "Bei Trauma als Differenzialdiagnose berücksichtigen; gezielte Anamnese und ABCDE-Befunde entscheiden über die weitere Abklärung."
+      }
+    ],
+    "questions": [
+      "Unfallmechanismus?",
+      "Höhe / Geschwindigkeit?",
+      "Schutzsysteme?",
+      "Schmerzlokalisation?"
+    ],
+    "redflags": [
+      "Instabiler Kreislauf",
+      "Atemnot",
+      "Bewusstseinsstörung",
+      "Starke Blutung"
+    ],
+    "group": "Trauma"
+  },
+  {
+    "id": "diag-schluckstoerung-halsanschwellung",
+    "group": "Atemweg",
+    "icon": "🗣️",
+    "title": "Schluckstörung / Halsanschwellung",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Angioödem",
+        "physiology": "Tiefes Ödem von Haut oder Schleimhaut, histamin- oder bradykininvermittelt",
+        "findings": "Zungen-/Lippenschwellung, Dysphagie, ggf. Stridor",
+        "cave": "ACE-Hemmer-Angioödem oft ohne Urtikaria",
+        "info": "Tiefes Ödem von Haut oder Schleimhaut, histamin- oder bradykininvermittelt Zungen-/Lippenschwellung, Dysphagie, ggf. Stridor CAVE: ACE-Hemmer-Angioödem oft ohne Urtikaria"
+      },
+      {
+        "name": "Peritonsillarabszess",
+        "physiology": "Eitrige Infektion im Tonsillenumfeld",
+        "findings": "einseitige Halsschmerzen, kloßige Sprache, Trismus",
+        "cave": "Atemweg und tiefe Ausbreitung",
+        "info": "Eitrige Infektion im Tonsillenumfeld einseitige Halsschmerzen, kloßige Sprache, Trismus CAVE: Atemweg und tiefe Ausbreitung"
+      },
+      {
+        "name": "Schlaganfall",
+        "physiology": "Zentrale Schluckstörung durch zerebrale Ischämie/Blutung",
+        "findings": "Dysarthrie, Fazialisparese, Aspirationsgefahr",
+        "cave": "plötzlicher Beginn ist zeitkritisch",
+        "info": "Zentrale Schluckstörung durch zerebrale Ischämie/Blutung Dysarthrie, Fazialisparese, Aspirationsgefahr CAVE: plötzlicher Beginn ist zeitkritisch"
+      }
+    ]
+  },
+  {
+    "id": "diag-husten-produktiver-husten",
+    "group": "Atmung",
+    "icon": "🫁",
+    "title": "Husten / produktiver Husten",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Akute Bronchitis",
+        "physiology": "Meist virale Entzündung der Bronchialschleimhaut",
+        "findings": "Husten, Auswurf, oft normale SpO₂",
+        "cave": "Dyspnoe oder schlechte Vitalwerte sprechen für schwere Ursache",
+        "info": "Meist virale Entzündung der Bronchialschleimhaut Husten, Auswurf, oft normale SpO₂ CAVE: Dyspnoe oder schlechte Vitalwerte sprechen für schwere Ursache"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Infektion von Alveolen und Interstitium",
+        "findings": "Fieber, produktiver Husten, Tachypnoe, fokale Auskultation",
+        "cave": "Sepsisgefahr",
+        "info": "Infektion von Alveolen und Interstitium Fieber, produktiver Husten, Tachypnoe, fokale Auskultation CAVE: Sepsisgefahr"
+      },
+      {
+        "name": "COPD-Exazerbation",
+        "physiology": "Akute Verschlechterung bestehender COPD",
+        "findings": "mehr Husten, Dyspnoe und/oder Sputum",
+        "cave": "Hyperkapnie und Atemerschöpfung",
+        "info": "Akute Verschlechterung bestehender COPD mehr Husten, Dyspnoe und/oder Sputum CAVE: Hyperkapnie und Atemerschöpfung"
+      },
+      {
+        "name": "Kardiales Lungenödem",
+        "physiology": "Flüssigkeitsübertritt in Lungengewebe",
+        "findings": "Husten, Orthopnoe, feuchte Rasselgeräusche, teils schaumiger Auswurf",
+        "cave": "schwere Hypoxämie",
+        "info": "Flüssigkeitsübertritt in Lungengewebe Husten, Orthopnoe, feuchte Rasselgeräusche, teils schaumiger Auswurf CAVE: schwere Hypoxämie"
+      }
+    ]
+  },
+  {
+    "id": "diag-bluthusten-haemoptyse",
+    "group": "Atmung",
+    "icon": "🫁",
+    "title": "Bluthusten / Hämoptyse",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Bronchitis / Bronchiektasen",
+        "physiology": "Entzündliche oder strukturelle Bronchialschäden mit Schleimhautblutung",
+        "findings": "blutiger Auswurf, Husten",
+        "cave": "echte Hämoptyse von Hämatemesis unterscheiden",
+        "info": "Entzündliche oder strukturelle Bronchialschäden mit Schleimhautblutung blutiger Auswurf, Husten CAVE: echte Hämoptyse von Hämatemesis unterscheiden"
+      },
+      {
+        "name": "Lungenembolie",
+        "physiology": "Gefäßverschluss mit möglichem Lungeninfarkt",
+        "findings": "Dyspnoe, pleuritischer Schmerz, Hämoptyse",
+        "cave": "Synkope/Hypotonie",
+        "info": "Gefäßverschluss mit möglichem Lungeninfarkt Dyspnoe, pleuritischer Schmerz, Hämoptyse CAVE: Synkope/Hypotonie"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Entzündungsbedingte Gefäßschädigung",
+        "findings": "Fieber, Husten, blutiges Sputum",
+        "cave": "schwere Infektion",
+        "info": "Entzündungsbedingte Gefäßschädigung Fieber, Husten, blutiges Sputum CAVE: schwere Infektion"
+      },
+      {
+        "name": "Pulmonale Blutung",
+        "physiology": "Blut tritt in die Atemwege ein",
+        "findings": "größere Blutmengen, Hypoxämie",
+        "cave": "Erstickungsgefahr auch ohne erheblichen Blutverlust",
+        "info": "Blut tritt in die Atemwege ein größere Blutmengen, Hypoxämie CAVE: Erstickungsgefahr auch ohne erheblichen Blutverlust"
+      }
+    ]
+  },
+  {
+    "id": "diag-palpitationen-herzrasen",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Palpitationen / Herzrasen",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Vorhofflimmern",
+        "physiology": "Ungeordnete atriale Erregung mit unregelmäßiger Kammeraktion",
+        "findings": "absolut arrhythmischer Puls, variable HF",
+        "cave": "Instabilität und thromboembolisches Risiko",
+        "info": "Ungeordnete atriale Erregung mit unregelmäßiger Kammeraktion absolut arrhythmischer Puls, variable HF CAVE: Instabilität und thromboembolisches Risiko"
+      },
+      {
+        "name": "Supraventrikuläre Tachykardie",
+        "physiology": "Reentry oder fokale atriale Tachykardie",
+        "findings": "meist regelmäßige schmale Tachykardie, plötzlich einsetzend",
+        "cave": "Hypotonie, Thoraxschmerz, Synkope",
+        "info": "Reentry oder fokale atriale Tachykardie meist regelmäßige schmale Tachykardie, plötzlich einsetzend CAVE: Hypotonie, Thoraxschmerz, Synkope"
+      },
+      {
+        "name": "Ventrikuläre Tachykardie",
+        "physiology": "Tachykarder Ursprung aus den Kammern",
+        "findings": "breite regelmäßige QRS-Komplexe häufig, Schock/Synkope",
+        "cave": "breite Tachykardie zunächst als VT bewerten",
+        "info": "Tachykarder Ursprung aus den Kammern breite regelmäßige QRS-Komplexe häufig, Schock/Synkope CAVE: breite Tachykardie zunächst als VT bewerten"
+      },
+      {
+        "name": "Sinustachykardie",
+        "physiology": "Physiologische Reaktion auf Stressoren",
+        "findings": "regelmäßiger Rhythmus mit P-Wellen",
+        "cave": "Ursache wie Sepsis, Blutung oder LAE suchen",
+        "info": "Physiologische Reaktion auf Stressoren regelmäßiger Rhythmus mit P-Wellen CAVE: Ursache wie Sepsis, Blutung oder LAE suchen"
+      }
+    ]
+  },
+  {
+    "id": "diag-bradykardie",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Bradykardie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "AV-Block",
+        "physiology": "Gestörte atrioventrikuläre Überleitung",
+        "findings": "langsame HF, EKG mit Überleitungsstörung",
+        "cave": "höhergradige Blöcke können instabil werden",
+        "info": "Gestörte atrioventrikuläre Überleitung langsame HF, EKG mit Überleitungsstörung CAVE: höhergradige Blöcke können instabil werden"
+      },
+      {
+        "name": "Hyperkaliämie",
+        "physiology": "Erhöhtes Serumkalium beeinträchtigt kardiale Erregung",
+        "findings": "Bradykardie, Leitungsstörungen, teils spitze T-Wellen",
+        "cave": "EKG kann trotz schwerer Hyperkaliämie wenig auffällig sein",
+        "info": "Erhöhtes Serumkalium beeinträchtigt kardiale Erregung Bradykardie, Leitungsstörungen, teils spitze T-Wellen CAVE: EKG kann trotz schwerer Hyperkaliämie wenig auffällig sein"
+      },
+      {
+        "name": "Medikamentenwirkung",
+        "physiology": "Betablocker, Calciumantagonisten oder Digitalis reduzieren Frequenz/Überleitung",
+        "findings": "Bradykardie, Hypotonie",
+        "cave": "Intoxikation beachten",
+        "info": "Betablocker, Calciumantagonisten oder Digitalis reduzieren Frequenz/Überleitung Bradykardie, Hypotonie CAVE: Intoxikation beachten"
+      },
+      {
+        "name": "Vagale Reaktion",
+        "physiology": "Reflektorische Frequenz- und Blutdrucksenkung",
+        "findings": "Übelkeit, Schwitzen, kurzzeitige Bradykardie",
+        "cave": "kardiale Ursachen ausschließen",
+        "info": "Reflektorische Frequenz- und Blutdrucksenkung Übelkeit, Schwitzen, kurzzeitige Bradykardie CAVE: kardiale Ursachen ausschließen"
+      }
+    ]
+  },
+  {
+    "id": "diag-hypotonie-schock",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Hypotonie / Schock",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hypovolämischer Schock",
+        "physiology": "Verminderte zirkulierende Blutmenge",
+        "findings": "Tachykardie, kalte Haut, verlängerte Rekapillarisierung",
+        "cave": "Normotonie schließt kompensierten Schock nicht aus",
+        "info": "Verminderte zirkulierende Blutmenge Tachykardie, kalte Haut, verlängerte Rekapillarisierung CAVE: Normotonie schließt kompensierten Schock nicht aus"
+      },
+      {
+        "name": "Kardiogener Schock",
+        "physiology": "Pumpversagen des Herzens",
+        "findings": "Hypotonie, kalte Extremitäten, Stauungszeichen möglich",
+        "cave": "ACS und Rhythmusstörungen",
+        "info": "Pumpversagen des Herzens Hypotonie, kalte Extremitäten, Stauungszeichen möglich CAVE: ACS und Rhythmusstörungen"
+      },
+      {
+        "name": "Septischer Schock",
+        "physiology": "Infektionsbedingte Vasodilatation, Kapillarleck und Organminderperfusion",
+        "findings": "veränderte Vigilanz, Tachypnoe, ggf. warme Haut initial",
+        "cave": "Fieber kann fehlen",
+        "info": "Infektionsbedingte Vasodilatation, Kapillarleck und Organminderperfusion veränderte Vigilanz, Tachypnoe, ggf. warme Haut initial CAVE: Fieber kann fehlen"
+      },
+      {
+        "name": "Anaphylaktischer Schock",
+        "physiology": "Systemische Mediatorfreisetzung mit Vasodilatation und Kapillarleck",
+        "findings": "Hypotonie, Bronchospasmus, Hautsymptome möglich",
+        "cave": "ohne Exanthem möglich",
+        "info": "Systemische Mediatorfreisetzung mit Vasodilatation und Kapillarleck Hypotonie, Bronchospasmus, Hautsymptome möglich CAVE: ohne Exanthem möglich"
+      },
+      {
+        "name": "Obstruktiver Schock",
+        "physiology": "Mechanische Füllungs-/Auswurfbehinderung des Herzens",
+        "findings": "Hypotonie bei LAE, Tamponade oder Spannungspneumothorax",
+        "cave": "unmittelbar reversible Ursachen",
+        "info": "Mechanische Füllungs-/Auswurfbehinderung des Herzens Hypotonie bei LAE, Tamponade oder Spannungspneumothorax CAVE: unmittelbar reversible Ursachen"
+      }
+    ]
+  },
+  {
+    "id": "diag-bluthochdruck-hypertensiver-notfall",
+    "group": "Kreislauf",
+    "icon": "❤️",
+    "title": "Bluthochdruck / hypertensiver Notfall",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hypertensiver Notfall",
+        "physiology": "Akut stark erhöhter RR mit Endorganschaden",
+        "findings": "neurologische Defizite, Dyspnoe, Thoraxschmerz oder Nierenfunktionsstörung",
+        "cave": "Endorganschaden ist entscheidend, nicht nur RR-Zahl",
+        "info": "Akut stark erhöhter RR mit Endorganschaden neurologische Defizite, Dyspnoe, Thoraxschmerz oder Nierenfunktionsstörung CAVE: Endorganschaden ist entscheidend, nicht nur RR-Zahl"
+      },
+      {
+        "name": "Hypertensive Entgleisung ohne akuten Organschaden",
+        "physiology": "Erhöhter arterieller Widerstand",
+        "findings": "oft wenige oder keine Beschwerden",
+        "cave": "keine rasche RR-Senkung ohne Indikation",
+        "info": "Erhöhter arterieller Widerstand oft wenige oder keine Beschwerden CAVE: keine rasche RR-Senkung ohne Indikation"
+      },
+      {
+        "name": "Präeklampsie",
+        "physiology": "Schwangerschaftsassoziierte Endotheldysfunktion mit Hypertonie",
+        "findings": "Kopfschmerz, Sehstörung, Oberbauchschmerz",
+        "cave": "Eklampsie/HELLP",
+        "info": "Schwangerschaftsassoziierte Endotheldysfunktion mit Hypertonie Kopfschmerz, Sehstörung, Oberbauchschmerz CAVE: Eklampsie/HELLP"
+      }
+    ]
+  },
+  {
+    "id": "diag-kopfschmerz",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Kopfschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Migräne",
+        "physiology": "Neurovaskuläre Kopfschmerzerkrankung",
+        "findings": "pulsierend, Übelkeit, Lichtempfindlichkeit, ggf. Aura",
+        "cave": "erstmaliger/atypischer Kopfschmerz",
+        "info": "Neurovaskuläre Kopfschmerzerkrankung pulsierend, Übelkeit, Lichtempfindlichkeit, ggf. Aura CAVE: erstmaliger/atypischer Kopfschmerz"
+      },
+      {
+        "name": "Spannungskopfschmerz",
+        "physiology": "Primärer Kopfschmerz mit muskulärer und zentraler Schmerzverarbeitung",
+        "findings": "bilateral drückend",
+        "cave": "neue Red Flags hinterfragen",
+        "info": "Primärer Kopfschmerz mit muskulärer und zentraler Schmerzverarbeitung bilateral drückend CAVE: neue Red Flags hinterfragen"
+      },
+      {
+        "name": "Subarachnoidalblutung",
+        "physiology": "Blutung in Subarachnoidalraum, häufig Aneurysmaruptur",
+        "findings": "schlagartiger Vernichtungskopfschmerz",
+        "cave": "neurologischer Status kann anfangs normal sein",
+        "info": "Blutung in Subarachnoidalraum, häufig Aneurysmaruptur schlagartiger Vernichtungskopfschmerz CAVE: neurologischer Status kann anfangs normal sein"
+      },
+      {
+        "name": "Meningitis",
+        "physiology": "Entzündung der Hirnhäute",
+        "findings": "Fieber, Kopfschmerz, Meningismus möglich",
+        "cave": "klassische Trias kann fehlen",
+        "info": "Entzündung der Hirnhäute Fieber, Kopfschmerz, Meningismus möglich CAVE: klassische Trias kann fehlen"
+      },
+      {
+        "name": "Clusterkopfschmerz",
+        "physiology": "Trigeminus-autonome Kopfschmerzerkrankung",
+        "findings": "stärkster einseitiger orbitaler Schmerz, Tränenfluss, Unruhe",
+        "cave": "neue Ausfälle abklären",
+        "info": "Trigeminus-autonome Kopfschmerzerkrankung stärkster einseitiger orbitaler Schmerz, Tränenfluss, Unruhe CAVE: neue Ausfälle abklären"
+      }
+    ]
+  },
+  {
+    "id": "diag-schwindel-ataxie",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Schwindel / Ataxie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Benigner Lagerungsschwindel",
+        "physiology": "Otolithen im Bogengang lösen lageabhängigen Drehschwindel aus",
+        "findings": "Sekunden dauernde Attacken bei Lagewechsel",
+        "cave": "persistierende neurologische Symptome sprechen dagegen",
+        "info": "Otolithen im Bogengang lösen lageabhängigen Drehschwindel aus Sekunden dauernde Attacken bei Lagewechsel CAVE: persistierende neurologische Symptome sprechen dagegen"
+      },
+      {
+        "name": "Vestibularisneuritis",
+        "physiology": "Akuter einseitiger Vestibularisausfall",
+        "findings": "anhaltender Schwindel, Nystagmus, Übelkeit",
+        "cave": "posteriorer Schlaganfall kann ähnlich sein",
+        "info": "Akuter einseitiger Vestibularisausfall anhaltender Schwindel, Nystagmus, Übelkeit CAVE: posteriorer Schlaganfall kann ähnlich sein"
+      },
+      {
+        "name": "Kleinhirn-/Hirnstamminfarkt",
+        "physiology": "Unterbrechung der zerebellären/vertebrobasilären Durchblutung",
+        "findings": "akute Ataxie, Dysarthrie, Doppelbilder, teils isolierter Schwindel",
+        "cave": "FAST kann negativ sein",
+        "info": "Unterbrechung der zerebellären/vertebrobasilären Durchblutung akute Ataxie, Dysarthrie, Doppelbilder, teils isolierter Schwindel CAVE: FAST kann negativ sein"
+      },
+      {
+        "name": "Orthostatische Hypotonie",
+        "physiology": "Abfall der zerebralen Perfusion beim Aufstehen",
+        "findings": "präsynkopaler Schwindel",
+        "cave": "Blutverlust und Arrhythmie ausschließen",
+        "info": "Abfall der zerebralen Perfusion beim Aufstehen präsynkopaler Schwindel CAVE: Blutverlust und Arrhythmie ausschließen"
+      }
+    ]
+  },
+  {
+    "id": "diag-krampfanfall",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Krampfanfall",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Epileptischer Anfall",
+        "physiology": "Vorübergehende synchronisierte neuronale Übererregung",
+        "findings": "tonisch-klonische Bewegung, postiktale Phase möglich",
+        "cave": "Atemwegsgefährdung",
+        "info": "Vorübergehende synchronisierte neuronale Übererregung tonisch-klonische Bewegung, postiktale Phase möglich CAVE: Atemwegsgefährdung"
+      },
+      {
+        "name": "Status epilepticus",
+        "physiology": "Anhaltende oder rasch wiederholte Anfälle ohne Erholung",
+        "findings": "konvulsiver Anfall ab ca. 5 Minuten behandlungsbedürftig",
+        "cave": "Hypoxie und Folgeschäden",
+        "info": "Anhaltende oder rasch wiederholte Anfälle ohne Erholung konvulsiver Anfall ab ca. 5 Minuten behandlungsbedürftig CAVE: Hypoxie und Folgeschäden"
+      },
+      {
+        "name": "Fieberkrampf",
+        "physiology": "Anfall im Zusammenhang mit Fieber im Kindesalter",
+        "findings": "generalisierte Krämpfe möglich",
+        "cave": "Meningitis und komplexe Verläufe",
+        "info": "Anfall im Zusammenhang mit Fieber im Kindesalter generalisierte Krämpfe möglich CAVE: Meningitis und komplexe Verläufe"
+      },
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Schwere neuroglykopenische Störung",
+        "findings": "niedriger BZ, Krämpfe",
+        "cave": "rasch reversible Ursache",
+        "info": "Schwere neuroglykopenische Störung niedriger BZ, Krämpfe CAVE: rasch reversible Ursache"
+      }
+    ]
+  },
+  {
+    "id": "diag-sehstoerung-sehverlust",
+    "group": "Neurologie",
+    "icon": "🧠",
+    "title": "Sehstörung / Sehverlust",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Retinaler Arterienverschluss",
+        "physiology": "Akute Netzhautischämie",
+        "findings": "plötzlicher schmerzloser monokularer Visusverlust",
+        "cave": "vaskulärer Zeitnotfall",
+        "info": "Akute Netzhautischämie plötzlicher schmerzloser monokularer Visusverlust CAVE: vaskulärer Zeitnotfall"
+      },
+      {
+        "name": "Migräne mit Aura",
+        "physiology": "Vorübergehende kortikale Funktionsstörung",
+        "findings": "flimmernde Skotome, meist graduelle Ausbreitung",
+        "cave": "erstmalige Aura/TIA abgrenzen",
+        "info": "Vorübergehende kortikale Funktionsstörung flimmernde Skotome, meist graduelle Ausbreitung CAVE: erstmalige Aura/TIA abgrenzen"
+      },
+      {
+        "name": "Akutes Winkelblockglaukom",
+        "physiology": "Plötzlicher Abflussstau des Kammerwassers",
+        "findings": "rotes schmerzhaftes Auge, Visusminderung, Übelkeit",
+        "cave": "Sehverlust droht",
+        "info": "Plötzlicher Abflussstau des Kammerwassers rotes schmerzhaftes Auge, Visusminderung, Übelkeit CAVE: Sehverlust droht"
+      },
+      {
+        "name": "Schlaganfall",
+        "physiology": "Okzipitale oder Hirnstammischämie",
+        "findings": "homonyme Gesichtsfeldausfälle, Doppelbilder",
+        "cave": "begleitende Hirnstammzeichen",
+        "info": "Okzipitale oder Hirnstammischämie homonyme Gesichtsfeldausfälle, Doppelbilder CAVE: begleitende Hirnstammzeichen"
+      }
+    ]
+  },
+  {
+    "id": "diag-uebelkeit-erbrechen",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Übelkeit / Erbrechen",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Gastroenteritis",
+        "physiology": "Magen-Darm-Infekt führt zu Schleimhautreizung",
+        "findings": "Erbrechen und Durchfall",
+        "cave": "Volumenmangel",
+        "info": "Magen-Darm-Infekt führt zu Schleimhautreizung Erbrechen und Durchfall CAVE: Volumenmangel"
+      },
+      {
+        "name": "Ileus",
+        "physiology": "Blockierte Darmpassage",
+        "findings": "Erbrechen, zunehmende Distension, Stuhlverhalt",
+        "cave": "Aspirations- und Ischämiegefahr",
+        "info": "Blockierte Darmpassage Erbrechen, zunehmende Distension, Stuhlverhalt CAVE: Aspirations- und Ischämiegefahr"
+      },
+      {
+        "name": "Migräne",
+        "physiology": "Neurovaskuläre Störung mit vegetativer Aktivierung",
+        "findings": "Übelkeit, Lichtscheu, Kopfschmerz",
+        "cave": "atypische neurologische Zeichen",
+        "info": "Neurovaskuläre Störung mit vegetativer Aktivierung Übelkeit, Lichtscheu, Kopfschmerz CAVE: atypische neurologische Zeichen"
+      },
+      {
+        "name": "Diabetische Ketoazidose",
+        "physiology": "Insulinmangel verursacht Ketogenese und metabolische Azidose",
+        "findings": "Bauchschmerz, Erbrechen, vertiefte Atmung, hoher BZ oft >250 mg/dl",
+        "cave": "euglykämische DKA möglich",
+        "info": "Insulinmangel verursacht Ketogenese und metabolische Azidose Bauchschmerz, Erbrechen, vertiefte Atmung, hoher BZ oft >250 mg/dl CAVE: euglykämische DKA möglich"
+      },
+      {
+        "name": "Myokardinfarkt",
+        "physiology": "Akute Myokardischämie mit vegetativen Symptomen",
+        "findings": "Übelkeit, Kaltschweißigkeit, ggf. Oberbauchdruck",
+        "cave": "ohne Brustschmerz möglich",
+        "info": "Akute Myokardischämie mit vegetativen Symptomen Übelkeit, Kaltschweißigkeit, ggf. Oberbauchdruck CAVE: ohne Brustschmerz möglich"
+      }
+    ]
+  },
+  {
+    "id": "diag-bluterbrechen-haematemesis",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Bluterbrechen / Hämatemesis",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Ulkusblutung",
+        "physiology": "Arrosion eines Gefäßes in Magen/Duodenum",
+        "findings": "frisches Blut oder Kaffeesatzerbrechen",
+        "cave": "hämorrhagischer Schock",
+        "info": "Arrosion eines Gefäßes in Magen/Duodenum frisches Blut oder Kaffeesatzerbrechen CAVE: hämorrhagischer Schock"
+      },
+      {
+        "name": "Ösophagusvarizenblutung",
+        "physiology": "Ruptur portaler Kollateralen meist bei Leberzirrhose",
+        "findings": "starke Hämatemesis",
+        "cave": "rascher Blutverlust und Aspirationsrisiko",
+        "info": "Ruptur portaler Kollateralen meist bei Leberzirrhose starke Hämatemesis CAVE: rascher Blutverlust und Aspirationsrisiko"
+      },
+      {
+        "name": "Mallory-Weiss-Läsion",
+        "physiology": "Schleimhautriss nach starkem Würgen",
+        "findings": "Blut nach Erbrechensattacke",
+        "cave": "Ausmaß der Blutung beachten",
+        "info": "Schleimhautriss nach starkem Würgen Blut nach Erbrechensattacke CAVE: Ausmaß der Blutung beachten"
+      }
+    ]
+  },
+  {
+    "id": "diag-blut-im-stuhl-melaena",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Blut im Stuhl / Meläna",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Obere gastrointestinale Blutung",
+        "physiology": "Blutung proximal des Treitz-Bands führt häufig zu Teerstuhl",
+        "findings": "schwarze klebrige Stühle, ggf. Schock",
+        "cave": "massive Blutung kann auch rot erscheinen",
+        "info": "Blutung proximal des Treitz-Bands führt häufig zu Teerstuhl schwarze klebrige Stühle, ggf. Schock CAVE: massive Blutung kann auch rot erscheinen"
+      },
+      {
+        "name": "Divertikelblutung",
+        "physiology": "Blutung aus Dickdarmdivertikel",
+        "findings": "meist schmerzlose Hämatochezie",
+        "cave": "erheblicher Volumenverlust",
+        "info": "Blutung aus Dickdarmdivertikel meist schmerzlose Hämatochezie CAVE: erheblicher Volumenverlust"
+      },
+      {
+        "name": "Ischämische Kolitis",
+        "physiology": "Darmwand-Minderperfusion",
+        "findings": "Bauchschmerzen und blutiger Stuhl",
+        "cave": "Mesenterialischämie ausschließen",
+        "info": "Darmwand-Minderperfusion Bauchschmerzen und blutiger Stuhl CAVE: Mesenterialischämie ausschließen"
+      },
+      {
+        "name": "Hämorrhoiden",
+        "physiology": "Blutung erweiterter Gefäßpolster",
+        "findings": "hellrotes Blut am Papier",
+        "cave": "nicht vorschnell als harmlose Ursache werten",
+        "info": "Blutung erweiterter Gefäßpolster hellrotes Blut am Papier CAVE: nicht vorschnell als harmlose Ursache werten"
+      }
+    ]
+  },
+  {
+    "id": "diag-durchfall-dehydratation",
+    "group": "Abdomen",
+    "icon": "🩺",
+    "title": "Durchfall / Dehydratation",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Akute Gastroenteritis",
+        "physiology": "Infektiöse Flüssigkeitssekretion oder Malabsorption",
+        "findings": "Diarrhö, Erbrechen, trockene Schleimhäute",
+        "cave": "Hypovolämie",
+        "info": "Infektiöse Flüssigkeitssekretion oder Malabsorption Diarrhö, Erbrechen, trockene Schleimhäute CAVE: Hypovolämie"
+      },
+      {
+        "name": "Clostridioides-difficile-Kolitis",
+        "physiology": "Toxinvermittelte Darmentzündung oft nach Antibiotika",
+        "findings": "wässrige Diarrhö, Fieber",
+        "cave": "toxisches Megakolon/Sepsis",
+        "info": "Toxinvermittelte Darmentzündung oft nach Antibiotika wässrige Diarrhö, Fieber CAVE: toxisches Megakolon/Sepsis"
+      },
+      {
+        "name": "Ischämische Kolitis",
+        "physiology": "Minderdurchblutung der Kolonschleimhaut",
+        "findings": "krampfartiger Schmerz, ggf. blutige Diarrhö",
+        "cave": "vaskuläre Ursache",
+        "info": "Minderdurchblutung der Kolonschleimhaut krampfartiger Schmerz, ggf. blutige Diarrhö CAVE: vaskuläre Ursache"
+      }
+    ]
+  },
+  {
+    "id": "diag-hypoglykaemiezeichen",
+    "group": "Stoffwechsel",
+    "icon": "🧪",
+    "title": "Hypoglykämiezeichen",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Medikamentenbedingte Hypoglykämie",
+        "physiology": "Insulin oder Sulfonylharnstoffe senken Glukose",
+        "findings": "Schwitzen, Tremor, Verwirrtheit, BZ <70 mg/dl",
+        "cave": "Rezidiv insbesondere bei Sulfonylharnstoffen",
+        "info": "Insulin oder Sulfonylharnstoffe senken Glukose Schwitzen, Tremor, Verwirrtheit, BZ <70 mg/dl CAVE: Rezidiv insbesondere bei Sulfonylharnstoffen"
+      },
+      {
+        "name": "Sepsisassoziierte Hypoglykämie",
+        "physiology": "Erhöhter Verbrauch/gestörte Glukosebereitstellung",
+        "findings": "Verwirrtheit, niedriger BZ",
+        "cave": "schwerer Infekt",
+        "info": "Erhöhter Verbrauch/gestörte Glukosebereitstellung Verwirrtheit, niedriger BZ CAVE: schwerer Infekt"
+      },
+      {
+        "name": "Alkoholassoziierte Hypoglykämie",
+        "physiology": "Hemmung der Glukoneogenese bei eingeschränkten Reserven",
+        "findings": "Bewusstseinsstörung, erniedrigter BZ",
+        "cave": "Intoxikation überdeckt Hypoglykämie",
+        "info": "Hemmung der Glukoneogenese bei eingeschränkten Reserven Bewusstseinsstörung, erniedrigter BZ CAVE: Intoxikation überdeckt Hypoglykämie"
+      }
+    ]
+  },
+  {
+    "id": "diag-hyperglykaemie-polyurie",
+    "group": "Stoffwechsel",
+    "icon": "🧪",
+    "title": "Hyperglykämie / Polyurie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Diabetische Ketoazidose",
+        "physiology": "Insulinmangel führt zu Ketonkörperbildung und Azidose",
+        "findings": "hoher BZ, Kussmaul-Atmung, Dehydratation, Ketone",
+        "cave": "auch bei geringer BZ-Erhöhung möglich",
+        "info": "Insulinmangel führt zu Ketonkörperbildung und Azidose hoher BZ, Kussmaul-Atmung, Dehydratation, Ketone CAVE: auch bei geringer BZ-Erhöhung möglich"
+      },
+      {
+        "name": "Hyperosmolares hyperglykämisches Syndrom",
+        "physiology": "Ausgeprägte Hyperglykämie und Hyperosmolarität ohne ausgeprägte Ketose",
+        "findings": "oft BZ >600 mg/dl (33,3 mmol/l), Exsikkose, Vigilanzminderung",
+        "cave": "Thrombose-/Schockrisiko",
+        "info": "Ausgeprägte Hyperglykämie und Hyperosmolarität ohne ausgeprägte Ketose oft BZ >600 mg/dl (33,3 mmol/l), Exsikkose, Vigilanzminderung CAVE: Thrombose-/Schockrisiko"
+      },
+      {
+        "name": "Stresshyperglykämie",
+        "physiology": "Katecholamin-/Kortisolanstieg bei akuter Erkrankung",
+        "findings": "erhöhter BZ ohne zwingende DKA",
+        "cave": "BZ allein unterscheidet Krisen nicht",
+        "info": "Katecholamin-/Kortisolanstieg bei akuter Erkrankung erhöhter BZ ohne zwingende DKA CAVE: BZ allein unterscheidet Krisen nicht"
+      }
+    ]
+  },
+  {
+    "id": "diag-muskelkraempfe-tetanie",
+    "group": "Stoffwechsel",
+    "icon": "🧪",
+    "title": "Muskelkrämpfe / Tetanie",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hypokalzämie",
+        "physiology": "Niedriges ionisiertes Calcium erhöht neuromuskuläre Erregbarkeit",
+        "findings": "Pfötchenstellung, Parästhesien, QT-Verlängerung",
+        "cave": "Laryngospasmus/Arrhythmie",
+        "info": "Niedriges ionisiertes Calcium erhöht neuromuskuläre Erregbarkeit Pfötchenstellung, Parästhesien, QT-Verlängerung CAVE: Laryngospasmus/Arrhythmie"
+      },
+      {
+        "name": "Hyperventilation",
+        "physiology": "Respiratorische Alkalose senkt ionisiertes Calcium vorübergehend",
+        "findings": "periorales Kribbeln, Tetanie",
+        "cave": "somatische Ursache der Tachypnoe ausschließen",
+        "info": "Respiratorische Alkalose senkt ionisiertes Calcium vorübergehend periorales Kribbeln, Tetanie CAVE: somatische Ursache der Tachypnoe ausschließen"
+      },
+      {
+        "name": "Elektrolytverlust",
+        "physiology": "Verlust von Magnesium/Kalium etwa durch Diarrhö oder Diuretika",
+        "findings": "Krämpfe, Schwäche",
+        "cave": "Arrhythmiegefahr",
+        "info": "Verlust von Magnesium/Kalium etwa durch Diarrhö oder Diuretika Krämpfe, Schwäche CAVE: Arrhythmiegefahr"
+      }
+    ]
+  },
+  {
+    "id": "diag-fieber-schuettelfrost",
+    "group": "Infektion",
+    "icon": "🌡️",
+    "title": "Fieber / Schüttelfrost",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Virusinfekt",
+        "physiology": "Immunreaktion mit pyrogener Sollwerterhöhung",
+        "findings": "Fieber, Abgeschlagenheit, respiratorische Beschwerden",
+        "cave": "klinische Verschlechterung",
+        "info": "Immunreaktion mit pyrogener Sollwerterhöhung Fieber, Abgeschlagenheit, respiratorische Beschwerden CAVE: klinische Verschlechterung"
+      },
+      {
+        "name": "Pneumonie",
+        "physiology": "Alveoläre Infektion",
+        "findings": "Fieber, Husten, Tachypnoe, Hypoxämie",
+        "cave": "Sepsis",
+        "info": "Alveoläre Infektion Fieber, Husten, Tachypnoe, Hypoxämie CAVE: Sepsis"
+      },
+      {
+        "name": "Pyelonephritis",
+        "physiology": "Aufsteigende bakterielle Nierenbeckeninfektion",
+        "findings": "Fieber, Flankenschmerz, Dysurie",
+        "cave": "infizierter Harnstau",
+        "info": "Aufsteigende bakterielle Nierenbeckeninfektion Fieber, Flankenschmerz, Dysurie CAVE: infizierter Harnstau"
+      },
+      {
+        "name": "Sepsis",
+        "physiology": "Lebensbedrohliche Organdysfunktion infolge fehlregulierter Infektionsantwort",
+        "findings": "veränderte Vigilanz, Tachypnoe, Hypotonie möglich",
+        "cave": "fehlendes Fieber schließt nicht aus",
+        "info": "Lebensbedrohliche Organdysfunktion infolge fehlregulierter Infektionsantwort veränderte Vigilanz, Tachypnoe, Hypotonie möglich CAVE: fehlendes Fieber schließt nicht aus"
+      },
+      {
+        "name": "Meningitis",
+        "physiology": "Hirnhautentzündung",
+        "findings": "Fieber, Kopfschmerz, Nackensteife möglich",
+        "cave": "rascher Verlauf",
+        "info": "Hirnhautentzündung Fieber, Kopfschmerz, Nackensteife möglich CAVE: rascher Verlauf"
+      }
+    ]
+  },
+  {
+    "id": "diag-hautausschlag-purpura",
+    "group": "Infektion",
+    "icon": "🌡️",
+    "title": "Hautausschlag / Purpura",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Urtikaria",
+        "physiology": "Mastzellvermittelte oberflächliche Quaddelbildung",
+        "findings": "juckende flüchtige Quaddeln",
+        "cave": "Atemwegs- oder Kreislaufbeteiligung weist auf Anaphylaxie",
+        "info": "Mastzellvermittelte oberflächliche Quaddelbildung juckende flüchtige Quaddeln CAVE: Atemwegs- oder Kreislaufbeteiligung weist auf Anaphylaxie"
+      },
+      {
+        "name": "Arzneimittelexanthem",
+        "physiology": "Immunreaktion auf Medikament",
+        "findings": "makulopapulöse Hautveränderungen",
+        "cave": "Schleimhautbeteiligung/Blasen als Warnzeichen",
+        "info": "Immunreaktion auf Medikament makulopapulöse Hautveränderungen CAVE: Schleimhautbeteiligung/Blasen als Warnzeichen"
+      },
+      {
+        "name": "Meningokokkensepsis",
+        "physiology": "Invasive bakterielle Infektion mit Gerinnungsaktivierung",
+        "findings": "Petechien/Purpura, Fieber, rascher Schock",
+        "cave": "zeitkritisch",
+        "info": "Invasive bakterielle Infektion mit Gerinnungsaktivierung Petechien/Purpura, Fieber, rascher Schock CAVE: zeitkritisch"
+      },
+      {
+        "name": "Erysipel",
+        "physiology": "Akute bakterielle Hautinfektion",
+        "findings": "scharf begrenzte Rötung, Wärme, Fieber",
+        "cave": "systemische Sepsiszeichen",
+        "info": "Akute bakterielle Hautinfektion scharf begrenzte Rötung, Wärme, Fieber CAVE: systemische Sepsiszeichen"
+      }
+    ]
+  },
+  {
+    "id": "diag-flankenschmerz",
+    "group": "Urologie",
+    "icon": "🫘",
+    "title": "Flankenschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Ureterstein",
+        "physiology": "Obstruktion mit Harnstau und Dehnung",
+        "findings": "wellenförmiger Schmerz, Unruhe, ggf. Hämaturie",
+        "cave": "infizierte Obstruktion",
+        "info": "Obstruktion mit Harnstau und Dehnung wellenförmiger Schmerz, Unruhe, ggf. Hämaturie CAVE: infizierte Obstruktion"
+      },
+      {
+        "name": "Pyelonephritis",
+        "physiology": "Bakterielle Entzündung des Nierenbeckens",
+        "findings": "Flankenschmerz, Fieber, Klopfschmerz",
+        "cave": "Urosepsis",
+        "info": "Bakterielle Entzündung des Nierenbeckens Flankenschmerz, Fieber, Klopfschmerz CAVE: Urosepsis"
+      },
+      {
+        "name": "Niereninfarkt",
+        "physiology": "Akuter Verschluss einer Nierenarterie",
+        "findings": "plötzlicher Flankenschmerz, Hämaturie möglich",
+        "cave": "bei Emboliequellen bedenken",
+        "info": "Akuter Verschluss einer Nierenarterie plötzlicher Flankenschmerz, Hämaturie möglich CAVE: bei Emboliequellen bedenken"
+      }
+    ]
+  },
+  {
+    "id": "diag-dysurie-harnverhalt",
+    "group": "Urologie",
+    "icon": "🫘",
+    "title": "Dysurie / Harnverhalt",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Zystitis",
+        "physiology": "Infektion der Harnblase",
+        "findings": "Dysurie, Pollakisurie, suprapubischer Schmerz",
+        "cave": "systemische Infektzeichen",
+        "info": "Infektion der Harnblase Dysurie, Pollakisurie, suprapubischer Schmerz CAVE: systemische Infektzeichen"
+      },
+      {
+        "name": "Akuter Harnverhalt",
+        "physiology": "Gestörter Harnabfluss, häufig Prostataobstruktion oder Medikamente",
+        "findings": "schmerzhafte volle Blase, fehlende Miktion",
+        "cave": "Nierenstau",
+        "info": "Gestörter Harnabfluss, häufig Prostataobstruktion oder Medikamente schmerzhafte volle Blase, fehlende Miktion CAVE: Nierenstau"
+      },
+      {
+        "name": "Cauda-equina-Syndrom",
+        "physiology": "Kompression lumbosakraler Nervenwurzeln",
+        "findings": "Harnverhalt, Sattelanästhesie, Beinschwäche",
+        "cave": "dringende neurochirurgische Abklärung",
+        "info": "Kompression lumbosakraler Nervenwurzeln Harnverhalt, Sattelanästhesie, Beinschwäche CAVE: dringende neurochirurgische Abklärung"
+      }
+    ]
+  },
+  {
+    "id": "diag-vaginale-blutung-unterbauchschmerz",
+    "group": "Geburtshilfe",
+    "icon": "🤰",
+    "title": "Vaginale Blutung / Unterbauchschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Extrauteringravidität",
+        "physiology": "Implantation außerhalb des Uterus",
+        "findings": "einseitiger Unterbauchschmerz, vaginale Blutung, Synkope",
+        "cave": "innere Blutung nach Ruptur",
+        "info": "Implantation außerhalb des Uterus einseitiger Unterbauchschmerz, vaginale Blutung, Synkope CAVE: innere Blutung nach Ruptur"
+      },
+      {
+        "name": "Abort / Fehlgeburt",
+        "physiology": "Vorzeitiges Schwangerschaftsende",
+        "findings": "Blutung, Unterbauchkrämpfe",
+        "cave": "hoher Blutverlust",
+        "info": "Vorzeitiges Schwangerschaftsende Blutung, Unterbauchkrämpfe CAVE: hoher Blutverlust"
+      },
+      {
+        "name": "Vorzeitige Plazentalösung",
+        "physiology": "Plazenta trennt sich vor Geburt",
+        "findings": "Bauchschmerz, harter Uterus, teils vaginale Blutung",
+        "cave": "Blutung kann verborgen sein",
+        "info": "Plazenta trennt sich vor Geburt Bauchschmerz, harter Uterus, teils vaginale Blutung CAVE: Blutung kann verborgen sein"
+      },
+      {
+        "name": "Ovarialtorsion",
+        "physiology": "Verdrehung des Ovars beeinträchtigt Durchblutung",
+        "findings": "abrupt einseitiger Unterbauchschmerz, Übelkeit",
+        "cave": "Organverlust",
+        "info": "Verdrehung des Ovars beeinträchtigt Durchblutung abrupt einseitiger Unterbauchschmerz, Übelkeit CAVE: Organverlust"
+      }
+    ]
+  },
+  {
+    "id": "diag-schwangerschaft-kopfschmerz-oberbauchschmerz",
+    "group": "Geburtshilfe",
+    "icon": "🤰",
+    "title": "Schwangerschaft: Kopfschmerz / Oberbauchschmerz",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Präeklampsie",
+        "physiology": "Schwangerschaftsassoziierte Gefäß-/Plazentadysfunktion",
+        "findings": "Hypertonie ab 140/90 mmHg nach 20. SSW, Kopfschmerz, Sehstörung",
+        "cave": "Organschaden und Eklampsie",
+        "info": "Schwangerschaftsassoziierte Gefäß-/Plazentadysfunktion Hypertonie ab 140/90 mmHg nach 20. SSW, Kopfschmerz, Sehstörung CAVE: Organschaden und Eklampsie"
+      },
+      {
+        "name": "HELLP-Syndrom",
+        "physiology": "Hämolyse, erhöhte Leberenzyme und Thrombozytopenie",
+        "findings": "rechter Oberbauchschmerz, Übelkeit, Krankheitsgefühl",
+        "cave": "auch ohne ausgeprägte Hypertonie",
+        "info": "Hämolyse, erhöhte Leberenzyme und Thrombozytopenie rechter Oberbauchschmerz, Übelkeit, Krankheitsgefühl CAVE: auch ohne ausgeprägte Hypertonie"
+      },
+      {
+        "name": "Eklampsie",
+        "physiology": "Krampfanfall im Rahmen einer hypertensiven Schwangerschaftserkrankung",
+        "findings": "tonisch-klonische Krämpfe",
+        "cave": "auch postpartal",
+        "info": "Krampfanfall im Rahmen einer hypertensiven Schwangerschaftserkrankung tonisch-klonische Krämpfe CAVE: auch postpartal"
+      }
+    ]
+  },
+  {
+    "id": "diag-rueckenschmerz-neurologische-ausfaelle",
+    "group": "Trauma",
+    "icon": "🩹",
+    "title": "Rückenschmerz / neurologische Ausfälle",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Bandscheibenbedingte Radikulopathie",
+        "physiology": "Nervenwurzelreizung durch Bandscheibe",
+        "findings": "dermatomale Schmerzen, Parästhesien",
+        "cave": "progrediente Paresen",
+        "info": "Nervenwurzelreizung durch Bandscheibe dermatomale Schmerzen, Parästhesien CAVE: progrediente Paresen"
+      },
+      {
+        "name": "Cauda-equina-Syndrom",
+        "physiology": "Druck auf sakrale Nervenwurzeln",
+        "findings": "Blasen-/Mastdarmstörung, Sattelanästhesie",
+        "cave": "zeitkritisch",
+        "info": "Druck auf sakrale Nervenwurzeln Blasen-/Mastdarmstörung, Sattelanästhesie CAVE: zeitkritisch"
+      },
+      {
+        "name": "Wirbelsäulenfraktur",
+        "physiology": "Knochenverletzung nach Trauma/Osteoporose",
+        "findings": "fokaler Schmerz, evtl. Neurologie",
+        "cave": "Instabilität",
+        "info": "Knochenverletzung nach Trauma/Osteoporose fokaler Schmerz, evtl. Neurologie CAVE: Instabilität"
+      },
+      {
+        "name": "Aortensyndrom",
+        "physiology": "Akute Aortenwandpathologie",
+        "findings": "starker Rücken-/Brustschmerz",
+        "cave": "Gefäß-/neurologische Komplikationen",
+        "info": "Akute Aortenwandpathologie starker Rücken-/Brustschmerz CAVE: Gefäß-/neurologische Komplikationen"
+      }
+    ]
+  },
+  {
+    "id": "diag-extremitaetenschmerz-schwellung",
+    "group": "Trauma",
+    "icon": "🩹",
+    "title": "Extremitätenschmerz / Schwellung",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Fraktur",
+        "physiology": "Unterbrechung der Knochenkontinuität",
+        "findings": "Fehlstellung, Schwellung, Schmerz",
+        "cave": "distal DMS prüfen",
+        "info": "Unterbrechung der Knochenkontinuität Fehlstellung, Schwellung, Schmerz CAVE: distal DMS prüfen"
+      },
+      {
+        "name": "Tiefe Venenthrombose",
+        "physiology": "Thrombus im tiefen Venensystem",
+        "findings": "einseitige Schwellung, Schmerz, Überwärmung",
+        "cave": "Lungenembolie",
+        "info": "Thrombus im tiefen Venensystem einseitige Schwellung, Schmerz, Überwärmung CAVE: Lungenembolie"
+      },
+      {
+        "name": "Akuter arterieller Verschluss",
+        "physiology": "Akute Ischämie der Extremität",
+        "findings": "Schmerz, Blässe, Pulslosigkeit, Parästhesie, Parese, Kälte",
+        "cave": "drohender Extremitätenverlust",
+        "info": "Akute Ischämie der Extremität Schmerz, Blässe, Pulslosigkeit, Parästhesie, Parese, Kälte CAVE: drohender Extremitätenverlust"
+      },
+      {
+        "name": "Kompartmentsyndrom",
+        "physiology": "Erhöhter Druck in Muskelloge senkt Gewebeperfusion",
+        "findings": "disproportionaler Schmerz, Schmerz bei passiver Dehnung",
+        "cave": "Pulse können erhalten bleiben",
+        "info": "Erhöhter Druck in Muskelloge senkt Gewebeperfusion disproportionaler Schmerz, Schmerz bei passiver Dehnung CAVE: Pulse können erhalten bleiben"
+      }
+    ]
+  },
+  {
+    "id": "diag-agitation-angst-hyperventilation",
+    "group": "Psychiatrie / Toxikologie",
+    "icon": "💊",
+    "title": "Agitation / Angst / Hyperventilation",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Panikattacke",
+        "physiology": "Akute Angstreaktion mit vegetativer Aktivierung",
+        "findings": "Herzrasen, Atemnot, Kribbeln",
+        "cave": "Ausschluss gefährlicher somatischer Ursachen",
+        "info": "Akute Angstreaktion mit vegetativer Aktivierung Herzrasen, Atemnot, Kribbeln CAVE: Ausschluss gefährlicher somatischer Ursachen"
+      },
+      {
+        "name": "Hypoglykämie",
+        "physiology": "Adrenerge Aktivierung durch Glukosemangel",
+        "findings": "Unruhe, Schwitzen, Tremor",
+        "cave": "BZ messen",
+        "info": "Adrenerge Aktivierung durch Glukosemangel Unruhe, Schwitzen, Tremor CAVE: BZ messen"
+      },
+      {
+        "name": "Stimulanzienintoxikation",
+        "physiology": "Sympathomimetische Überaktivierung",
+        "findings": "Mydriasis, Tachykardie, Hypertonie, Hyperthermie",
+        "cave": "Arrhythmie/Hyperthermie",
+        "info": "Sympathomimetische Überaktivierung Mydriasis, Tachykardie, Hypertonie, Hyperthermie CAVE: Arrhythmie/Hyperthermie"
+      },
+      {
+        "name": "Delir",
+        "physiology": "Akute fluktuierende Hirnfunktionsstörung",
+        "findings": "Aufmerksamkeitsstörung, Desorientierung, Unruhe",
+        "cave": "Infekt, Hypoxie, Entzug",
+        "info": "Akute fluktuierende Hirnfunktionsstörung Aufmerksamkeitsstörung, Desorientierung, Unruhe CAVE: Infekt, Hypoxie, Entzug"
+      }
+    ]
+  },
+  {
+    "id": "diag-somnolenz-verdacht-auf-intoxikation",
+    "group": "Psychiatrie / Toxikologie",
+    "icon": "💊",
+    "title": "Somnolenz / Verdacht auf Intoxikation",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Opioidintoxikation",
+        "physiology": "Opioidrezeptorwirkung unterdrückt Atemantrieb",
+        "findings": "Miosis, Bradypnoe, Vigilanzminderung",
+        "cave": "Atemdepression und Rezidiv nach Antagonisierung",
+        "info": "Opioidrezeptorwirkung unterdrückt Atemantrieb Miosis, Bradypnoe, Vigilanzminderung CAVE: Atemdepression und Rezidiv nach Antagonisierung"
+      },
+      {
+        "name": "Alkoholintoxikation",
+        "physiology": "Ethanol wirkt ZNS-dämpfend",
+        "findings": "Ataxie, Erbrechen, Somnolenz",
+        "cave": "Trauma, Hypoglykämie und Mischintoxikation",
+        "info": "Ethanol wirkt ZNS-dämpfend Ataxie, Erbrechen, Somnolenz CAVE: Trauma, Hypoglykämie und Mischintoxikation"
+      },
+      {
+        "name": "Benzodiazepinintoxikation",
+        "physiology": "GABA-vermittelte ZNS-Depression",
+        "findings": "Müdigkeit, Ataxie, verwaschene Sprache",
+        "cave": "Mischintoxikation/Atemwegsrisiko",
+        "info": "GABA-vermittelte ZNS-Depression Müdigkeit, Ataxie, verwaschene Sprache CAVE: Mischintoxikation/Atemwegsrisiko"
+      },
+      {
+        "name": "Kohlenmonoxidvergiftung",
+        "physiology": "CO blockiert Hämoglobin und beeinträchtigt zelluläre Atmung",
+        "findings": "Kopfschmerz, Übelkeit, Verwirrtheit",
+        "cave": "gewöhnliche Pulsoxymetrie kann unauffällig sein",
+        "info": "CO blockiert Hämoglobin und beeinträchtigt zelluläre Atmung Kopfschmerz, Übelkeit, Verwirrtheit CAVE: gewöhnliche Pulsoxymetrie kann unauffällig sein"
+      }
+    ]
+  },
+  {
+    "id": "diag-atemnot-beim-kind",
+    "group": "Pädiatrie",
+    "icon": "🧸",
+    "title": "Atemnot beim Kind",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Pseudokrupp",
+        "physiology": "Virale subglottische Schwellung",
+        "findings": "bellender Husten, Stridor, Heiserkeit",
+        "cave": "Stridor in Ruhe",
+        "info": "Virale subglottische Schwellung bellender Husten, Stridor, Heiserkeit CAVE: Stridor in Ruhe"
+      },
+      {
+        "name": "Bronchiolitis",
+        "physiology": "Virale Entzündung kleiner Atemwege vor allem im Säuglingsalter",
+        "findings": "Tachypnoe, Einziehungen, Giemen, Trinkschwäche",
+        "cave": "Apnoe bei jungen Säuglingen",
+        "info": "Virale Entzündung kleiner Atemwege vor allem im Säuglingsalter Tachypnoe, Einziehungen, Giemen, Trinkschwäche CAVE: Apnoe bei jungen Säuglingen"
+      },
+      {
+        "name": "Fremdkörperaspiration",
+        "physiology": "Mechanische Bronchus- oder Kehlkopfverlegung",
+        "findings": "plötzlicher Husten, einseitiges Giemen oder Stridor",
+        "cave": "vollständige Verlegung",
+        "info": "Mechanische Bronchus- oder Kehlkopfverlegung plötzlicher Husten, einseitiges Giemen oder Stridor CAVE: vollständige Verlegung"
+      },
+      {
+        "name": "Asthma",
+        "physiology": "Bronchospasmus und Schleimhautschwellung",
+        "findings": "Giemen, verlängertes Exspirium",
+        "cave": "Erschöpfung/stille Lunge",
+        "info": "Bronchospasmus und Schleimhautschwellung Giemen, verlängertes Exspirium CAVE: Erschöpfung/stille Lunge"
+      }
+    ]
+  },
+  {
+    "id": "diag-fieber-apathie-beim-kind",
+    "group": "Pädiatrie",
+    "icon": "🧸",
+    "title": "Fieber / Apathie beim Kind",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Virale Infektion",
+        "physiology": "Immunreaktion auf viralen Erreger",
+        "findings": "Fieber, Husten, Rhinorrhö",
+        "cave": "Trinkmangel",
+        "info": "Immunreaktion auf viralen Erreger Fieber, Husten, Rhinorrhö CAVE: Trinkmangel"
+      },
+      {
+        "name": "Meningitis / Sepsis",
+        "physiology": "Invasive Infektion mit systemischer Organstörung",
+        "findings": "Apathie, Rekapillarisierungsstörung, Fieber oder Hypothermie",
+        "cave": "junge Säuglinge können unspezifisch sein",
+        "info": "Invasive Infektion mit systemischer Organstörung Apathie, Rekapillarisierungsstörung, Fieber oder Hypothermie CAVE: junge Säuglinge können unspezifisch sein"
+      },
+      {
+        "name": "Fieberkrampf",
+        "physiology": "Anfall bei fieberhafter Erkrankung im typischen Kindesalter",
+        "findings": "generalisierter Krampfanfall",
+        "cave": "prolongierte oder fokale Anfälle",
+        "info": "Anfall bei fieberhafter Erkrankung im typischen Kindesalter generalisierter Krampfanfall CAVE: prolongierte oder fokale Anfälle"
+      },
+      {
+        "name": "Dehydratation",
+        "physiology": "Flüssigkeitsdefizit nach Diarrhö/Erbrechen",
+        "findings": "trockene Schleimhäute, reduzierte Diurese",
+        "cave": "Kreislaufversagen",
+        "info": "Flüssigkeitsdefizit nach Diarrhö/Erbrechen trockene Schleimhäute, reduzierte Diurese CAVE: Kreislaufversagen"
+      }
+    ]
+  },
+  {
+    "id": "diag-hitze-kaelteexposition",
+    "group": "Umwelt",
+    "icon": "🌡️",
+    "title": "Hitze / Kälteexposition",
+    "questions": [
+      "Beginn, Verlauf und Auslöser?",
+      "Relevante Vorerkrankungen, Medikamente, Risikofaktoren?",
+      "Begleitsymptome und Vitalparameter?"
+    ],
+    "redflags": [
+      "ABCDE-Instabilität oder Bewusstseinsstörung",
+      "Neu aufgetretene schwere oder rasch zunehmende Beschwerden"
+    ],
+    "causes": [
+      {
+        "name": "Hitzschlag",
+        "physiology": "Thermoregulatorisches Versagen mit ZNS-Dysfunktion",
+        "findings": "schwere Hyperthermie, Verwirrtheit, Kollaps",
+        "cave": "sofortige Kühlung ist zeitkritisch",
+        "info": "Thermoregulatorisches Versagen mit ZNS-Dysfunktion schwere Hyperthermie, Verwirrtheit, Kollaps CAVE: sofortige Kühlung ist zeitkritisch"
+      },
+      {
+        "name": "Hitzeerschöpfung",
+        "physiology": "Volumen-/Salzverlust bei Hitze",
+        "findings": "Schwäche, Schwindel, Schwitzen",
+        "cave": "ZNS-Störung weist auf Hitzschlag",
+        "info": "Volumen-/Salzverlust bei Hitze Schwäche, Schwindel, Schwitzen CAVE: ZNS-Störung weist auf Hitzschlag"
+      },
+      {
+        "name": "Hypothermie",
+        "physiology": "Körperkerntemperatur unter 35 °C",
+        "findings": "Zittern, später Bewusstseinseintrübung und Bradykardie",
+        "cave": "schonend bewegen, Arrhythmiegefahr",
+        "info": "Körperkerntemperatur unter 35 °C Zittern, später Bewusstseinseintrübung und Bradykardie CAVE: schonend bewegen, Arrhythmiegefahr"
+      },
+      {
+        "name": "CO-Vergiftung",
+        "physiology": "Exposition durch Abgase/Heizgeräte",
+        "findings": "Kopfschmerz, Übelkeit, Synkope",
+        "cave": "Eigenschutz und normale SpO₂ trotz Vergiftung",
+        "info": "Exposition durch Abgase/Heizgeräte Kopfschmerz, Übelkeit, Synkope CAVE: Eigenschutz und normale SpO₂ trotz Vergiftung"
+      }
+    ]
+  }
+],
   "events": [
     {
       "id": "e1",
