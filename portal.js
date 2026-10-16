@@ -50,7 +50,20 @@ function icon(name){return svg[name]||svg.books}
 function chrome(){
  document.body.classList.add('app-shell',`page-${page}`);
  const bb=$('[data-back-btn]'),hb=$('[data-home-btn]');
- if(bb){bb.innerHTML=svg.back;bb.onclick=()=>{if(page==='meetings'&&new URLSearchParams(location.search).has('id')){location.href='dienstbesprechungen.html';return}if(page==='differential'){const q=new URLSearchParams(location.search);if(q.has('disease')){q.delete('disease');location.href='differential.html?'+q.toString()}else if(q.has('id')||q.has('group'))location.href='differential.html';else location.href='index.html';return}if(page==='algorithms'&&new URLSearchParams(location.search).has('id')){location.href='algorithmen.html';return}if(page==='changes'&&new URLSearchParams(location.search).has('id')){location.href='lehrmeinung.html';return}location.href='index.html'}}
+ if(bb){bb.innerHTML=svg.back;bb.onclick=()=>{
+  if($('.overlay')?.classList.contains('show')){$('.overlay').classList.remove('show');return}
+  const params=new URLSearchParams(location.search);
+  if(page==='meetings'&&params.has('id')){location.href='dienstbesprechungen.html';return}
+  if(page==='algorithms'&&params.has('id')){location.href='algorithmen.html';return}
+  if(page==='changes'&&params.has('id')){location.href='lehrmeinung.html';return}
+  if(page==='differential'){
+   if(params.has('disease')){params.delete('disease');location.href='differential.html'+(params.size?'?'+params:'');return}
+   if(params.has('id')){params.delete('id');location.href='differential.html'+(params.size?'?'+params:'');return}
+   if(params.has('group')){location.href='differential.html';return}
+  }
+  const parents={wissen:'index.html',training:'index.html',events:'index.html',news:'index.html',meetings:'index.html',editor:'index.html',differential:'wissen.html',algorithms:'wissen.html',literature:'wissen.html',guidelines:'wissen.html',abcde:'wissen.html',changes:'aktuelles.html',skills:'training.html',guide:'training.html',faq:'training.html'};
+  location.href=parents[page]||'index.html';
+ }}
  if(hb)hb.innerHTML=svg.home;
  document.body.insertAdjacentHTML('beforeend',`<div class="overlay"><div class="shade" data-overlay-close></div><section class="overlay-panel" role="dialog" aria-modal="true"><div class="overlay-head"><h2 data-overlay-title></h2><button class="close" data-overlay-close>✕</button></div><div class="overlay-body" data-overlay-body></div></section></div>`);
  $$('[data-overlay-close]').forEach(x=>x.onclick=()=>$('.overlay').classList.remove('show'));
@@ -65,16 +78,17 @@ function chrome(){
   const activeId=(navItems.find(it=>it.match.includes(page))||{}).id||'';
   const more=document.createElement('div');
   more.className='mobile-more-sheet';
-  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grab"></div><div class="mobile-more-head"><strong>Aktuelles & Mehr</strong><button type="button" class="close" data-more-close>✕</button></div><div class="mobile-more-grid"><a href="dienstbesprechungen.html"><span>🗣️</span><strong>Dienstbesprechungen</strong></a><a href="aktuelles.html"><span>📣</span><strong>Aktuelles</strong></a><a href="lehrmeinung.html"><span>🔄</span><strong>Lehrmeinungen</strong></a><a href="editor.html"><span>✏️</span><strong>Redaktion</strong></a><button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
+  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grab"></div><div class="mobile-more-head"><strong>Mehr</strong><button type="button" class="close" data-more-close>✕</button></div><div class="mobile-more-grid"><a href="dienstbesprechungen.html"><span>🗣️</span><strong>Dienstbesprechungen</strong></a><a href="lehrmeinung.html"><span>🔄</span><strong>Lehrmeinungen</strong></a><a href="editor.html"><span>✏️</span><strong>Redaktion</strong></a><button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
   document.body.appendChild(more);
   const nav=document.createElement('nav');
   nav.className='mobile-bottom-nav';
   nav.setAttribute('aria-label','Hauptnavigation');
-  nav.innerHTML=`${navItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="mbn-icon">${it.icon}</span><span>${it.label}</span></a>`).join('')}<button type="button" class="${activeId==='more'?'active':''}" data-open-more><span class="mbn-icon">⋯</span><span>Mehr</span></button>`;
+  nav.innerHTML=`${navItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="mbn-icon">${it.icon}</span><span>${it.label}</span></a>`).join('')}<button type="button" class="${activeId==='more'?'active':''}" data-open-more><span class="mbn-icon more-arrow" aria-hidden="true">⌃</span><span>Mehr</span></button>`;
   document.body.appendChild(nav);
-  $$('[data-more-close]',more).forEach(el=>el.onclick=()=>more.classList.remove('show'));
+  $$('[data-more-close]',more).forEach(el=>el.onclick=()=>{more.classList.remove('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded','false')});
   $('[data-feedback-open]',more)?.addEventListener('click',()=>{more.classList.remove('show');showFeedback()});
-  $('[data-open-more]',nav)?.addEventListener('click',()=>more.classList.add('show'));
+  $('[data-open-more]',nav)?.addEventListener('click',()=>{more.classList.add('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded','true')});
+  $('[data-open-more]',nav)?.setAttribute('aria-expanded','false');
  }
 }
 function showFeedback(){
@@ -134,17 +148,10 @@ async function home(){
  $('[data-main]').innerHTML=`<section class="dashboard-hero compact-hero"><div class="hero-kicker">OST 1020</div><h1>Wissenssammlung 1020</h1></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen, Skills, Literatur …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle Meldungen</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
- <section class="section"><div class="section-head"><h2>Themenbereiche</h2></div><div class="ost-hubs">
- <section class="ost-hub ost-hub-knowledge"><div class="ost-hub-heading"><span class="ost-hub-icon">📚</span><div><h3>Wissen</h3><p>Medizinische Inhalte und Nachschlagewerke</p></div></div><div class="ost-hub-links"><a href="algorithmen.html"><span>📋</span><strong>Algorithmen & Schemata</strong><b>›</b></a><a href="leitlinien.html"><span>📖</span><strong>Leitlinien / Guidelines</strong><b>›</b></a><a href="literatur.html"><span>📚</span><strong>Literatursammlung</strong><b>›</b></a><a href="differential.html"><span>🩺</span><strong>Diagnostik</strong><b>›</b></a></div></section>
- <section class="ost-hub ost-hub-training"><div class="ost-hub-heading"><span class="ost-hub-icon">🎓</span><div><h3>Training</h3><p>Praktische Fertigkeiten und Simulation</p></div></div><div class="ost-hub-links"><a href="skilltraining.html"><span>🩹</span><strong>Skilltraining</strong><b>›</b></a><a href="simulation.html"><span>🖥️</span><strong>Simulations Guide</strong><b>›</b></a><a href="simulation-faq.html"><span>❓</span><strong>FAQ zu Simulationstrainings</strong><b>›</b></a></div></section>
- <a class="ost-hub ost-hub-events ost-hub-single" href="termine.html"><span class="ost-hub-icon">📅</span><span><strong>Termine</strong><small>Kalender, Anmeldungen und Fortbildungen</small></span><b>›</b></a>
- <section class="ost-hub ost-hub-more"><div class="ost-hub-heading"><span class="ost-hub-icon">📣</span><div><h3>Aktuelles & Mehr</h3><p>Neuigkeiten und organisatorische Inhalte</p></div></div><div class="ost-hub-links"><a href="aktuelles.html"><span>📣</span><strong>Aktuelles</strong><b>›</b></a><a href="dienstbesprechungen.html"><span>👥</span><strong>Dienstbesprechungen</strong><b>›</b></a><a href="lehrmeinung.html"><span>🔄</span><strong>Lehrmeinungsänderungen</strong><b>›</b></a><a href="editor.html"><span>✏️</span><strong>Redaktion</strong><b>›</b></a><button type="button" data-feedback-open-home><span>💬</span><strong>Fehler melden</strong><b>›</b></button></div></section>
- </div></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Kalender öffnen</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section>`;
- $('[data-feedback-open-home]')?.addEventListener('click',showFeedback);
  const q=$('[data-global-search]'),results=$('[data-search-results]');
  const drawSearch=()=>{const term=q.value.trim().toLowerCase();if(!term){results.classList.add('hidden');results.innerHTML='';return}const hits=index.filter(x=>(x.label+' '+x.sub).toLowerCase().includes(term)).slice(0,8);results.innerHTML=hits.map(x=>`<a href="${x.href}"><span><strong>${esc(x.label)}</strong><small>${esc(x.sub)}</small></span><b>›</b></a>`).join('')||'<div class="empty compact">Keine Treffer.</div>';results.classList.remove('hidden')};q.oninput=drawSearch;$('[data-search-clear]').onclick=()=>{q.value='';drawSearch();q.focus()};
- $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><span class="cat-pill">${esc(x.category||'Organisation')}</span><div class="news-meta">${esc(x.date||'')}</div><p>${esc(x.text||'')}</p></section>`);}});
+ $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><span class="cat-pill">${esc(x.category||'Organisation')}</span><div class="news-meta">${esc(x.date||'')}</div><p>${esc(x.text||'')}</p>${x.link?`<a class="btn primary" href="${esc(x.link)}">Inhalt öffnen →</a>`:''}</section>`);}});
 }
 async function wissenPage(){
  const links=[['📋','Algorithmen & Schemata','algorithmen.html','Strukturierte Abläufe und Untersuchungsschemata'],['📖','Leitlinien / Guidelines','leitlinien.html','Quellen, Fachgesellschaften und Empfehlungen'],['📚','Literatursammlung','literatur.html','Artikel, Lehrbücher und Forschung'],['🩺','Diagnostik','differential.html','Leitsymptome und Krankheitsbilder']];
@@ -411,6 +418,20 @@ async function editor(){
    $('[data-add]',box).onclick=()=>{sync();d.unshift(blank(name));render();openCard(0)};
    $('[data-save]',box).onclick=async()=>{sync();const ok=await save(name,d);alert(ok?'Gespeichert und synchronisiert.':'Lokal gespeichert. Worker-Sync nicht verfügbar.')};
    box.onclick=async e=>{
+     const publish=e.target.closest('[data-publish-news]');if(publish){
+       if(!['algorithms','differential','articles','changes','skills','guide','meetings'].includes(name))return;
+       sync();const idx=Number(publish.dataset.publishNews),entry=d[idx];if(!entry)return;
+       const title=String(entry.title||entry.name||'').trim();if(!title)return alert('Bitte zuerst einen Titel eingeben.');
+       if(!confirm(`„${title}“ als neue Meldung unter Aktuelles veröffentlichen?`))return;
+       const map={algorithms:['Leitlinie','algorithmen.html'],differential:['Leitlinie','differential.html'],articles:['Literatur','literatur.html'],changes:['Lehrmeinung','lehrmeinung.html'],skills:['Ausbildung','skilltraining.html'],guide:['Simulationstraining','simulation.html'],meetings:['Organisation','dienstbesprechungen.html']};
+       const [category,base]=map[name],link=entry.id&&['algorithms','changes','meetings'].includes(name)?base+'?id='+encodeURIComponent(entry.id):base;
+       const current=await get('news'),today=new Date().toLocaleDateString('sv-SE');
+       const exists=current.some(v=>v.relatedSection===name&&v.relatedId===String(entry.id||title));
+       if(exists&&!confirm('Es gibt bereits eine verknüpfte Meldung. Trotzdem eine weitere erstellen?'))return;
+       const newsItem={id:'news-'+Date.now(),title:'Neu: '+title,category,date:today,text:'Neuer oder aktualisierter Inhalt: '+title,link,active:true,relatedSection:name,relatedId:String(entry.id||title)};
+       const saved=await save('news',[newsItem,...current]);
+       alert(saved?'Meldung unter Aktuelles veröffentlicht.':'Meldung nur lokal gespeichert – Worker-Synchronisierung prüfen.');return;
+     }
      const del=e.target.closest('[data-del]');if(del){const i=+del.dataset.del;sync();d.splice(i,1);render();return}
      const addRow=e.target.closest('[data-add-row]');if(addRow){
        const card=addRow.closest('[data-index]'),ci=+card.dataset.index,key=addRow.dataset.addRow;
@@ -460,7 +481,7 @@ async function editor(){
    else if(name==='changes') body=field('Titel',x.title,'title')+field('Kategorie',x.category,'category')+field('Datum',x.date,'date','date')+field('Bisher',x.old,'old','textarea')+field('Neu',x.new,'new','textarea')+field('Quelle',x.source,'source')+field('Gültigkeit',x.validity,'validity')+field('Zuletzt fachlich geprüft',x.lastReviewed,'lastReviewed','date')+field('Nächste Prüfung fällig',x.reviewDue,'reviewDue','date')+field('Verantwortliche Person',x.reviewOwner,'reviewOwner')+field('Bild-URL',x.imageUrl,'imageUrl')+`<label class="ux-field"><span>Bild hochladen</span><input type="file" accept="image/*" data-media-upload data-target="imageUrl"></label>`;
    else if(name==='abcde') body=field('Buchstabe',x.key,'key')+field('Titel',x.title,'title')+`<section class="editor-subsection"><h3>Beurteilung</h3>${listEditor(x.checks,'checks','Punkt')}</section><section class="editor-subsection"><h3>Maßnahmen</h3>${listEditor(x.actions,'actions','Punkt')}</section><section class="editor-subsection"><h3>Warnzeichen</h3>${listEditor(x.pitfalls,'pitfalls','Punkt')}</section>`;
    else if(name==='guide') body=field('Titel',x.title,'title')+field('Symbol',x.icon,'icon')+`<section class="editor-subsection"><h3>Schritte</h3>${listEditor(x.steps,'steps','Schritt')}</section>`;
-   return `<details class="edit-card ux-edit-card" data-card="${i}"><summary><span>${esc(x.title||x.name||x.key||'Neuer Eintrag')}</span><span>▾</span></summary><div class="edit-body" data-index="${i}">${body}<div class="danger-zone"><button class="btn danger" data-del="${i}">Eintrag löschen</button></div></div></details>`;
+   return `<details class="edit-card ux-edit-card" data-card="${i}"><summary><span>${esc(x.title||x.name||x.key||'Neuer Eintrag')}</span><span>▾</span></summary><div class="edit-body" data-index="${i}">${body}${["algorithms","differential","articles","changes","skills","guide","meetings"].includes(name)?`<div class="editor-news-link"><button class="btn" type="button" data-publish-news="${i}">📣 Unter Aktuelles veröffentlichen</button><small>Erstellt eine neue Meldung mit Verknüpfung zu diesem Inhalt.</small></div>`:""}<div class="danger-zone"><button class="btn danger" data-del="${i}">Eintrag löschen</button></div></div></details>`;
  }
  function renderMaterialGroup(title,key,items,i){return `<div class="material-editor-group"><div class="material-editor-head"><strong>${title}</strong><button class="small-add" type="button" data-add-alg-material="${key}">+ Datei</button></div>${items.map((m,mi)=>`<div class="material-editor-item" data-material-item data-kind="${key}" data-material-index="${mi}">${field('Titel',m.title,'matTitle')}${field('Beschreibung',m.note,'matNote','textarea')}${field('Datei-/Web-URL',m.url,'matUrl')}<label class="ux-field"><span>PDF, Bild oder Präsentation hochladen</span><input type="file" accept="application/pdf,image/*,.ppt,.pptx,.odp" data-media-upload data-target="matUrl"></label></div>`).join('')}</div>`}
  function readAll(name,d,box){

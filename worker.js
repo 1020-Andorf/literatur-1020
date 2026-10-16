@@ -33,27 +33,27 @@ export default {
     return json({error:"Gleichzeitige Änderung: bitte erneut versuchen"},409,cors);
    }
    if(url.pathname==="/feedback"&&request.method==="POST"){
-    if(!env.FEEDBACK_KV)return json({error:"Feedback-Speicher nicht konfiguriert"},503,cors);
+    if(!feedbackAvailable(env))return json({error:"Feedback-Speicher fehlt: FEEDBACK_KV oder privates R2-Binding BACKUPS konfigurieren"},503,cors);
     const ip=request.headers.get('CF-Connecting-IP')||'unknown';const ipHash=await sha256(ip+String(env.FEEDBACK_SALT||''));const key='limit:'+ipHash;
-    if(await env.FEEDBACK_KV.get(key))return json({error:"Bitte später erneut senden"},429,cors);
+    if(await feedbackRateLimited(env,key))return json({error:"Bitte später erneut senden"},429,cors);
     const data=await request.json().catch(()=>({}));const title=String(data.title||'').trim(),message=String(data.message||'').trim(),href=String(data.href||'').trim();
     if(title.length<3||title.length>160||message.length<10||message.length>3000||href.length>500)return json({error:"Ungültige Meldung"},400,cors);
     const id=crypto.randomUUID(),record={id,title,message,href:href.startsWith('https://')?href:'',status:'offen',createdAt:new Date().toISOString()};
-    await env.FEEDBACK_KV.put('feedback:'+id,JSON.stringify(record));await env.FEEDBACK_KV.put(key,'1',{expirationTtl:300});
+    await feedbackWrite(env,'feedback:'+id,record);await feedbackWrite(env,key,{expires:Date.now()+300000},300);
     return json({ok:true,id},201,cors);
    }
    if(url.pathname==="/admin/feedback"&&request.method==="GET"){
     if(!(await validPin(request.headers.get('X-Admin-Pin')||'',env.ADMIN_PIN_SHA256)))return json({error:'Unauthorized'},401,cors);
-    if(!env.FEEDBACK_KV)return json({error:'FEEDBACK_KV fehlt'},503,cors);
-    const keys=await env.FEEDBACK_KV.list({prefix:'feedback:',limit:100});const entries=await Promise.all(keys.keys.map(async k=>JSON.parse(await env.FEEDBACK_KV.get(k.name))));return json({items:entries.sort((a,b)=>b.createdAt.localeCompare(a.createdAt)),cursor:keys.cursor,list_complete:keys.list_complete},200,cors);
+    if(!feedbackAvailable(env))return json({error:'Feedback-Speicher nicht eingerichtet'},503,cors);
+    const {entries,cursor,list_complete}=await feedbackEntries(env);return json({items:entries.sort((a,b)=>b.createdAt.localeCompare(a.createdAt)),cursor,list_complete},200,cors);
    }
    const feedbackStatus=url.pathname.match(/^\/admin\/feedback\/([a-z0-9-]+)$/);
    if(feedbackStatus&&request.method==='PATCH'){
     if(!(await validPin(request.headers.get('X-Admin-Pin')||'',env.ADMIN_PIN_SHA256)))return json({error:'Unauthorized'},401,cors);
-    if(!env.FEEDBACK_KV)return json({error:'FEEDBACK_KV fehlt'},503,cors);
-    const key='feedback:'+feedbackStatus[1],old=await env.FEEDBACK_KV.get(key,'json');if(!old)return json({error:'Nicht gefunden'},404,cors);
+    if(!feedbackAvailable(env))return json({error:'Feedback-Speicher nicht eingerichtet'},503,cors);
+    const key='feedback:'+feedbackStatus[1],old=await feedbackRead(env,key);if(!old)return json({error:'Nicht gefunden'},404,cors);
     const body=await request.json().catch(()=>({}));if(!['offen','in Bearbeitung','erledigt'].includes(body.status))return json({error:'Ungültiger Status'},400,cors);
-    await env.FEEDBACK_KV.put(key,JSON.stringify({...old,status:body.status}));return json({ok:true},200,cors);
+    await feedbackWrite(env,key,{...old,status:body.status});return json({ok:true},200,cors);
    }
    if(url.pathname==='/admin/history'&&request.method==='GET'){
     if(!(await validPin(request.headers.get('X-Admin-Pin')||'',env.ADMIN_PIN_SHA256)))return json({error:'Unauthorized'},401,cors);
@@ -127,3 +127,28 @@ function eventEnded(ev){const date=String(ev.date||''),time=/^([01]\d|2[0-3]):[0
 async function sha256(str){const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return [...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,'0')).join('')}
 async function getJsonAt(env,file,sha){const p=`/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${file}?ref=${sha}`;const data=await(await gh(env,p)).json();return JSON.parse(decodeURIComponent(escape(atob(data.content.replace(/\n/g,'')))))}
 async function backupNow(env){if(!env.BACKUPS)throw new Error('R2-Binding BACKUPS fehlt');const records={};for(const name of CONTENT_NAMES){records[name]=await getJson(env,`data/${name}.json`)}const snapshot={format:'ost1020-backup-v1',date:new Date().toISOString(),records};const key=`ost1020/${snapshot.date.slice(0,10)}/${snapshot.date.replace(/[:.]/g,'-')}.json`;await env.BACKUPS.put(key,JSON.stringify(snapshot),{httpMetadata:{contentType:'application/json'},customMetadata:{format:'ost1020-backup-v1'}});return {key,createdAt:snapshot.date,collections:CONTENT_NAMES.length}}
+
+
+// Feedback storage: prefer KV; fall back to private R2 BACKUPS (same binding used for backups).
+// Never expose feedback records through the public content endpoint.
+function feedbackAvailable(env){return Boolean(env.FEEDBACK_KV||env.BACKUPS)}
+function feedbackObjectKey(key){return 'private-feedback/'+key+'.json'}
+async function feedbackRead(env,key){
+ if(env.FEEDBACK_KV)return await env.FEEDBACK_KV.get(key,'json');
+ const obj=await env.BACKUPS.get(feedbackObjectKey(key));return obj?await obj.json():null;
+}
+async function feedbackWrite(env,key,value,ttl){
+ if(env.FEEDBACK_KV)return env.FEEDBACK_KV.put(key,JSON.stringify(value),ttl?{expirationTtl:ttl}:undefined);
+ return env.BACKUPS.put(feedbackObjectKey(key),JSON.stringify(value),{httpMetadata:{contentType:'application/json'}});
+}
+async function feedbackRateLimited(env,key){const obj=await feedbackRead(env,key);return Boolean(obj&&Number(obj.expires)>Date.now())}
+async function feedbackEntries(env){
+ if(env.FEEDBACK_KV){
+  const result=await env.FEEDBACK_KV.list({prefix:'feedback:',limit:100});
+  const entries=(await Promise.all(result.keys.map(k=>feedbackRead(env,k.name)))).filter(Boolean);
+  return {entries,cursor:result.cursor,list_complete:result.list_complete};
+ }
+ const result=await env.BACKUPS.list({prefix:'private-feedback/feedback:',limit:100});
+ const entries=(await Promise.all(result.objects.map(async obj=>{const record=await env.BACKUPS.get(obj.key);return record?await record.json():null}))).filter(Boolean);
+ return {entries,cursor:result.cursor,list_complete:result.truncated===false};
+}
