@@ -885,3 +885,25 @@ body.desktop-has-sidebar .section,body.desktop-has-sidebar .page-banner,body.des
 body.desktop-has-sidebar .dashboard-search,body.desktop-has-sidebar .week-card,body.desktop-has-sidebar .compact-news,body.desktop-has-sidebar .hub-grid,body.desktop-has-sidebar .wissen-quick-grid,body.desktop-has-sidebar .event-list,body.desktop-has-sidebar .diag-results,body.desktop-has-sidebar .diag-disease-list,body.desktop-has-sidebar .scheme-grid,body.desktop-has-sidebar .skill-grid,body.desktop-has-sidebar .meeting-grid,body.desktop-has-sidebar .lit-list{max-width:1200px}
 body.desktop-has-sidebar .compact-news .news-list{max-width:1200px}
 body.desktop-has-sidebar .topbar-inner{max-width:none}
+
+/* PC: alle Startseiten-Kästen auf derselben horizontalen Achse */
+@media (min-width: 861px) {
+  body.page-home .main > section {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  body.page-home .main > section .news-list,
+  body.page-home .main > section .week-card,
+  body.page-home .main > section .dashboard-news,
+  body.page-home .main > section .global-search,
+  body.page-home .main > section .ost-shortcuts,
+  body.page-home .main > section .ost-quick-grid {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+  }
+  body.page-home .main > section .section-head {width:100%;max-width:none;box-sizing:border-box}
+}
