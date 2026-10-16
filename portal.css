@@ -951,3 +951,7 @@ body{
     min-height: calc(100vh - 36px);
   }
 }
+
+/* Mehr-Menü: ausschließlich vier Optionen, ohne Titel/Schließen */
+.mobile-more-panel{padding-top:16px!important}
+.mobile-more-grid{margin:0}

@@ -84,7 +84,7 @@ function chrome(){
   const activeId=(navItems.find(it=>it.match.includes(page))||{}).id || ((extraItems.find(it=>it.match.includes(page))||{}).id) || '';
   const more=document.createElement('div');
   more.className='mobile-more-sheet';
-  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grab"></div><div class="mobile-more-head"><strong>Mehr</strong><button type="button" class="close" data-more-close>✕</button></div><div class="mobile-more-grid">${extraItems.filter(x=>x.id!=='news').map(x=>`<a class="${activeId===x.id?'active':''}" href="${x.href}"><span>${x.emoji}</span><strong>${x.label}</strong></a>`).join('')}<button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
+  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grid">${extraItems.filter(x=>x.id!=='news').map(x=>`<a class="${activeId===x.id?'active':''}" href="${x.href}"><span>${x.emoji}</span><strong>${x.label}</strong></a>`).join('')}<button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
   document.body.appendChild(more);
   const nav=document.createElement('nav');
   nav.className='mobile-bottom-nav';
