@@ -907,3 +907,25 @@ body.desktop-has-sidebar .topbar-inner{max-width:none}
   }
   body.page-home .main > section .section-head {width:100%;max-width:none;box-sizing:border-box}
 }
+
+/* Einheitliche Dialogoberfläche: keine graue Querlinie in Skills,
+   Lehrmeinung oder Dienstbesprechungen */
+body.page-skills .overlay-head,
+body.page-changes .overlay-head,
+body.page-meetings .overlay-head,
+body.page-skills .overlay-body,
+body.page-changes .overlay-body,
+body.page-meetings .overlay-body{
+ border-top:0!important;border-bottom:0!important;
+ box-shadow:none!important;
+ background-image:none!important;
+}
+body.page-skills .overlay-head::before,
+body.page-changes .overlay-head::before,
+body.page-meetings .overlay-head::before,
+body.page-skills .overlay-head::after,
+body.page-changes .overlay-head::after,
+body.page-meetings .overlay-head::after{display:none!important}
+body.page-skills .overlay-body,
+body.page-changes .overlay-body,
+body.page-meetings .overlay-body{background:#fff!important}
