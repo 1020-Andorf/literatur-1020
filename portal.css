@@ -831,3 +831,15 @@ body.page-home .ost-week-bottom .week-card{margin-bottom:16px}
  .ost-shortcut-grid a strong{font-size:.72rem}
 }
 @media(max-width:380px){.ost-shortcut-grid a strong{font-size:.65rem}}
+
+/* UI-Korrekturen: More-Toggle, Dialog über Tabbar, ruhigerer Dialogkopf */
+.overlay.show{z-index:120!important}
+.overlay-panel{background:#fff;outline:0}
+.overlay-head{border-bottom:0!important;box-shadow:none!important;background:#fff!important}
+.overlay-body{min-width:0}
+@media(max-width:860px){
+ .overlay.show{z-index:120!important}
+ .overlay-panel{max-height:calc(100dvh - 25px)!important;overflow-y:auto;overscroll-behavior:contain;padding-bottom:max(24px,env(safe-area-inset-bottom))!important}
+ .mobile-more-panel::after{display:none!important}
+ .mobile-more-panel{border:1px solid #e5ebf2;border-bottom:0}
+}

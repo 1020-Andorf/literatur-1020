@@ -78,7 +78,7 @@ function chrome(){
   const activeId=(navItems.find(it=>it.match.includes(page))||{}).id||'';
   const more=document.createElement('div');
   more.className='mobile-more-sheet';
-  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grab"></div><div class="mobile-more-head"><strong>Mehr</strong><button type="button" class="close" data-more-close>✕</button></div><div class="mobile-more-grid"><a href="dienstbesprechungen.html"><span>🗣️</span><strong>Dienstbesprechungen</strong></a><a href="lehrmeinung.html"><span>🔄</span><strong>Lehrmeinungen</strong></a><a href="editor.html"><span>✏️</span><strong>Redaktion</strong></a><button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
+  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grab"></div><div class="mobile-more-head"><strong>Mehr</strong><button type="button" class="close" data-more-close>✕</button></div><div class="mobile-more-grid"><a href="dienstbesprechungen.html"><span>🗣️</span><strong>Dienstbesprechungen</strong></a><a href="lehrmeinung.html"><span>🔄</span><strong>Lehrmeinung</strong></a><a href="editor.html"><span>✏️</span><strong>Redaktion</strong></a><button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
   document.body.appendChild(more);
   const nav=document.createElement('nav');
   nav.className='mobile-bottom-nav';
@@ -87,7 +87,7 @@ function chrome(){
   document.body.appendChild(nav);
   $$('[data-more-close]',more).forEach(el=>el.onclick=()=>{more.classList.remove('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded','false')});
   $('[data-feedback-open]',more)?.addEventListener('click',()=>{more.classList.remove('show');showFeedback()});
-  $('[data-open-more]',nav)?.addEventListener('click',()=>{more.classList.add('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded','true')});
+  $('[data-open-more]',nav)?.addEventListener('click',()=>{const isOpen=more.classList.toggle('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded',String(isOpen));});
   $('[data-open-more]',nav)?.setAttribute('aria-expanded','false');
  }
 }
@@ -150,7 +150,7 @@ async function home(){
  $('[data-main]').innerHTML=`<section class="dashboard-hero compact-hero"><div class="hero-kicker">OST 1020</div><h1>Wissenssammlung 1020</h1></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen, Skills, Literatur …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle Meldungen</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
- <section class="section ost-shortcuts"><div class="section-head"><h2>Schnellzugriff</h2></div><nav class="ost-shortcut-grid" aria-label="Schnellzugriff"><a href="algorithmen.html"><span aria-hidden="true">📋</span><strong>Schemata</strong></a><a href="skilltraining.html"><span aria-hidden="true">🩹</span><strong>Skills</strong></a><a href="termine.html"><span aria-hidden="true">📅</span><strong>Termine</strong></a><a href="lehrmeinung.html"><span aria-hidden="true">🔄</span><strong>Lehrmeinungen</strong></a></nav></section>
+ <section class="section ost-shortcuts"><div class="section-head"><h2>Schnellzugriff</h2></div><nav class="ost-shortcut-grid" aria-label="Schnellzugriff"><a href="algorithmen.html"><span aria-hidden="true">📋</span><strong>Schemata</strong></a><a href="skilltraining.html"><span aria-hidden="true">🩹</span><strong>Skills</strong></a><a href="termine.html"><span aria-hidden="true">📅</span><strong>Termine</strong></a><a href="lehrmeinung.html"><span aria-hidden="true">🔄</span><strong>Lehrmeinung</strong></a></nav></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Kalender öffnen</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section>`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
  const drawSearch=()=>{const term=q.value.trim().toLowerCase();if(!term){results.classList.add('hidden');results.innerHTML='';return}const hits=index.filter(x=>(x.label+' '+x.sub).toLowerCase().includes(term)).slice(0,8);results.innerHTML=hits.map(x=>`<a href="${x.href}"><span><strong>${esc(x.label)}</strong><small>${esc(x.sub)}</small></span><b>›</b></a>`).join('')||'<div class="empty compact">Keine Treffer.</div>';results.classList.remove('hidden')};q.oninput=drawSearch;$('[data-search-clear]').onclick=()=>{q.value='';drawSearch();q.focus()};
