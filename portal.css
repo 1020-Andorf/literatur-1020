@@ -929,3 +929,25 @@ body.page-meetings .overlay-head::after{display:none!important}
 body.page-skills .overlay-body,
 body.page-changes .overlay-body,
 body.page-meetings .overlay-body{background:#fff!important}
+
+/* Fix: einheitlicher Seitenhintergrund ohne sichtbaren Farbübergang */
+html,
+body{
+  background: var(--bg) !important;
+}
+body{
+  min-height: 100vh;
+}
+.main{
+  min-height: calc(100vh - 74px);
+  background: transparent;
+}
+@media(min-width:1100px){
+  body.desktop-has-sidebar,
+  body.desktop-has-sidebar .main{
+    background: var(--bg) !important;
+  }
+  body.desktop-has-sidebar .main{
+    min-height: calc(100vh - 36px);
+  }
+}
