@@ -702,3 +702,37 @@ body:not(.page-home) .main{padding-top:14px}
  .hub-links{grid-template-columns:1fr}
  .mobile-more-grid{grid-template-columns:1fr}
 }
+
+/* Navigation + Wissen-Hub refinement */
+.wissen-quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.wissen-quick-grid-large{grid-template-columns:repeat(2,minmax(0,1fr))}
+.wissen-topic-card{display:grid;gap:8px;padding:16px;border-radius:20px;border:1px solid #dfe7ef;background:linear-gradient(180deg,#fff 0%,#fbfdff 100%);text-decoration:none;color:#15324f;box-shadow:0 6px 22px rgba(13,41,72,.05)}
+.wissen-topic-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:#eef5ff;font-size:1.25rem}
+.wissen-topic-card strong{font-size:1.03rem;line-height:1.25}.wissen-topic-card small{font-size:.84rem;line-height:1.48;color:#66798d}
+.wissen-list-group{display:grid;gap:10px}.wissen-list-row{display:grid;grid-template-columns:44px 1fr 18px;gap:12px;align-items:center;padding:14px 16px;border-radius:18px;border:1px solid #dfe7ef;background:#fff;color:#15324f;text-decoration:none;box-shadow:0 5px 18px rgba(13,41,72,.04)}
+.wissen-list-ico{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#eef5ff;font-size:1.2rem}.wissen-list-row strong{display:block;font-size:1rem;line-height:1.25}.wissen-list-row small{display:block;margin-top:3px;font-size:.82rem;line-height:1.5;color:#66798d}.wissen-list-row b{font-size:1.3rem;font-weight:400;color:#99a6b5}
+.hub-grid-secondary{grid-template-columns:repeat(3,minmax(0,1fr))}
+.mobile-bottom-nav a,.mobile-bottom-nav button{min-width:0}
+.mobile-bottom-nav span:last-child{white-space:nowrap}
+.mobile-bottom-nav .mbn-icon{background:#f2f6fb}
+@media(max-width:860px){
+ .wissen-quick-grid,.wissen-quick-grid-large{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .wissen-topic-card{padding:14px;border-radius:18px;gap:7px}
+ .wissen-topic-icon{width:38px;height:38px;border-radius:12px;font-size:1.1rem}
+ .wissen-topic-card strong{font-size:.93rem}
+ .wissen-topic-card small{font-size:.74rem;line-height:1.42}
+ .hub-grid-secondary{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+ .wissen-quick-grid,.wissen-quick-grid-large{grid-template-columns:1fr 1fr}
+ .wissen-topic-card strong{font-size:.9rem}
+ .wissen-topic-card small{font-size:.72rem}
+ .wissen-list-row{padding:12px 13px;grid-template-columns:40px 1fr 15px}
+ .wissen-list-ico{width:40px;height:40px;border-radius:12px}
+}
+@media(max-width:390px){
+ .wissen-quick-grid,.wissen-quick-grid-large{grid-template-columns:1fr}
+ .mobile-bottom-nav{gap:4px;padding:7px}
+ .mobile-bottom-nav span:last-child{font-size:.68rem}
+ .mobile-bottom-nav .mbn-icon{width:32px;height:32px}
+}
