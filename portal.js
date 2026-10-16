@@ -48,7 +48,7 @@ const svg={
 </svg>`};
 function icon(name){return svg[name]||svg.books}
 function chrome(){
- document.body.classList.add('app-shell',`page-${page}`);
+ document.body.classList.add('app-shell',`page-${page}`); if(window.matchMedia('(min-width: 1100px)').matches) document.body.classList.add('desktop-has-sidebar');
  const bb=$('[data-back-btn]'),hb=$('[data-home-btn]');
  if(bb){bb.innerHTML=svg.back;bb.onclick=()=>{
   if($('.overlay')?.classList.contains('show')){$('.overlay').classList.remove('show');return}
@@ -68,27 +68,40 @@ function chrome(){
  document.body.insertAdjacentHTML('beforeend',`<div class="overlay"><div class="shade" data-overlay-close></div><section class="overlay-panel" role="dialog" aria-modal="true"><div class="overlay-head"><h2 data-overlay-title></h2><button class="close" data-overlay-close>✕</button></div><div class="overlay-body" data-overlay-body></div></section></div>`);
  $$('[data-overlay-close]').forEach(x=>x.onclick=()=>$('.overlay').classList.remove('show'));
 
- if(page!=='editor'){
+ {
   const navItems=[
    {id:'home',label:'Start',href:'index.html',icon:svg.home,match:['home']},
    {id:'wissen',label:'Wissen',href:'wissen.html',icon:svg.books,match:['wissen','differential','algorithms','literature','guidelines','abcde']},
    {id:'training',label:'Training',href:'training.html',icon:svg.skill,match:['training','skills','guide','faq']},
    {id:'events',label:'Termine',href:'termine.html',icon:svg.calendar,match:['events']}
   ];
-  const activeId=(navItems.find(it=>it.match.includes(page))||{}).id||'';
+  const extraItems=[
+   {id:'news',label:'Aktuelles',href:'aktuelles.html',emoji:'📣',match:['news']},
+   {id:'meetings',label:'Dienstbesprechungen',href:'dienstbesprechungen.html',emoji:'🗣️',match:['meetings']},
+   {id:'changes',label:'Lehrmeinung',href:'lehrmeinung.html',emoji:'🔄',match:['changes']},
+   {id:'editor',label:'Redaktion',href:'editor.html',emoji:'✏️',match:['editor']}
+  ];
+  const activeId=(navItems.find(it=>it.match.includes(page))||{}).id || ((extraItems.find(it=>it.match.includes(page))||{}).id) || '';
   const more=document.createElement('div');
   more.className='mobile-more-sheet';
-  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grab"></div><div class="mobile-more-head"><strong>Mehr</strong><button type="button" class="close" data-more-close>✕</button></div><div class="mobile-more-grid"><a href="dienstbesprechungen.html"><span>🗣️</span><strong>Dienstbesprechungen</strong></a><a href="lehrmeinung.html"><span>🔄</span><strong>Lehrmeinung</strong></a><a href="editor.html"><span>✏️</span><strong>Redaktion</strong></a><button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
+  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grab"></div><div class="mobile-more-head"><strong>Mehr</strong><button type="button" class="close" data-more-close>✕</button></div><div class="mobile-more-grid">${extraItems.filter(x=>x.id!=='news').map(x=>`<a class="${activeId===x.id?'active':''}" href="${x.href}"><span>${x.emoji}</span><strong>${x.label}</strong></a>`).join('')}<button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
   document.body.appendChild(more);
   const nav=document.createElement('nav');
   nav.className='mobile-bottom-nav';
   nav.setAttribute('aria-label','Hauptnavigation');
-  nav.innerHTML=`${navItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="mbn-icon">${it.icon}</span><span>${it.label}</span></a>`).join('')}<button type="button" class="${activeId==='more'?'active':''}" data-open-more><span class="mbn-icon more-arrow" aria-hidden="true">⌃</span><span>Mehr</span></button>`;
+  nav.innerHTML=`${navItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="mbn-icon">${it.icon}</span><span>${it.label}</span></a>`).join('')}<button type="button" class="${['news','meetings','changes','editor'].includes(activeId)?'active':''}" data-open-more><span class="mbn-icon more-arrow" aria-hidden="true">⌃</span><span>Mehr</span></button>`;
   document.body.appendChild(nav);
   $$('[data-more-close]',more).forEach(el=>el.onclick=()=>{more.classList.remove('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded','false')});
   $('[data-feedback-open]',more)?.addEventListener('click',()=>{more.classList.remove('show');showFeedback()});
   $('[data-open-more]',nav)?.addEventListener('click',()=>{const isOpen=more.classList.toggle('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded',String(isOpen));});
   $('[data-open-more]',nav)?.setAttribute('aria-expanded','false');
+
+  const sidebar=document.createElement('aside');
+  sidebar.className='desktop-sidebar';
+  sidebar.setAttribute('aria-label','Desktop-Navigation');
+  sidebar.innerHTML=`<div class="desktop-sidebar-head"><div class="desktop-brand-kicker">OST 1020</div><strong>Wissenssammlung</strong><p>Schneller Zugriff für Redaktion und Inhalte.</p></div><nav class="desktop-sidebar-nav"><div class="desktop-nav-group"><div class="desktop-nav-title">Navigation</div>${navItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="ds-icon ds-icon-svg">${it.icon}</span><span>${it.label}</span></a>`).join('')}</div><div class="desktop-nav-group"><div class="desktop-nav-title">Mehr</div>${extraItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="ds-icon ds-icon-emoji">${it.emoji}</span><span>${it.label}</span></a>`).join('')}<button type="button" class="desktop-feedback-btn" data-feedback-open-desktop><span class="ds-icon ds-icon-emoji">💬</span><span>Fehler melden</span></button></div></nav>`;
+  document.body.appendChild(sidebar);
+  $('[data-feedback-open-desktop]',sidebar)?.addEventListener('click',showFeedback);
  }
 }
 function showFeedback(){

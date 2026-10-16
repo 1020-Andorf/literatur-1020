@@ -843,3 +843,45 @@ body.page-home .ost-week-bottom .week-card{margin-bottom:16px}
  .mobile-more-panel::after{display:none!important}
  .mobile-more-panel{border:1px solid #e5ebf2;border-bottom:0}
 }
+
+/* Desktop und Redaktion: Hauptnavigation dauerhaft sichtbar */
+@media(min-width:861px){
+ .mobile-bottom-nav{display:grid!important;width:min(calc(100% - 48px),760px);bottom:18px;z-index:100!important}
+ .mobile-more-sheet.show{display:block!important;z-index:95!important}
+ .mobile-more-panel{bottom:104px!important;width:min(650px,calc(100% - 48px));border-radius:24px!important;max-height:calc(100vh - 140px);overflow-y:auto;padding:20px 22px!important}
+ .mobile-more-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ body.app-shell .main{padding-bottom:140px!important}
+ body.page-home .main{padding-bottom:140px!important}
+ body.page-editor .editor-dashboard{margin-bottom:42px}
+}
+@media(max-width:860px){
+ body.page-editor .mobile-bottom-nav{display:grid!important}
+ body.page-editor .main{padding-bottom:calc(150px + env(safe-area-inset-bottom))!important}
+}
+
+/* Desktop sidebar only */
+.desktop-sidebar{display:none}
+@media(min-width:1100px){
+ body.desktop-has-sidebar .desktop-sidebar{display:flex;flex-direction:column;position:fixed;left:18px;top:18px;bottom:18px;width:286px;padding:20px 16px 18px;background:rgba(255,255,255,.94);backdrop-filter:blur(18px);border:1px solid #dbe4ed;border-radius:28px;box-shadow:0 14px 40px rgba(15,34,58,.10);z-index:90;overflow:auto}
+ body.desktop-has-sidebar .topbar{left:322px;width:calc(100% - 322px);border-radius:0 0 18px 18px}
+ body.desktop-has-sidebar .main{max-width:none;margin-left:322px;padding:18px 22px 36px 22px}
+ body.desktop-has-sidebar.page-home .main{padding-bottom:32px}
+ body.desktop-has-sidebar .mobile-bottom-nav,body.desktop-has-sidebar .mobile-more-sheet,body.desktop-has-sidebar .global-editor-footer{display:none!important}
+}
+.desktop-sidebar-head{padding:4px 8px 18px;border-bottom:1px solid #e7edf3;margin-bottom:16px}
+.desktop-brand-kicker{font-size:.74rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#be343d;margin-bottom:8px}
+.desktop-sidebar-head strong{display:block;font-size:1.35rem;line-height:1.15;color:#142a44}
+.desktop-sidebar-head p{margin:8px 0 0;font-size:.88rem;line-height:1.55;color:#6a7e92}
+.desktop-sidebar-nav{display:grid;gap:18px}
+.desktop-nav-group{display:grid;gap:8px}
+.desktop-nav-title{padding:0 8px 6px;font-size:.76rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase;color:#7d8da0}
+.desktop-nav-group a,.desktop-feedback-btn{display:grid;grid-template-columns:40px 1fr;align-items:center;gap:12px;min-height:48px;padding:10px 10px;border-radius:16px;text-decoration:none;color:#17324f;background:transparent;border:1px solid transparent;font:inherit;text-align:left;cursor:pointer}
+.desktop-nav-group a:hover,.desktop-feedback-btn:hover{background:#f8fbfe;border-color:#e3ebf3}
+.desktop-nav-group a.active{background:#eef5ff;border-color:#d4e5ff;color:#0e2f4e;box-shadow:inset 0 0 0 1px #d4e5ff}
+.ds-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:#f3f7fb;color:#24435d}
+.ds-icon-svg svg{width:22px;height:22px;stroke-width:2.2}.ds-icon-emoji{font-size:1.2rem}
+.desktop-feedback-btn .ds-icon{background:#fdf3f4}
+body.desktop-has-sidebar .section,body.desktop-has-sidebar .page-banner,body.desktop-has-sidebar .detail-page,body.desktop-has-sidebar .diag-detail{max-width:1200px}
+body.desktop-has-sidebar .dashboard-search,body.desktop-has-sidebar .week-card,body.desktop-has-sidebar .compact-news,body.desktop-has-sidebar .hub-grid,body.desktop-has-sidebar .wissen-quick-grid,body.desktop-has-sidebar .event-list,body.desktop-has-sidebar .diag-results,body.desktop-has-sidebar .diag-disease-list,body.desktop-has-sidebar .scheme-grid,body.desktop-has-sidebar .skill-grid,body.desktop-has-sidebar .meeting-grid,body.desktop-has-sidebar .lit-list{max-width:1200px}
+body.desktop-has-sidebar .compact-news .news-list{max-width:1200px}
+body.desktop-has-sidebar .topbar-inner{max-width:none}
