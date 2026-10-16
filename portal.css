@@ -813,3 +813,21 @@ body.page-home .ost-week-bottom .week-card{margin-bottom:16px}
 .scheme-tile h2{font-size:1rem!important;line-height:1.35!important}
 .scheme-more{font-size:.76rem!important;margin-top:3px!important}
 @media(max-width:650px){.skill-card{padding:9px 11px!important}.skill-icon{width:35px!important;height:35px!important;font-size:19px!important;border-radius:11px!important}.skill-card strong{font-size:.92rem!important}.skill-group-head h2{font-size:1.08rem!important}}
+
+/* Schnellzugriff und nach oben öffnendes Mehr mit sichtbarer Tabbar */
+.ost-shortcut-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.ost-shortcut-grid a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:0;min-height:90px;background:#fff;border:1px solid #e2e9f1;border-radius:17px;color:#14314f;text-decoration:none;box-shadow:0 4px 16px rgba(17,48,76,.04);padding:12px 5px;text-align:center}
+.ost-shortcut-grid a>span{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#f0f5fc;font-size:20px}
+.ost-shortcut-grid a strong{font-size:.83rem;line-height:1.24;overflow-wrap:anywhere}
+@media(max-width:860px){
+ .mobile-bottom-nav{z-index:100!important}
+ .mobile-more-sheet{z-index:95!important;bottom:0!important}
+ .mobile-more-shade{bottom:0}
+ .mobile-more-panel{bottom:calc(86px + env(safe-area-inset-bottom))!important;border-radius:22px!important;max-height:calc(100dvh - 118px - env(safe-area-inset-bottom))!important;padding-bottom:16px!important;box-shadow:0 -6px 32px rgba(14,37,63,.13)}
+ .mobile-more-panel::after{content:"";position:absolute;bottom:-12px;left:50%;width:28px;height:12px;background:#fff;transform:translateX(-50%);border-radius:0 0 8px 8px}
+ .ost-shortcut-grid{gap:7px}
+ .ost-shortcut-grid a{min-height:76px;padding:9px 3px;gap:5px;border-radius:14px}
+ .ost-shortcut-grid a>span{width:32px;height:32px;font-size:17px}
+ .ost-shortcut-grid a strong{font-size:.72rem}
+}
+@media(max-width:380px){.ost-shortcut-grid a strong{font-size:.65rem}}

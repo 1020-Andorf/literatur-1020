@@ -135,9 +135,11 @@ function rememberPage(){if(page==='home'||page==='editor')return;const labels={h
 function favorites(){try{return JSON.parse(localStorage.getItem(FAV_KEY)||'[]')}catch(e){return[]}}
 function toggleFavorite(href){let f=favorites();f=f.includes(href)?f.filter(x=>x!==href):[...f,href];localStorage.setItem(FAV_KEY,JSON.stringify(f));return f.includes(href)}
 
+// Meldungen werden 30 Tage nach ihrem Datum ausgeblendet, nicht aus dem Datenspeicher gelöscht.
+function visibleNews(items){const now=new Date();now.setHours(12,0,0,0);return (Array.isArray(items)?items:[]).filter(n=>{if(n.active===false)return false;if(!n.date)return true;const d=new Date(String(n.date).slice(0,10)+'T12:00:00');if(Number.isNaN(d.getTime()))return true;const days=(now-d)/86400000;return days<30&&days>=-1}).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')))}
 async function home(){
  const [news,events,arts,ab,diff,skillsData,algs,changes]=await Promise.all([get('news'),get('events'),articles(),get('abcde'),get('differential'),get('skills'),get('algorithms'),get('changes')]);
- const now=new Date(),today=now.toISOString().slice(0,10),active=(news||[]).filter(x=>x.active!==false).slice(0,3);
+ const now=new Date(),today=now.toISOString().slice(0,10),active=visibleNews(news).slice(0,3);
  const upcoming=(events||[]).filter(x=>x.date>=today).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,3);
  const monday=new Date(now);monday.setHours(12,0,0,0);monday.setDate(now.getDate()-((now.getDay()+6)%7));
  const week=Array.from({length:7},(_,i)=>{const d=new Date(monday);d.setDate(monday.getDate()+i);const key=d.toISOString().slice(0,10),hits=(events||[]).filter(e=>e.date===key);return {d,key,hits}});
@@ -148,6 +150,7 @@ async function home(){
  $('[data-main]').innerHTML=`<section class="dashboard-hero compact-hero"><div class="hero-kicker">OST 1020</div><h1>Wissenssammlung 1020</h1></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen, Skills, Literatur …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle Meldungen</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
+ <section class="section ost-shortcuts"><div class="section-head"><h2>Schnellzugriff</h2></div><nav class="ost-shortcut-grid" aria-label="Schnellzugriff"><a href="algorithmen.html"><span aria-hidden="true">📋</span><strong>Schemata</strong></a><a href="skilltraining.html"><span aria-hidden="true">🩹</span><strong>Skills</strong></a><a href="termine.html"><span aria-hidden="true">📅</span><strong>Termine</strong></a><a href="lehrmeinung.html"><span aria-hidden="true">🔄</span><strong>Lehrmeinungen</strong></a></nav></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Kalender öffnen</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section>`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
  const drawSearch=()=>{const term=q.value.trim().toLowerCase();if(!term){results.classList.add('hidden');results.innerHTML='';return}const hits=index.filter(x=>(x.label+' '+x.sub).toLowerCase().includes(term)).slice(0,8);results.innerHTML=hits.map(x=>`<a href="${x.href}"><span><strong>${esc(x.label)}</strong><small>${esc(x.sub)}</small></span><b>›</b></a>`).join('')||'<div class="empty compact">Keine Treffer.</div>';results.classList.remove('hidden')};q.oninput=drawSearch;$('[data-search-clear]').onclick=()=>{q.value='';drawSearch();q.focus()};
@@ -170,7 +173,7 @@ async function faqPage(){
  $('[data-main]').innerHTML=`<section class="page-banner"><h1>FAQ zu Simulationstrainings</h1><p>Allgemeine Hinweise zu Vorbereitung, Durchführung und Nachbesprechung.</p></section><div class="ost-faq-list">${items.map(([q,a])=>`<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div><p class="diag-hint">Allgemeine Orientierung; lokale Ausbildungsstandards gehen vor.</p>`;
 }
 async function newsPage(){
- const d=await get('news');
+ const d=visibleNews(await get('news'));
  $('[data-main]').innerHTML=`<section class="page-banner"><h1>Aktuelles</h1><div class="toolbar"><div class="filter-chips"><button class="filter-chip active" data-cat="all">Alle</button>${[...new Set(d.map(x=>x.category||'Organisation'))].map(c=>`<button class="filter-chip" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div></div></section><div class="news-list" data-list></div>`;
  let shown=d;
  const draw=cat=>{shown=d.filter(x=>cat==='all'||(x.category||'Organisation')===cat);$('[data-list]').innerHTML=shown.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'};
