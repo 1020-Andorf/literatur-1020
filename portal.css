@@ -988,3 +988,25 @@ body.page-home .ost-home-intro,body.page-home .dashboard-search,body.page-home .
 .ost-figure .ost-anatomy-figure{margin:0 auto;max-height:420px;width:min(100%,660px)}
 .ost-figure figcaption{font-size:12px;color:#667b8b;padding:5px 8px 2px}
 @media(max-width:600px){body.page-home .ost-home-intro{padding:5px 0 0}body.page-home .section{margin-top:15px}body.page-home .ost-shortcut-grid{gap:6px}body.page-home .ost-shortcut-grid a{min-height:64px}}
+/* Fachredaktion: formatierter Text und Bilder */
+.ost-rich-toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.ost-rich-toolbar button{border:1px solid #d4e0e9;border-radius:9px;background:#f7fafc;padding:8px 11px;font-size:.85rem;font-weight:650}.ost-rich-toolbar button:hover{background:#eaf3ff}.ost-rich-input{min-height:280px;line-height:1.6;font-family:inherit}.ost-module-field small{display:block;color:#61748a;margin:5px 0 8px;line-height:1.5}.ost-image-upload{display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:#214666;font-size:.86rem;font-weight:750;margin:10px 0}.ost-image-upload input{max-width:100%;font-weight:400}.ost-module-upload-note{font-size:.82rem;color:#24577a;padding:6px 0}.ost-module-body{font-size:1rem;line-height:1.72}.ost-module-body h3{margin:26px 0 10px;font-size:1.3rem}.ost-module-body h4{margin:18px 0 8px;font-size:1.08rem}.ost-module-body p{margin:0 0 14px}.ost-module-body ul{padding-left:24px;line-height:1.7}.ost-inline-figure{margin:22px 0;max-width:100%;text-align:center}.ost-inline-figure img{display:block;width:auto;max-width:100%;max-height:650px;object-fit:contain;border-radius:15px;margin:0 auto}.ost-inline-figure figcaption{font-size:.82rem;color:#64748b;margin-top:9px}
+/* Befundwörterbuch – direkt sichtbar, alphabetisch, keine Dropdowns */
+.ost-dictionary-wrap{overflow-x:auto;background:#fff;border:1px solid #dfe8f1;border-radius:18px}.ost-dictionary{width:100%;border-collapse:collapse;table-layout:fixed;text-align:left}.ost-dictionary thead th{background:#f2f6fa;color:#43596e;font-size:.78rem;letter-spacing:.02em;padding:14px 18px}.ost-dictionary th:first-child{width:29%}.ost-dictionary tbody tr{border-top:1px solid #e8edf2}.ost-dictionary tbody tr:nth-child(even){background:#fbfcfd}.ost-dictionary tbody th,.ost-dictionary tbody td{padding:13px 18px;vertical-align:top;overflow-wrap:anywhere}.ost-dictionary tbody th{font-weight:800;color:#1b3550}.ost-dictionary tbody td{line-height:1.5;color:#344b63}.ost-dict-description p{margin:4px 0 0}.ost-dict-description h3,.ost-dict-description h4{font-size:1rem;margin:10px 0 4px}
+@media(max-width:640px){.ost-dictionary th:first-child{width:36%}.ost-dictionary tbody th,.ost-dictionary tbody td{padding:11px 10px;font-size:.87rem}.ost-rich-toolbar button{flex:1 1 auto}.ost-image-upload{display:block}.ost-image-upload input{display:block;margin-top:8px}}
+
+/* Redaktion: fünf Hauptgruppen mit abgerundeten Unterbereich-Kacheln */
+body.page-editor .editor-dashboard{display:block!important}
+body.page-editor .editor-nav,body.page-editor .editor-mobile-picker{display:none!important}
+.editor-grouped-menu{margin-bottom:18px;min-width:0}
+.editor-primary-groups{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin:0 0 16px}
+.editor-primary-groups button{display:flex;align-items:center;justify-content:center;gap:9px;min-width:0;min-height:52px;padding:10px 11px;border:1px solid #dbe5ef;border-radius:17px;background:#fff;color:#31506b;text-align:center;font:inherit;cursor:pointer;transition:background .15s,border-color .15s}
+.editor-primary-groups button span{font-size:20px}.editor-primary-groups button strong{font-size:13px;line-height:1.25}
+.editor-primary-groups button.active{background:#fff2f3;border-color:#e7bdc0;color:#a72d35;box-shadow:0 2px 8px rgba(15,34,58,.04)}
+.editor-group-subtitle{font-weight:800;font-size:13px;color:#657c91;margin:0 0 9px 3px}
+.editor-subgroup-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:6px}
+.editor-subgroup-tile{display:flex;align-items:center;gap:10px;min-height:62px;text-align:left;background:#fff;border:1px solid #dce6ef;border-radius:17px;padding:13px 14px;color:#213c55;font:inherit;cursor:pointer;min-width:0}
+.editor-subgroup-tile span{font-size:23px;flex-shrink:0}.editor-subgroup-tile strong{font-size:13px;line-height:1.35;overflow-wrap:anywhere}
+.editor-subgroup-tile.active{background:#f1f6fd;border-color:#a9c6e8;box-shadow:inset 0 0 0 1px #bcd4f0}
+.editor-primary-groups button:focus-visible,.editor-subgroup-tile:focus-visible{outline:3px solid #78a9ed;outline-offset:2px}
+@media(max-width:860px){.editor-primary-groups{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.editor-primary-groups button{flex-direction:column;gap:5px;min-height:69px;padding:8px 5px}.editor-primary-groups button strong{font-size:11px}.editor-subgroup-tiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.editor-subgroup-tile{min-height:57px;padding:10px}.editor-subgroup-tile strong{font-size:12px}}
+@media(max-width:410px){.editor-primary-groups{grid-template-columns:repeat(3,minmax(0,1fr))}.editor-subgroup-tiles{grid-template-columns:1fr 1fr}}
