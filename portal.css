@@ -970,3 +970,21 @@ body{
 .ost-anatomy-figure{display:block;width:min(100%,440px);max-height:350px;object-fit:contain;margin:10px auto 24px;border-radius:18px}
 .editor-mobile-picker{display:none}
 @media(max-width:860px){.editor-nav{display:none!important}.editor-mobile-picker{display:grid;gap:7px;background:#fff;border:1px solid #dce6f0;border-radius:15px;padding:12px;margin-bottom:13px}.editor-mobile-picker label{font-size:12px;font-weight:800;color:#547089}.editor-mobile-picker select{min-width:0;width:100%;padding:12px;border-radius:10px;border:1px solid #cfdae5;background:#f9fcff;font:inherit}.editor-dashboard{display:block!important}.editor-content{min-width:0}.admin-tools{margin-top:26px;margin-bottom:135px}}
+
+/* Startseite: weniger große Flächen und mehr Weißraum für Orientierung */
+body.page-home .ost-home-intro{padding:15px 0 2px;max-width:1200px}
+body.page-home .ost-home-intro span{font-size:.72rem;letter-spacing:.13em;font-weight:800;color:#b73740}
+body.page-home .ost-home-intro h1{font-size:clamp(1.7rem,3vw,2.25rem);margin:5px 0 0;line-height:1.14;letter-spacing:-.04em}
+body.page-home .dashboard-search{margin-top:14px}
+body.page-home .section{margin-top:18px}
+body.page-home .section-head{margin-bottom:9px}
+body.page-home .section-head h2{font-size:1.14rem;letter-spacing:-.02em}
+body.page-home .dashboard-news{gap:7px}
+body.page-home .dashboard-news .news-item{border-radius:14px;box-shadow:none;padding:10px 12px}
+body.page-home .ost-shortcut-grid a{box-shadow:none;border-radius:14px;min-height:68px;padding:9px 5px}
+body.page-home .week-card{box-shadow:none}
+body.page-home .ost-home-intro,body.page-home .dashboard-search,body.page-home .compact-news,body.page-home .ost-shortcuts,body.page-home .ost-week-bottom{max-width:1200px}
+.ost-figure{background:#f5f9fd;border:1px solid #e3ecf3;border-radius:18px;padding:10px;margin:15px 0 22px;text-align:center}
+.ost-figure .ost-anatomy-figure{margin:0 auto;max-height:420px;width:min(100%,660px)}
+.ost-figure figcaption{font-size:12px;color:#667b8b;padding:5px 8px 2px}
+@media(max-width:600px){body.page-home .ost-home-intro{padding:5px 0 0}body.page-home .section{margin-top:15px}body.page-home .ost-shortcut-grid{gap:6px}body.page-home .ost-shortcut-grid a{min-height:64px}}
