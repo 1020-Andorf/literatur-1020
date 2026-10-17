@@ -1112,3 +1112,15 @@ body.page-algorithms .row-card strong,body.page-algorithms .scheme-card strong,b
 .ost-checklist-card{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:15px;align-items:start;background:#fff;border:1px solid #dce6ef;border-radius:18px;padding:18px}
 .ost-checklist-icon{font-size:24px}.ost-checklist-info{min-width:0}.ost-checklist-card h2{margin:0 0 6px;font-weight:550;font-size:1.05rem;overflow-wrap:anywhere}.ost-checklist-card p{margin:7px 0;color:#50657b;line-height:1.5}.ost-checklist-category{font-size:.77rem;color:#74869a}.ost-checklist-body p{font-size:.88rem;margin:7px 0}.ost-checklist-download{border-radius:12px;padding:11px 13px;background:#edf4fd;color:#174a80;font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap}.ost-checklist-missing{font-size:.8rem;color:#8794a5}
 @media(max-width:620px){.topbar-inner{display:flex!important}.ost-link-directory>a{grid-template-columns:38px minmax(0,1fr) 13px!important;gap:10px!important;padding:13px!important}.ost-link-directory>a>span:first-child{width:38px!important;min-width:38px!important;height:38px!important}.ost-checklist-card{grid-template-columns:34px minmax(0,1fr)}.ost-checklist-download,.ost-checklist-missing{grid-column:2;justify-self:start}}
+
+/* UI-Feinschliff: transparente Detailcontainer, einheitliche Flächen, Redaktion mobil sichtbar */
+body.page-changes .change-detail,body.page-meetings .detail-page,body.page-skills .detail-page{background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important;outline:0!important}
+body.page-changes .change-detail::before,body.page-changes .change-detail::after{display:none!important}
+body.page-changes .guideline-box{background:#fff!important;box-shadow:none!important;border:1px solid #dbe5ee!important}
+body.page-changes .compare-card{box-shadow:none!important}
+.ost-home-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ost-home-title-row h1{min-width:0}
+.ost-home-editor{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:0 0 auto;padding:10px 14px;border:1px solid #d6e4f0;border-radius:13px;background:#fff;color:#214865;text-decoration:none;font-size:.9rem;font-weight:550;line-height:1.2}
+.ost-home-editor:hover,.ost-home-editor:focus-visible{background:#eff6ff;border-color:#bad2ee}
+@media(max-width:1099px){.topbar-inner{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important}.header-editor-link{display:inline-flex!important;align-items:center!important;white-space:nowrap!important;min-height:39px!important;margin-left:auto!important}.ost-home-title-row{flex-wrap:wrap}.ost-home-editor{margin-left:auto}}
+@media(max-width:480px){.ost-home-editor{padding:9px 12px;font-size:.83rem}.ost-home-title-row h1{font-size:1.75rem!important}.ost-main-destinations a{border-radius:15px!important;box-shadow:none!important}.ost-main-destinations{gap:10px!important}.section-head h2{font-size:1.22rem!important}}
