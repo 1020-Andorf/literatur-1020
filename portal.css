@@ -1022,3 +1022,54 @@ body.page-editor .editor-nav,body.page-editor .editor-mobile-picker{display:none
 .editor-mobile-picker[hidden]{display:none!important}
 .admin-tools{margin-top:32px!important}
 @media(max-width:860px){.ost-entry-picker{padding:12px}.ost-entry-picker select{font-size:16px}}
+
+/* OCT 2026 – einheitliches, reduziertes Hauptmenü auf allen Geräten */
+:root{--bg:#f5f8fc;--text:#18334e}
+html,body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif!important}
+.mobile-bottom-nav,.mobile-more-sheet{display:none!important}
+.compact-top-navigation{display:none}
+body.app-shell .main{padding-bottom:42px!important}
+.ost-main-destinations{display:grid;grid-template-columns:repeat(auto-fit,minmax(195px,1fr));gap:10px;max-width:1200px}
+.ost-main-destinations a{display:flex;align-items:center;gap:13px;padding:17px 18px;min-height:66px;border-radius:17px;border:1px solid #dce5ee;background:white;color:#173451;font-size:1rem;font-weight:500;transition:background .15s,border-color .15s}
+.ost-main-destinations a:hover{background:#f4f9fe;border-color:#a5c7e9}
+.ost-main-destinations a span{font-size:24px;display:grid;place-items:center;width:37px;height:37px;background:#eff5fa;border-radius:11px}
+.ost-link-directory strong,.directory-item-name,.editor-subgroup-tile strong,.editor-primary-groups button strong{font-weight:500!important}
+.ost-link-directory a{min-height:68px!important}
+.ost-link-directory a b{font-weight:400}
+.editor-subgroup-tile,.editor-primary-groups button{font-weight:500}
+.editor-subgroup-tile.active,.editor-primary-groups button.active{background:#edf5fd;border-color:#bad0e8;color:#173451}
+.page-banner h1{font-size:clamp(1.5rem,2.8vw,2rem)}
+@media(min-width:1100px){
+ body.desktop-has-sidebar .desktop-sidebar{width:282px;display:flex;box-shadow:0 6px 28px rgba(16,40,64,.07)}
+ body.desktop-has-sidebar .topbar{left:318px;width:calc(100% - 318px)}
+ body.desktop-has-sidebar .main{margin-left:318px;padding:24px 28px 44px!important;max-width:none}
+ .desktop-sidebar-head{margin-bottom:14px}
+ .desktop-sidebar-head strong{font-size:1.15rem}
+ .desktop-sidebar-nav{flex:1}
+ .desktop-nav-group a{min-height:50px;font-size:.96rem;font-weight:500;padding:8px 10px}
+ .desktop-nav-group a.active{background:#eef5fd;box-shadow:none;border-color:#d4e5f4}
+ .desktop-sidebar .ds-icon{width:36px;height:36px}
+ .desktop-sidebar .ds-icon svg{width:21px;height:21px}
+ .sidebar-actions{border-top:1px solid #e2eaf0;padding:16px 4px 0;display:grid;gap:7px}
+ .sidebar-actions a,.sidebar-actions button{display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:13px;background:#f3f7fa;color:#1e405d;text-decoration:none;border:1px solid #e3ebf2;text-align:left;font:inherit;font-size:.92rem;font-weight:500;cursor:pointer}
+ .sidebar-actions .editor-entry-button{background:#eaf3ff;border-color:#cfe2f5}
+}
+@media(max-width:1099px){
+ .desktop-sidebar{display:none!important}
+ .compact-top-navigation{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:45;background:#ffffffec;backdrop-filter:blur(14px);border-bottom:1px solid #e2eaf0;padding:7px 12px}
+ .compact-menu-links{display:flex;overflow-x:auto;gap:5px;min-width:0;flex:1;scrollbar-width:thin}
+ .compact-menu-links a{display:flex;align-items:center;gap:7px;padding:9px 12px;border-radius:12px;font-size:.86rem;white-space:nowrap;text-decoration:none;color:#36536d;font-weight:500;border:1px solid transparent}
+ .compact-menu-links a.active{background:#edf5fc;border-color:#dbe8f3;color:#133650}
+ .simple-menu-icon{font-size:17px;width:22px;height:22px;display:grid;place-items:center}
+ .simple-menu-icon svg{width:21px;height:21px}
+ .compact-editor-entry{padding:10px 12px;border-radius:12px;border:1px solid #cadfee;background:#f3f8fd;color:#173852;font-size:.84rem;text-decoration:none;font-weight:600;white-space:nowrap}
+ .compact-top-navigation+.main{padding-top:15px}
+}
+@media(max-width:570px){
+ .compact-top-navigation{padding:6px 8px}
+ .compact-menu-links a{font-size:.8rem;padding:8px 9px}
+ .compact-editor-entry span{display:none}
+ .compact-editor-entry{font-size:21px;padding:7px 12px}
+ .ost-main-destinations{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .ost-main-destinations a{min-height:74px;display:grid;justify-items:center;text-align:center;gap:6px;padding:12px 8px;font-size:.85rem}
+}

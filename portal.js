@@ -62,7 +62,7 @@ function chrome(){
    if(params.has('id')){params.delete('id');location.href='differential.html'+(params.size?'?'+params:'');return}
    if(params.has('group')){location.href='differential.html';return}
   }
-  const parents={wissen:'index.html',training:'index.html',events:'index.html',modules:'wissen.html',news:'index.html',meetings:'index.html',editor:'index.html',differential:'wissen.html',algorithms:'wissen.html',literature:'wissen.html',guidelines:'wissen.html',abcde:'wissen.html',changes:'aktuelles.html',skills:'training.html',guide:'training.html',faq:'training.html'};
+  const parents={wissen:'index.html',training:'index.html',events:'index.html',modules:'wissen.html',news:'index.html',meetings:'index.html',editor:'index.html',differential:'wissen.html',algorithms:'wissen.html',literature:'wissen.html',guidelines:'wissen.html',abcde:'wissen.html',changes:'index.html',skills:'training.html',guide:'training.html',faq:'training.html'};
   location.href=parents[page]||'index.html';
  }}
  if(hb)hb.innerHTML=svg.home;
@@ -70,40 +70,30 @@ function chrome(){
  $$('[data-overlay-close]').forEach(x=>x.onclick=()=>$('.overlay').classList.remove('show'));
 
  {
-  const navItems=[
+  const menu=[
    {id:'home',label:'Start',href:'index.html',icon:svg.home,match:['home']},
    {id:'wissen',label:'Wissen',href:'wissen.html',icon:svg.books,match:['wissen','differential','algorithms','literature','guidelines','abcde','modules']},
    {id:'training',label:'Training',href:'training.html',icon:svg.skill,match:['training','skills','guide','faq']},
-   {id:'events',label:'Termine',href:'termine.html',icon:svg.calendar,match:['events']}
-  ];
-  const extraItems=[
-   {id:'news',label:'Aktuelles',href:'aktuelles.html',emoji:'📣',match:['news']},
+   {id:'events',label:'Termine',href:'termine.html',icon:svg.calendar,match:['events']},
    {id:'meetings',label:'Dienstbesprechungen',href:'dienstbesprechungen.html',emoji:'🗣️',match:['meetings']},
-   {id:'changes',label:'Lehrmeinung',href:'lehrmeinung.html',emoji:'🔄',match:['changes']},
-   {id:'editor',label:'Redaktion',href:'editor.html',emoji:'✏️',match:['editor']}
+   {id:'changes',label:'Lehrmeinungsänderungen',href:'lehrmeinung.html',emoji:'🔄',match:['changes']}
   ];
-  const activeId=(navItems.find(it=>it.match.includes(page))||{}).id || ((extraItems.find(it=>it.match.includes(page))||{}).id) || '';
-  const more=document.createElement('div');
-  more.className='mobile-more-sheet';
-  more.innerHTML=`<div class="mobile-more-shade" data-more-close></div><section class="mobile-more-panel"><div class="mobile-more-grid">${extraItems.filter(x=>x.id!=='news').map(x=>`<a class="${activeId===x.id?'active':''}" href="${x.href}"><span>${x.emoji}</span><strong>${x.label}</strong></a>`).join('')}<button type="button" data-feedback-open><span>💬</span><strong>Fehler melden</strong></button></div></section>`;
-  document.body.appendChild(more);
-  const nav=document.createElement('nav');
-  nav.className='mobile-bottom-nav';
-  nav.setAttribute('aria-label','Hauptnavigation');
-  nav.innerHTML=`${navItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="mbn-icon">${it.icon}</span><span>${it.label}</span></a>`).join('')}<button type="button" class="${['news','meetings','changes','editor'].includes(activeId)?'active':''}" data-open-more><span class="mbn-icon more-arrow" aria-hidden="true">⌃</span><span>Mehr</span></button>`;
-  document.body.appendChild(nav);
-  $$('[data-more-close]',more).forEach(el=>el.onclick=()=>{more.classList.remove('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded','false')});
-  $('[data-feedback-open]',more)?.addEventListener('click',()=>{more.classList.remove('show');showFeedback()});
-  $('[data-open-more]',nav)?.addEventListener('click',()=>{const isOpen=more.classList.toggle('show');$('[data-open-more]',nav)?.setAttribute('aria-expanded',String(isOpen));});
-  $('[data-open-more]',nav)?.setAttribute('aria-expanded','false');
-
+  const current=(menu.find(x=>x.match.includes(page))||{}).id;
+  const renderLink=(it,desktop=false)=>`<a class="${current===it.id?'active':''}" ${current===it.id?'aria-current="page"':''} href="${it.href}"><span class="${desktop?'ds-icon':'simple-menu-icon'}">${it.icon||it.emoji}</span><span>${it.label}</span></a>`;
   const sidebar=document.createElement('aside');
   sidebar.className='desktop-sidebar';
-  sidebar.setAttribute('aria-label','Desktop-Navigation');
-  sidebar.innerHTML=`<div class="desktop-sidebar-head"><div class="desktop-brand-kicker">OST 1020</div><strong>Wissenssammlung</strong><p>Schneller Zugriff für Redaktion und Inhalte.</p></div><nav class="desktop-sidebar-nav"><div class="desktop-nav-group"><div class="desktop-nav-title">Navigation</div>${navItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="ds-icon ds-icon-svg">${it.icon}</span><span>${it.label}</span></a>`).join('')}</div><div class="desktop-nav-group"><div class="desktop-nav-title">Mehr</div>${extraItems.map(it=>`<a class="${activeId===it.id?'active':''}" href="${it.href}"><span class="ds-icon ds-icon-emoji">${it.emoji}</span><span>${it.label}</span></a>`).join('')}<button type="button" class="desktop-feedback-btn" data-feedback-open-desktop><span class="ds-icon ds-icon-emoji">💬</span><span>Fehler melden</span></button></div></nav>`;
+  sidebar.setAttribute('aria-label','Hauptnavigation');
+  sidebar.innerHTML=`<div class="desktop-sidebar-head"><div class="desktop-brand-kicker">OST 1020</div><strong>Wissenssammlung</strong></div><nav class="desktop-sidebar-nav"><div class="desktop-nav-group">${menu.map(x=>renderLink(x,true)).join('')}</div></nav><div class="sidebar-actions"><a class="editor-entry-button ${page==='editor'?'active':''}" href="editor.html">✎ <span>Redaktion</span></a><button type="button" class="desktop-feedback-btn" data-feedback-open-desktop>💬 <span>Fehler melden</span></button></div>`;
   document.body.appendChild(sidebar);
   $('[data-feedback-open-desktop]',sidebar)?.addEventListener('click',showFeedback);
+  const mobile=document.createElement('nav');
+  mobile.className='compact-top-navigation';
+  mobile.setAttribute('aria-label','Hauptnavigation');
+  mobile.innerHTML=`<div class="compact-menu-links">${menu.map(x=>renderLink(x)).join('')}</div><a href="editor.html" class="compact-editor-entry" aria-label="Redaktion öffnen">✎ <span>Redaktion</span></a>`;
+  const topbar=$('.topbar');
+  if(topbar)topbar.insertAdjacentElement('afterend',mobile);else document.body.prepend(mobile);
  }
+
 }
 function showFeedback(){
  const panel=`<section class="overlay-section"><p>Fehler oder Verbesserungsvorschlag melden. Keine personenbezogenen Patientendaten eingeben.</p><label class="ux-field"><span>Thema</span><input data-fb-title maxlength="160" placeholder="z. B. Quelle überprüfen"></label><label class="ux-field"><span>Beschreibung</span><textarea data-fb-message maxlength="3000" placeholder="Was sollte korrigiert werden?"></textarea></label><button type="button" class="btn primary" data-fb-submit>Meldung absenden</button><div data-fb-status role="status"></div></section>`;
@@ -176,7 +166,7 @@ async function home(){
  $('[data-main]').innerHTML=`<section class="ost-home-intro"><span>OST 1020</span><h1>Wissenssammlung</h1></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen, Skills, Literatur …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
- <section class="section ost-shortcuts"><div class="section-head"><h2>Direkt zu</h2></div><nav class="ost-shortcut-grid" aria-label="Schnellzugriff"><a href="algorithmen.html"><span aria-hidden="true">📋</span><strong>Schemata</strong></a><a href="skilltraining.html"><span aria-hidden="true">🩹</span><strong>Skills</strong></a><a href="termine.html"><span aria-hidden="true">📅</span><strong>Termine</strong></a><a href="lehrmeinung.html"><span aria-hidden="true">🔄</span><strong>Lehrmeinung</strong></a></nav></section>
+ <section class="section ost-shortcuts"><div class="section-head"><h2>Bereiche</h2></div><nav class="ost-main-destinations" aria-label="Bereiche"><a href="wissen.html"><span>📚</span>Wissen</a><a href="training.html"><span>🎓</span>Training</a><a href="termine.html"><span>📅</span>Termine</a><a href="dienstbesprechungen.html"><span>🗣️</span>Dienstbesprechungen</a><a href="lehrmeinung.html"><span>🔄</span>Lehrmeinungsänderungen</a></nav></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Alle Termine →</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section>`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
  let catalog=[];contentCatalog().then(c=>{catalog=c;if(q.value.trim())drawSearch()}).catch(()=>{});
@@ -226,11 +216,11 @@ async function moduleEditor(box,initialModule='pharm'){
 
 async function wissenPage(){
  const links=[['📋','Algorithmen & Schemata','algorithmen.html','Strukturierte Abläufe und Untersuchungsschemata'],['📖','Leitlinien / Guidelines','leitlinien.html','Quellen, Fachgesellschaften und Empfehlungen'],['📚','Literatursammlung','literatur.html','Artikel, Lehrbücher und Forschung'],['🩺','Diagnostik','differential.html','Leitsymptome und Krankheitsbilder'],['💊','Pharmakologie','themen.html?bereich=pharm','Übersicht und Nachschlagen'],['🫀','Anatomie & Physiologie','themen.html?bereich=anatomy','Übersicht und Nachschlagen'],['📖','Befundwörterbuch','themen.html?bereich=befund','Fachbegriffe und Abkürzungen']];
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Wissen</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ico}</span><div><strong>${title}</strong></div><b>›</b></a>`).join('')}</div>`;
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Wissen</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ico}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
 }
 async function trainingPage(){
  const links=[['🩹','Skilltraining','skilltraining.html','Fertigkeiten, Materialien und Abläufe'],['🖥️','Simulations Guide','simulation.html','Quick Guide für den Simulator'],['❓','FAQ zu Simulationstrainings','simulation-faq.html','Häufige Fragen zur Vorbereitung und Durchführung']];
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Training</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ico}</span><div><strong>${title}</strong></div><b>›</b></a>`).join('')}</div>`;
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Training</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ico}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
 }
 async function guidelinesPage(){
  const a=await get('algorithms');const refs=a.filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl));
