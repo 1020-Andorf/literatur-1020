@@ -1098,3 +1098,17 @@ body.app-shell .main{padding-bottom:42px!important}
 .ost-link-directory a strong,.ost-link-directory a .directory-item-name,.ost-link-directory a div strong,.skill-card strong,.row-card strong{font-weight:450!important}
 .ost-link-directory a>span:first-child{background:transparent!important;box-shadow:none!important;border:0!important}
 body.page-algorithms .row-card strong,body.page-algorithms .scheme-card strong,body.page-algorithms .algorithm-card strong{font-weight:450!important}
+
+/* UI fix: Kopf ohne Wortmarke, saubere Zeilen ohne Icon-Text-Kollision */
+.topbar .brand{display:none!important}
+.topbar-inner{grid-template-columns:52px 52px minmax(0,1fr)!important}
+.ost-link-directory>a{display:grid!important;grid-template-columns:44px minmax(0,1fr) 16px!important;column-gap:14px!important;align-items:center!important;min-height:72px!important;overflow:hidden}
+.ost-link-directory>a>span:first-child{display:flex!important;align-items:center!important;justify-content:center!important;width:44px!important;min-width:44px!important;height:44px!important;background:transparent!important;flex-shrink:0}
+.ost-link-directory>a>div{display:block!important;min-width:0!important;width:auto!important;max-width:100%!important;overflow-wrap:break-word!important;word-break:normal!important}
+.ost-link-directory>a>div span,.ost-link-directory>a .directory-item-name{display:block!important;width:auto!important;height:auto!important;min-width:0!important;max-width:100%!important;background:transparent!important;padding:0!important;white-space:normal!important;overflow-wrap:break-word!important;line-height:1.4!important;border-radius:0!important;font-weight:450!important;font-size:1rem!important}
+.ost-link-directory>a>b{justify-self:end!important;font-weight:400!important}
+.scheme-tile strong,.scheme-tile h3,.scheme-card strong,.algorithm-card strong,body.page-algorithms .row-card strong{font-weight:450!important}
+.ost-checklist-list{display:grid;gap:12px;margin:16px 0 28px}
+.ost-checklist-card{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:15px;align-items:start;background:#fff;border:1px solid #dce6ef;border-radius:18px;padding:18px}
+.ost-checklist-icon{font-size:24px}.ost-checklist-info{min-width:0}.ost-checklist-card h2{margin:0 0 6px;font-weight:550;font-size:1.05rem;overflow-wrap:anywhere}.ost-checklist-card p{margin:7px 0;color:#50657b;line-height:1.5}.ost-checklist-category{font-size:.77rem;color:#74869a}.ost-checklist-body p{font-size:.88rem;margin:7px 0}.ost-checklist-download{border-radius:12px;padding:11px 13px;background:#edf4fd;color:#174a80;font-size:.85rem;font-weight:600;text-decoration:none;white-space:nowrap}.ost-checklist-missing{font-size:.8rem;color:#8794a5}
+@media(max-width:620px){.topbar-inner{display:flex!important}.ost-link-directory>a{grid-template-columns:38px minmax(0,1fr) 13px!important;gap:10px!important;padding:13px!important}.ost-link-directory>a>span:first-child{width:38px!important;min-width:38px!important;height:38px!important}.ost-checklist-card{grid-template-columns:34px minmax(0,1fr)}.ost-checklist-download,.ost-checklist-missing{grid-column:2;justify-self:start}}
