@@ -1073,3 +1073,28 @@ body.app-shell .main{padding-bottom:42px!important}
  .ost-main-destinations{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
  .ost-main-destinations a{min-height:74px;display:grid;justify-items:center;text-align:center;gap:6px;padding:12px 8px;font-size:.85rem}
 }
+
+/* Oktober 2026 – ruhige Desktop- und Mobile-Navigation */
+@media(max-width:1099px){
+ .compact-top-navigation{display:none!important}
+ .topbar{position:relative!important;top:auto!important;backdrop-filter:none!important}
+ .topbar-inner{display:flex!important;align-items:center!important;min-height:64px;height:auto!important;gap:8px!important;padding:8px 12px!important}
+ .topbar .brand{margin-left:auto!important;min-width:0}
+ .topbar .brand strong{font-size:15px!important}
+ .header-editor-link{flex:0 0 auto;padding:9px 10px;border-radius:11px;background:#f1f5f9;border:1px solid #dde5ef;text-decoration:none;color:#26435c;font-size:12px;font-weight:500}
+ .ost-main-destinations{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .ost-main-destinations a{min-width:0;min-height:94px;display:flex;flex-direction:column;justify-content:center;gap:9px;overflow-wrap:anywhere;text-align:center;font-size:14px;font-weight:450;padding:12px}
+ .ost-main-destinations a span{width:auto;height:auto;background:none!important;font-size:23px}
+}
+@media(max-width:390px){.ost-main-destinations a{font-size:12px}.header-editor-link{font-size:11px;padding:8px}}
+@media(min-width:1100px){
+ .header-editor-link{display:none!important}
+ .desktop-sidebar,.desktop-sidebar *{min-width:0}
+ .desktop-nav-group a{grid-template-columns:26px minmax(0,1fr)!important;gap:12px!important;overflow-wrap:anywhere;white-space:normal!important;font-size:13px!important;line-height:1.35}
+ .desktop-nav-group a>.ds-icon{background:transparent!important;border:0!important;width:25px!important;height:25px!important;padding:0!important;font-size:17px}
+ .desktop-nav-group a>.ds-icon svg{width:20px!important;height:20px!important}
+ .desktop-nav-group a>span:last-child{min-width:0;overflow-wrap:anywhere}
+}
+.ost-link-directory a strong,.ost-link-directory a .directory-item-name,.ost-link-directory a div strong,.skill-card strong,.row-card strong{font-weight:450!important}
+.ost-link-directory a>span:first-child{background:transparent!important;box-shadow:none!important;border:0!important}
+body.page-algorithms .row-card strong,body.page-algorithms .scheme-card strong,body.page-algorithms .algorithm-card strong{font-weight:450!important}
