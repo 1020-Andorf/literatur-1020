@@ -9,7 +9,7 @@ export default {
   if(env.ALLOWED_ORIGIN&&origin&&origin!==env.ALLOWED_ORIGIN)return json({error:'Origin nicht zugelassen'},403,cors);
   try{
    if(url.pathname==="/articles"&&request.method==="GET")return json(await getJson(env,"data/articles.json"),200,cors);
-   const m=url.pathname.match(/^\/content\/(articles|abcde|differential|skills|news|algorithms|changes|events|guide|materials|meetings)$/);
+   const m=url.pathname.match(/^\/content\/(articles|abcde|differential|skills|news|algorithms|changes|events|guide|materials|meetings|knowledgeModules)$/);
    if(m&&request.method==="GET")return json(await getJson(env,`data/${m[1]}.json`),200,cors);
    if(url.pathname==="/auth"&&request.method==="POST"){const body=await request.json().catch(()=>({}));return (await validPin(String(body.pin||""),env.ADMIN_PIN_SHA256))?json({ok:true},200,cors):json({error:"PIN ungültig"},401,cors);}
    const rsvp=url.pathname.match(/^\/events\/rsvp\/([^/]+)$/);
@@ -120,7 +120,7 @@ async function putJson(env,file,obj,sha,message){const text=JSON.stringify(obj,n
 
 async function putBase64(env,file,b64,message){const p=`/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}/contents/${file}`;await gh(env,p,{method:"PUT",body:JSON.stringify({message,content:b64,branch:env.GITHUB_BRANCH||"main"})})}
 
-const CONTENT_NAMES=['articles','abcde','differential','skills','news','algorithms','changes','events','guide','materials','meetings'];
+const CONTENT_NAMES=['articles','abcde','differential','skills','news','algorithms','changes','events','guide','materials','meetings','knowledgeModules'];
 function allowedContent(n){return CONTENT_NAMES.includes(n)}
 function normalizedAttendees(a){return (Array.isArray(a)?a:[]).map(v=>typeof v==='string'?{clientId:v,name:'',registeredAt:''}:v).filter(v=>v&&v.clientId)}
 function eventEnded(ev){const date=String(ev.date||''),time=/^([01]\d|2[0-3]):[0-5]\d$/.test(ev.time||'')?ev.time:'23:59';if(!/^\d{4}-\d{2}-\d{2}$/.test(date))return true;const timezone=String(ev.timezone||'Europe/Vienna');let fmt;try{fmt=new Intl.DateTimeFormat('en-CA',{timeZone:timezone,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'})}catch{fmt=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Vienna',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'})}const parts=Object.fromEntries(fmt.formatToParts(new Date()).filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));const local=`${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;return local>`${date}T${time}`}
