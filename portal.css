@@ -1417,3 +1417,40 @@ body.app-shell .editor-subgroup-tile strong{overflow-wrap:normal!important;word-
  body.app-shell .editor-subgroup-tile strong{font-size:.84rem!important}
  body.app-shell .page-banner{padding:14px!important}
 }
+
+
+/* --- Final uniform mobile header, editor gate and highlighted news refinements --- */
+@media(max-width:1099px){
+ body.app-shell:not(.page-home) .topbar .brand{
+  display:block!important;flex:1 1 auto!important;min-width:0!important;
+  margin:0!important;padding-left:4px!important;text-align:left!important;justify-self:auto!important;
+ }
+ body.app-shell:not(.page-home) .topbar .brand strong{
+  display:block!important;font-size:1rem!important;font-weight:780!important;
+  color:var(--ost-ink)!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+ }
+ body.app-shell:not(.page-home) .topbar .brand small{display:none!important}
+}
+.page-banner-no-title{padding-top:12px!important}
+.page-banner-no-title .page-banner-row:empty{display:none!important}
+body.page-home .compact-news{margin-top:10px!important}
+body.page-home .compact-news .section-head h2{letter-spacing:-.02em}
+body.page-home .dashboard-news .news-item{background:#fff7f8!important;border-color:#ecdde0!important;min-height:58px!important}
+body.page-home .dashboard-news .news-item:first-child{background:linear-gradient(135deg,#fff6f6,#ffffff)!important;border-color:#e5d3d7!important}
+body.page-home .dashboard-news .news-item h3{font-weight:520!important}
+.overlay-section.news-detail .cat-pill,.overlay-section.news-detail .news-meta{display:none!important}
+.editor-gate{
+ max-width:760px!important;margin:10px auto 0!important;padding:26px 24px!important;
+ border:1px solid var(--ost-border)!important;border-radius:24px!important;
+ background:rgba(255,255,255,.86)!important;box-shadow:none!important;display:grid!important;gap:14px!important;
+}
+.editor-gate .pin-symbol{
+ width:64px!important;height:64px!important;margin:0 auto 4px!important;border-radius:18px!important;
+ background:#eef5fb!important;border:1px solid #dbe6ef!important;color:#244968!important;font-size:0!important;
+}
+.editor-gate .pin-symbol .ost-outline-icon{width:28px!important;height:28px!important}
+.editor-gate h2{margin:0!important;font-size:2rem!important;letter-spacing:-.03em!important;color:var(--ost-ink)!important}
+.editor-gate p{margin:0!important;color:#6d8091!important;font-size:1.02rem!important}
+.editor-gate input{margin-top:2px!important;height:62px!important;border-radius:18px!important;border:1px solid #d9e4ed!important;padding:0 18px!important;font-size:1.2rem!important}
+.editor-gate .actions{display:flex!important;justify-content:center!important;gap:14px!important;flex-wrap:wrap!important}
+.editor-gate .btn{min-width:180px!important;border-radius:18px!important;padding:15px 18px!important;font-size:1rem!important}

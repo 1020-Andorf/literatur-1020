@@ -77,7 +77,7 @@ function chrome(){
    {id:'training',label:'Training',href:'training.html',icon:svg.skill,match:['training','skills','guide','faq']},
    {id:'events',label:'Termine',href:'termine.html',icon:svg.calendar,match:['events']},
    {id:'meetings',label:'Dienstbesprechungen',href:'dienstbesprechungen.html',icon:ostIcon('users'),match:['meetings']},
-   {id:'changes',label:'Lehrmeinungsänderungen',href:'lehrmeinung.html',icon:ostIcon('changes'),match:['changes']}
+   {id:'changes',label:'Lehrmeinungsänderungen',href:'lehrmeinung.html',icon:ostIcon('refresh'),match:['changes']}
   ];
   const current=(menu.find(x=>x.match.includes(page))||{}).id;
   const renderLink=(it,desktop=false)=>`<a class="${current===it.id?'active':''}" ${current===it.id?'aria-current="page"':''} href="${it.href}"><span class="${desktop?'ds-icon':'simple-menu-icon'}">${it.icon||it.emoji}</span><span>${it.label}</span></a>`;
@@ -172,9 +172,43 @@ const OST_ICONS={
  news:'<path d="M3 10v4h3l9 5V5L6 10H3Z"/><path d="M7 14l2 6h3M19 9a5 5 0 0 1 0 6"/>',
  folder:'<path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9H3Z"/>',
  check:'<path d="m4 12 5 5L20 6"/>',
- group:'<path d="M4 20v-2a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v2"/><circle cx="12" cy="7" r="4"/>'
+ group:'<path d="M4 20v-2a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v2"/><circle cx="12" cy="7" r="4"/>',
+ lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 1 1 8 0v3"/>'
 };
 function ostIcon(key){return `<svg class="ost-outline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${OST_ICONS[key]||OST_ICONS.book}</svg>`}
+function normalizedTitle(t){return String(t||'').replace(/^[^\p{L}\p{N}]+/gu,'').replace(/\s+/g,' ').trim()}
+function headerTitle(){
+ const params=new URLSearchParams(location.search);
+ const map={home:'Wissenssammlung',wissen:'Wissen',training:'Training',events:'Termine',news:'Aktuelles',meetings:'Dienstbesprechungen',editor:'Redaktion',differential:'Diagnostik',algorithms:'Algorithmen & Merkhilfen',literature:'Literatursammlung',guidelines:'Leitlinien / Guidelines',abcde:'ABCDE-Schema',changes:'Lehrmeinung',skills:'Skilltraining',guide:'Simulations Guide',faq:'FAQ zu Simulationstrainings'};
+ if(page==='modules'){
+  const slug=params.get('bereich')||'pharm';
+  return (MODULE_TYPES[slug]&&MODULE_TYPES[slug].title)||'Wissensbereich';
+ }
+ return map[page]||'OST 1020';
+}
+function syncHeaderTitle(){
+ const brand=$('.topbar .brand strong');
+ if(brand)brand.textContent=headerTitle();
+ if(page!=='home')document.title=`OST 1020 – ${headerTitle()}`;
+}
+function cleanupDuplicatePageHeading(){
+ syncHeaderTitle();
+ if(page==='home')return;
+ const banner=document.querySelector('.main > .page-banner:first-child');
+ if(!banner)return;
+ const h1=banner.querySelector('h1');
+ if(!h1)return;
+ const header=normalizedTitle(headerTitle()).toLocaleLowerCase('de');
+ const own=normalizedTitle(h1.textContent).toLocaleLowerCase('de');
+ if(!header||header!==own)return;
+ const row=h1.closest('.page-banner-row');
+ h1.remove();
+ if(row && !row.textContent.trim() && !row.querySelector('button,a,input,select,.toolbar,.filter-chips'))row.remove();
+ banner.classList.add('page-banner-no-title');
+ const keep=banner.querySelector('.toolbar,.searchbar,input,select,button,a,p,.filter-chips,.page-banner-row,.ost-module-toolbar,.diag-search-wrap');
+ if(!keep)banner.remove();
+}
+
 function newsHtml(n,i=''){const map={Lehrmeinung:'🔄',Leitlinie:'📋',Ausbildung:'🎓',Termin:'📅',Simulationstraining:'🖥️',Organisation:'📣',Literatur:'📚'};const c=n.category||'Organisation';return `<button class="news-item news-title-only" data-news="${i}"><h3>${esc(n.title)}</h3><span class="arrow" aria-hidden="true">›</span></button>`}
 const RECENT_KEY='ost1020-recent-pages',FAV_KEY='ost1020-favorites';
 function rememberPage(){if(page==='home'||page==='editor')return;const labels={home:'Start',wissen:'Wissen',news:'Aktuelles',literature:'Literatursammlung',abcde:'ABCDE-Schema',differential:'Diagnostik',skills:'Skilltraining',algorithms:'Algorithmen & Merkhilfen',meetings:'Dienstbesprechungen',changes:'Lehrmeinungsänderungen',events:'Termine',guide:'Quick Guide Simulation',materials:'Materialien'};const href=location.pathname.split('/').pop()||'index.html';let r=[];try{r=JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){}r=[{page,label:labels[page]||document.title,href},...r.filter(x=>x.page!==page)].slice(0,4);localStorage.setItem(RECENT_KEY,JSON.stringify(r))}
@@ -195,13 +229,13 @@ async function home(){
  const index=[...(arts||[]).map(x=>({label:x.title,sub:'Literatur',href:'literatur.html'})),...(ab||[]).map(x=>({label:`${x.key} – ${x.title}`,sub:'ABCDE',href:'abcde.html'})),...(diff||[]).map(x=>({label:x.title,sub:'Diagnostik',href:'differential.html'})),...(skillsData||[]).flatMap(g=>g.skills.map(s=>({label:s.name,sub:g.name,href:'skilltraining.html'}))),...(algs||[]).map(x=>({label:x.title,sub:'Algorithmus',href:'algorithmen.html'})),...(changes||[]).map(x=>({label:x.title,sub:'Lehrmeinung',href:'lehrmeinung.html'}))];
  $('[data-main]').innerHTML=`<section class="ost-home-intro"><span>OST 1020</span><div class="ost-home-title-row"><h1>Wissenssammlung</h1></div></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen durchsuchen …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
- <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html">${ostIcon('book')}<span>Wissen</span></a><a href="training.html">${ostIcon('training')}<span>Training</span></a><a href="termine.html">${ostIcon('calendar')}<span>Termine</span></a><a href="dienstbesprechungen.html">${ostIcon('users')}<span>Besprechungen</span></a><a href="lehrmeinung.html">${ostIcon('changes')}<span>Lehrmeinung</span></a></nav></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
+ <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html">${ostIcon('book')}<span>Wissen</span></a><a href="training.html">${ostIcon('training')}<span>Training</span></a><a href="termine.html">${ostIcon('calendar')}<span>Termine</span></a><a href="dienstbesprechungen.html">${ostIcon('users')}<span>Besprechungen</span></a><a href="lehrmeinung.html">${ostIcon('refresh')}<span>Lehrmeinung</span></a></nav></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Alle Termine →</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section><div class="ost-home-admin-footer"><a class="ost-home-editor" href="editor.html" aria-label="Redaktion öffnen">✎ Redaktion</a></div>`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
  let catalog=[];contentCatalog().then(c=>{catalog=c;if(q.value.trim())drawSearch()}).catch(()=>{});
  const drawSearch=()=>{const term=q.value.trim();if(!term){results.classList.add('hidden');results.innerHTML='';return}const hits=catalogSearch(catalog,term);const groups=[...new Set(hits.map(x=>x.type))];results.innerHTML=groups.map(type=>`<div class="ost-search-group"><h3>${esc(LINK_TYPES[type][0])}</h3>${hits.filter(x=>x.type===type).map(x=>`<a href="${esc(x.href)}"><span><strong>${esc(x.title)}</strong></span><b>›</b></a>`).join('')}</div>`).join('')||'<div class="empty compact">Keine Treffer.</div>';results.classList.remove('hidden')};q.oninput=drawSearch;$('[data-search-clear]').onclick=()=>{q.value='';drawSearch();q.focus()};
- $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><span class="cat-pill">${esc(x.category||'Organisation')}</span><div class="news-meta">${esc(x.date||'')}</div><p>${esc(x.text||'')}</p>${x.link?`<a class="btn primary" href="${esc(x.link)}">Inhalt öffnen →</a>`:''}</section>`);}});
+ $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><p>${esc(x.text||'')}</p>${x.link?`<a class="btn primary" href="${esc(x.link)}">Inhalt öffnen →</a>`:''}</section>`);}});
 }
 
 const MODULE_TYPES={"pharm":{"title":"Pharmakologie","icon":"💊","area":"wissen"},"anatomy":{"title":"Anatomie & Physiologie","icon":"🫀","area":"wissen"},"befund":{"title":"Befundwörterbuch","icon":"📖","area":"wissen"},"mpg":{"title":"MPG-Informationen","icon":"🩺","area":"training"},"checklists":{"title":"Checklisten","icon":"📄","area":"training"}};
@@ -290,7 +324,7 @@ async function wissenPage(){
  $('[data-main]').innerHTML=`<h1 class="ost-visually-hidden">Wissen</h1><div class="ost-link-directory ost-tonal-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ostIcon(ico)}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
 }
 async function trainingPage(){
- const links=[['skill','Skilltraining','skilltraining.html','Fertigkeiten, Materialien und Abläufe'],['device','MPG-Informationen','themen.html?bereich=mpg','Geräte, Spezifikationen und Bedienungsanleitungen'],['checklist','Checklisten','themen.html?bereich=checklists','PDF-Checklisten und Übungsunterlagen'],['screen','Simulations Guide','simulation.html','Quick Guide für den Simulator'],['question','FAQ zu Simulationstrainings','simulation-faq.html','Häufige Fragen zur Vorbereitung und Durchführung']];
+ const links=[['training','Skilltraining','skilltraining.html','Fertigkeiten, Materialien und Abläufe'],['device','MPG-Informationen','themen.html?bereich=mpg','Geräte, Spezifikationen und Bedienungsanleitungen'],['checklist','Checklisten','themen.html?bereich=checklists','PDF-Checklisten und Übungsunterlagen'],['screen','Simulations Guide','simulation.html','Quick Guide für den Simulator'],['question','FAQ zu Simulationstrainings','simulation-faq.html','Häufige Fragen zur Vorbereitung und Durchführung']];
  $('[data-main]').innerHTML=`<h1 class="ost-visually-hidden">Training</h1><div class="ost-link-directory ost-tonal-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ostIcon(ico)}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
 }
 async function guidelinesPage(){
@@ -306,7 +340,7 @@ async function newsPage(){
  $('[data-main]').innerHTML=`<section class="page-banner"><h1>Aktuelles</h1><div class="toolbar"><div class="filter-chips"><button class="filter-chip active" data-cat="all">Alle</button>${[...new Set(d.map(x=>x.category||'Organisation'))].map(c=>`<button class="filter-chip" data-cat="${esc(c)}">${esc(c)}</button>`).join('')}</div></div></section><div class="news-list" data-list></div>`;
  let shown=d;
  const draw=cat=>{shown=d.filter(x=>cat==='all'||(x.category||'Organisation')===cat);$('[data-list]').innerHTML=shown.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'};
- $('[data-main]').onclick=e=>{const c=e.target.closest('[data-cat]');if(c){$$('[data-cat]').forEach(x=>x.classList.toggle('active',x===c));draw(c.dataset.cat);return}const n=e.target.closest('[data-news]');if(n){const x=shown[+n.dataset.news];open(x.title,`<section class="overlay-section news-detail"><span class="cat-pill">${esc(x.category||'Organisation')}</span><div class="news-meta">${esc(x.date||'')}</div><p>${esc(x.text||'Noch keine Beschreibung hinterlegt.')}</p>${x.link?`<a class="btn primary" href="${esc(x.link)}">Weiterlesen</a>`:''}</section>`)}};
+ $('[data-main]').onclick=e=>{const c=e.target.closest('[data-cat]');if(c){$$('[data-cat]').forEach(x=>x.classList.toggle('active',x===c));draw(c.dataset.cat);return}const n=e.target.closest('[data-news]');if(n){const x=shown[+n.dataset.news];open(x.title,`<section class="overlay-section news-detail"><p>${esc(x.text||'Noch keine Beschreibung hinterlegt.')}</p>${x.link?`<a class="btn primary" href="${esc(x.link)}">Weiterlesen</a>`:''}</section>`)}};
  draw('all')
 }
 async function literature(){
@@ -441,7 +475,7 @@ async function skills(){
 async function changesPage(){
  const d=await get('changes'),params=new URLSearchParams(location.search),id=params.get('id'),x=d.find(v=>v.id===id);
  if(x){$('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page change-detail">${x.imageUrl?`<img class="change-image" src="${esc(x.imageUrl)}" alt="${esc(x.title)}">`:''}<div class="before-after"><section class="compare-card old"><span>BISHER</span><h3>Alt</h3><p>${esc(x.old||'')}</p></section><section class="compare-card new"><span>NEU</span><h3>Neu</h3><p>${esc(x.new||'')}</p></section></div><section class="guideline-box"><h3>Quelle / Einordnung</h3><p>${esc(x.source||'')}</p></section><section class="guideline-box change-validity"><h3>Gültigkeit</h3><p>${esc(x.validity||'Noch nicht hinterlegt')}</p></section></section>`;const catalog=await contentCatalog();$('.change-detail')?.insertAdjacentHTML('beforeend',relatedHtml(x,catalog));return}
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list ost-tonal-list">${d.map(x=>`<a class="row-card" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">${ostIcon('changes')}</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list ost-tonal-list">${d.map(x=>`<a class="row-card" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">${ostIcon('refresh')}</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`
 }
 async function guidePage(){
  const d=await get('guide');
@@ -505,7 +539,7 @@ async function verifyEditorPin(pin){
 async function editor(){
  const gate=async()=>{const pin=sessionStorage.getItem('ost1020-editor-pin')||'';if(pin&&await verifyEditorPin(pin))return true;return false};
  if(!(await gate())){
-   $('[data-main]').innerHTML=`<section class="pin-box editor-gate"><div class="pin-symbol">🔐</div><h2>Redaktion</h2><p>PIN eingeben, um Inhalte zu bearbeiten.</p><input type="password" inputmode="numeric" data-pin placeholder="PIN"><div class="actions"><button class="btn primary" data-unlock>Entsperren</button><a class="btn" href="index.html">Abbrechen</a></div><div class="pin-status" data-pin-status></div></section>`;
+   $('[data-main]').innerHTML=`<section class="pin-box editor-gate"><div class="pin-symbol">${ostIcon('lock')}</div><h2>Redaktion</h2><p>PIN eingeben, um Inhalte zu bearbeiten.</p><label class="ost-visually-hidden" for="editor-pin">PIN</label><input id="editor-pin" type="password" inputmode="numeric" data-pin placeholder="PIN"><div class="actions"><button class="btn primary" data-unlock>Entsperren</button><a class="btn" href="index.html">Abbrechen</a></div><div class="pin-status" data-pin-status></div></section>`;
    const attempt=async()=>{const v=$('[data-pin]').value.trim();if(!v)return;const st=$('[data-pin-status]');st.textContent='Prüfe …';if(await verifyEditorPin(v)){sessionStorage.setItem('ost1020-editor-pin',v);editor()}else{st.textContent='PIN nicht korrekt.';$('[data-pin]').select()}};
    $('[data-unlock]').onclick=attempt;$('[data-pin]').onkeydown=e=>{if(e.key==='Enter')attempt()};return;
  }
@@ -689,6 +723,29 @@ async function editor(){
  const hash=location.hash.replace('#','');const initialTab=hash==='literatur'?'articles':hash&&tabs.some(t=>t[0]===hash)?hash:'news';syncGroupedEditorMenu(initialTab);draw(initialTab)
 }
 
-async function init(){chrome();rememberPage();if(page==='home')return home();if(page==='wissen')return wissenPage();if(page==='modules')return modulePage();if(page==='training')return trainingPage();if(page==='guidelines')return guidelinesPage();if(page==='faq')return faqPage();if(page==='news')return newsPage();if(page==='literature')return literature();if(page==='abcde')return abcdePage();if(page==='differential')return differentialPage();if(page==='skills')return skills();if(page==='algorithms')return algorithmsPage();if(page==='changes')return changesPage();if(page==='events')return eventsPage();if(page==='guide')return guidePage();if(page==='materials'){location.replace('algorithmen.html');return}if(page==='meetings')return meetingsPage();if(page==='editor')return editor()}
+async function init(){
+ chrome();
+ syncHeaderTitle();
+ rememberPage();
+ if(page==='home')await home();
+ else if(page==='wissen')await wissenPage();
+ else if(page==='modules')await modulePage();
+ else if(page==='training')await trainingPage();
+ else if(page==='guidelines')await guidelinesPage();
+ else if(page==='faq')await faqPage();
+ else if(page==='news')await newsPage();
+ else if(page==='literature')await literature();
+ else if(page==='abcde')await abcdePage();
+ else if(page==='differential')await differentialPage();
+ else if(page==='skills')await skills();
+ else if(page==='algorithms')await algorithmsPage();
+ else if(page==='changes')await changesPage();
+ else if(page==='events')await eventsPage();
+ else if(page==='guide')await guidePage();
+ else if(page==='materials'){location.replace('algorithmen.html');return}
+ else if(page==='meetings')await meetingsPage();
+ else if(page==='editor')await editor();
+ cleanupDuplicatePageHeading();
+}
 window.addEventListener('DOMContentLoaded',init)
 })();
