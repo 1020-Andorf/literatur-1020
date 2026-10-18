@@ -76,8 +76,8 @@ function chrome(){
    {id:'wissen',label:'Wissen',href:'wissen.html',icon:svg.books,match:['wissen','differential','algorithms','literature','guidelines','abcde','modules']},
    {id:'training',label:'Training',href:'training.html',icon:svg.skill,match:['training','skills','guide','faq']},
    {id:'events',label:'Termine',href:'termine.html',icon:svg.calendar,match:['events']},
-   {id:'meetings',label:'Dienstbesprechungen',href:'dienstbesprechungen.html',emoji:'🗣️',match:['meetings']},
-   {id:'changes',label:'Lehrmeinungsänderungen',href:'lehrmeinung.html',emoji:'🔄',match:['changes']}
+   {id:'meetings',label:'Dienstbesprechungen',href:'dienstbesprechungen.html',icon:ostIcon('users'),match:['meetings']},
+   {id:'changes',label:'Lehrmeinungsänderungen',href:'lehrmeinung.html',icon:ostIcon('changes'),match:['changes']}
   ];
   const current=(menu.find(x=>x.match.includes(page))||{}).id;
   const renderLink=(it,desktop=false)=>`<a class="${current===it.id?'active':''}" ${current===it.id?'aria-current="page"':''} href="${it.href}"><span class="${desktop?'ds-icon':'simple-menu-icon'}">${it.icon||it.emoji}</span><span>${it.label}</span></a>`;
@@ -165,7 +165,14 @@ const OST_ICONS={
  device:'<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M7 11h3l2-4 2 8 2-4h1M9 18h6"/>',
  checklist:'<rect x="6" y="3" width="13" height="18" rx="2"/><path d="m9 9 1.5 1.5L13 8m-4 7 1.5 1.5L13 14m2-4h2m-2 6h2"/>',
  screen:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4m-3-12 6 2-6 3V9Z"/>',
- question:'<circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.7 2.7 0 1 1 4.4 2.1c-1.3 1-1.9 1.5-1.9 3M12 17.5v.5"/>'
+ question:'<circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.7 2.7 0 1 1 4.4 2.1c-1.3 1-1.9 1.5-1.9 3M12 17.5v.5"/>',
+ changes:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h5M9 16h3"/><path d="m15 15 2 2 4-4"/>',
+ anatomy:'<path d="M12 21s-8-4.8-9-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-1 5.2-9 10-9 10Z"/><path d="M3 12h5l2-3 3 6 2-3h6"/>',
+ edit:'<path d="M12 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-7"/><path d="m16 5 3-3 3 3-9 9-4 1 1-4 9-9"/>',
+ news:'<path d="M3 10v4h3l9 5V5L6 10H3Z"/><path d="M7 14l2 6h3M19 9a5 5 0 0 1 0 6"/>',
+ folder:'<path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9H3Z"/>',
+ check:'<path d="m4 12 5 5L20 6"/>',
+ group:'<path d="M4 20v-2a5 5 0 0 1 5-5h6a5 5 0 0 1 5 5v2"/><circle cx="12" cy="7" r="4"/>'
 };
 function ostIcon(key){return `<svg class="ost-outline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${OST_ICONS[key]||OST_ICONS.book}</svg>`}
 function newsHtml(n,i=''){const map={Lehrmeinung:'🔄',Leitlinie:'📋',Ausbildung:'🎓',Termin:'📅',Simulationstraining:'🖥️',Organisation:'📣',Literatur:'📚'};const c=n.category||'Organisation';return `<button class="news-item news-title-only" data-news="${i}"><h3>${esc(n.title)}</h3><span class="arrow" aria-hidden="true">›</span></button>`}
@@ -188,7 +195,7 @@ async function home(){
  const index=[...(arts||[]).map(x=>({label:x.title,sub:'Literatur',href:'literatur.html'})),...(ab||[]).map(x=>({label:`${x.key} – ${x.title}`,sub:'ABCDE',href:'abcde.html'})),...(diff||[]).map(x=>({label:x.title,sub:'Diagnostik',href:'differential.html'})),...(skillsData||[]).flatMap(g=>g.skills.map(s=>({label:s.name,sub:g.name,href:'skilltraining.html'}))),...(algs||[]).map(x=>({label:x.title,sub:'Algorithmus',href:'algorithmen.html'})),...(changes||[]).map(x=>({label:x.title,sub:'Lehrmeinung',href:'lehrmeinung.html'}))];
  $('[data-main]').innerHTML=`<section class="ost-home-intro"><span>OST 1020</span><div class="ost-home-title-row"><h1>Wissenssammlung</h1></div></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen durchsuchen …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
- <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html">${ostIcon('book')}<span>Wissen</span></a><a href="training.html">${ostIcon('training')}<span>Training</span></a><a href="termine.html">${ostIcon('calendar')}<span>Termine</span></a><a href="dienstbesprechungen.html">${ostIcon('users')}<span>Besprechungen</span></a><a href="lehrmeinung.html">${ostIcon('refresh')}<span>Lehrmeinung</span></a></nav></section>
+ <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html">${ostIcon('book')}<span>Wissen</span></a><a href="training.html">${ostIcon('training')}<span>Training</span></a><a href="termine.html">${ostIcon('calendar')}<span>Termine</span></a><a href="dienstbesprechungen.html">${ostIcon('users')}<span>Besprechungen</span></a><a href="lehrmeinung.html">${ostIcon('changes')}<span>Lehrmeinung</span></a></nav></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Alle Termine →</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section><div class="ost-home-admin-footer"><a class="ost-home-editor" href="editor.html" aria-label="Redaktion öffnen">✎ Redaktion</a></div>`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
@@ -434,7 +441,7 @@ async function skills(){
 async function changesPage(){
  const d=await get('changes'),params=new URLSearchParams(location.search),id=params.get('id'),x=d.find(v=>v.id===id);
  if(x){$('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page change-detail">${x.imageUrl?`<img class="change-image" src="${esc(x.imageUrl)}" alt="${esc(x.title)}">`:''}<div class="before-after"><section class="compare-card old"><span>BISHER</span><h3>Alt</h3><p>${esc(x.old||'')}</p></section><section class="compare-card new"><span>NEU</span><h3>Neu</h3><p>${esc(x.new||'')}</p></section></div><section class="guideline-box"><h3>Quelle / Einordnung</h3><p>${esc(x.source||'')}</p></section><section class="guideline-box change-validity"><h3>Gültigkeit</h3><p>${esc(x.validity||'Noch nicht hinterlegt')}</p></section></section>`;const catalog=await contentCatalog();$('.change-detail')?.insertAdjacentHTML('beforeend',relatedHtml(x,catalog));return}
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list">${d.map(x=>`<a class="row-card" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">🔄</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list">${d.map(x=>`<a class="row-card" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">${ostIcon('changes')}</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`
 }
 async function guidePage(){
  const d=await get('guide');
@@ -503,7 +510,7 @@ async function editor(){
    $('[data-unlock]').onclick=attempt;$('[data-pin]').onkeydown=e=>{if(e.key==='Enter')attempt()};return;
  }
  const tabs=[['abcde','ABCDE'],['algorithms','Algorithmen & Schemata'],['news','Aktuelles'],['meetings','Dienstbesprechungen'],['differential','Diagnostik'],['articles','Literatur'],['changes','Lehrmeinungsänderungen'],['guide','Quick Guide Simulation'],['skills','Skilltraining'],['attendance','Teilnehmerlisten'],['events','Termine'],['modules','Wissensbereiche']];
- const tabIcons={abcde:'🩺',algorithms:'📋',news:'📣',meetings:'🗣️',differential:'🔎',articles:'📚',changes:'🔄',guide:'🖥️',skills:'🎓',attendance:'👥',events:'📅',modules:'🧩'};
+ const tabIcons={abcde:ostIcon('notes'),algorithms:ostIcon('notes'),news:ostIcon('news'),meetings:ostIcon('users'),differential:ostIcon('search'),articles:ostIcon('book'),changes:ostIcon('changes'),guide:ostIcon('screen'),skills:ostIcon('training'),attendance:ostIcon('group'),events:ostIcon('calendar'),modules:ostIcon('book')};
  $('[data-main]').innerHTML=`<section class="page-banner"><div class="page-banner-row"><h1>Redaktion</h1><button class="editor-shortcut" data-lock-editor>🔒 Sperren</button></div></section><section class="ost-editor-overview" data-editor-overview><div class="ost-editor-overview-head"><h2>Redaktions-Dashboard</h2><small>Live-Übersicht aus vorhandenen Daten</small></div><div class="ost-editor-stats" data-editor-stats><div>Lade Übersicht …</div></div><div class="ost-editor-actions"><button type="button" class="btn" data-open-review>Prüffristen</button><button type="button" class="btn" data-open-feedback>Fehlermeldungen</button><button type="button" class="btn" data-open-history>Versionsverlauf</button><button type="button" class="btn" data-open-backup>Backup</button></div></section><section class="admin-tools"><details><summary>🗄️ Wartung, Versionen &amp; Meldungen</summary><div class="admin-tools-actions"><button class="btn" data-admin-history>Versionsverlauf</button><button class="btn" data-admin-backup>Backup erstellen</button><button class="btn" data-admin-status>Backups anzeigen</button><button class="btn" data-admin-feedback>Meldungen ansehen</button><button class="btn" data-admin-review>Prüffristen</button></div><div class="admin-tools-results" data-admin-results></div></details></section><section class="editor-dashboard"><aside class="editor-nav">${tabs.map((t,i)=>`<button class="editor-nav-btn ${i?'':'active'}" data-tab="${t[0]}"><span>${tabIcons[t[0]]||'📋'}</span><strong>${t[1]}</strong></button>`).join('')}</aside><section class="editor-content" data-edit></section></section>`;
  const maintenance=$('.admin-tools');if(maintenance)$('[data-main]').appendChild(maintenance);
  $('[data-lock-editor]').onclick=()=>{sessionStorage.removeItem('ost1020-editor-pin');editor()};
@@ -645,13 +652,13 @@ async function editor(){
  }
  function blank(n){if(n==='meetings')return{id:'meeting-'+Date.now(),title:'Neue Dienstbesprechung',date:new Date().toISOString().slice(0,10),category:'Fortbildung',speaker:'',summary:'',files:[]};if(n==='skills')return{name:'Neue Kategorie',skills:[]};if(n==='abcde')return{id:'x-'+Date.now(),key:'X',title:'Neuer Bereich',checks:[],actions:[],pitfalls:[]};if(n==='differential')return{id:'symptom-'+Date.now(),title:'Neues Leitsymptom',group:'Weitere',icon:'🩺',questions:[],redflags:[],causes:[]};if(n==='events')return{id:'event-'+Date.now(),title:'Neuer Termin',date:new Date().toISOString().slice(0,10),time:'18:00',location:'',category:'Simulationstraining',capacity:10,attendees:[]};if(n==='algorithms')return{id:'algorithm-'+Date.now(),title:'Neuer Algorithmus',icon:'📋',category:'',stand:'',steps:[],source:'',sourceUrl:'',materials:{background:[],checklists:[]}};if(n==='articles')return{id:'article-'+Date.now(),title:'Neuer Artikel',authors:'',journal:'',year:new Date().getFullYear(),doi:'',topics:[],type:'Fachartikel',read:'',access:'oa',level:'rs-nfs',language:'de',license:'',why:'',publisherUrl:'',freeUrl:'',featured:false,added:new Date().toISOString().slice(0,10),archived:false};if(n==='changes')return{id:'change-'+Date.now(),title:'Neue Lehrmeinungsänderung',category:'',date:new Date().toISOString().slice(0,10),old:'',new:'',source:'',validity:'',imageUrl:''};if(n==='guide')return{id:'guide-'+Date.now(),title:'Neuer Schritt',icon:'🖥️',steps:[]};return{id:'new-'+Date.now(),title:'Neuer Eintrag'}}
  const editorGroups=[
-  {id:'aktuelles',title:'Aktuelles',icon:'📣',items:['news']},
-  {id:'organisation',title:'Organisation',icon:'🗣️',items:['meetings']},
-  {id:'termine',title:'Termine',icon:'📅',items:['events','attendance']},
-  {id:'training',title:'Training',icon:'🎓',items:['modules:checklists','guide','skills','modules:mpg']},
-  {id:'wissen',title:'Wissen',icon:'📚',items:['abcde','algorithms','modules:anatomy','modules:befund','differential','modules:pharm','articles','changes']}
+  {id:'aktuelles',title:'Aktuelles',icon:ostIcon('news'),items:['news']},
+  {id:'organisation',title:'Organisation',icon:ostIcon('users'),items:['meetings']},
+  {id:'termine',title:'Termine',icon:ostIcon('calendar'),items:['events','attendance']},
+  {id:'training',title:'Training',icon:ostIcon('training'),items:['modules:checklists','guide','skills','modules:mpg']},
+  {id:'wissen',title:'Wissen',icon:ostIcon('book'),items:['abcde','algorithms','modules:anatomy','modules:befund','differential','modules:pharm','articles','changes']}
  ];
- const extraLabels={'modules:anatomy':['Anatomie & Physiologie','🫀'],'modules:befund':['Befundwörterbuch','📖'],'modules:pharm':['Pharmakologie','💊'],'modules:mpg':['MPG-Informationen','🩺'],'modules:checklists':['Checklisten','📄']};
+ const extraLabels={'modules:anatomy':['Anatomie & Physiologie',ostIcon('anatomy')],'modules:befund':['Befundwörterbuch',ostIcon('dictionary')],'modules:pharm':['Pharmakologie',ostIcon('pill')],'modules:mpg':['MPG-Informationen',ostIcon('device')],'modules:checklists':['Checklisten',ostIcon('checklist')]};
  let moduleRequested='pharm';
  const groupedEditorMenu=document.createElement('div');
  groupedEditorMenu.className='editor-grouped-menu';

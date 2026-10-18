@@ -1295,3 +1295,41 @@ body.page-wissen .ost-link-directory>a>span:first-child,body.page-training .ost-
 body.page-wissen .ost-link-directory .directory-item-name,body.page-training .ost-link-directory .directory-item-name{font-weight:450!important;font-size:.96rem!important}
 @media(min-width:900px){body.page-home .ost-main-destinations{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 @media(max-width:390px){body.page-home .ost-main-destinations a,body.page-home .ost-main-destinations a:last-child{padding:10px!important;gap:7px!important;font-size:.82rem!important;min-height:57px!important}body.page-home .ost-main-destinations .ost-outline-icon{width:19px;height:19px;flex-basis:19px}}
+
+
+/* OCT 2026 – unified sections, minimal icon language, muted accents */
+body.page-wissen .main>.page-banner,body.page-training .main>.page-banner,body.page-events .main>.page-banner{display:none!important}
+body.page-wissen .main,body.page-training .main,body.page-events .main{padding-top:22px!important}
+.ost-link-directory>a{transition:background .16s,border-color .16s;box-shadow:none!important}
+.ost-link-directory>a:nth-child(5n+1){background:#f8fbfe!important;border-color:#e1eaf4!important}
+.ost-link-directory>a:nth-child(5n+2){background:#f9fcfa!important;border-color:#e3ece5!important}
+.ost-link-directory>a:nth-child(5n+3){background:#fdfbfe!important;border-color:#eae5f0!important}
+.ost-link-directory>a:nth-child(5n+4){background:#fcfbf8!important;border-color:#eee9e0!important}
+.ost-link-directory>a:nth-child(5n){background:#fffafa!important;border-color:#f0e5e5!important}
+.ost-link-directory>a:hover{background:#f0f6fc!important}
+.ost-link-directory .ost-outline-icon{width:25px!important;height:25px!important;flex-shrink:0}
+.ost-link-directory .directory-item-name{font-weight:450!important}
+/* consistent no-emoji editorial navigation */
+.editor-primary-groups button,.editor-subgroup-tile{min-width:0;box-shadow:none!important;border:1px solid #e0e8ef!important;border-radius:16px!important;background:#fcfdff!important;color:#1d3a56!important}
+.editor-primary-groups button:nth-child(5n+1),.editor-subgroup-tile:nth-child(5n+1){background:#f5f9fe!important}
+.editor-primary-groups button:nth-child(5n+2),.editor-subgroup-tile:nth-child(5n+2){background:#f6faf8!important}
+.editor-primary-groups button:nth-child(5n+3),.editor-subgroup-tile:nth-child(5n+3){background:#faf8fe!important}
+.editor-primary-groups button:nth-child(5n+4),.editor-subgroup-tile:nth-child(5n+4){background:#fcfaf6!important}
+.editor-primary-groups button.active,.editor-subgroup-tile.active{background:#edf5fc!important;border-color:#aac9df!important;box-shadow:inset 0 0 0 1px #d4e2ed!important}
+.editor-primary-groups button span,.editor-subgroup-tile>span:first-child,.editor-nav-btn>span:first-child{display:flex;align-items:center;justify-content:center;flex:0 0 28px;color:#426b89}
+.editor-primary-groups svg,.editor-subgroup-tile svg,.editor-nav-btn svg{display:block;width:23px;height:23px;max-width:100%}
+.editor-primary-groups button strong,.editor-subgroup-tile strong,.editor-nav-btn strong{font-weight:450!important;line-height:1.36!important;min-width:0;overflow-wrap:anywhere}
+.editor-primary-groups button{gap:8px!important}
+.editor-subgroup-tile{gap:10px!important;padding:12px!important}
+.editor-primary-groups button:focus-visible,.editor-subgroup-tile:focus-visible{outline:2px solid #477eac;outline-offset:2px}
+.editor-group-subtitle{font-weight:600!important;color:#58738a!important}
+.desktop-nav-group .simple-menu-icon svg,.desktop-nav-group .ds-icon svg{width:22px;height:22px}
+body.page-changes .row-icon .ost-outline-icon{width:29px;height:29px}
+@media(max-width:640px){
+ body.page-wissen .main,body.page-training .main,body.page-events .main{padding-top:15px!important}
+ .editor-primary-groups{gap:8px!important}
+ .editor-primary-groups button{min-height:64px!important}
+ .editor-subgroup-tile{min-height:56px!important}
+ .editor-subgroup-tile strong{font-size:.88rem!important}
+ .ost-link-directory>a{min-height:60px!important;padding:13px!important}
+}
