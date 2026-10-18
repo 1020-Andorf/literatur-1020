@@ -1170,3 +1170,79 @@ body.page-algorithms .algorithm-detail .algorithm-figure img{max-width:100%;heig
  .ost-home-admin-footer .ost-home-editor{margin-left:auto}
 }
 @media(min-width:1100px){body.desktop-has-sidebar .main{min-height:0!important;padding-bottom:28px!important}}
+
+
+/* v3.4.6 – mobile navigation, minimal topbar, quieter content cards */
+.topbar{position:sticky;top:0;z-index:1200;background:rgba(255,255,255,.96);backdrop-filter:blur(10px)}
+.main{padding-bottom:24px!important}
+body.subpage-topbar .topbar-inner{grid-template-columns:48px 48px 0!important;justify-content:flex-start!important}
+body.subpage-topbar .topbar .brand{display:none!important}
+body.subpage-topbar .topbar{box-shadow:0 2px 12px rgba(11,35,66,.04)}
+body.subpage-topbar .main{padding-top:14px!important}
+
+/* Mobile home menu smaller and calmer */
+.ost-main-destinations{align-items:stretch}
+.ost-main-destinations a{line-height:1.25}
+@media(max-width:760px){
+  .ost-main-destinations{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .ost-main-destinations a{min-height:84px!important;padding:10px 10px 12px!important;border-radius:18px!important;font-size:13px!important;font-weight:500!important;gap:7px!important;justify-content:center}
+  .ost-main-destinations a span{font-size:22px!important;line-height:1!important}
+  .ost-main-destinations a:last-child{grid-column:1 / -1;min-height:76px!important}
+  .ost-home-admin-footer{margin-top:10px}
+}
+@media(max-width:420px){
+  .ost-main-destinations a{min-height:78px!important;font-size:12.5px!important;padding:9px 8px 10px!important}
+  .ost-main-destinations a span{font-size:20px!important}
+}
+
+/* Remove blue icon boxes in menu/list entries */
+.ost-link-directory>a span,.ost-main-destinations a span{background:transparent!important;box-shadow:none!important;border:none!important}
+
+/* Quieter module and diagnostic lists */
+.diag-group>summary,.diag-group[data-tone] > summary{background:#fff!important}
+.diag-group-badge{background:#f4f7fa!important}
+.diag-group-copy strong,.diag-result strong,.diag-disease-title strong{font-weight:500!important;color:#1a314a!important}
+.diag-group-copy small,.diag-result small,.diag-disease-title small{font-weight:400!important}
+body.page-differential .diag-group,.page-differential .diag-result,.page-differential .diag-disease-card{box-shadow:none!important}
+body.page-differential .diag-result-icon,body.page-differential .diag-group-badge{background:#f5f7fa!important}
+
+/* Algorithms calmer and without outer white frame */
+body.page-algorithms .scheme-tile h2,body.page-algorithms .scheme-card strong,body.page-algorithms .row-card strong,body.page-algorithms .algorithm-card strong{font-weight:400!important}
+body.page-algorithms .detail-page,body.page-changes .detail-page,body.page-modules .ost-module-detail,body.page-differential .diag-detail,body.page-meetings .meeting-detail{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+body.page-algorithms .detail-page > *,body.page-changes .detail-page > *,body.page-modules .ost-module-detail > *,body.page-differential .diag-detail > *,body.page-meetings .meeting-detail > *{margin-bottom:14px}
+body.page-modules .ost-module-detail .ost-module-body,body.page-algorithms .detail-page .guideline-box,body.page-changes .detail-page .guideline-box,body.page-differential .diag-info-section,body.page-differential .diag-summary,body.page-differential .diag-assess-box,body.page-algorithms .detail-page .algorithm-figure,body.page-algorithms .detail-page .flowchart,body.page-algorithms .detail-page .schema-visual,body.page-algorithms .detail-page .detail-section,body.page-meetings .meeting-resources,body.page-changes .before-after{background:transparent}
+
+/* Module detail/list polish */
+.ost-module-detail-head{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.ost-module-symbol{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:#f4f7fa;font-size:1.7rem;flex:0 0 auto}
+.ost-module-detail h2{margin:0}
+.ost-module-kicker{margin-bottom:4px}
+.ost-link-directory>a strong,.directory-item-name{font-weight:500!important}
+.ost-link-directory>a small{font-weight:400!important}
+.ost-module-field select,.ost-entry-picker select{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#fff;font:inherit}
+
+/* Befundwörterbuch simple table */
+.ost-dictionary td,.ost-dictionary th{vertical-align:top}
+.ost-dict-description{display:none!important}
+
+/* Keep mobile pages tidy */
+@media(max-width:760px){
+  .page-banner{padding:18px 18px!important}
+  .ost-link-directory{gap:9px!important}
+  .ost-link-directory>a{padding:13px 14px!important;min-height:58px!important;grid-template-columns:40px 1fr 14px!important}
+  .ost-link-directory>a span{width:40px;height:40px;font-size:1.2rem;border-radius:12px}
+  .ost-link-directory>a strong,.directory-item-name{font-size:.98rem!important;line-height:1.35!important;font-weight:500!important}
+  .ost-link-directory>a small{margin-top:2px;font-size:.79rem!important;line-height:1.35!important}
+  .scheme-grid{grid-template-columns:1fr!important}
+  .scheme-tile{padding:14px 15px!important;min-height:64px!important}
+  .scheme-tile h2{font-size:1rem!important;line-height:1.35!important;font-weight:400!important}
+}
+
+/* Footer editor access more subtle on mobile */
+.ost-home-editor{border-radius:16px;background:#fff;border:1px solid #e2e7ec;color:#18324d;box-shadow:none}
+
+/* Reduce phantom extra scroll */
+html,body{min-height:100%;overflow-x:hidden}
+body{overscroll-behavior-y:none}
+.main>*:last-child{margin-bottom:0!important}
+
