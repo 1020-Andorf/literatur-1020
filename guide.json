@@ -4,26 +4,23 @@
     "icon": "🚀",
     "title": "Schnellstart",
     "steps": [
-      "Ausbildungstablett mit WLAN \"VitaSim\" verbinden",
-      "WLAN Passwort: VitaSim-Training",
-      "Shortcut am Tablet Homebildschirm öffnen",
-      "Eventuell erneut verbinden drücken",
-      "Steuerung übernehmen, falls sich der Startbildschirm nicht öffnet (PIN: 0000)"
+      "Simulationstraining im Trainings-WLAN öffnen",
+      "Szenariotraining wählen",
+      "Fall aus der Bibliothek starten",
+      "Monitor und Geräte prüfen",
+      "Training starten"
     ]
   },
   {
     "id": "scenario",
     "icon": "🎮",
-    "title": "Szenariotraining starten",
+    "title": "Szenario starten",
     "steps": [
-      "Szenariotraining öffnen",
+      "Fallbibliothek öffnen",
       "Fall auswählen",
-      "Fallvorschau durchlesen und mit Darsteller besprechen",
-      "Fallbilder mit Teilnehmern am Monitor durchgehen",
-      "Raum und Darsteller vorbereiten",
-      "Start drücken",
-      "Szenario durchspielen mit den hinterlegten Vitalwerten und Szenarioverläufen",
-      "Bei Training beenden --> Ende des Trainings und Debriefing der Teilnehmer"
+      "Fernbedienung öffnen",
+      "Ausgangswerte prüfen",
+      "Start drücken"
     ]
   },
   {
@@ -31,21 +28,21 @@
     "icon": "🖥️",
     "title": "Monitor verwenden",
     "steps": [
-      "Monitorgerät mit VitaSim Wlan verbinden",
-      "Entweder hinterlegtes Shortcut auswählen oder im Browser http://10.42.0.1 eingeben",
-      "Gerät als Monitor identifizieren (am Steuergerät / Ausbildungstablet)",
-      "Monitoransicht auswählen (am Steuergerät / Ausbildungstablet)"
+      "Monitorseite auf Zielgerät öffnen",
+      "RS/NFS/Bilder-Modus auswählen",
+      "Vitalparameter über Master steuern",
+      "Rhythmus und Anzeige kontrollieren"
     ]
   },
   {
     "id": "devices",
     "icon": "📱",
-    "title": "Andere Geräte verbinden",
+    "title": "Geräte verbinden",
     "steps": [
-      "Bewertungsgeräte oder zusätzliche Monitore mit VitaSim Wlan verbinden",
-      "Shortcut öffnen oder im Browser http://10.42.0.1 eingeben",
-      "Gerät eine Rolle zuweisen (am Steuergerät / Ausbildungstablet)",
-      "Bewerten am eigenen Handy etc."
+      "Simulationsgeräte öffnen",
+      "Gerät koppeln",
+      "Rolle zuweisen",
+      "Verbindungsstatus prüfen"
     ]
   },
   {
@@ -54,9 +51,21 @@
     "title": "BLE-Simulatoren",
     "steps": [
       "Gerät einschalten",
-      "Verbindung im Bereich Simulationsgeräte prüfen (Steuergerät / Ausbildungstablet)",
+      "Verbindung im Bereich Simulationsgeräte prüfen",
       "Messwerte testen",
-      "Szenario wie oben starten (Werte werden auf Geräten angezeigt)"
+      "Bei Abbruch neu verbinden"
+    ]
+  },
+  {
+    "id": "debrief",
+    "icon": "📊",
+    "title": "Debriefing & Bewertung",
+    "steps": [
+      "Training beenden",
+      "Timeline prüfen",
+      "Bewertung ergänzen",
+      "Debriefing durchführen",
+      "PDF bei Bedarf exportieren"
     ]
   }
 ]
