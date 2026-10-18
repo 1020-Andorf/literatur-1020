@@ -148,6 +148,26 @@ const SEARCH_SYNONYMS=[['atemnot','dyspnoe'],['herzinfarkt','acs','akutes korona
 function searchTokens(q){const qn=normalizedSearch(q);const tokens=[qn];for(const group of SEARCH_SYNONYMS){if(group.some(x=>qn.includes(normalizedSearch(x))))tokens.push(...group.map(normalizedSearch))}return [...new Set(tokens)]}
 function catalogSearch(cat,term){const keys=searchTokens(term);return cat.map(x=>{const title=normalizedSearch(x.title),txt=normalizedSearch(x.text);let score=0;for(const q of keys){if(title===q)score+=120;else if(title.startsWith(q))score+=65;else if(title.includes(q))score+=40;if(txt.includes(q))score+=12}return {...x,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.title.localeCompare(b.title,'de')).slice(0,25)}
 function coreCard(href,ico,title,sub){return `<a class="core-card" href="${href}"><div class="core-visual">${ico}</div><div class="core-card-copy"><h3>${title}</h3></div></a>`}
+// Einheitliche, dezente Kontur-Symbole für Navigationskacheln und Rubriken.
+const OST_ICONS={
+ book:'<path d="M12 7c-2.5-1.8-5.1-2.1-9-1v13c3.9-1.1 6.5-.8 9 1m0-13c2.5-1.8 5.1-2.1 9-1v13c-3.9-1.1-6.5-.8-9 1m0-13v13"/>',
+ training:'<path d="m2 9 10-5 10 5-10 5-10-5Zm4 3v5c3.9 3 8.1 3 12 0v-5M22 10v7"/>',
+ calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M8 14h3M8 17h6"/>',
+ users:'<path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2m13-14a4 4 0 0 1 0 8m5 6v-2a4 4 0 0 0-3-3.87"/><circle cx="9.5" cy="7" r="4"/>',
+ refresh:'<path d="M20 7v5h-5M4 17v-5h5"/><path d="M5.7 9A7 7 0 0 1 18 6l2 1M4 17l2 1a7 7 0 0 0 12.3-3"/>',
+ notes:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
+ guideline:'<path d="M6 3h11a2 2 0 0 1 2 2v16H8a3 3 0 0 1-3-3V5a2 2 0 0 1 1-2Zm-1 15a3 3 0 0 1 3-3h11"/>',
+ search:'<circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/>',
+ pill:'<rect x="7" y="2" width="10" height="20" rx="5" transform="rotate(45 12 12)"/><path d="m8.5 15.5 7-7"/>',
+ heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
+ dictionary:'<path d="M4 4h13a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4Zm0 13a3 3 0 0 1 3-3h13M9 8h6m-6 3h5"/>',
+ skill:'<path d="m14 5 5 5M4 20l8.5-8.5a5 5 0 0 1 6.8-6.8l-4.1 4.1 1 3.1 3.1 1 4.1-4.1a5 5 0 0 1-6.8 6.8L8 24"/>',
+ device:'<rect x="4" y="3" width="16" height="18" rx="3"/><path d="M7 11h3l2-4 2 8 2-4h1M9 18h6"/>',
+ checklist:'<rect x="6" y="3" width="13" height="18" rx="2"/><path d="m9 9 1.5 1.5L13 8m-4 7 1.5 1.5L13 14m2-4h2m-2 6h2"/>',
+ screen:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4m-3-12 6 2-6 3V9Z"/>',
+ question:'<circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.7 2.7 0 1 1 4.4 2.1c-1.3 1-1.9 1.5-1.9 3M12 17.5v.5"/>'
+};
+function ostIcon(key){return `<svg class="ost-outline-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${OST_ICONS[key]||OST_ICONS.book}</svg>`}
 function newsHtml(n,i=''){const map={Lehrmeinung:'🔄',Leitlinie:'📋',Ausbildung:'🎓',Termin:'📅',Simulationstraining:'🖥️',Organisation:'📣',Literatur:'📚'};const c=n.category||'Organisation';return `<button class="news-item news-title-only" data-news="${i}"><h3>${esc(n.title)}</h3><span class="arrow" aria-hidden="true">›</span></button>`}
 const RECENT_KEY='ost1020-recent-pages',FAV_KEY='ost1020-favorites';
 function rememberPage(){if(page==='home'||page==='editor')return;const labels={home:'Start',wissen:'Wissen',news:'Aktuelles',literature:'Literatursammlung',abcde:'ABCDE-Schema',differential:'Diagnostik',skills:'Skilltraining',algorithms:'Algorithmen & Merkhilfen',meetings:'Dienstbesprechungen',changes:'Lehrmeinungsänderungen',events:'Termine',guide:'Quick Guide Simulation',materials:'Materialien'};const href=location.pathname.split('/').pop()||'index.html';let r=[];try{r=JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){}r=[{page,label:labels[page]||document.title,href},...r.filter(x=>x.page!==page)].slice(0,4);localStorage.setItem(RECENT_KEY,JSON.stringify(r))}
@@ -167,9 +187,9 @@ async function home(){
  const recent=(()=>{try{return JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){return[]}})();
  const index=[...(arts||[]).map(x=>({label:x.title,sub:'Literatur',href:'literatur.html'})),...(ab||[]).map(x=>({label:`${x.key} – ${x.title}`,sub:'ABCDE',href:'abcde.html'})),...(diff||[]).map(x=>({label:x.title,sub:'Diagnostik',href:'differential.html'})),...(skillsData||[]).flatMap(g=>g.skills.map(s=>({label:s.name,sub:g.name,href:'skilltraining.html'}))),...(algs||[]).map(x=>({label:x.title,sub:'Algorithmus',href:'algorithmen.html'})),...(changes||[]).map(x=>({label:x.title,sub:'Lehrmeinung',href:'lehrmeinung.html'}))];
  $('[data-main]').innerHTML=`<section class="ost-home-intro"><span>OST 1020</span><div class="ost-home-title-row"><h1>Wissenssammlung</h1></div></section>
- <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen, Skills, Literatur …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
+ <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen durchsuchen …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
+ <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html">${ostIcon('book')}<span>Wissen</span></a><a href="training.html">${ostIcon('training')}<span>Training</span></a><a href="termine.html">${ostIcon('calendar')}<span>Termine</span></a><a href="dienstbesprechungen.html">${ostIcon('users')}<span>Besprechungen</span></a><a href="lehrmeinung.html">${ostIcon('refresh')}<span>Lehrmeinung</span></a></nav></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
- <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html"><span>📚</span>Wissen</a><a href="training.html"><span>🎓</span>Training</a><a href="termine.html"><span>📅</span>Termine</a><a href="dienstbesprechungen.html"><span>🗣️</span>Dienstbesprechungen</a><a href="lehrmeinung.html"><span>🔄</span>Lehrmeinung</a></nav></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Alle Termine →</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section><div class="ost-home-admin-footer"><a class="ost-home-editor" href="editor.html" aria-label="Redaktion öffnen">✎ Redaktion</a></div>`;
  const q=$('[data-global-search]'),results=$('[data-search-results]');
  let catalog=[];contentCatalog().then(c=>{catalog=c;if(q.value.trim())drawSearch()}).catch(()=>{});
@@ -259,12 +279,12 @@ async function moduleEditor(box,initialModule='pharm'){
 }
 
 async function wissenPage(){
- const links=[['📋','Algorithmen & Merkhilfen','algorithmen.html','Strukturierte Abläufe und Untersuchungsschemata'],['📖','Leitlinien / Guidelines','leitlinien.html','Quellen, Fachgesellschaften und Empfehlungen'],['📚','Literatursammlung','literatur.html','Artikel, Lehrbücher und Forschung'],['🩺','Diagnostik','differential.html','Leitsymptome und Krankheitsbilder'],['💊','Pharmakologie','themen.html?bereich=pharm','Übersicht und Nachschlagen'],['🫀','Anatomie & Physiologie','themen.html?bereich=anatomy','Übersicht und Nachschlagen'],['📖','Befundwörterbuch','themen.html?bereich=befund','Fachbegriffe und Abkürzungen']];
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Wissen</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ico}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
+ const links=[['notes','Algorithmen & Merkhilfen','algorithmen.html','Strukturierte Abläufe und Untersuchungsschemata'],['guideline','Leitlinien / Guidelines','leitlinien.html','Quellen, Fachgesellschaften und Empfehlungen'],['book','Literatursammlung','literatur.html','Artikel, Lehrbücher und Forschung'],['search','Diagnostik','differential.html','Leitsymptome und Krankheitsbilder'],['pill','Pharmakologie','themen.html?bereich=pharm','Übersicht und Nachschlagen'],['heart','Anatomie & Physiologie','themen.html?bereich=anatomy','Übersicht und Nachschlagen'],['dictionary','Befundwörterbuch','themen.html?bereich=befund','Fachbegriffe und Abkürzungen']];
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Wissen</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ostIcon(ico)}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
 }
 async function trainingPage(){
- const links=[['🩹','Skilltraining','skilltraining.html','Fertigkeiten, Materialien und Abläufe'],['🩺','MPG-Informationen','themen.html?bereich=mpg','Geräte, Spezifikationen und Bedienungsanleitungen'],['📄','Checklisten','themen.html?bereich=checklists','PDF-Checklisten und Übungsunterlagen'],['🖥️','Simulations Guide','simulation.html','Quick Guide für den Simulator'],['❓','FAQ zu Simulationstrainings','simulation-faq.html','Häufige Fragen zur Vorbereitung und Durchführung']];
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Training</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ico}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
+ const links=[['skill','Skilltraining','skilltraining.html','Fertigkeiten, Materialien und Abläufe'],['device','MPG-Informationen','themen.html?bereich=mpg','Geräte, Spezifikationen und Bedienungsanleitungen'],['checklist','Checklisten','themen.html?bereich=checklists','PDF-Checklisten und Übungsunterlagen'],['screen','Simulations Guide','simulation.html','Quick Guide für den Simulator'],['question','FAQ zu Simulationstrainings','simulation-faq.html','Häufige Fragen zur Vorbereitung und Durchführung']];
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Training</h1></section><div class="ost-link-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ostIcon(ico)}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
 }
 async function guidelinesPage(){
  const a=await get('algorithms');const refs=a.filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl));
