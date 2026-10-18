@@ -4,491 +4,174 @@
     "skills": [
       {
         "name": "Fahrzeugcheck",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Fahrzeug laut Ausstattungsrichtlinie kontrollieren",
-              "Rucksäcke laut Ausstattungsrichtlinie kontrollieren",
-              "korrekte Funktionskontrolle bei allen Geräten",
-              "Pagerprobe und Anmelden am m-pad"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "SEW (mit gesamter Ausstattung)",
-              "m-pad (Token)"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Bei Dienstbeginn immer abwechselnd Rucksäcke und Fahrzeug kontrollieren lassen",
-              "Für G-Eintrag einmal alles kontrollieren lassen und mitschauen."
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
         "name": "Umgang mit Tragsessel",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Patienten mit Tragsessel über eine Stiege tragen",
-              "Tragsessel korrekt im Auto verriegeln und herausnehmen",
-              "Funktionen und Aufbereitung erklären"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Tragsessel",
-              "SEW"
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
         "name": "Umgang mit Fahrtrage",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Patienten auf der Fahrtrage befördern",
-              "Alle Lagerungen auf der Trage erklären können",
-              "Korrektes Entnehmen und Laden der Fahrtrage",
-              "Aufbereitung und Sicherheitsaspekte erklären können"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Fahrtrage (Stryker M1)",
-              "SEW"
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Lagerungen",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Welche Lagerungen gibt es?",
-              "Welche Krankheitsbilder verlangen besondere Lagerungen",
-              "Lagerungen vorzeigen"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Kann man gut mit Fahrtrage kombinieren"
-            ]
-          }
+        "name": "Lagerungen (Grundlagerungen / Patientenorientiert)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Einsatzprotokoll / m-pad",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Anmeldung und Dienst übernehmen",
-              "Transportprotokoll selbstständig und korrekt ausfüllen",
-              "Einsatzprotokoll selbstständig und korrekt ausfüllen"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "m-pad mit Token"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Möglichst viel im Dienst dokumentieren lassen"
-            ]
-          }
+        "name": "Einsatzprotokoll",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       }
-    ],
-    "id": "basiskenntnisse-rettungsdienst-1791828778597"
+    ]
   },
   {
     "name": "Patientenbeurteilung",
     "skills": [
       {
         "name": "ABCDE / SAMPLE",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "ABCDE erklären und im Einsatz anwenden",
-              "SAMPLE erklären und im Einsatz anwenden",
-              "Verdachtsdiagnosen aus ABCDE und SAMPLE erarbeiten"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "So viel wie möglich am realen Patienten üben!"
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
         "name": "Patientenbetreuung",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Patienten bei einem Transport gut betreuen",
-              "Patienten bei einem Einsatz richtig betreuen / reevaluieren",
-              "Angepasstes / höfliches Auftreten und guter Umgang"
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
         "name": "Übergabe",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Übergabe an das Krankenhauspersonal machen (ZNA, ZAE)",
-              "Übergabe an ein SRM machen",
-              "Übergabe in einem Pflegeheim machen"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "So früh wie möglich im Dienst beüben",
-              "Übergabe soll standardisierten Schemata folgen"
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       }
-    ],
-    "id": "patientenbeurteilung-1791828778598"
+    ]
   },
   {
     "name": "Sanitätshilfe Anwendungen",
     "skills": [
       {
-        "name": "RR / HF / AF / AVPU / ZOPS",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "RR messen (auskultatorisch und palpatorisch)",
-              "HF an verschiedenen Stellen tasten und auszählen",
-              "AF beurteilen und auszählen",
-              "neurologischen Status erheben"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "So viel wie möglich am realen Patienten üben / beurteilen"
-            ]
-          }
+        "name": "Blutdruck / Puls / Atemfrequenz / AVPU / ZOPS",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "O₂ und SpO₂",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Flascheninhalt berechnen",
-              "Flaschentausch durchführen",
-              "Sicherheitshinweises des Sauerstoffs nennen",
-              "Anwendung von Sauerstoff erklären",
-              "Sättigungsbereiche und Sauerstoffgabe erklären"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Sauerstoffflasche + Druckminderer",
-              "Pulsoxymeter"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Am beste durchmachen, wenn im Dienst eine Flasche getauscht werde muss"
-            ]
-          }
+        "name": "O₂ (Anwendung, Berechnen, Flaschenwechsel), SpO₂",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Absaugen (Technik und Geräte)",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Absaugtechnik erklären (+ Abmessung Katheter und Sogstärken)",
-              "Ausräumen mit Magillzange erklären",
-              "AccuVac Funktionskontrolle und Aufbereitung vorzeigen"
-            ]
-          },
-          {
-            "title": "Material",
-            "items": [
-              "AccuVac",
-              "Magillzange"
-            ]
-          }
+        "name": "Absaugen, Technik, Geräte (AkkuVac, AMBU Twin, Magillz.)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Aufbereitung aller Geräte lt. MPG",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Die Aufbereitung aller Geräte erklären können",
-              "Herstellen einer Desinfektionslösung erklären bzw. zeigen",
-              "Schutzausrüstung kennen",
-              "Was darf man wie reinigen / desinfizieren?"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Desinfektionswanne + Desinfektionsmittel",
-              "Schutzausrüstung"
-            ]
-          }
+        "name": "Aufbereitung aller Geräte lt. MPG (Desinfektion, etc.)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Schienungen / MDS",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Schnitzler Schiene anlegen",
-              "Sam-Splint anlegen",
-              "MDS Kontrolle erklären und durchführen",
-              "Armtragetuch anlegen"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Schnitzler Schiene",
-              "Sam-Splint + Mullbinde",
-              "Dreiecktuch"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Kann ganz leicht im Dienst beübt werden"
-            ]
-          }
+        "name": "Extremitätenschienung u. Ruhigstellung / MDS",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Rettungstechniken",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Rautekgriff und Bergung aus einem PKW erklären und zeigen",
-              "Verwendung des Rettungstuchs erklären und zeigen",
-              "Schaufeltrage richtig verwenden"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Rettungstuch",
-              "Schaufeltrage + Gurte"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Kann man auch gut im Dienst beüben",
-              "Immer alle Sicherheitsgurte verwenden!"
-            ]
-          }
+        "name": "Rettungstechniken (Rettungstuch, Rautengriff, Umheben, etc.)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Sturzhelmabnahme / MILS oder HWS",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Sturzhelmabnahme durch 2 Helfer zeigen",
-              "MILS zeigen und erklären",
-              "Anlegen der HWS erklären und zeigen"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Sturzhelm",
-              "HWS Schiene (Stifneck)"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Kann man gut mit den Traumabeispielen bei den Übungsabenden kombinieren."
-            ]
-          }
+        "name": "Sturzhelmabnahme durch 2 Helfer (inkl. MILS oder HWS)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Traumaversorgung",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Traumapatient nach ABCDE Schema beurteilen",
-              "Korrekte Verdachtsdiagnose stellen",
-              "Korrekte Rettung / Umlagerung eines Traumapatienten",
-              "Auf Situationsveränderungen angemessen reagieren"
-            ]
-          },
-          {
-            "title": "Material",
-            "items": [
-              "Schaufeltrage",
-              "Vakuummatratze",
-              "Decken",
-              "SEW Rucksäcke"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Wird meist im Zuge der Übungsabende trainiert."
-            ]
-          }
+        "name": "Traumaversorgung (MILS, Schaufeltrage, Vakuummatr., HWS)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Patiententransfer",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Patienten korrekt umlagern (Bett-Trage, Rollstuhl-Tragsessel, ...)",
-              "Hilfsmittel korrekt einsetzen können (Rollboard)",
-              "Ergonomisches Arbeiten erklären können"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "Rollboard",
-              "Fahrtrage",
-              "Tragsessel"
-            ]
-          }
+        "name": "Patiententransfer (Bett/Rollstuhl - Trage/Tragsessel, Rollboard ...)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
-        "name": "Bewusstloser Patient",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "Bewusstlosen Patienten nach ABCDE Schema versorgen",
-              "Korrekten Notfallcheck machen",
-              "Laufende Reevaluierung sicherstellen",
-              "Erarbeitung einer Verdachtsdiagnose"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "SEW Rucksäcke",
-              "Decken"
-            ]
-          },
-          {
-            "title": "Praxis-Tipps",
-            "items": [
-              "Wird meist im Zuge der Übungsabende trainiert."
-            ]
-          }
+        "name": "Bewusstloser Patient (Esmarch, Wendl, stab. Seitenlage, BZ)",
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
         "name": "Wiederbelebung Säugling (inkl. Defi)",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "CPR Säugling lt. aktuell gültiger Checkliste",
-              "Wenig Hands-off Zeiten",
-              "Alle Sicherheitshinweise beachten",
-              "Qualitativ hochwertige Herzdruckmassage",
-              "Alle Beatmungen sollten funktionieren"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "SEW Rucksäcke",
-              "Q-CPR Übungspuppen",
-              "AccuVac",
-              "Übungsdefibrillator",
-              "HRT"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Wird meist im Zuge der Übungsabende trainiert."
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       },
       {
         "name": "Wiederbelebung Kind (inkl. Defi)",
-        "sections": [
-          {
-            "title": "Was muss man können?",
-            "items": [
-              "CPR Säugling lt. aktuell gültiger Checkliste",
-              "Wenig Hands-off Zeiten",
-              "Alle Sicherheitshinweise beachten",
-              "Qualitativ hochwertige Herzdruckmassage",
-              "Alle Beatmungen sollten funktionieren"
-            ]
-          },
-          {
-            "title": "Benötigtes Material",
-            "items": [
-              "SEW Rucksäcke",
-              "Q-CPR Übungspuppen",
-              "AccuVac",
-              "Übungsdefibrillator",
-              "HRT"
-            ]
-          },
-          {
-            "title": "Praxis-Tipp",
-            "items": [
-              "Wird meist im Zuge der Übungsabende trainiert."
-            ]
-          }
+        "items": [
+          "Unterpunkt 1 – noch definieren",
+          "Unterpunkt 2 – noch definieren",
+          "Unterpunkt 3 – noch definieren"
         ]
       }
-    ],
-    "id": "sanitätshilfe-anwendungen-1791828778598"
+    ]
   }
 ]
