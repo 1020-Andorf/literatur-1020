@@ -1,41 +1,23 @@
 [
   {
-    "id": "x-1791234520234",
-    "key": "EE",
-    "title": "Erster Eindruck",
-    "checks": [
-      "Unfallmechanismus",
-      "Bewusstseinszustand",
-      "(Äußere) starke Blutung"
-    ],
-    "actions": [
-      "MILS (manuelle in-line Stabilisation)",
-      "Blutungskontrolle - Tourniquet / Druckverband"
-    ],
-    "pitfalls": [
-      "Sturz > 3 m oder 1.5 fache Körpergröße",
-      "VU mit > 30 km/h",
-      "VU Fußgänger",
-      "AVPU < A",
-      "Spritzende oder schwallartige Blutung"
-    ]
-  },
-  {
     "id": "a",
     "key": "A",
     "title": "Airway",
     "checks": [
-      "Spricht der Patient?",
+      "Spricht der Patient frei?",
       "Atemweg frei oder verlegt?",
-      "Fremdkörper oder Aspiration?"
+      "Stridor, Schnarchen, Gurgeln oder Fremdkörper?",
+      "Bei Trauma HWS-Schutz berücksichtigen"
     ],
     "actions": [
-      "Atemwege freimachen (Absaugen, Ausräumen, Heimlich Manöver)",
-      "Atemwege freihalten (stabile Seitenlage, Kopf überstrecken, Wendl Tubus, Esmarch Handgriff)"
+      "Atemweg freimachen und absaugen",
+      "Kopfposition / Esmarch-Handgriff nach Situation",
+      "Guedel/Wendl nach Indikation",
+      "Erweiterte Atemwegshilfe vorbereiten"
     ],
     "pitfalls": [
-      "Pfeifende oder abnorme Atemgeräusche",
-      "Patient ringt um Luft, Husten"
+      "Atemweg nicht früh genug priorisiert",
+      "Absaugung oder Hilfsmittel nicht vorbereitet"
     ]
   },
   {
@@ -43,21 +25,20 @@
     "key": "B",
     "title": "Breathing",
     "checks": [
-      "Atemfrequenz (qualitativ und quantitativ)",
+      "Atemfrequenz und Atemmuster",
       "Thoraxexkursion und Atemarbeit",
-      "SpO₂ (Zyanose?)",
-      "Atemgeräusche"
+      "SpO₂ und Hautkolorit",
+      "Auskultation / Atemgeräusche"
     ],
     "actions": [
       "Sauerstoffgabe nach Indikation",
-      "Zielsättigungsbereiche beachten (94% bzw. 90% bei COPD)",
-      "Zum Einsetzen der Atemhilfsmuskulatur anleiten"
+      "Beutel-Maskenbeatmung vorbereiten",
+      "Lagerung optimieren",
+      "Ventilation und Oxygenierung reevaluieren"
     ],
     "pitfalls": [
-      "Zyanose",
-      "Ringen um Luft",
-      "Pfeifende Atemgeräusche (in- und exspiratorischer Stridor)",
-      "Brodelndes / Rasselndes Atemgeräusch"
+      "Sauerstoffgabe nicht angepasst",
+      "Erschöpfung oder stille Lunge übersehen"
     ]
   },
   {
@@ -65,22 +46,20 @@
     "key": "C",
     "title": "Circulation",
     "checks": [
-      "Hautkolorit und Hauttemperatur (kaltschweißig, blass, ...)",
-      "Puls (qualitativ und quantitativ)",
-      "Blutdruck",
-      "Rekap - Zeit (Achtung im Freien oder bei kalten Gliedmaßen --> zentrale Rekap - Zeit)"
+      "Puls, Blutdruck und Rekap-Zeit",
+      "Starke Blutung?",
+      "Hauttemperatur und Perfusion",
+      "Schockzeichen / Rhythmus"
     ],
     "actions": [
-      "Lagerung optimieren (Patientenorientiert, OK hoch, Beine hoch)",
-      "Wärmeerhalt!"
+      "Blutstillung",
+      "Wärmeerhalt und Lagerung",
+      "i.v./i.o.-Zugang nach Standard",
+      "Monitoring und Reevaluation"
     ],
     "pitfalls": [
-      "Kaltschweißigkeit, Blässe",
-      "Tachykardie (>140 Schläge / min)",
-      "Bradykardie (<40 Schläge / min)",
-      "Arrhythmischer Puls",
-      "sehr hoher Blutdruck (+ Symptomatik)",
-      "sehr niedriger Blutdruck"
+      "Blutung übersehen",
+      "Schockzeichen nicht erkannt"
     ]
   },
   {
@@ -88,24 +67,20 @@
     "key": "D",
     "title": "Disability",
     "checks": [
-      "ZOPS",
-      "FAST (oder BEFAST)",
-      "neurologische Auffälligkeiten",
-      "Blutzuckerkontrolle (wenn angebracht)",
-      "Pupillenkontrolle"
+      "AVPU / GCS",
+      "Pupillen",
+      "Blutzucker",
+      "FAST / neurologische Defizite / Krampfaktivität"
     ],
     "actions": [
-      "prophylaktischer Seitenlage",
-      "Reevaluierung",
-      "FAST Lane wenn möglich (Stroke)"
+      "Blutzucker korrigieren nach Standard",
+      "Stroke-Screening",
+      "Krampfmanagement",
+      "Neurologischen Verlauf reevaluieren"
     ],
     "pitfalls": [
-      "Bewusstlosigkeit (BZ Messung!)",
-      "akute Verschlechterung",
-      "neu aufgetretene Verwirrtheit",
-      "neu aufgetretene Pupillendifferenz oder abnorme Reaktion auf Licht",
-      "sehr starke, akute Kopfschmerzen",
-      "Meningismus"
+      "Hypoglykämie nicht ausgeschlossen",
+      "Neurologische Verschlechterung zu spät erkannt"
     ]
   },
   {
@@ -113,20 +88,20 @@
     "key": "E",
     "title": "Exposure",
     "checks": [
-      "Ganzkörperinspektion / gezielte Untersuchung",
-      "SAMPLE(R)",
+      "Ganzkörperinspektion",
+      "SAMPLE(R) / OPQRST",
       "Temperatur und Umfeld",
-      "weitere Verletzungen und Schmerzen (NRS oder VAS)"
+      "Verletzungen, Haut und Schmerz"
     ],
     "actions": [
-      "Suchen nach Verletzungen",
-      "Fremdanamnese oder Selbstanamnese",
-      "Befunde und Krankengeschichte evaluieren",
-      "Temperatumessung"
+      "Ganzkörperuntersuchung",
+      "Wärmeerhalt",
+      "Gezielte Anamnese",
+      "Befunde dokumentieren und reevaluieren"
     ],
     "pitfalls": [
-      ">39 °C Fieber",
-      "Vorgeschichte, die auf Ereignis schließen lässt"
+      "Wärmeerhalt vergessen",
+      "Verdeckte Verletzungen übersehen"
     ]
   }
 ]
