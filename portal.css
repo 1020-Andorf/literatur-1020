@@ -1124,3 +1124,49 @@ body.page-changes .compare-card{box-shadow:none!important}
 .ost-home-editor:hover,.ost-home-editor:focus-visible{background:#eff6ff;border-color:#bad2ee}
 @media(max-width:1099px){.topbar-inner{display:flex!important;flex-wrap:nowrap!important;justify-content:flex-start!important}.header-editor-link{display:inline-flex!important;align-items:center!important;white-space:nowrap!important;min-height:39px!important;margin-left:auto!important}.ost-home-title-row{flex-wrap:wrap}.ost-home-editor{margin-left:auto}}
 @media(max-width:480px){.ost-home-editor{padding:9px 12px;font-size:.83rem}.ost-home-title-row h1{font-size:1.75rem!important}.ost-main-destinations a{border-radius:15px!important;box-shadow:none!important}.ost-main-destinations{gap:10px!important}.section-head h2{font-size:1.22rem!important}}
+
+/* Oktober – Bereinigung von Detailflächen und Mobilabständen */
+body.page-algorithms .scheme-tile h2,
+body.page-algorithms .scheme-grid .scheme-tile h2,
+body.page-algorithms .scheme-grid .scheme-tile strong,
+body.page-algorithms .scheme-tile,
+body.page-algorithms .scheme-tile *{font-weight:400!important;letter-spacing:normal!important}
+
+/* Hintergrundflächen nicht erneut als weißen äußeren Container zeichnen */
+body.app-shell .main > .detail-page,
+body.app-shell .main > .meeting-detail,
+body.app-shell .main > .change-detail,
+body.app-shell .main > .algorithm-detail,
+body.app-shell .main > .diag-detail,
+body.app-shell .main > .module-detail,
+body.app-shell .main > .ost-module-detail,
+body.app-shell .main > .ost-module-content,
+body.app-shell .main > .simulation-flow,
+body.app-shell .main > .skill-groups{
+ background:transparent!important;border:0!important;outline:0!important;box-shadow:none!important;
+ padding-left:0!important;padding-right:0!important;
+}
+body.app-shell .main > .detail-page::before,
+body.app-shell .main > .detail-page::after{display:none!important}
+body.page-algorithms .algorithm-detail .algorithm-figure{max-width:100%;min-width:0;overflow:hidden}
+body.page-algorithms .algorithm-detail .algorithm-figure img{max-width:100%;height:auto}
+
+.ost-home-admin-footer{display:flex;justify-content:flex-end;margin:14px 0 4px}
+.ost-home-admin-footer .ost-home-editor{font-weight:500;padding:9px 15px;font-size:.84rem;color:#456078;border-color:#dce4ed;background:transparent}
+@media(max-width:1099px){
+ .header-editor-link{display:none!important}
+ .ost-home-title-row .ost-home-editor{display:none!important}
+ .ost-home-admin-footer{margin-top:16px;padding-bottom:0}
+ body.app-shell .main,body.app-shell:not(.page-editor) .main,body.page-home .main,body.page-editor .main{
+    min-height:0!important;padding-bottom:20px!important;scroll-padding-bottom:0!important;
+ }
+ body.app-shell{min-height:100dvh!important}
+ .main>.page-banner{margin-top:0}
+ .ost-main-destinations a{min-height:82px!important;padding:10px!important;gap:5px!important;border-radius:16px!important;line-height:1.25}
+ .ost-home-intro{padding-top:12px!important;padding-bottom:12px!important}
+ .section{margin-top:18px}
+ .page-banner{padding:14px 16px!important}
+ .page-banner h1{font-size:clamp(1.4rem,5vw,1.75rem)!important;line-height:1.2!important}
+ .ost-home-admin-footer .ost-home-editor{margin-left:auto}
+}
+@media(min-width:1100px){body.desktop-has-sidebar .main{min-height:0!important;padding-bottom:28px!important}}
