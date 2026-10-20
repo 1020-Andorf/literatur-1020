@@ -1,0 +1,31 @@
+OST 1020 – Neuer GitHub-Commit (Stand 530)
+================================================
+
+Dieses Paket ist DIREKT für das Repository-Hauptverzeichnis gedacht.
+Die ZIP selbst NICHT als einzelnes Element im Repository ablegen.
+
+Empfohlener Weg mit GitHub Desktop:
+1. Im GitHub-Repository: Code > Open with GitHub Desktop (oder Repo klonen).
+2. Vorher unter GitHub > Code > Download ZIP eine Sicherung erstellen.
+3. Redaktionsdaten im Online-System separat als Backup exportieren.
+4. Im lokal geklonten Repo die bisherigen Webseiten-Projektdateien durch die
+   ENTpackten Dateien dieses ZIP ersetzen. .git selbst unbedingt behalten.
+   Vorherige Unterordner literatur/ entfernen, sofern sie nur die alte
+   Duplikat-Webseite enthalten. NIE .git, persönliche Dateien oder
+   andere nicht zu diesem Projekt gehörende Dateien unbesehen löschen.
+5. In GitHub Desktop alle Änderungen prüfen und als Commit speichern.
+6. 'Push origin' anklicken. Unter GitHub > Actions grünen Deploy abwarten.
+7. Webseite im privaten Tab aufrufen.
+
+Wichtig: GitHub-Webupload hat eine Begrenzung auf 100 Dateien pro Aktion.
+Eine ZIP wird von GitHub Pages nicht automatisch entpackt.
+GitHub Desktop umgeht diese Einschränkung, da ein Commit viele Dateien
+enthalten kann.
+
+GitHub Pages: Settings > Pages > Branch main, Folder /(root), sofern im
+Repository nicht bewusst ein anderer Deploy-Workflow eingerichtet ist.
+
+Worker-/Cloudflare-Backend NICHT neu provisionieren oder dessen Daten
+löschen. Vorhandene Credentials und Produktivdaten behalten.
+Die Paketdateien enthalten keine Garantie, dass serverseitige Redaktions-
+daten dem aktuellen lokalen Datenstand entsprechen.

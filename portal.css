@@ -1454,3 +1454,119 @@ body.page-home .dashboard-news .news-item h3{font-weight:520!important}
 .editor-gate input{margin-top:2px!important;height:62px!important;border-radius:18px!important;border:1px solid #d9e4ed!important;padding:0 18px!important;font-size:1.2rem!important}
 .editor-gate .actions{display:flex!important;justify-content:center!important;gap:14px!important;flex-wrap:wrap!important}
 .editor-gate .btn{min-width:180px!important;border-radius:18px!important;padding:15px 18px!important;font-size:1rem!important}
+
+/* OST 1020 / 530: single coherent visual language – public pages + editorial */
+:root{
+ --ost-navy:#1d3851;--ost-muted:#657f91;--ost-line:#dbe5ec;
+ --ost-a:#eef5f9;--ost-b:#eff7f4;--ost-c:#f4f0f8;
+ --ost-d:#f8f5ed;--ost-e:#f8f0f1;--ost-w:#fff;
+ --ost-radius:17px;
+}
+body.app-shell{color:var(--ost-navy);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:0;font-weight:400}
+body.app-shell .main,body.app-shell .main *{min-width:0}
+body.app-shell a,body.app-shell button{ -webkit-tap-highlight-color:transparent }
+body.app-shell :focus-visible{outline:3px solid #6598b4!important;outline-offset:3px}
+body.app-shell .main h1,body.app-shell .main h2,body.app-shell .main h3{letter-spacing:-.025em;line-height:1.3;overflow-wrap:break-word}
+body.app-shell .main .section-head h2{font-weight:700}
+body.app-shell .page-banner,body.app-shell .page-banner-no-title{background:transparent!important;border:none!important;box-shadow:none!important;padding:0!important;margin:0 0 16px!important}
+body.app-shell .page-banner:has(.page-banner-row):has(button){margin-bottom:16px!important}
+body.app-shell .page-banner-no-title:empty{display:none!important}
+body.app-shell .page-banner p{margin:8px 0 0;color:var(--ost-muted);line-height:1.55}
+body.app-shell .ost-outline-icon{width:24px;height:24px;display:block;flex-shrink:0;max-width:100%;stroke-width:1.8}
+/* Five very muted colors repeat consistently on lists instead of strong random colors */
+body.app-shell .ost-main-destinations>a:nth-child(5n+1),body.app-shell .ost-link-directory>a:nth-child(5n+1),body.app-shell .scheme-tile:nth-child(5n+1),body.app-shell .skill-card:nth-child(5n+1),body.app-shell .row-card:nth-child(5n+1),body.app-shell .diag-group:nth-child(5n+1),body.app-shell .meeting-tile:nth-child(5n+1),body.app-shell .editor-primary-groups>button:nth-child(5n+1),body.app-shell .editor-subgroup-tiles>button:nth-child(5n+1){background:var(--ost-a)!important}
+body.app-shell .ost-main-destinations>a:nth-child(5n+2),body.app-shell .ost-link-directory>a:nth-child(5n+2),body.app-shell .scheme-tile:nth-child(5n+2),body.app-shell .skill-card:nth-child(5n+2),body.app-shell .row-card:nth-child(5n+2),body.app-shell .diag-group:nth-child(5n+2),body.app-shell .meeting-tile:nth-child(5n+2),body.app-shell .editor-primary-groups>button:nth-child(5n+2),body.app-shell .editor-subgroup-tiles>button:nth-child(5n+2){background:var(--ost-b)!important}
+body.app-shell .ost-main-destinations>a:nth-child(5n+3),body.app-shell .ost-link-directory>a:nth-child(5n+3),body.app-shell .scheme-tile:nth-child(5n+3),body.app-shell .skill-card:nth-child(5n+3),body.app-shell .row-card:nth-child(5n+3),body.app-shell .diag-group:nth-child(5n+3),body.app-shell .meeting-tile:nth-child(5n+3),body.app-shell .editor-primary-groups>button:nth-child(5n+3),body.app-shell .editor-subgroup-tiles>button:nth-child(5n+3){background:var(--ost-c)!important}
+body.app-shell .ost-main-destinations>a:nth-child(5n+4),body.app-shell .ost-link-directory>a:nth-child(5n+4),body.app-shell .scheme-tile:nth-child(5n+4),body.app-shell .skill-card:nth-child(5n+4),body.app-shell .row-card:nth-child(5n+4),body.app-shell .diag-group:nth-child(5n+4),body.app-shell .meeting-tile:nth-child(5n+4),body.app-shell .editor-primary-groups>button:nth-child(5n+4),body.app-shell .editor-subgroup-tiles>button:nth-child(5n+4){background:var(--ost-d)!important}
+body.app-shell .ost-main-destinations>a:nth-child(5n),body.app-shell .ost-link-directory>a:nth-child(5n),body.app-shell .scheme-tile:nth-child(5n),body.app-shell .skill-card:nth-child(5n),body.app-shell .row-card:nth-child(5n),body.app-shell .diag-group:nth-child(5n),body.app-shell .meeting-tile:nth-child(5n),body.app-shell .editor-primary-groups>button:nth-child(5n),body.app-shell .editor-subgroup-tiles>button:nth-child(5n){background:var(--ost-e)!important}
+body.app-shell .ost-main-destinations>a,body.app-shell .ost-link-directory>a,body.app-shell .scheme-tile,body.app-shell .skill-card,body.app-shell .row-card,body.app-shell .meeting-tile,body.app-shell .diag-group,body.app-shell .ost-checklist-card,body.app-shell .editor-primary-groups button,body.app-shell .editor-subgroup-tile{border:1px solid var(--ost-line)!important;border-radius:var(--ost-radius)!important;box-shadow:none!important;color:var(--ost-navy)!important}
+body.app-shell .ost-main-destinations>a:hover,body.app-shell .ost-link-directory>a:hover,body.app-shell .scheme-tile:hover,body.app-shell .skill-card:hover{border-color:#a9bfcc!important;filter:brightness(.992)}
+/* Identical icon panels across surface types */
+body.app-shell .scheme-icon,body.app-shell .skill-icon,body.app-shell .row-icon,body.app-shell .ost-link-directory>a>span:first-child,body.app-shell .diag-group-badge,body.app-shell .diag-result-icon,body.app-shell .meeting-tile-icon,body.app-shell .ost-checklist-icon,body.app-shell .editor-primary-groups button>span:first-child,body.app-shell .editor-subgroup-tile>span:first-child{
+ display:grid!important;place-items:center!important;flex-shrink:0!important;
+ width:43px!important;height:43px!important;border-radius:13px!important;
+ background:rgba(255,255,255,.65)!important;border:1px solid rgba(175,194,207,.4)!important;
+ color:#325f7a!important;margin:0!important;font-size:20px!important;
+}
+body.app-shell .scheme-icon svg,body.app-shell .skill-icon svg,body.app-shell .row-icon svg,body.app-shell .ost-link-directory>a>span:first-child svg,body.app-shell .diag-group-badge svg,body.app-shell .editor-subgroup-tile svg,body.app-shell .editor-primary-groups button svg{width:24px!important;height:24px!important}
+body.app-shell .scheme-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+body.app-shell .scheme-tile{display:grid;grid-template-columns:43px minmax(0,1fr) 18px;align-items:center;gap:12px!important;min-height:70px!important;padding:12px 15px!important}
+body.app-shell .scheme-tile .scheme-icon{grid-column:1;grid-row:1/span 2}
+body.app-shell .scheme-tile h2{grid-column:2!important;grid-row:1/span 2!important;font-weight:450!important;font-size:1rem!important;line-height:1.35!important;margin:0!important}
+body.app-shell .scheme-tile .scheme-more{font-size:0!important;grid-column:3;grid-row:1/span 2}
+body.app-shell .scheme-tile .scheme-more::after{content:'›';font-size:24px;color:#788f9e}
+body.app-shell .scheme-tile strong,body.app-shell .row-card strong,body.app-shell .skill-card strong,body.app-shell .diag-group-copy strong,body.app-shell .diag-result strong,body.app-shell .ost-link-directory strong,body.app-shell .editor-primary-groups strong,body.app-shell .editor-subgroup-tile strong{font-weight:450!important;letter-spacing:0!important;line-height:1.4!important}
+body.app-shell .skill-card,body.app-shell .row-card{grid-template-columns:43px minmax(0,1fr) 20px!important;gap:11px!important;padding:12px 15px!important;min-height:70px!important}
+body.app-shell .diag-group>summary{background:transparent!important;color:var(--ost-navy)!important}
+body.app-shell .diag-group-badge{background:rgba(255,255,255,.65)!important}
+body.app-shell .diag-sections,.ost-tonal-grid{gap:10px!important}
+body.app-shell .editor-primary-groups button.active,body.app-shell .editor-subgroup-tile.active{background:#e5f0f5!important;border-color:#97b9cf!important;box-shadow:inset 0 0 0 1px #c4d8e5!important}
+body.app-shell .editor-primary-groups,body.app-shell .editor-subgroup-tiles{gap:9px!important}
+body.app-shell .editor-primary-groups button,body.app-shell .editor-subgroup-tile{min-width:0!important;overflow:visible!important;align-items:center!important}
+body.app-shell .editor-primary-groups strong,body.app-shell .editor-subgroup-tile strong{overflow-wrap:anywhere!important;word-break:normal!important}
+/* Article-like detail with clear visual rhythm and integrated anatomy diagrams */
+body.app-shell .ost-module-detail,body.app-shell .algorithm-detail,body.app-shell .diag-detail,body.app-shell .change-detail{background:transparent!important;box-shadow:none!important;border:0!important;padding:0!important}
+body.app-shell .ost-module-detail-head,body.app-shell .detail-lead,body.app-shell .diag-summary{background:#fff!important;border:1px solid var(--ost-line)!important;border-radius:19px!important;padding:18px!important;box-shadow:none!important}
+body.app-shell .ost-module-detail-head{gap:13px}
+body.app-shell .ost-module-detail h2{font-size:clamp(1.15rem,3vw,1.5rem)!important;font-weight:700!important;line-height:1.35!important;margin:0!important}
+body.app-shell .ost-module-kicker{font-weight:650!important;letter-spacing:.04em}
+body.app-shell .ost-module-lead{font-size:1.02rem;font-weight:450;line-height:1.62;color:#486277}
+body.app-shell .ost-figure{padding:15px!important;background:#f6fafc!important;border:1px solid var(--ost-line)!important;box-shadow:none!important;border-radius:18px!important;margin:16px 0!important;overflow:hidden}
+body.app-shell .ost-figure img{max-width:100%!important;height:auto!important;object-fit:contain!important}
+body.app-shell .ost-module-body{display:block!important;background:#fff!important;border:1px solid var(--ost-line)!important;border-radius:19px!important;padding:clamp(16px,3vw,28px)!important;font-size:1rem!important;line-height:1.73!important;color:#233b50}
+body.app-shell .ost-module-body>h3{margin:26px 0 12px!important;font-weight:700!important;font-size:1.13rem!important;color:#244b66;border-bottom:1px solid #e4ebef;padding-bottom:7px}
+body.app-shell .ost-module-body>h3:first-child{margin-top:0!important}
+body.app-shell .ost-module-body>h4{margin:19px 0 9px!important;font-weight:650!important;font-size:1rem!important;color:#315a74}
+body.app-shell .ost-module-body p{margin:0 0 16px!important}
+body.app-shell .ost-module-body ul{padding-left:22px!important;margin:10px 0 20px!important}
+body.app-shell .ost-module-body li{margin:6px 0!important}
+body.app-shell .ost-module-body strong{font-weight:650!important}
+body.app-shell .ost-module-body .ost-inline-figure{background:#f6fafc;border:1px solid var(--ost-line);border-radius:18px;padding:10px}
+body.app-shell .ost-module-sources,body.app-shell .ost-theory-aside{background:#f5f9fb!important;border:1px solid var(--ost-line)!important;border-radius:17px!important;padding:17px 20px!important;margin:15px 0!important;line-height:1.65;color:#35556b}
+body.app-shell .ost-theory-aside .ost-theory-label{font-size:.73rem;font-weight:800;letter-spacing:.09em;color:#577992}
+body.app-shell .ost-theory-aside p{margin:8px 0 0;line-height:1.68}
+body.app-shell .flow-node{border-radius:16px!important;border:1px solid var(--ost-line)!important;background:#f4f8fb!important;box-shadow:none!important}
+body.app-shell .flow-node strong{font-weight:550!important;line-height:1.55!important}
+body.app-shell .algorithm-figure,body.app-shell .guideline-box,body.app-shell .detail-section{border:1px solid var(--ost-line)!important;border-radius:17px!important;box-shadow:none!important}
+body.app-shell .editor-gate{max-width:540px!important}
+/* News is the homepage highlight; its detail has body only and a close icon */
+body.page-home .compact-news{margin:12px 0 20px!important}
+body.page-home .compact-news .section-head h2{color:#9c343d;font-weight:760!important}
+body.page-home .dashboard-news .news-item{background:#fff5f5!important;border:1px solid #eedbdf!important;border-left:4px solid #cf6470!important;border-radius:15px!important;min-height:59px!important;padding:12px 15px!important}
+body.page-home .dashboard-news .news-item h3{font-weight:500!important;color:var(--ost-navy)!important}
+body.page-home .dashboard-news .news-item .arrow{color:#b55764!important}
+.overlay-panel.ost-news-modal .overlay-head{justify-content:flex-end!important;min-height:48px!important;padding-bottom:0!important}
+.overlay-panel.ost-news-modal [data-overlay-title]{display:none!important}
+.overlay-panel.ost-news-modal .overlay-body{padding-top:4px!important}
+.overlay-panel.ost-news-modal .news-detail{padding-top:0!important;border:0!important;background:transparent!important}
+.overlay-panel.ost-news-modal .news-detail p{margin:0!important;color:#2b4d63!important;line-height:1.7!important}
+/* Editor access is not a giant security panel */
+body.page-editor .editor-gate{background:#fff!important;border:1px solid var(--ost-line)!important;border-radius:22px!important;box-shadow:none!important;padding:26px 22px!important}
+body.page-editor .editor-gate .pin-symbol{color:#496e84!important;background:#eef5f9!important}
+body.page-editor .editor-gate .pin-symbol svg{width:29px!important;height:29px!important}
+body.page-editor .editor-gate h2{font-weight:730!important;font-size:1.6rem!important}
+body.page-editor .editor-gate .btn.primary{background:#286782!important;border-color:#286782!important}
+body.page-editor .editor-gate input{height:55px!important;border-radius:14px!important}
+/* Ensure descenders (g, j, p, q, y) are never cut off in mobile navigation */
+@media(max-width:1099px){
+ body.app-shell:not(.page-home) .topbar,body.app-shell:not(.page-home).subpage-topbar .topbar{height:auto!important;min-height:70px!important;position:relative!important;overflow:visible!important}
+ body.app-shell:not(.page-home) .topbar-inner,body.app-shell:not(.page-home).subpage-topbar .topbar-inner{min-height:70px!important;height:auto!important;gap:10px!important;padding:9px 14px!important;overflow:visible!important}
+ body.app-shell:not(.page-home) .topbar .brand{min-width:0!important;overflow:visible!important;align-self:center!important}
+ body.app-shell:not(.page-home) .topbar .brand strong{display:block!important;line-height:1.52!important;padding:3px 0 5px!important;overflow:visible!important;max-width:100%!important;white-space:normal!important;overflow-wrap:anywhere!important;font-size:clamp(.88rem,3vw,1.08rem)!important}
+ body.app-shell:not(.page-home) .topbar .top-action{flex:0 0 43px!important}
+}
+@media(max-width:760px){
+ body.app-shell .main{padding-top:14px!important;padding-bottom:max(18px,env(safe-area-inset-bottom))!important}
+ body.app-shell .scheme-grid{grid-template-columns:1fr!important}
+ body.app-shell .scheme-tile{min-height:66px!important;padding:10px 13px!important}
+ body.app-shell .skill-card,body.app-shell .row-card,body.app-shell .ost-link-directory>a{min-height:66px!important}
+ body.app-shell .ost-module-body{padding:16px!important;font-size:.96rem!important;line-height:1.65!important}
+ body.app-shell .ost-figure{padding:9px!important}
+ body.app-shell .ost-module-detail-head{padding:14px!important}
+ body.app-shell .editor-primary-groups{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.app-shell .editor-primary-groups button{padding:11px!important;min-height:62px!important}
+ body.app-shell .editor-subgroup-tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ body.app-shell .editor-subgroup-tile{padding:10px!important;min-height:60px!important}
+ body.app-shell .editor-subgroup-tile strong{font-size:.86rem!important}
+ body.app-shell .ost-outline-icon{width:22px!important;height:22px!important}
+}
