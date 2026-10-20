@@ -175,7 +175,7 @@ const OST_ICONS={
  notes:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/>',
  guideline:'<path d="M6 3h11a2 2 0 0 1 2 2v16H8a3 3 0 0 1-3-3V5a2 2 0 0 1 1-2Zm-1 15a3 3 0 0 1 3-3h11"/>',
  search:'<circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/>',
- pill:'<rect x="7" y="2" width="10" height="20" rx="5" transform="rotate(45 12 12)"/><path d="m8.5 15.5 7-7"/>',
+ pill:'<path d="M9 3h6v2h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V3Z"/><path d="M10 11h4M12 9v4"/><path d="M9 5h6"/>',
  heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
  dictionary:'<path d="M4 4h13a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4Zm0 13a3 3 0 0 1 3-3h13M9 8h6m-6 3h5"/>',
  skill:'<path d="m14 5 5 5M4 20l8.5-8.5a5 5 0 0 1 6.8-6.8l-4.1 4.1 1 3.1 3.1 1 4.1-4.1a5 5 0 0 1-6.8 6.8L8 24"/>',
@@ -255,20 +255,20 @@ async function home(){
  $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><p>${esc(x.text||'')}</p>${x.link?`<a class="btn primary" href="${esc(x.link)}">Inhalt öffnen →</a>`:''}</section>`,{news:true});}});
 }
 
-const MODULE_TYPES={"pharm":{"title":"Pharmakologie","icon":"💊","area":"wissen"},"anatomy":{"title":"Anatomie & Physiologie","icon":"🫀","area":"wissen"},"befund":{"title":"Befundwörterbuch","icon":"📖","area":"wissen"},"mpg":{"title":"MPG-Informationen","icon":"🩺","area":"training"},"checklists":{"title":"Checklisten","icon":"📄","area":"training"}};
-const MODULE_ICON_OPTIONS=['','💊','💉','🫀','🫁','🧠','🩺','📖','📄','🧪','🔬','🧬','⚡','🖥️','🧰','🦠','💧','❤️','🦴','👶'];
+const MODULE_TYPES={"pharm":{"title":"Pharmakologie","icon":"⚕️","area":"wissen"},"anatomy":{"title":"Anatomie & Physiologie","icon":"🫀","area":"wissen"},"befund":{"title":"Befundwörterbuch","icon":"📖","area":"wissen"},"mpg":{"title":"MPG-Informationen","icon":"🩺","area":"training"},"checklists":{"title":"Checklisten","icon":"📄","area":"training"}};
+const MODULE_ICON_OPTIONS=['','⚕️','💉','🫀','🫁','🧠','🩺','📖','📄','🧪','🔬','🧬','⚡','🖥️','🧰','🦠','💧','❤️','🦴','👶'];
 function moduleItemIcon(item,slug){
  const saved=String(item?.icon||'').trim();if(saved)return saved;
  const text=String([item?.title,item?.category,item?.summary].filter(Boolean).join(' ')).toLocaleLowerCase('de');
  if(slug==='pharm'){
-  if(/analge|schmerz|opioid|paracetamol|ibuprofen|novalgin|morphin/.test(text))return '💊';
+  if(/analge|schmerz|opioid|paracetamol|ibuprofen|novalgin|morphin/.test(text))return '⚕️';
   if(/adrenalin|noradren|vaso|kreislauf|reanimation/.test(text))return '🫀';
   if(/salbutamol|broncho|asthma|copd|inhal/.test(text))return '🫁';
   if(/insulin|glukose|diabetes|hypoglyk/.test(text))return '🧪';
   if(/antibiot|antiinfek/.test(text))return '🦠';
   if(/sedier|benzodiazep|midazolam|narkose/.test(text))return '💉';
   if(/antiem|übel|erbrechen/.test(text))return '💧';
-  return '💊';
+  return '⚕️';
  }
  if(slug==='anatomy'){
   if(/herz|kreislauf|koronar|gefäß/.test(text))return '🫀';
@@ -310,20 +310,32 @@ async function modulePage(){
  const all=await get('knowledgeModules'),items=(Array.isArray(all)?all:[]).filter(x=>x.module===slug&&x.status!=='draft');
  const q=new URLSearchParams(location.search).get('id'),current=items.find(x=>x.id===q);
  if(slug==='befund'){
- const base=`<section class="page-banner"><h1>📖 Befundwörterbuch</h1><p>Fachbegriffe und Abkürzungen auf einen Blick.</p></section>`;
+ const base=`<section class="page-banner"><h1>Befundwörterbuch</h1><p>Fachbegriffe und Abkürzungen auf einen Blick.</p></section>`;
  $('[data-main]').innerHTML=base+`<div class="ost-module-toolbar"><input type="search" data-befund-search placeholder="Abkürzung oder Begriff suchen …" aria-label="Befundwörterbuch durchsuchen"></div><div class="ost-dictionary-wrap"><table class="ost-dictionary"><thead><tr><th>Begriff / Abkürzung</th><th>Erklärung</th></tr></thead><tbody data-befund-rows></tbody></table></div>`;
  const draw=()=>{const term=normalizedSearch($('[data-befund-search]').value);const matched=items.filter(x=>normalizedSearch([x.title,x.summary,x.body,x.synonyms].join(' ')).includes(term)).sort((a,b)=>String(a.title).localeCompare(String(b.title),'de',{sensitivity:'base'}));$('[data-befund-rows]').innerHTML=matched.map(x=>`<tr><th scope="row">${esc(x.title)}</th><td>${esc(shortModuleExplanation(x)||'–')}</td></tr>`).join('')||'<tr><td colspan="2">Keine Einträge gefunden.</td></tr>'};$('[data-befund-search]').addEventListener('input',draw);draw();return;
  }
-
  if(slug==='checklists'){
   const base=`<section class="page-banner"><h1>Checklisten</h1></section>`;
   $('[data-main]').innerHTML=base+`<div class="ost-module-toolbar"><input type="search" data-checklist-search placeholder="Checkliste suchen …" aria-label="Checklisten durchsuchen"></div><div class="ost-checklist-list" data-checklist-list></div>`;
   const draw=()=>{const term=normalizedSearch($('[data-checklist-search]').value);const hits=items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body].join(' ')).includes(term)).sort((a,b)=>String(a.title).localeCompare(String(b.title),'de'));$('[data-checklist-list]').innerHTML=hits.map(x=>`<article class="ost-checklist-card"><span class="ost-checklist-icon" aria-hidden="true">${ostIcon('checklist')}</span><div class="ost-checklist-info"><h2>${esc(x.title)}</h2>${x.category?`<div class="ost-checklist-category">${esc(x.category)}</div>`:''}${x.summary?`<p>${esc(x.summary)}</p>`:''}${x.body?`<div class="ost-checklist-body">${renderModuleText(x.body)}</div>`:''}</div>${x.documentUrl&&/^https:\/\/[^\s"<>]+$/i.test(x.documentUrl)?`<a class="ost-checklist-download" href="${esc(x.documentUrl)}" target="_blank" rel="noopener noreferrer" download>PDF öffnen <span aria-hidden="true">↗</span></a>`:'<span class="ost-checklist-missing">Noch kein PDF</span>'}</article>`).join('')||'<p class="empty">Noch keine Checklisten vorhanden.</p>'};$('[data-checklist-search]').oninput=draw;draw();return;
  }
- const base=`<section class="page-banner"><h1>${esc(meta.icon)} ${esc(meta.title)}</h1></section>`;
+ const base=`<section class="page-banner"><h1>${esc(meta.title)}</h1></section>`;
  if(current){const itemIcon=moduleItemIcon(current,slug);$('[data-main]').innerHTML=base+`<article class="ost-module-detail"><div class="ost-module-detail-head"><span class="ost-module-symbol">${esc(itemIcon)}</span><div><div class="ost-module-kicker">${esc(current.category||meta.title)}</div><h2>${esc(current.title)}</h2></div></div>${current.summary?`<p class="ost-module-lead">${esc(current.summary)}</p>`:''}${current.image&&/^(https:\/\/[^\s]+|assets\/[a-zA-Z0-9._\/-]+\.(svg|png|webp|jpg|jpeg))$/i.test(current.image)?`<figure class="ost-figure"><img class="ost-anatomy-figure" src="${esc(current.image)}" alt="${esc(current.imageCaption||'Lernabbildung: '+current.title)}" loading="lazy"><figcaption>${esc(current.imageCaption||'Schematische Lernabbildung')}</figcaption></figure>`:''}<div class="ost-module-body">${renderModuleText(current.body)}</div>${current.sources?`<section class="ost-module-sources"><h3>Quellen</h3><p>${esc(current.sources).replace(/\n/g,'<br>')}</p></section>`:''}<p class="diag-hint">Inhalte vor klinischer Anwendung anhand freigegebener lokaler Vorgaben prüfen.${current.reviewDue?' Nächste Prüfung: '+esc(current.reviewDue):''}</p></article>`;const cat=await contentCatalog();$('[data-main]').insertAdjacentHTML('beforeend',relatedHtml(current,cat));return}
+ if(slug==='anatomy'){
+  const areaDefs=[
+   {id:'head',label:'Kopf & Neuro',emoji:'🧠',copy:'Gehirn, Nerven, Sinnesorgane',match:/kopf|gehirn|hirn|neuro|nerv|auge|ohr|mund|schädel/i},
+   {id:'thorax',label:'Thorax & Herz',emoji:'🫀',copy:'Herz, Kreislauf und Atmung',match:/herz|kreislauf|thorax|lunge|atem|respira|koronar/i},
+   {id:'abdomen',label:'Abdomen',emoji:'🩺',copy:'Bauchorgane, Stoffwechsel, Niere',match:/abd|bauch|magen|darm|leber|niere|uro|stoffwechsel|endo/i},
+   {id:'movement',label:'Bewegungsapparat',emoji:'🦴',copy:'Knochen, Muskeln, Gelenke',match:/skelett|knochen|muskel|gelenk|extrem|wirbel|becken/i},
+   {id:'general',label:'Grundlagen',emoji:'📚',copy:'Allgemeine Physiologie und Übersicht',match:/.*/}
+  ];
+  const grouped=areaDefs.map(def=>({...def,items:items.filter(x=>def.id==='general'?true:def.match.test([x.title,x.category,x.summary,x.synonyms].join(' ')))}));
+  const unique=grouped.map((g,idx)=>idx===grouped.length-1?{...g,items:g.items.filter(x=>!grouped.slice(0,-1).some(prev=>prev.items.includes(x)))}:g).filter(g=>g.items.length);
+  $('[data-main]').innerHTML=base+`<section class="ost-body-hero"><div class="ost-body-hero-copy"><div class="ost-theory-label">Interaktive Orientierung</div><h2>Anatomie & Physiologie nach Körperregion</h2><p>Über die Körperkarte direkt in die passende Region springen. Das wirkt am Handy deutlich klarer als eine reine lange Liste.</p></div><div class="ost-body-map" aria-label="Körperregionen"><div class="body-model-core" aria-hidden="true">🧍</div>${unique.slice(0,4).map(g=>`<a class="body-hotspot hotspot-${g.id}" href="${g.items[0]?`themen.html?bereich=anatomy&id=${encodeURIComponent(g.items[0].id)}`:`#anatomy-${g.id}`}"><span>${g.emoji}</span><strong>${esc(g.label)}</strong></a>`).join('')}</div></section><div class="ost-module-toolbar anatomy-toolbar"><input type="search" data-module-search placeholder="Region oder Thema suchen …" aria-label="Anatomie durchsuchen"></div><div class="ost-anatomy-groups" data-module-list></div><p class="diag-hint">Tipp: Herz antippen → Herzthemen öffnen, Gehirn antippen → Neuro/Physiologie. So bleibt die Navigation mobil kompakt.</p>`;
+  const draw=()=>{const term=normalizedSearch($('[data-module-search]').value);$('[data-module-list]').innerHTML=unique.map(g=>{const hits=g.items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body,x.synonyms].join(' ')).includes(term));if(!hits.length)return '';return `<section class="ost-body-group" id="anatomy-${g.id}"><div class="ost-body-group-head"><span>${g.emoji}</span><div><h3>${esc(g.label)}</h3><p>${esc(g.copy)}</p></div><b>${hits.length}</b></div><div class="ost-link-directory ost-tonal-directory">${hits.map(x=>`<a href="themen.html?bereich=anatomy&id=${encodeURIComponent(x.id)}"><span>${x.icon?esc(x.icon):moduleItemIcon(x,'anatomy')}</span><div><strong>${esc(x.title)}</strong>${x.summary?`<small>${esc(x.summary)}</small>`:''}</div><b>›</b></a>`).join('')}</div></section>`}).join('')||'<div class="empty">Keine Einträge gefunden.</div>'};$('[data-module-search]').oninput=draw;draw();return;
+ }
  $('[data-main]').innerHTML=base+`<div class="ost-module-toolbar"><input type="search" data-module-search placeholder="${esc(meta.title)} durchsuchen …" aria-label="Themen durchsuchen"></div><div class="ost-link-directory ost-tonal-directory" data-module-list></div><p class="diag-hint">Einträge werden in der Redaktion gepflegt. Technische Angaben und Anleitungen bitte anhand der Herstellerdokumentation prüfen.</p>`;
- const draw=()=>{const term=normalizedSearch($('[data-module-search]').value);const hits=items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body,x.synonyms].join(' ')).includes(term));$('[data-module-list]').innerHTML=hits.map(x=>`<a href="themen.html?bereich=${encodeURIComponent(slug)}&id=${encodeURIComponent(x.id)}"><span>${x.icon?esc(x.icon):ostIcon(slug==='pharm'?'pill':slug==='anatomy'?'anatomy':'book')}</span><div><strong>${esc(x.title)}</strong>${x.summary?`<small>${esc(x.summary)}</small>`:''}</div><b>›</b></a>`).join('')||'<div class="empty">Noch keine Einträge in diesem Bereich. Inhalte können in der Redaktion ergänzt werden.</div>'};$('[data-module-search]').oninput=draw;draw();
+ const draw=()=>{const term=normalizedSearch($('[data-module-search]').value);const hits=items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body,x.synonyms].join(' ')).includes(term));$('[data-module-list]').innerHTML=hits.map(x=>`<a href="themen.html?bereich=${encodeURIComponent(slug)}&id=${encodeURIComponent(x.id)}"><span>${x.icon?esc(x.icon):moduleItemIcon(x,slug)}</span><div><strong>${esc(x.title)}</strong>${x.summary?`<small>${esc(x.summary)}</small>`:''}</div><b>›</b></a>`).join('')||'<div class="empty">Noch keine Einträge in diesem Bereich. Inhalte können in der Redaktion ergänzt werden.</div>'};$('[data-module-search]').oninput=draw;draw();
 }
 let activeModuleSetter=null;
 async function moduleEditor(box,initialModule='pharm'){
@@ -362,15 +374,41 @@ async function newsPage(){
 }
 async function literature(){
  const arts=await articles();
- const defs=[['Reanimation','❤️',['Reanimation','Kreislaufstillstand']],['Simulation & Debriefing','👥',['Simulation','Debriefing','Ausbildung']],['CRM & Human Factors','🧑‍🤝‍🧑',['CRM','Human Factors','Entscheidungsfindung']],['Neurologie / Schlaganfall','🧠',['Neurologie','Schlaganfall']],['Qualität & Sicherheit','🛡️',['Qualität','Patientensicherheit','System']],['Critical Care','🫁',['Critical Care','Diagnostik']],['Pharmakologie & Schmerz','💊',['Pharmakologie','Schmerz']],['HEMS & Präklinik','🚁',['HEMS','Versorgung','Österreich']]];
- const now=new Date();const fresh=a=>{const raw=a.added||a.activeSince||'';if(!raw)return false;const d=new Date(raw+'T12:00:00');return !Number.isNaN(d.getTime())&&((now-d)/86400000)<=30&&((now-d)/86400000)>=0};
+ const defs=[['Reanimation','❤️',['Reanimation','Kreislaufstillstand']],['Simulation & Debriefing','👥',['Simulation','Debriefing','Ausbildung']],['CRM & Human Factors','🧑‍🤝‍🧑',['CRM','Human Factors','Entscheidungsfindung']],['Neurologie / Schlaganfall','🧠',['Neurologie','Schlaganfall']],['Qualität & Sicherheit','🛡️',['Qualität','Patientensicherheit','System']],['Critical Care','🫁',['Critical Care','Diagnostik']],['Pharmakologie & Schmerz','⚕️',['Pharmakologie','Schmerz']],['HEMS & Präklinik','🚁',['HEMS','Versorgung','Österreich']]];
+ const now=new Date();
+ const fresh=a=>{const raw=a.added||a.activeSince||'';if(!raw)return false;const d=new Date(raw+'T12:00:00');return !Number.isNaN(d.getTime())&&((now-d)/86400000)<=30&&((now-d)/86400000)>=0};
  const freshItems=arts.filter(fresh);
  const groups=[{id:'new',title:'Neuerscheinungen',icon:'✨',items:freshItems,new:true},...defs.map((x,i)=>({id:'g'+i,title:x[0],icon:x[1],items:arts.filter(a=>arr(a.topics).some(t=>x[2].includes(t)))}))].filter(g=>g.items.length);
- $('[data-main]').innerHTML=`<section class="page-banner lit-banner"><div class="page-banner-row"><h1>Literatursammlung</h1></div><div class="toolbar"><div class="searchbar"><input data-q placeholder="Literatur suchen …"><select data-f><option value="all">Alle Kategorien</option>${groups.map(g=>`<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select></div><div class="filter-chips"><button class="filter-chip active" data-chip="all">Alle</button>${groups.map(g=>`<button class="filter-chip" data-chip="${g.id}">${g.icon} ${esc(g.title)}</button>`).join('')}</div></div></section><section class="lit-list" data-list></section>`;
- function article(a){const link=a.freeUrl||a.publisherUrl||'';const auth=Array.isArray(a.authors)?a.authors.join(', '):String(a.authors||'');return `<article class="lit-article-card"><div class="doc-icon">📄</div><div class="lit-article-copy"><h4>${esc(a.title)}</h4><p>${esc(auth)}${a.journal?` · ${esc(a.journal)}`:''}${a.year?` · ${esc(a.year)}`:''}</p><div class="lit-meta"><span class="meta-chip">${esc(a.type||'Artikel')}</span>${a.level?`<span class="meta-chip">${esc(String(a.level).toUpperCase())}</span>`:''}${a.access?`<span class="meta-chip">${esc(a.access==='oa'?'Open Access':a.access==='free'?'Freie Version':'Paywall')}</span>`:''}</div></div>${link?`<a class="lit-link-arrow" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Artikel öffnen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5"/><path d="M10 14 19 5"/><path d="M19 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>`:''}</article>`}
- function draw(){const q=$('[data-q]').value.toLowerCase().trim(),fid=$('[data-f]').value;const list=groups.filter(g=>fid==='all'||g.id===fid).map(g=>{const items=g.items.filter(a=>!q||[a.title,Array.isArray(a.authors)?a.authors.join(' '):a.authors,a.journal,arr(a.topics).join(' ')].join(' ').toLowerCase().includes(q));if(!items.length)return'';return `<article class="lit-topic" data-group="${g.id}"><button class="lit-topic-head" data-toggle="${g.id}"><span class="lit-topic-icon">${g.icon}</span><span><h3>${esc(g.title)}</h3><p>${items.length} Artikel${g.new?' · letzte 30 Tage':''}</p></span><span class="lit-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 7 5 5-5 5"/></svg></span></button><div class="lit-articles hidden">${items.map(article).join('')}</div></article>`}).join('');$('[data-list]').innerHTML=list||'<div class="empty">Keine Treffer</div>'}
- $('[data-q]').oninput=draw;$('[data-f]').onchange=draw;$('[data-main]').onclick=e=>{const c=e.target.closest('[data-chip]');if(c){$$('[data-chip]').forEach(x=>x.classList.toggle('active',x===c));$('[data-f]').value=c.dataset.chip;draw();return}const t=e.target.closest('[data-toggle]');if(t){const box=t.closest('.lit-topic'),body=$('.lit-articles',box);box.classList.toggle('expanded');body.classList.toggle('hidden')}};draw()
+ $('[data-main]').innerHTML=`<section class="page-banner lit-banner lit-clean"><div class="page-banner-row"><h1>Literatursammlung</h1></div><div class="toolbar lit-toolbar"><div class="searchbar literature-search"><input data-q placeholder="Literatur suchen …"><select data-f><option value="all">Alle Kategorien</option>${groups.map(g=>`<option value="${g.id}">${esc(g.title)}</option>`).join('')}</select></div></div></section><section class="lit-list lit-list-clean" data-list></section>`;
+ function article(a){
+  const link=a.freeUrl||a.publisherUrl||'';
+  const auth=Array.isArray(a.authors)?a.authors.join(', '):String(a.authors||'');
+  return `<article class="lit-article-card"><div class="doc-icon">📄</div><div class="lit-article-copy"><h4>${esc(a.title)}</h4><p>${esc(auth)}${a.journal?` · ${esc(a.journal)}`:''}${a.year?` · ${esc(a.year)}`:''}</p><div class="lit-meta"><span class="meta-chip">${esc(a.type||'Artikel')}</span>${a.level?`<span class="meta-chip">${esc(String(a.level).toUpperCase())}</span>`:''}${a.access?`<span class="meta-chip">${esc(a.access==='oa'?'Open Access':a.access==='free'?'Freie Version':'Paywall')}</span>`:''}</div></div>${link?`<a class="lit-link-arrow" href="${esc(link)}" target="_blank" rel="noopener" aria-label="Artikel öffnen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h5v5"/><path d="M10 14 19 5"/><path d="M19 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></a>`:''}</article>`
+ }
+ function draw(){
+  const q=$('[data-q]').value.toLowerCase().trim();
+  const fid=$('[data-f]').value;
+  const visible=groups.filter(g=>fid==='all'||g.id===fid).map(g=>{
+   const items=g.items.filter(a=>!q||[a.title,Array.isArray(a.authors)?a.authors.join(' '):a.authors,a.journal,arr(a.topics).join(' ')].join(' ').toLowerCase().includes(q));
+   if(!items.length)return'';
+   return `<article class="lit-topic ${g.new?'lit-topic-fresh':''}" data-group="${g.id}"><button class="lit-topic-head" data-toggle="${g.id}"><span class="lit-topic-icon">${g.icon}</span><span class="lit-topic-copy"><h3>${esc(g.title)}</h3><p>${items.length} Artikel${g.new?' · letzte 30 Tage':''}</p></span><span class="lit-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 7 5 5-5 5"/></svg></span></button><div class="lit-articles hidden">${items.map(article).join('')}</div></article>`
+  }).join('');
+  $('[data-list]').innerHTML=visible||'<div class="empty">Keine Treffer</div>';
+ }
+ $('[data-q]').oninput=draw;
+ $('[data-f]').onchange=draw;
+ $('[data-main]').onclick=e=>{
+  const t=e.target.closest('[data-toggle]');
+  if(t){
+   const box=t.closest('.lit-topic');
+   const body=$('.lit-articles',box);
+   box.classList.toggle('expanded');
+   body.classList.toggle('hidden');
+  }
+ };
+ draw();
 }
+
 async function abcdePage(){
  const d=await get('abcde'),labels={A:'Airway',B:'Breathing',C:'Circulation',D:'Disability',E:'Exposure'},sub={A:'Atemweg',B:'Atmung',C:'Kreislauf',D:'Neurologie',E:'Umgebung'},vis={A:'🫁',B:'🫁',C:'❤️',D:'🧠',E:'🌡️'};let current=0;
  $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>ABCDE-Schema</h1></section><section class="abcde-wrap"><div class="abcde-tabs" data-tabs></div><div class="abcde-main simplified" data-detail></div></section>`;
@@ -436,7 +474,8 @@ async function differentialPage(){
  const groups=new Map();
  d.forEach(x=>{const meta=resolveGroup(x.group);if(!groups.has(meta.label))groups.set(meta.label,{meta,items:[]});groups.get(meta.label).items.push(x)});
  const sorted=[...groups.values()].sort((a,b)=>(order.indexOf(a.meta.label)<0?999:order.indexOf(a.meta.label))-(order.indexOf(b.meta.label)<0?999:order.indexOf(b.meta.label)));
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Diagnostik</h1></section><div class="diag-search-wrap"><input class="diag-search" data-diag-search placeholder="Symptom oder Krankheitsbild suchen …" aria-label="Diagnostik durchsuchen"></div><div data-diag-categories class="diag-sections ost-tonal-grid">${sorted.map(({meta,items})=>`<details class="diag-group" data-tone="${meta.tone}"><summary><span class="diag-group-badge">${ostIcon(meta.tone==='heart'?'heart':meta.tone==='brain'?'anatomy':meta.tone==='breath'?'device':'search')}</span><span class="diag-group-copy"><strong>${esc(meta.label)}</strong></span><span class="diag-group-chevron">⌄</span></summary><div class="diag-results">${items.map(symptomCard).join('')}</div></details>`).join('')}</div><div data-diag-search-results class="diag-results" hidden></div>${intro}`;
+ const anchor=v=>'diag-'+String(v||'').toLowerCase().replace(/[^a-z0-9äöüß]+/gi,'-');
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Diagnostik</h1><p>Über Symptome, Körperregionen und Systemgruppen schnell zum passenden Beschwerdebild.</p></section><div class="diag-search-wrap"><input class="diag-search" data-diag-search placeholder="Symptom oder Krankheitsbild suchen …" aria-label="Diagnostik durchsuchen"></div><nav class="diag-quick-grid">${sorted.map(({meta,items})=>`<a class="diag-quick-tile" href="#${anchor(meta.label)}"><span class="diag-group-badge">${ostIcon(meta.tone==='heart'?'heart':meta.tone==='brain'?'anatomy':meta.tone==='breath'?'device':'search')}</span><strong>${esc(meta.label)}</strong><small>${items.length} Themen</small></a>`).join('')}</nav><div data-diag-categories class="diag-sections diag-sections-clean">${sorted.map(({meta,items})=>`<section class="diag-topic-block" id="${anchor(meta.label)}"><div class="diag-topic-head"><span class="diag-group-badge">${ostIcon(meta.tone==='heart'?'heart':meta.tone==='brain'?'anatomy':meta.tone==='breath'?'device':'search')}</span><div><h2>${esc(meta.label)}</h2><p>${esc(meta.sub||'')}</p></div><b>${items.length}</b></div><div class="diag-topic-list">${items.map(symptomCard).join('')}</div></section>`).join('')}</div><div data-diag-search-results class="diag-results" hidden></div>${intro}`;
  const input=$('[data-diag-search]'),categories=$('[data-diag-categories]'),results=$('[data-diag-search-results]');
  input.oninput=()=>{
   const q=input.value.trim().toLocaleLowerCase('de');
@@ -444,11 +483,10 @@ async function differentialPage(){
   if(!q)return;
   const found=[];
   d.forEach(x=>{
-   const meta=resolveGroup(x.group);
-   if(String(x.title||'').toLocaleLowerCase('de').includes(q))found.push({type:'symptom',x,meta});
-   arr(x.causes).forEach((c,i)=>{const obj=typeof c==='string'?{name:c}:c;if(String(obj.name||'').toLocaleLowerCase('de').includes(q))found.push({type:'disease',x,meta,i,obj})});
+   if(String(x.title||'').toLocaleLowerCase('de').includes(q))found.push({type:'symptom',x});
+   arr(x.causes).forEach((c,i)=>{const obj=typeof c==='string'?{name:c}:c;if(String(obj.name||'').toLocaleLowerCase('de').includes(q))found.push({type:'disease',x,i,obj})});
   });
-  results.innerHTML=found.slice(0,80).map(r=>r.type==='symptom'?`<a class="diag-result diag-symptom-card" href="${link(r.x)}"><span class="diag-result-icon">${iconFor(r.x)}</span><span><strong>${esc(r.x.title)}</strong></span><b>›</b></a>`:`<a class="diag-disease-card diag-disease-compact" href="${link(r.x,r.i)}"><div class="diag-disease-head"><span class="diag-result-icon">${diseaseIcon(r.obj.name)}</span><span class="diag-disease-title"><strong>${esc(r.obj.name)}</strong></span><b>›</b></div></a>`).join('')||'<p class="diag-lead">Keine Treffer gefunden.</p>';
+  results.innerHTML=found.slice(0,80).map(r=>r.type==='symptom'?`<a class="diag-result diag-symptom-card" href="${link(r.x)}"><span class="diag-result-icon">${iconFor(r.x)}</span><span><strong>${esc(r.x.title)}</strong></span><b>›</b></a>`:`<a class="diag-disease-card diag-disease-compact" href="${link(r.x,r.i)}"><div class="diag-disease-head"><span class="diag-result-icon">${diseaseIcon(r.obj.name)}</span><span class="diag-disease-title"><strong>${esc(r.obj.name)}</strong><small>${esc(r.x.title)}</small></span><b>›</b></div></a>`).join('')||'<p class="diag-lead">Keine Treffer gefunden.</p>';
  };
 }
 
@@ -605,11 +643,15 @@ async function editor(){
    box.innerHTML=`<div class="editor-toolbar"><div><h2>${tabs.find(t=>t[0]===name)?.[1]||name}</h2><p>Einträge öffnen, bearbeiten und direkt synchronisieren.</p></div><div class="editor-toolbar-actions"><button class="btn primary" data-add>+ Neu</button><button class="btn" data-save>Speichern</button></div></div><div class="editor-items" data-items></div>`;
    const itemsBox=$('[data-items]',box);
    let selectedIndex=-1;
+   let filterTerm='';
    const render=()=>{
      if(name==='news'){itemsBox.innerHTML=d.map((x,i)=>renderCard(name,x,i)).join('');return}
-     const options=d.map((x,i)=>({i,label:String(x.title||x.name||x.key||'Eintrag '+(i+1))})).sort((a,b)=>a.label.localeCompare(b.label,'de'));
-     itemsBox.innerHTML=`<div class="ost-entry-picker"><label>Eintrag auswählen<select data-editor-pick><option value="-1">– Bitte auswählen –</option>${options.map(x=>`<option value="${x.i}" ${selectedIndex===x.i?'selected':''}>${esc(x.label)}</option>`).join('')}</select></label></div>`+(selectedIndex>=0&&d[selectedIndex]?renderCard(name,d[selectedIndex],selectedIndex):'<p class="diag-hint">Wähle einen Eintrag aus, um das Bearbeitungsfenster zu öffnen.</p>');
-     itemsBox.querySelector('[data-editor-pick]').onchange=e=>{sync();selectedIndex=Number(e.target.value);render();openCard(selectedIndex)};
+     const options=d.map((x,i)=>({i,label:String(x.title||x.name||x.key||'Eintrag '+(i+1)),search:normalizedSearch([x.title,x.authors,x.journal,Array.isArray(x.topics)?x.topics.join(' '):x.topics].join(' '))})).sort((a,b)=>a.label.localeCompare(b.label,'de'));
+     const visible=name==='articles'&&filterTerm?options.filter(x=>x.search.includes(normalizedSearch(filterTerm))):options;
+     const pickerTop=name==='articles'?`<div class="literature-admin-stats"><div><strong>${d.length}</strong><span>Artikel gesamt</span></div><div><strong>${new Set(d.flatMap(x=>Array.isArray(x.topics)?x.topics:[x.topics]).filter(Boolean)).size}</strong><span>Themen</span></div></div><div class="editor-grid two literature-editor-tools"><label class="ux-field"><span>Literatur suchen</span><input data-article-filter placeholder="Titel, Autor:in, Journal …" value="${esc(filterTerm)}"></label><label class="ux-field"><span>Eintrag auswählen</span><select data-editor-pick><option value="-1">– Bitte auswählen –</option>${visible.map(x=>`<option value="${x.i}" ${selectedIndex===x.i?'selected':''}>${esc(x.label)}</option>`).join('')}</select></label></div>`:`<div class="ost-entry-picker"><label>Eintrag auswählen<select data-editor-pick><option value="-1">– Bitte auswählen –</option>${options.map(x=>`<option value="${x.i}" ${selectedIndex===x.i?'selected':''}>${esc(x.label)}</option>`).join('')}</select></label></div>`;
+     itemsBox.innerHTML=pickerTop+(selectedIndex>=0&&d[selectedIndex]?renderCard(name,d[selectedIndex],selectedIndex):'<p class="diag-hint">Wähle einen Eintrag aus, um das Bearbeitungsfenster zu öffnen.</p>');
+     itemsBox.querySelector('[data-editor-pick]')?.addEventListener('change',e=>{sync();selectedIndex=Number(e.target.value);render();openCard(selectedIndex)});
+     itemsBox.querySelector('[data-article-filter]')?.addEventListener('input',e=>{filterTerm=e.target.value;if(selectedIndex>=0&&!visible.some(v=>v.i===selectedIndex))selectedIndex=-1;render();});
    };render();
    const sync=()=>{readAll(name,d,box);editorDrafts.set(name,d)};
    const rerenderOpen=i=>{selectedIndex=i;render();openCard(i)};
@@ -676,7 +718,7 @@ async function editor(){
    } else if(name==='differential'){
      body=`<div class="editor-grid two">${field('Symptom / führendes Beschwerdebild',x.title,'title')}${field('Fachbereich / Gruppe',x.group||'Weitere','group')}${field('Symbol / Emoji',x.icon,'icon')}</div>${field('Physiologisches Hintergrundwissen',x.theory,'theory','textarea')}<section class="editor-subsection"><h3>Wichtige Fragen</h3>${listEditor(x.questions,'questions','Frage')}</section><section class="editor-subsection"><h3>Red Flags</h3>${listEditor(x.redflags,'redflags','Red Flag')}</section><section class="editor-subsection"><h3>Krankheitsbilder</h3><div class="disease-editor-list">${arr(x.causes).map((c,ci)=>{const o=typeof c==='string'?{name:c,info:''}:c;return `<div class="disease-editor-card" data-disease-index="${ci}">${field('Name',o.name,'diseaseName')}${field('Physiologie / Pathophysiologie',o.physiology,'diseasePhysiology','textarea')}${field('Typische Befunde / auffällige Werte',o.findings,'diseaseFindings','textarea')}${field('CAVE / Warnzeichen',o.cave,'diseaseCave','textarea')}${field('Weitere Informationen (optional)',o.info,'diseaseInfo','textarea')}${field('Quellenlink (https://…)',o.sourceUrl,'diseaseSourceUrl')}${field('Linktext',o.sourceLabel,'diseaseSourceLabel')}</div>`}).join('')}</div><button class="small-add" type="button" data-add-disease>+ Krankheitsbild</button></section>`;
    } else if(name==='articles'){
-     body=`<div class="editor-grid two">${field('Titel',x.title,'title')}${field('DOI',x.doi,'doi')}${field('Autor:innen',x.authors,'authors')}${field('Journal / Quelle',x.journal,'journal')}${field('Jahr',x.year,'year')}${field('Dokumenttyp',x.type,'type')}${field('Themen / Kategorien',Array.isArray(x.topics)?x.topics.join(', '):x.topics,'topics')}${field('Zielgruppe',x.level,'level')}${field('Sprache',x.language,'language')}${field('Lizenz',x.license,'license')}${field('Lesezeit',x.read,'read')}${field('Zugriff',x.access,'access')}${field('Original-/Verlagslink',x.publisherUrl,'publisherUrl')}${field('Freier Volltext',x.freeUrl,'freeUrl')}${field('Hinzugefügt am',x.added,'added','date')}</div>${field('Warum lesenswert?',x.why,'why','textarea')}<button class="btn" type="button" data-doi-lookup>DOI-Daten abrufen</button>`;
+     body=`<section class="editor-subsection"><h3>Bibliografische Daten</h3><div class="editor-grid two">${field('Titel',x.title,'title')}${field('DOI',x.doi,'doi')}${field('Autor:innen',x.authors,'authors')}${field('Journal / Quelle',x.journal,'journal')}${field('Jahr',x.year,'year')}${field('Dokumenttyp',x.type,'type')}</div><button class="btn" type="button" data-doi-lookup>DOI-Daten abrufen</button></section><section class="editor-subsection"><h3>Einordnung</h3><div class="editor-grid two">${field('Themen / Kategorien',Array.isArray(x.topics)?x.topics.join(', '):x.topics,'topics')}${field('Zielgruppe',x.level,'level')}${field('Sprache',x.language,'language')}${field('Lizenz',x.license,'license')}${field('Lesezeit',x.read,'read')}${field('Zugriff',x.access,'access')}${field('Hinzugefügt am',x.added,'added','date')}</div>${field('Warum lesenswert?',x.why,'why','textarea')}</section><section class="editor-subsection"><h3>Links</h3><div class="editor-grid two">${field('Original-/Verlagslink',x.publisherUrl,'publisherUrl')}${field('Freier Volltext',x.freeUrl,'freeUrl')}</div></section>`;
    } else if(name==='news') body=field('Titel',x.title,'title')+field('Kategorie',x.category,'category')+field('Datum',x.date,'date','date')+field('Beschreibung',x.text,'text','textarea');
    else if(name==='events') body=field('Titel',x.title,'title')+`<div class="editor-grid two">${field('Datum',x.date,'date','date')}${field('Uhrzeit',x.time,'time')}${field('Ort',x.location,'location')}${field('Kategorie',x.category,'category')}${field('Max. Teilnehmer',x.capacity,'capacity')}</div>`+field('Beschreibung',x.description,'description','textarea');
    else if(name==='changes') body=field('Titel',x.title,'title')+field('Kategorie',x.category,'category')+field('Datum',x.date,'date','date')+field('Bisher',x.old,'old','textarea')+field('Neu',x.new,'new','textarea')+field('Quelle',x.source,'source')+field('Gültigkeit',x.validity,'validity')+field('Zuletzt fachlich geprüft',x.lastReviewed,'lastReviewed','date')+field('Nächste Prüfung fällig',x.reviewDue,'reviewDue','date')+field('Verantwortliche Person',x.reviewOwner,'reviewOwner')+field('Bild-URL',x.imageUrl,'imageUrl')+`<label class="ux-field"><span>Bild hochladen</span><input type="file" accept="image/*" data-media-upload data-target="imageUrl"></label>`;

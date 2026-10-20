@@ -1570,3 +1570,196 @@ body.page-editor .editor-gate input{height:55px!important;border-radius:14px!imp
  body.app-shell .editor-subgroup-tile strong{font-size:.86rem!important}
  body.app-shell .ost-outline-icon{width:22px!important;height:22px!important}
 }
+
+
+/* OST1020 visual cleanup 531a */
+:root{
+  --ost-surface:#ffffff;
+  --ost-surface-soft:#f4f8fb;
+  --ost-surface-soft-2:#eef4f8;
+  --ost-line-soft:#dbe5ee;
+  --ost-accent-dark:#183754;
+  --ost-accent-soft:#edf4f8;
+  --ost-alert:#da291c;
+}
+body.app-shell{background:#f4f7fa!important;color:var(--ost-accent-dark)!important}
+body.app-shell .hub-card,
+body.app-shell .scheme-tile,
+body.app-shell .row-card,
+body.app-shell .skill-card,
+body.app-shell .meeting-tile,
+body.app-shell .lit-topic,
+body.app-shell .news-item,
+body.app-shell .event-card,
+body.app-shell .diag-result,
+body.app-shell .diag-disease-card,
+body.app-shell .detail-section,
+body.app-shell .detail-lead,
+body.app-shell .diag-detail,
+body.app-shell .diag-summary,
+body.app-shell .sim-flow-group,
+body.app-shell .material-card,
+body.app-shell .week-card,
+body.app-shell .calendar,
+body.app-shell .page-banner{background:var(--ost-surface)!important;border:1px solid var(--ost-line-soft)!important;box-shadow:none!important}
+body.app-shell .row-icon,
+body.app-shell .detail-big-icon,
+body.app-shell .news-icon,
+body.app-shell .status-icon,
+body.app-shell .doc-icon,
+body.app-shell .lit-topic-icon,
+body.app-shell .abcde-action .i,
+body.app-shell .sim-flow-title span,
+body.app-shell .disease-card>span:first-child,
+body.app-shell .material-card>span:first-child,
+body.app-shell .skill-icon,
+body.app-shell .diag-result-icon,
+body.app-shell .hub-icon,
+body.app-shell .section-icon{background:var(--ost-accent-soft)!important;border:1px solid #e2ebf2!important;color:#274868!important}
+body.app-shell .news-item{position:relative;padding-left:22px!important}
+body.app-shell .news-item::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:4px;border-radius:99px;background:var(--ost-alert)}
+body.app-shell .news-item h3,body.app-shell .lit-topic h3,body.app-shell .row-card h3,body.app-shell .skill-card h3{color:var(--ost-accent-dark)!important}
+body.app-shell .meta-chip{background:var(--ost-surface-soft-2)!important;color:#486176!important}
+body.app-shell .filter-chip{background:#fff!important;border:1px solid var(--ost-line-soft)!important;color:#32506c!important}
+body.app-shell .filter-chip.active{background:var(--ost-accent-dark)!important;border-color:var(--ost-accent-dark)!important;color:#fff!important}
+body.app-shell .lit-chevron,body.app-shell .lit-link-arrow{background:#fff!important;border-color:var(--ost-line-soft)!important;color:#7c93a6!important}
+body.app-shell .lit-topic.expanded .lit-chevron{color:var(--ost-accent-dark)!important;border-color:#c6d4df!important;background:var(--ost-surface-soft)!important}
+body.app-shell .searchbar input,body.app-shell .searchbar select{background:#fff!important;border:1px solid var(--ost-line-soft)!important}
+body.app-shell .section-head a,body.app-shell .page-banner a{color:#56738d!important}
+body.app-shell .hub-card,body.app-shell .scheme-tile,body.app-shell .row-card,body.app-shell .skill-card,body.app-shell .meeting-tile,body.app-shell .event-card{transition:none!important}
+
+/* cleaner literature page */
+.lit-clean .page-banner-row{margin-bottom:10px}
+.lit-clean .toolbar{margin-top:0!important}
+.lit-clean .filter-chips{display:none!important}
+.lit-list-clean{display:grid;gap:14px}
+.lit-list-clean .lit-topic{border-radius:22px!important;overflow:hidden}
+.lit-list-clean .lit-topic-head{padding:16px!important;grid-template-columns:56px minmax(0,1fr) 34px!important;gap:14px!important;align-items:center!important}
+.lit-list-clean .lit-topic-copy h3{font-size:1.28rem!important;line-height:1.2!important;margin:0!important}
+.lit-list-clean .lit-topic-copy p{font-size:.95rem!important;margin:6px 0 0!important;color:#6f8597!important}
+.lit-list-clean .lit-topic-icon{width:56px!important;height:56px!important;border-radius:18px!important;font-size:30px!important}
+.lit-list-clean .lit-articles{padding:0 16px 4px!important;border-top:1px solid #edf2f6!important}
+.lit-list-clean .lit-article-card{padding:14px 0!important}
+.lit-list-clean .lit-article-copy h4{font-size:1rem!important}
+@media (max-width:700px){
+  .lit-list-clean .lit-topic-head{grid-template-columns:50px minmax(0,1fr) 30px!important;padding:14px!important}
+  .lit-list-clean .lit-topic-icon{width:50px!important;height:50px!important;border-radius:16px!important;font-size:27px!important}
+  .lit-list-clean .lit-topic-copy h3{font-size:1.12rem!important}
+  .lit-list-clean .lit-topic-copy p{font-size:.9rem!important}
+}
+
+/* news overlay without empty top gap */
+.overlay-panel.ost-news-modal{position:relative!important;padding-top:18px!important}
+.overlay-panel.ost-news-modal .overlay-head{position:absolute!important;top:14px!important;right:14px!important;left:auto!important;width:auto!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+.overlay-panel.ost-news-modal [data-overlay-title]{display:none!important}
+.overlay-panel.ost-news-modal .overlay-body{padding-top:0!important}
+.overlay-panel.ost-news-modal .close{width:44px!important;height:44px!important;border-radius:14px!important;background:#f3f7fb!important;border:1px solid var(--ost-line-soft)!important;color:var(--ost-accent-dark)!important}
+.overlay-panel.ost-news-modal .news-detail{padding:10px 0 0!important;margin-top:0!important;border:0!important;background:transparent!important}
+.overlay-panel.ost-news-modal .news-detail p{font-size:1.05rem!important;line-height:1.7!important;color:#2b4862!important}
+
+/* uniform page cards in submenus */
+body.app-shell .diag-result,
+body.app-shell .diag-disease-card,
+body.app-shell .scheme-tile,
+body.app-shell .skill-card,
+body.app-shell .meeting-tile,
+body.app-shell .material-card,
+body.app-shell .hub-card,
+body.app-shell .row-card{background:#fff!important}
+body.app-shell .diag-result:nth-child(odd),
+body.app-shell .diag-disease-card:nth-child(odd),
+body.app-shell .scheme-grid > *:nth-child(odd),
+body.app-shell .skill-grid > *:nth-child(odd),
+body.app-shell .meeting-grid > *:nth-child(odd),
+body.app-shell .hub-grid > *:nth-child(odd){background:#fcfdff!important}
+body.app-shell .diag-result strong,
+body.app-shell .diag-disease-card strong,
+body.app-shell .scheme-tile strong,
+body.app-shell .skill-card strong,
+body.app-shell .meeting-tile strong,
+body.app-shell .material-card strong,
+body.app-shell .hub-card strong{font-weight:700!important}
+
+/* v5.3.1 – unified palette, literature refresh, anatomy map, diagnostics quick nav */
+:root{
+  --ost-accent:#23435e;
+  --ost-accent-dark:#1d3950;
+  --ost-surface:#ffffff;
+  --ost-surface-soft:#f4f8fb;
+  --ost-surface-tint:#edf4f8;
+  --ost-line-soft:#dce7ef;
+}
+body{background:#f5f8fb}
+.page-banner,.section,.lit-group,.ost-module-detail,.diag-topic-block,.ost-body-hero,.editor-toolbar,.attendance-group,.week-card,.compact-news .news-list,.ost-search-group,.ost-checklist-card{background:var(--ost-surface);border:1px solid var(--ost-line-soft);box-shadow:0 10px 24px rgba(19,46,74,.05)}
+.top-action,.close,.editor-shortcut,.header-editor-link,.ost-home-editor{border-color:var(--ost-line-soft)!important;color:var(--ost-accent-dark)!important}
+.page-banner h1,.section-head h2,.lit-item h2,.ost-module-detail h2,.diag-topic-head h2,.ost-body-hero h2{color:var(--ost-accent-dark)}
+.filter-chips,.lit-chips{display:none!important}
+
+.overlay-panel.ost-news-modal{padding:18px 18px 24px!important;min-height:auto!important}
+.overlay-panel.ost-news-modal .overlay-head{position:absolute!important;top:14px!important;right:14px!important;left:auto!important;width:auto!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important}
+.overlay-panel.ost-news-modal .overlay-body{padding-top:0!important;margin-top:0!important}
+.overlay-panel.ost-news-modal .news-detail{padding:6px 0 0!important;margin:0!important;border:0!important;background:transparent!important}
+.overlay-panel.ost-news-modal .news-detail p{margin:0!important;padding-top:0!important}
+
+.lit-clean .lit-toolbar{margin-top:16px}
+.lit-clean .literature-search{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.lit-clean .literature-search input,.lit-clean .literature-search select{height:58px;border-radius:20px;border:1px solid var(--ost-line-soft);background:var(--ost-surface)}
+.lit-list-clean{display:grid;gap:16px}
+.lit-group{border-radius:24px;padding:18px 18px 12px}
+.lit-group-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px}
+.lit-group-head strong{font-size:1.35rem;color:var(--ost-accent-dark)}
+.lit-group-head span{font-size:.95rem;color:#6b8399}
+.lit-group .lit-item{margin-bottom:12px;border-radius:20px;background:var(--ost-surface-soft)}
+.lit-item .lit-meta{color:#67819a}
+
+.ost-body-hero{display:grid;gap:18px;padding:18px;border-radius:26px;margin-bottom:16px;background:linear-gradient(180deg,#fff 0%,#f4f8fb 100%)}
+.ost-body-hero-copy p{margin:8px 0 0;color:#577188;line-height:1.6}
+.ost-theory-label{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5c758c}
+.ost-body-map{position:relative;min-height:360px;border-radius:24px;background:radial-gradient(circle at top,#f9fcff 0%,#edf4f8 100%);border:1px solid var(--ost-line-soft);overflow:hidden}
+ .body-model-core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:8.5rem;line-height:1;filter:drop-shadow(0 10px 22px rgba(29,57,80,.12))}
+.body-hotspot{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--ost-line-soft);box-shadow:0 8px 18px rgba(24,45,72,.07);font-weight:800;color:var(--ost-accent-dark)}
+.body-hotspot span{font-size:1.25rem}
+.body-hotspot strong{font-size:.92rem}
+.hotspot-head{top:24px;left:50%;transform:translateX(-50%)}
+.hotspot-thorax{top:118px;right:16px}
+.hotspot-abdomen{bottom:88px;right:14px}
+.hotspot-movement{bottom:32px;left:16px}
+.hotspot-general{display:none}
+.ost-anatomy-groups{display:grid;gap:16px}
+.ost-body-group{background:#fff;border:1px solid var(--ost-line-soft);border-radius:24px;padding:16px}
+.ost-body-group-head{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;margin-bottom:14px}
+.ost-body-group-head>span{display:grid;place-items:center;width:40px;height:40px;border-radius:14px;background:var(--ost-surface-tint);font-size:1.3rem}
+.ost-body-group-head h3{margin:0;color:var(--ost-accent-dark);font-size:1.15rem}
+.ost-body-group-head p{margin:3px 0 0;color:#67819a;font-size:.92rem}
+.ost-body-group-head b{font-size:.94rem;color:#688199;background:#f4f8fb;padding:8px 10px;border-radius:999px}
+
+.diag-quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 18px}
+.diag-quick-tile,.diag-topic-block{border-radius:22px}
+.diag-quick-tile{display:grid;gap:8px;align-content:start;padding:14px;border:1px solid var(--ost-line-soft);background:#fff;color:var(--ost-accent-dark);box-shadow:0 8px 18px rgba(24,45,72,.05)}
+.diag-quick-tile small{color:#6d879f}
+.diag-sections-clean{display:grid;gap:16px}
+.diag-topic-block{padding:16px}
+.diag-topic-head{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;margin-bottom:14px}
+.diag-topic-head h2{margin:0;font-size:1.12rem}
+.diag-topic-head p{margin:4px 0 0;color:#70889f;font-size:.92rem}
+.diag-topic-head b{padding:8px 10px;border-radius:999px;background:var(--ost-surface-soft);color:#6c869d;font-size:.92rem}
+.diag-topic-list{display:grid;gap:10px}
+.diag-result-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:13px;background:var(--ost-surface-tint);font-size:1.1rem}
+
+.literature-admin-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.literature-admin-stats>div{padding:14px;border-radius:18px;background:var(--ost-surface-soft);border:1px solid var(--ost-line-soft)}
+.literature-admin-stats strong{display:block;font-size:1.25rem;color:var(--ost-accent-dark)}
+.literature-admin-stats span{color:#6f879c;font-size:.92rem}
+.literature-editor-tools{margin-bottom:10px}
+
+@media (max-width:760px){
+  .ost-body-map{min-height:320px}
+  .body-model-core{font-size:7rem}
+  .body-hotspot{padding:9px 12px;gap:8px}
+  .body-hotspot strong{font-size:.84rem}
+  .hotspot-head{top:14px}
+  .hotspot-thorax{top:104px;right:10px}
+  .hotspot-abdomen{bottom:82px;right:10px}
+  .hotspot-movement{bottom:24px;left:10px}
+  .diag-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}

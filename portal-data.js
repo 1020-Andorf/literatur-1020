@@ -2467,7 +2467,7 @@ window.OST1020_DATA = {
     {
       "id": "diag-agitation-angst-hyperventilation",
       "group": "Psychiatrie / Toxikologie",
-      "icon": "💊",
+      "icon": "⚕️",
       "title": "Agitation / Angst / Hyperventilation",
       "questions": [
         "Beginn, Verlauf und Auslöser?",
@@ -2520,7 +2520,7 @@ window.OST1020_DATA = {
     {
       "id": "diag-somnolenz-verdacht-auf-intoxikation",
       "group": "Psychiatrie / Toxikologie",
-      "icon": "💊",
+      "icon": "⚕️",
       "title": "Somnolenz / Verdacht auf Intoxikation",
       "questions": [
         "Beginn, Verlauf und Auslöser?",
