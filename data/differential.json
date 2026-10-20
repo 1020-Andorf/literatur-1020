@@ -98,7 +98,8 @@
       "SpO₂-Abfall trotz Sauerstoff",
       "Erschöpfung / Vigilanzminderung"
     ],
-    "group": "Atmung"
+    "group": "Atmung",
+    "theory": "Ventilation bewegt Luft in die Alveolen, Perfusion versorgt sie mit Blut. Eine Störung des Ventilations-Perfusions-Verhältnisses kann Hypoxämie hervorrufen, selbst wenn Atembewegungen sichtbar sind. Atemanstrengung, Sättigung, Vigilanz und Verlauf gemeinsam beurteilen."
   },
   {
     "id": "thorax",
@@ -181,7 +182,8 @@
       "Neurologische Defizite",
       "Schwere Dyspnoe"
     ],
-    "group": "Kreislauf"
+    "group": "Kreislauf",
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten."
   },
   {
     "id": "bewusstsein",
@@ -273,7 +275,8 @@
       "Pupillendifferenz",
       "Neurologische Herdzeichen"
     ],
-    "group": "Neurologie"
+    "group": "Neurologie",
+    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung."
   },
   {
     "id": "synkope",
@@ -356,7 +359,8 @@
       "Thoraxschmerz",
       "Pathologisches EKG"
     ],
-    "group": "Kreislauf"
+    "group": "Kreislauf",
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten."
   },
   {
     "id": "bauch",
@@ -484,7 +488,8 @@
       "Blutiges Erbrechen / Teerstuhl",
       "Synkope"
     ],
-    "group": "Abdomen"
+    "group": "Abdomen",
+    "theory": "Viszeraler Schmerz ist oft diffus und schlecht lokalisierbar. Eine Beteiligung des parietalen Peritoneums kann einen stärker lokalisierten Schmerz und Abwehrspannung auslösen. Kreislauf und Begleitsymptome sind entscheidend."
   },
   {
     "id": "allergie",
@@ -549,7 +554,8 @@
       "Bronchospasmus / zunehmende Atemnot",
       "Rasch progredienter Verlauf auch ohne Hautbefund"
     ],
-    "group": "Allgemein / Allergie"
+    "group": "Allgemein / Allergie",
+    "theory": "Allergische und entzündliche Vorgänge können Haut, Atemwege, Kreislauf und Gastrointestinaltrakt gleichzeitig betreffen. Ein fehlender Hautbefund schließt eine schwere systemische Reaktion nicht sicher aus."
   },
   {
     "id": "diag-stridor",
@@ -612,7 +618,8 @@
         "sourceLabel": "Fachliteratur auf PubMed suchen",
         "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
       }
-    ]
+    ],
+    "theory": "Die Offenheit des oberen Atemwegs ist Voraussetzung für eine ausreichende Ventilation. Stridor weist häufig auf ein extrathorakales Strömungshindernis hin, während exspiratorisches Giemen eher für eine intrathorakale Obstruktion spricht; Ausnahmen sind möglich."
   },
   {
     "id": "stroke",
@@ -677,7 +684,8 @@
       "Begleitender Vernichtungskopfschmerz oder Antikoagulation",
       "Neue Lähmung mit Atem- oder Schluckstörung"
     ],
-    "group": "Neurologie"
+    "group": "Neurologie",
+    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung."
   },
   {
     "id": "trauma",
@@ -769,7 +777,8 @@
       "Atemnot / Thoraxverletzung",
       "Bauchschmerz, Beckenstabilität oder starke Schmerzen bei Fehlstellung"
     ],
-    "group": "Trauma"
+    "group": "Trauma",
+    "theory": "Gewebeschädigung kann Blutung, Entzündung und Perfusionsstörungen verursachen. Bei schwerem Trauma beeinflussen Hypothermie, Azidose und Gerinnungsstörungen den weiteren Verlauf ungünstig."
   },
   {
     "id": "diag-schluckstoerung-halsanschwellung",
@@ -813,7 +822,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Schlaganfall%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Die Offenheit des oberen Atemwegs ist Voraussetzung für eine ausreichende Ventilation. Stridor weist häufig auf ein extrathorakales Strömungshindernis hin, während exspiratorisches Giemen eher für eine intrathorakale Obstruktion spricht; Ausnahmen sind möglich."
   },
   {
     "id": "diag-husten-produktiver-husten",
@@ -866,7 +876,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kardiales%20Lungen%C3%B6dem%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Ventilation bewegt Luft in die Alveolen, Perfusion versorgt sie mit Blut. Eine Störung des Ventilations-Perfusions-Verhältnisses kann Hypoxämie hervorrufen, selbst wenn Atembewegungen sichtbar sind. Atemanstrengung, Sättigung, Vigilanz und Verlauf gemeinsam beurteilen."
   },
   {
     "id": "diag-bluthusten-haemoptyse",
@@ -919,7 +930,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pulmonale%20Blutung%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Ventilation bewegt Luft in die Alveolen, Perfusion versorgt sie mit Blut. Eine Störung des Ventilations-Perfusions-Verhältnisses kann Hypoxämie hervorrufen, selbst wenn Atembewegungen sichtbar sind. Atemanstrengung, Sättigung, Vigilanz und Verlauf gemeinsam beurteilen."
   },
   {
     "id": "diag-palpitationen-herzrasen",
@@ -972,7 +984,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Sinustachykardie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten."
   },
   {
     "id": "diag-bradykardie",
@@ -1025,7 +1038,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Vagale%20Reaktion%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten."
   },
   {
     "id": "diag-hypotonie-schock",
@@ -1087,7 +1101,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Obstruktiver%20Schock%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten."
   },
   {
     "id": "diag-bluthochdruck-hypertensiver-notfall",
@@ -1131,7 +1146,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pr%C3%A4eklampsie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten."
   },
   {
     "id": "diag-kopfschmerz",
@@ -1193,7 +1209,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Clusterkopfschmerz%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung."
   },
   {
     "id": "diag-schwindel-ataxie",
@@ -1246,7 +1263,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Orthostatische%20Hypotonie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung."
   },
   {
     "id": "diag-krampfanfall",
@@ -1299,7 +1317,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Hypoglyk%C3%A4mie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung."
   },
   {
     "id": "diag-sehstoerung-sehverlust",
@@ -1352,7 +1371,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Schlaganfall%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung."
   },
   {
     "id": "diag-uebelkeit-erbrechen",
@@ -1414,7 +1434,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Myokardinfarkt%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Viszeraler Schmerz ist oft diffus und schlecht lokalisierbar. Eine Beteiligung des parietalen Peritoneums kann einen stärker lokalisierten Schmerz und Abwehrspannung auslösen. Kreislauf und Begleitsymptome sind entscheidend."
   },
   {
     "id": "diag-bluterbrechen-haematemesis",
@@ -1458,7 +1479,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Mallory-Weiss-L%C3%A4sion%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Viszeraler Schmerz ist oft diffus und schlecht lokalisierbar. Eine Beteiligung des parietalen Peritoneums kann einen stärker lokalisierten Schmerz und Abwehrspannung auslösen. Kreislauf und Begleitsymptome sind entscheidend."
   },
   {
     "id": "diag-blut-im-stuhl-melaena",
@@ -1511,7 +1533,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=H%C3%A4morrhoiden%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Viszeraler Schmerz ist oft diffus und schlecht lokalisierbar. Eine Beteiligung des parietalen Peritoneums kann einen stärker lokalisierten Schmerz und Abwehrspannung auslösen. Kreislauf und Begleitsymptome sind entscheidend."
   },
   {
     "id": "diag-durchfall-dehydratation",
@@ -1555,7 +1578,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Isch%C3%A4mische%20Kolitis%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Viszeraler Schmerz ist oft diffus und schlecht lokalisierbar. Eine Beteiligung des parietalen Peritoneums kann einen stärker lokalisierten Schmerz und Abwehrspannung auslösen. Kreislauf und Begleitsymptome sind entscheidend."
   },
   {
     "id": "diag-hypoglykaemiezeichen",
@@ -1599,7 +1623,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Alkoholassoziierte%20Hypoglyk%C3%A4mie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Störungen von Glukose, Elektrolyten und Säure-Basen-Regulation können Bewusstsein, Muskulatur, Atmung und Herzrhythmus gleichzeitig beeinflussen. Einzelne Symptome sind selten spezifisch."
   },
   {
     "id": "diag-hyperglykaemie-polyurie",
@@ -1643,7 +1668,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Stresshyperglyk%C3%A4mie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Störungen von Glukose, Elektrolyten und Säure-Basen-Regulation können Bewusstsein, Muskulatur, Atmung und Herzrhythmus gleichzeitig beeinflussen. Einzelne Symptome sind selten spezifisch."
   },
   {
     "id": "diag-muskelkraempfe-tetanie",
@@ -1687,7 +1713,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Elektrolytverlust%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Störungen von Glukose, Elektrolyten und Säure-Basen-Regulation können Bewusstsein, Muskulatur, Atmung und Herzrhythmus gleichzeitig beeinflussen. Einzelne Symptome sind selten spezifisch."
   },
   {
     "id": "diag-fieber-schuettelfrost",
@@ -1749,7 +1776,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Meningitis%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Infektionen lösen eine systemische Immunreaktion aus. Bei schwerem Verlauf können Gefäßtonus, Kapillarpermeabilität und Gewebeperfusion gestört sein; die Kombination klinischer Zeichen ist aussagekräftiger als ein Einzelwert."
   },
   {
     "id": "diag-hautausschlag-purpura",
@@ -1802,7 +1830,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Erysipel%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Infektionen lösen eine systemische Immunreaktion aus. Bei schwerem Verlauf können Gefäßtonus, Kapillarpermeabilität und Gewebeperfusion gestört sein; die Kombination klinischer Zeichen ist aussagekräftiger als ein Einzelwert."
   },
   {
     "id": "diag-flankenschmerz",
@@ -1846,7 +1875,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Niereninfarkt%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Die Nieren kontrollieren Volumen, Elektrolyte und Säure-Basen-Haushalt. Schmerzen im Flanken- oder Unterbauchbereich können renale, urologische, gynäkologische und auch extraabdominale Ursachen haben."
   },
   {
     "id": "diag-dysurie-harnverhalt",
@@ -1890,7 +1920,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Cauda-equina-Syndrom%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Die Nieren kontrollieren Volumen, Elektrolyte und Säure-Basen-Haushalt. Schmerzen im Flanken- oder Unterbauchbereich können renale, urologische, gynäkologische und auch extraabdominale Ursachen haben."
   },
   {
     "id": "diag-vaginale-blutung-unterbauchschmerz",
@@ -1943,7 +1974,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Ovarialtorsion%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Während der Schwangerschaft verändern sich Herzzeitvolumen, Atemmechanik und Blutvolumen. Neue Beschwerden müssen unter Berücksichtigung von Schwangerschaftsdauer und besonderen Gefahren eingeordnet werden."
   },
   {
     "id": "diag-schwangerschaft-kopfschmerz-oberbauchschmerz",
@@ -1987,7 +2019,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Eklampsie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Während der Schwangerschaft verändern sich Herzzeitvolumen, Atemmechanik und Blutvolumen. Neue Beschwerden müssen unter Berücksichtigung von Schwangerschaftsdauer und besonderen Gefahren eingeordnet werden."
   },
   {
     "id": "diag-rueckenschmerz-neurologische-ausfaelle",
@@ -2040,7 +2073,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Aortensyndrom%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Gewebeschädigung kann Blutung, Entzündung und Perfusionsstörungen verursachen. Bei schwerem Trauma beeinflussen Hypothermie, Azidose und Gerinnungsstörungen den weiteren Verlauf ungünstig."
   },
   {
     "id": "diag-extremitaetenschmerz-schwellung",
@@ -2093,7 +2127,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kompartmentsyndrom%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Gewebeschädigung kann Blutung, Entzündung und Perfusionsstörungen verursachen. Bei schwerem Trauma beeinflussen Hypothermie, Azidose und Gerinnungsstörungen den weiteren Verlauf ungünstig."
   },
   {
     "id": "diag-agitation-angst-hyperventilation",
@@ -2146,7 +2181,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Delir%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Bewusstseins- und Verhaltensveränderungen können auch toxische, metabolische, neurologische oder infektiöse Ursachen haben. Psychische Ursachen sollten nicht ohne somatische Basisbeurteilung angenommen werden."
   },
   {
     "id": "diag-somnolenz-verdacht-auf-intoxikation",
@@ -2199,7 +2235,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Kohlenmonoxidvergiftung%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Bewusstseins- und Verhaltensveränderungen können auch toxische, metabolische, neurologische oder infektiöse Ursachen haben. Psychische Ursachen sollten nicht ohne somatische Basisbeurteilung angenommen werden."
   },
   {
     "id": "diag-atemnot-beim-kind",
@@ -2252,7 +2289,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Asthma%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Kinder unterscheiden sich altersabhängig in Atemwegsanatomie, Atemreserve, Flüssigkeitshaushalt und Kompensationsmechanismen. Besonders Atemarbeit, Hautdurchblutung und Interaktion können früh Hinweise liefern."
   },
   {
     "id": "diag-fieber-apathie-beim-kind",
@@ -2305,7 +2343,8 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Dehydratation%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Kinder unterscheiden sich altersabhängig in Atemwegsanatomie, Atemreserve, Flüssigkeitshaushalt und Kompensationsmechanismen. Besonders Atemarbeit, Hautdurchblutung und Interaktion können früh Hinweise liefern."
   },
   {
     "id": "diag-hitze-kaelteexposition",
@@ -2358,6 +2397,7 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=CO-Vergiftung%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
-    ]
+    ],
+    "theory": "Hitze, Kälte und toxische Expositionen beeinflussen Stoffwechsel, Kreislauf und Bewusstsein. Expositionsart und zeitlicher Verlauf sind diagnostisch wichtig."
   }
 ]
