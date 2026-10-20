@@ -1763,3 +1763,95 @@ body{background:#f5f8fb}
   .hotspot-movement{bottom:24px;left:10px}
   .diag-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+
+/* --- v532 adjustments --- */
+html,body{overflow-y:auto!important;height:auto!important}
+body.app-shell{overflow-y:auto!important}
+main[data-main]{overflow:visible!important}
+
+body.app-shell:not(.page-home) .ost-link-directory>a,
+body.app-shell:not(.page-home) .row-card,
+body.app-shell:not(.page-home) .skill-card,
+body.app-shell:not(.page-home) .scheme-tile,
+body.app-shell:not(.page-home) .meeting-tile,
+body.app-shell:not(.page-home) .diag-group,
+body.app-shell:not(.page-home) .diag-system-tile,
+body.app-shell:not(.page-home) .diag-symptom-shell,
+body.app-shell:not(.page-home) .ost-checklist-card,
+body.app-shell:not(.page-home) .editor-primary-groups>button,
+body.app-shell:not(.page-home) .editor-subgroup-tile,
+body.app-shell:not(.page-home) .ost-main-destinations>a{
+  background:#fff!important;
+  border-color:#dce5ee!important;
+}
+body.app-shell:not(.page-home) .ost-link-directory>a:hover,
+body.app-shell:not(.page-home) .row-card:hover,
+body.app-shell:not(.page-home) .skill-card:hover,
+body.app-shell:not(.page-home) .scheme-tile:hover,
+body.app-shell:not(.page-home) .meeting-tile:hover,
+body.app-shell:not(.page-home) .diag-system-tile:hover{background:#f7fafc!important}
+
+.ost-body-map.illustrated{position:relative;min-height:560px;padding:18px 18px 26px;background:linear-gradient(180deg,#fff,#f7fafc);overflow:visible}
+.body-model-figure{display:block;width:min(320px,100% - 80px);max-width:320px;margin:0 auto;filter:drop-shadow(0 12px 28px rgba(16,40,66,.08));border-radius:18px}
+.anatomy-landing .ost-body-map,.diagnosis-landing .ost-body-map{max-width:540px;width:100%}
+.body-hotspot{position:absolute;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid #d8e3ec;border-radius:999px;background:#fff;color:#14324d;text-decoration:none;box-shadow:0 8px 20px rgba(16,40,66,.08);max-width:190px}
+.body-hotspot span{display:grid;place-items:center;width:28px;height:28px;border-radius:999px;background:#eef4fb;font-size:1rem}
+.body-hotspot strong{font-size:.92rem;line-height:1.2}
+.body-hotspot.hotspot-brain{top:7%;left:50%;transform:translateX(-50%)}
+.body-hotspot.hotspot-lungs{top:25%;left:12%}
+.body-hotspot.hotspot-heart{top:26%;right:10%}
+.body-hotspot.hotspot-abdomen{top:47%;right:7%}
+.body-hotspot.hotspot-kidney{top:62%;right:8%}
+.body-hotspot.hotspot-blood{top:63%;left:10%}
+.anatomy-search-results[hidden]{display:none!important}
+.search-results-only{margin-top:14px}
+
+.diag-system-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0 22px}
+.diag-system-tile{display:grid;grid-template-columns:44px minmax(0,1fr) 14px;align-items:center;gap:12px;padding:16px;border:1px solid #dde6ee;border-radius:18px;background:#fff;color:#173550;text-decoration:none}
+.diag-system-tile .diag-group-badge{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#eef4fb;font-size:1.15rem}
+.diag-system-tile strong{display:block;font-size:1rem;font-weight:650}
+.diag-system-tile small{display:block;margin-top:4px;color:#718298}
+.diag-system-tile b{justify-self:end;color:#8fa0b1;font-size:1.3rem;font-weight:400}
+.diag-group-overview{display:grid;gap:16px}
+.diag-symptom-shell{border:1px solid #dde6ee;border-radius:22px;background:#fff;padding:20px}
+.diag-symptom-shell-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-start}
+.diag-symptom-shell-head h2{margin:4px 0 6px;font-size:1.18rem;color:#163450}
+.diag-symptom-shell-head p{margin:0;color:#607588;line-height:1.55}
+.diag-open-link{white-space:nowrap;color:#215f8f;font-weight:700;text-decoration:none}
+.diag-disease-chiplist{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.diag-disease-chip{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid #d7e2eb;border-radius:999px;background:#f8fbfd;color:#173550;font:inherit;cursor:pointer}
+.diag-disease-chip span{font-size:1rem}
+.diag-disease-chip strong{font-weight:600}
+.diag-quick-overlay .btn.primary{margin-top:14px;display:inline-flex}
+
+body.page-algorithmen .algorithm-detail .detail-lead{margin-top:8px}
+body.page-algorithmen .algorithm-detail .detail-lead p{margin-top:6px}
+
+@media (max-width:900px){
+  .body-hotspot{max-width:160px;padding:8px 11px}
+  .body-hotspot strong{font-size:.84rem}
+  .body-model-figure{width:min(290px,100% - 50px)}
+}
+@media (max-width:760px){
+  .diag-system-grid{grid-template-columns:1fr}
+  .ost-body-map.illustrated{min-height:500px}
+  .body-hotspot.hotspot-lungs{left:2%}
+  .body-hotspot.hotspot-heart{right:2%}
+  .body-hotspot.hotspot-blood{left:2%}
+  .body-hotspot.hotspot-kidney{right:2%}
+  .diag-symptom-shell-head{flex-direction:column}
+  .diag-open-link{white-space:normal}
+}
+@media (max-width:560px){
+  .ost-body-map.illustrated{min-height:470px;padding:12px 8px 24px}
+  .body-model-figure{width:250px}
+  .body-hotspot{gap:6px;padding:7px 10px}
+  .body-hotspot span{width:24px;height:24px;font-size:.92rem}
+  .body-hotspot strong{font-size:.76rem}
+  .body-hotspot.hotspot-brain{top:6%}
+  .body-hotspot.hotspot-lungs{top:27%}
+  .body-hotspot.hotspot-heart{top:28%}
+  .body-hotspot.hotspot-abdomen{top:49%}
+  .body-hotspot.hotspot-blood{top:67%}
+  .body-hotspot.hotspot-kidney{top:66%}
+}
