@@ -2252,3 +2252,206 @@ body.app-shell .ost-teaching-arrow{font-size:19px!important}
 
 /* Inline back button on diagnostic detail pages. */
 .diag-inline-back{margin-bottom:16px!important}
+
+/* OST 1020 v538: pharma overlay, cleaner body model, compact diagnostik, white menu, swipe cards */
+
+/* Home menu tiles all white. */
+body.app-shell.page-home .ost-main-destinations>a,
+body.app-shell.page-home .ost-main-destinations>a:nth-child(n){
+  background:#fff!important;
+  border:1px solid #dce6ed!important;
+}
+body.app-shell.page-home .ost-main-destinations>a:hover{
+  background:#f7fafc!important;
+}
+
+/* Pharmakologie entries can behave like overlay rows. */
+.ost-pharm-directory{
+  display:grid!important;
+  gap:12px!important;
+}
+.ost-module-sheet-link{
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr) 18px;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  text-align:left;
+  padding:18px 16px;
+  border:1px solid #dce6ed;
+  border-radius:22px;
+  background:#fff;
+  color:#173550;
+  font:inherit;
+}
+.ost-module-sheet-link:hover{background:#f8fbfd}
+.ost-module-sheet-link>span:first-child{
+  display:grid;place-items:center;
+  width:40px;height:40px;
+  border-radius:12px;
+  background:#eef5fa;
+  font-size:1.35rem;
+}
+.ost-module-sheet-link strong{display:block;font-size:1.02rem}
+.ost-module-sheet-link small{display:block;margin-top:3px;color:#74889a;font-size:.82rem;line-height:1.35}
+.ost-module-sheet-link b{justify-self:end;color:#8ea1b2;font-size:1.2rem;font-weight:400}
+
+/* Stronger, cleaner body model. */
+.ost-model-screen{display:grid;gap:14px}
+.ost-model-stage{max-width:760px;margin:0 auto}
+.ost-model-art{
+  max-width:420px!important;
+  margin:0 auto!important;
+  padding:18px 18px 8px!important;
+  background:linear-gradient(180deg,#fbfdff 0%,#f3f7fb 100%)!important;
+  border:1px solid #d9e4ed!important;
+  border-radius:30px!important;
+}
+.ost-model-art img{
+  width:100%!important;
+  height:auto!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 12px 22px rgba(29,63,90,.10))!important;
+}
+.ost-organ-hit{border-radius:999px!important}
+.ost-organ-indicator{
+  width:22px!important;
+  height:22px!important;
+  border:4px solid #fff!important;
+  box-shadow:0 0 0 4px rgba(45,125,190,.16),0 4px 12px rgba(25,60,90,.18)!important;
+}
+.ost-organ-tip{
+  padding:8px 13px!important;
+  border-radius:999px!important;
+  border:1px solid #d9e5ed!important;
+  background:rgba(255,255,255,.97)!important;
+  color:#183753!important;
+  font-size:.75rem!important;
+  line-height:1.25!important;
+  font-weight:760!important;
+  white-space:nowrap!important;
+  box-shadow:0 6px 18px rgba(22,54,81,.10)!important;
+}
+.ost-anatomy-model .hit-brain .ost-organ-tip,
+.ost-diagnosis-model .hit-brain .ost-organ-tip{
+  left:50%!important;right:auto!important;top:-10px!important;transform:translate(-50%,-100%)!important;
+}
+.ost-anatomy-model .hit-lungs .ost-organ-tip,
+.ost-diagnosis-model .hit-lungs .ost-organ-tip{
+  left:auto!important;right:calc(100% + 12px)!important;top:50%!important;transform:translateY(-50%)!important;
+}
+.ost-anatomy-model .hit-heart .ost-organ-tip,
+.ost-diagnosis-model .hit-heart .ost-organ-tip{
+  left:calc(100% + 12px)!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;
+}
+.ost-anatomy-model .hit-abdomen .ost-organ-tip,
+.ost-diagnosis-model .hit-abdomen .ost-organ-tip{
+  left:calc(100% + 12px)!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;
+}
+.ost-anatomy-model .hit-kidney .ost-organ-tip,
+.ost-diagnosis-model .hit-kidney .ost-organ-tip{
+  left:auto!important;right:calc(100% + 12px)!important;top:50%!important;transform:translateY(-50%)!important;
+}
+.ost-anatomy-model .hit-movement .ost-organ-tip,
+.ost-diagnosis-model .hit-movement .ost-organ-tip{
+  left:calc(100% + 12px)!important;right:auto!important;top:50%!important;transform:translateY(-50%)!important;
+}
+.ost-model-hint{margin-top:10px!important;font-size:.86rem!important}
+@media(max-width:420px){
+  .ost-model-art{padding:14px 12px 6px!important;border-radius:26px!important}
+  .ost-organ-tip{font-size:.68rem!important;padding:7px 10px!important;max-width:165px;white-space:normal!important}
+}
+
+/* Diagnostik symptoms more compact. */
+.ost-diag-symptom-overview h3{margin-bottom:9px!important}
+.ost-diag-symptom-chips{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:6px!important;
+}
+.ost-diag-symptom-chips>span{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:34px!important;
+  padding:6px 9px!important;
+  border-radius:12px!important;
+  font-size:.76rem!important;
+  line-height:1.2!important;
+  text-align:center!important;
+}
+
+/* Swipeable cards for algorithms and merkhilfen. */
+.ost-steps-deck{display:grid;gap:14px;margin:4px 0 2px}
+.ost-steps-carousel{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:minmax(260px,84%);
+  gap:12px;
+  overflow-x:auto;
+  padding:2px 2px 10px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+.ost-step-card{
+  scroll-snap-align:start;
+  min-height:158px;
+  padding:16px 16px 18px;
+  border-radius:22px;
+  border:1px solid #dce6ed;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(20,49,78,.06);
+  display:grid;
+  gap:12px;
+}
+.ost-step-card-head{display:flex;align-items:center;gap:10px}
+.ost-step-card .flow-step-marker{
+  position:static!important;
+  transform:none!important;
+  width:40px!important;
+  height:40px!important;
+  border-radius:14px!important;
+  display:grid!important;
+  place-items:center!important;
+  font-size:1.1rem!important;
+  font-weight:800!important;
+}
+.ost-step-count{font-size:.78rem;font-weight:700;color:#73879a;letter-spacing:.02em}
+.ost-step-card .flow-step-copy{display:grid;gap:6px}
+.ost-step-card .flow-step-heading{font-size:1rem;line-height:1.25;color:#183451}
+.ost-step-card .flow-step-text{font-size:1rem;line-height:1.5;color:#294b63}
+.ost-steps-deck .pat-visual{margin-bottom:2px}
+.ost-steps-carousel::-webkit-scrollbar{display:none}
+
+/* Compact materials section on algorithm details. */
+body.app-shell .algorithm-detail .detail-section{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  padding:2px 0 0!important;
+}
+body.app-shell .algorithm-detail .detail-section h2{margin:0 0 12px!important}
+body.app-shell .algorithm-material-grid{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+body.app-shell .algorithm-material-tile{
+  text-decoration:none!important;
+  color:#173550!important;
+  border:1px solid #dce6ed!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  border-radius:18px!important;
+  padding:14px!important;
+  grid-template-columns:42px 1fr!important;
+  column-gap:10px!important;
+}
+body.app-shell .algorithm-material-tile>span{
+  width:42px!important;height:42px!important;border-radius:13px!important;
+}
+body.app-shell .algorithm-material-tile strong{font-size:.95rem!important;line-height:1.35!important}
+body.app-shell .algorithm-material-tile small{font-size:.78rem!important;line-height:1.35!important}
+@media(max-width:520px){
+  body.app-shell .algorithm-material-grid{grid-template-columns:1fr!important}
+}
