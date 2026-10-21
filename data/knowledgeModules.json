@@ -205,7 +205,8 @@
     "status": "published",
     "related": [],
     "image": "assets/anatomie/atmung.svg",
-    "imageCaption": "Vereinfachtes Funktionsschema mit beschrifteten Stationen; nicht maßstabsgetreu."
+    "imageCaption": "Vereinfachtes Funktionsschema mit beschrifteten Stationen; nicht maßstabsgetreu.",
+    "icon": "🫁"
   },
   {
     "id": "system-02",
