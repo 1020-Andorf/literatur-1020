@@ -2905,3 +2905,79 @@ body.app-shell .ost-interactive-step.tone-6 .ost-flow-pin{background:#e8f7fb!imp
 body.app-shell .algorithm-material-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))!important;gap:9px!important}
 body.app-shell .algorithm-material-tile{background:#fff!important;border:1px solid var(--ui-border)!important;box-shadow:none!important}
 @media(max-width:620px){body.page-editor .editor-primary-groups{grid-template-columns:repeat(3,minmax(0,1fr))!important}body.page-editor .editor-subgroup-tiles{grid-template-columns:1fr!important}body.app-shell .ost-flow-trigger{grid-template-columns:36px minmax(0,1fr) 18px!important}body.app-shell .ost-flow-trigger .ost-flow-pin{width:36px!important;height:36px!important}}
+
+/* OST 1020 CLINICAL FLOW / 543 — unified visual design */
+:root{--clinical-bg:#f7fafc;--clinical-primary:#102f4d;--clinical-ink:#1f3b55;--clinical-mute:#698095;--clinical-teal:#168b96;--clinical-soft:#edf6f8;--clinical-stroke:#e0eaf1;--clinical-shadow:0 2px 12px rgba(32,65,91,.035)}
+html,body,body.app-shell{background:var(--clinical-bg)!important;color:var(--clinical-ink)!important;font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif!important;min-height:100%!important;height:auto!important;overflow-y:auto!important;overflow-x:hidden!important}
+body.app-shell .main{max-width:1040px!important;padding-bottom:115px!important}
+body.app-shell .section,body.app-shell .page-banner,body.app-shell .scheme-section,body.app-shell .ost-shortcuts{background:transparent!important;border:0!important;box-shadow:none!important;padding-left:0!important;padding-right:0!important}
+body.app-shell :is(h1,h2,h3){color:var(--clinical-primary)!important;letter-spacing:-.025em}
+body.app-shell :is(a,button,input,select,textarea){-webkit-tap-highlight-color:transparent}
+body.app-shell :is(.scheme-tile,.skill-card,.row-card,.meeting-tile,.ost-checklist-card,.ost-module-sheet-link,.ost-link-directory>a,.diag-system-tile,.editor-subgroup-tile,.editor-primary-groups>button,.ost-skill-group,.ost-flow-trigger){background:#fff!important;border:1px solid var(--clinical-stroke)!important;box-shadow:var(--clinical-shadow)!important;border-radius:16px!important}
+body.app-shell :is(.ost-link-directory,.scheme-grid,.meeting-grid,.ost-diag-condition-list){gap:10px!important}
+body.app-shell .section-head{margin-bottom:11px!important}
+body.app-shell .section-head h2{font-size:1.08rem!important;font-weight:760!important}
+body.app-shell .section-head a{font-size:.81rem!important;font-weight:650!important;color:#327188!important}
+body.app-shell .ost-home-intro{margin-bottom:14px!important}
+body.app-shell .ost-home-intro>span{color:#237d88!important;letter-spacing:.12em!important;font-size:.78rem!important;font-weight:800!important}
+body.app-shell .ost-home-intro h1{font-size:clamp(1.7rem,3vw,2.25rem)!important;font-weight:820!important}
+body.app-shell .dashboard-search{margin-bottom:18px!important}
+body.app-shell .global-search{background:#fff!important;border:1px solid var(--clinical-stroke)!important;border-radius:16px!important;box-shadow:none!important;min-height:52px!important}
+/* Home clinical card grid — white surfaces with restrained tint only on destination cards */
+body.app-shell.page-home .ost-main-destinations{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;max-width:100%!important}
+body.app-shell.page-home .ost-main-destinations>a{display:flex!important;align-items:flex-start!important;justify-content:center!important;flex-direction:column!important;gap:11px!important;min-height:92px!important;border:1px solid var(--clinical-stroke)!important;border-radius:17px!important;background:#fff!important;padding:16px!important;color:var(--clinical-primary)!important;font-size:.96rem!important;font-weight:730!important;box-shadow:none!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+1){background:#eff6ff!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+2){background:#eef8f4!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+3){background:#f6f0fb!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+4){background:#fff7ee!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+5){background:#fff0f3!important}
+body.app-shell.page-home .ost-main-destinations>a .ost-outline-icon{width:27px!important;height:27px!important;stroke-width:1.9!important}
+body.app-shell.page-home .dashboard-news{display:grid!important;gap:7px!important;background:transparent!important;border:0!important;padding:0!important}
+body.app-shell.page-home .news-item{border:1px solid var(--clinical-stroke)!important;background:#fff!important;border-radius:15px!important;min-height:58px!important;box-shadow:none!important;padding:12px 15px!important}
+body.app-shell.page-home .news-item:before{display:none!important}
+body.app-shell.page-home .week-card{border:1px solid var(--clinical-stroke)!important;border-radius:18px!important;background:#fff!important;box-shadow:none!important;padding:12px!important}
+body.app-shell.page-home .week-day.today{background:#e7f5f6!important;color:#126d77!important;border-color:#8dbfc6!important;box-shadow:none!important}
+/* Shared discovery sections */
+.clinical-quick-section,.clinical-recent-section{margin:21px 0!important}
+.clinical-quick-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.clinical-quick-grid a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#fff;border:1px solid var(--clinical-stroke);border-radius:15px;padding:15px 8px;color:var(--clinical-primary);text-align:center;font-size:.78rem;font-weight:700;min-height:92px;text-decoration:none}
+.clinical-quick-grid svg{width:26px;height:26px;color:var(--clinical-teal)}
+.clinical-recent-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.clinical-recent-grid a{display:grid;grid-template-columns:22px minmax(0,1fr) 14px;gap:9px;align-items:center;text-decoration:none;color:var(--clinical-primary);border:1px solid var(--clinical-stroke);background:#fff;border-radius:13px;padding:12px;font-size:.85rem;font-weight:650}
+.clinical-recent-grid svg{width:20px;height:20px;color:var(--clinical-teal)}
+.clinical-recent-grid b{color:#8ca2b1;font-size:1.15rem;font-weight:400}
+.clinical-recent-empty{color:var(--clinical-mute);font-size:.85rem;grid-column:1/-1;padding:8px 0}
+/* Header and navigation parity */
+body.app-shell .topbar{min-height:56px!important;border-bottom:1px solid var(--clinical-stroke)!important;background:#fff!important}
+body.app-shell .topbar [data-back-btn],body.app-shell .topbar [data-home-btn]{width:40px!important;height:40px!important;background:#fff!important;border:0!important;box-shadow:none!important;color:var(--clinical-primary)!important}
+body.app-shell .desktop-sidebar{background:#fff!important;border-right:1px solid var(--clinical-stroke)!important;box-shadow:none!important}
+body.app-shell .desktop-sidebar-nav a.active{background:#eaf6f7!important;color:#11717c!important}
+.clinical-bottom-nav{display:none;position:fixed;z-index:90;left:0;right:0;bottom:0;background:rgba(255,255,255,.97);border-top:1px solid var(--clinical-stroke);padding:8px 12px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -5px 22px rgba(22,60,90,.04);grid-template-columns:repeat(4,minmax(0,1fr))}
+.clinical-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#6b8192;text-decoration:none;font-size:.69rem;font-weight:620;padding:4px;border-radius:11px}
+.clinical-bottom-nav svg{width:20px;height:20px}
+.clinical-bottom-nav a[aria-current=page]{color:#16838e;font-weight:760}
+@media(max-width:899px){.clinical-bottom-nav{display:grid}}
+@media(min-width:900px){body.app-shell .main{max-width:920px!important;margin-left:auto!important;margin-right:auto!important}body.app-shell.page-home .ost-main-destinations{grid-template-columns:repeat(3,minmax(0,1fr))!important}body.app-shell.page-home .ost-main-destinations>a{min-height:112px!important}.clinical-quick-grid{grid-template-columns:repeat(6,minmax(0,1fr))}.clinical-recent-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:460px){.clinical-quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.clinical-recent-grid{grid-template-columns:1fr}.clinical-quick-grid a{min-height:80px;padding:11px 4px;font-size:.72rem}}
+/* Learning mode + overview share same medical content */
+.clinical-learning-toggle{display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:999px;background:#eaf0f4;padding:4px;margin:0 0 12px}
+.clinical-learning-toggle button{background:transparent;border:0;border-radius:999px;color:#637f91;padding:10px;font:inherit;font-size:.88rem;font-weight:690;cursor:pointer}
+.clinical-learning-toggle button.active{background:#178b96;color:#fff;box-shadow:0 2px 8px rgba(10,98,109,.12)}
+.algorithm-detail.clinical-learning .ost-interactive-step:not(.is-current){display:none!important}
+.algorithm-detail.clinical-learning .ost-flow-counter{font-weight:750!important;color:#11717c!important}
+.algorithm-detail.clinical-learning .ost-flow-actions{display:flex!important;gap:10px;justify-content:space-between;padding:14px 0}
+.algorithm-detail.clinical-learning .ost-flow-actions button{border:1px solid var(--clinical-stroke)!important;background:#fff!important;border-radius:13px!important;padding:12px 18px!important;color:var(--clinical-primary)!important;font:inherit;font-weight:700}
+.algorithm-detail.clinical-learning .ost-flow-actions button[data-flow-next]{background:#158c96!important;color:#fff!important}
+.algorithm-detail.clinical-learning .ost-flow-show-all{display:none!important}
+/* Editorial uses the same visual units as public pages */
+body.page-editor .editor-primary-groups>button,body.page-editor .editor-subgroup-tile{border-radius:15px!important;padding:14px!important;background:#fff!important}
+body.page-editor .editor-primary-groups button.active,body.page-editor .editor-subgroup-tile.active{background:#e8f6f7!important;border-color:#80bcc4!important}
+body.page-editor .editor-toolbar{background:#fff!important;position:relative!important;border:1px solid var(--clinical-stroke)!important;box-shadow:none!important}
+body.page-editor .editor-toolbar-actions [data-save]{background:#188d98!important;color:#fff!important;border-color:#188d98!important}
+body.page-editor .editor-toolbar-actions [data-add]{background:#f0f7fa!important;color:#1b5365!important;border-color:#cfe1e9!important}
+.clinical-editor-path{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:#778ba0;font-size:.79rem;font-weight:650;margin:-4px 0 14px}
+.clinical-editor-path strong{color:#16838e}
+body.page-editor :is(.ost-entry-picker,.literature-editor-tools,.ux-edit-card,.editor-subsection,.ost-order-editor){border-radius:16px!important;background:#fff!important;border:1px solid var(--clinical-stroke)!important}
+body.page-editor .editor-items .ux-field :is(input,select,textarea){border-radius:12px!important;border-color:var(--clinical-stroke)!important}
+@media(min-width:900px){body.page-editor .main{max-width:880px!important}}
+@media(prefers-reduced-motion:reduce){body.app-shell *,body.app-shell *::before,body.app-shell *::after{scroll-behavior:auto!important;transition:none!important}}
