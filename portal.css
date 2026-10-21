@@ -2696,3 +2696,138 @@ body.app-shell .ost-flow-item.tone-4 .ost-flow-pin{background:#f3edff!important;
 body.app-shell .ost-flow-item.tone-5 .ost-flow-pin{background:#fff0f2!important;color:#c35c75;border-color:#f1d7dd}
 body.app-shell .ost-flow-item.tone-6 .ost-flow-pin{background:#e7f8fc!important;color:#2694b3;border-color:#cfeef5}
 @media(min-width:900px){body.app-shell .ost-flow-timeline{max-width:780px}}
+
+/* 541 – Anatomie / Diagnostik: Fokus auf das Modell, ohne zusätzlichen Kasten. */
+body.app-shell .ost-model-screen{gap:7px!important}
+body.app-shell .ost-model-intro,
+body.app-shell .ost-model-hint{display:none!important}
+body.app-shell .ost-model-stage{max-width:720px!important;width:100%!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+body.app-shell .ost-model-art{
+ max-width:470px!important;width:min(100%,470px)!important;
+ margin:4px auto 0!important;
+ padding:0!important;
+ border:0!important;
+ border-radius:0!important;
+ background:none!important;
+ box-shadow:none!important;
+ overflow:visible!important;
+}
+body.app-shell .ost-model-art img{border:0!important;border-radius:0!important;background:transparent!important;filter:none!important;width:100%!important;height:auto!important;display:block!important}
+body.app-shell .ost-organ-hit{
+ position:absolute!important;box-sizing:border-box!important;
+ width:44px!important;height:44px!important;
+ transform:translate(-50%,-50%)!important;
+ border:0!important;background:transparent!important;
+ box-shadow:none!important;padding:0!important;
+ display:block!important;
+ overflow:visible!important;z-index:3!important;
+}
+body.app-shell .ost-organ-indicator{position:absolute!important;left:50%!important;top:50%!important;transform:translate(-50%,-50%)!important;width:22px!important;height:22px!important;border:4px solid white!important;box-shadow:0 0 0 2px rgba(23,83,124,.22),0 3px 10px #19395033!important}
+body.app-shell .ost-organ-hit:focus-visible .ost-organ-indicator,
+body.app-shell .ost-organ-hit:hover .ost-organ-indicator{transform:translate(-50%,-50%) scale(1.17)!important}
+body.app-shell .ost-organ-tip{
+ top:50%!important;transform:translateY(-50%)!important;
+ left:calc(100% + 3px)!important;right:auto!important;
+ width:max-content!important;max-width:min(176px,36vw)!important;
+ padding:7px 10px!important;
+ border-radius:14px!important;
+ background:rgba(255,255,255,.97)!important;
+ border:1px solid #dbe6ed!important;
+ box-shadow:0 3px 12px #21405c12!important;
+ white-space:normal!important;line-height:1.2!important;
+ font-size:.74rem!important;font-weight:690!important;
+ pointer-events:none!important;
+}
+body.app-shell .ost-organ-hit.hit-brain .ost-organ-tip{left:50%!important;right:auto!important;top:-4px!important;transform:translate(-50%,-100%)!important}
+body.app-shell .ost-organ-hit.hit-lungs .ost-organ-tip,
+body.app-shell .ost-organ-hit.hit-kidney .ost-organ-tip{left:auto!important;right:calc(100% + 3px)!important}
+body.app-shell .ost-model-credit{display:block!important;text-align:center!important;margin:6px 0 0!important;color:#8091a0!important;font-size:.64rem!important}
+@media(max-width:530px){
+ body.app-shell .ost-model-art{max-width:360px!important}
+ body.app-shell .ost-organ-tip{font-size:.67rem!important;padding:6px 8px!important;max-width:124px!important}
+ body.app-shell .ost-organ-indicator{width:19px!important;height:19px!important;border-width:3px!important}
+}
+
+/* 541 – Pharmakologie: radiale Auswahl um das zentrale Medizin-Symbol. */
+body.app-shell .ost-pharm-explorer{max-width:960px!important;gap:12px!important}
+body.app-shell .ost-pharm-map{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) 188px minmax(0,1fr)!important;
+ grid-template-rows:repeat(3,minmax(98px,auto))!important;
+ max-width:790px!important;min-height:420px!important;
+ align-items:center!important;justify-items:stretch!important;
+ column-gap:24px!important;row-gap:12px!important;
+ background:radial-gradient(ellipse at center,#f0f8fc 0,#f9fcfe 38%,transparent 73%)!important;
+ border:0!important;box-shadow:none!important;
+ padding:25px 8px!important;
+}
+body.app-shell .ost-pharm-map-center{
+ grid-row:2!important;grid-column:2!important;
+ width:188px!important;height:188px!important;
+ margin:0!important;justify-self:center!important;
+ border:1px solid #d6e7f0!important;border-radius:50%!important;
+ background:radial-gradient(circle at 40% 35%,#fff 35%,#e7f4f9 100%)!important;
+ box-shadow:0 12px 28px #3665811f!important;
+}
+body.app-shell .ost-pharm-map-center svg{width:119px!important;height:119px!important}
+body.app-shell .ost-pharm-map-center strong{font-size:.9rem!important;color:#244860!important;font-weight:760!important;margin-top:-12px!important}
+body.app-shell .ost-pharm-sector{width:100%!important;min-height:86px!important;margin:0!important;display:flex!important;box-sizing:border-box!important;padding:13px!important;border-radius:18px!important;background:#fff!important;border:1px solid #dce7ef!important;box-shadow:0 5px 14px #2546630a!important}
+body.app-shell .ost-pharm-sector.sector-pain{grid-column:1!important;grid-row:1!important}
+body.app-shell .ost-pharm-sector.sector-sedation{grid-column:3!important;grid-row:1!important}
+body.app-shell .ost-pharm-sector.sector-cardio{grid-column:1!important;grid-row:2!important}
+body.app-shell .ost-pharm-sector.sector-air{grid-column:3!important;grid-row:2!important}
+body.app-shell .ost-pharm-sector.sector-blood{grid-column:1!important;grid-row:3!important}
+body.app-shell .ost-pharm-sector.sector-other{grid-column:3!important;grid-row:3!important}
+body.app-shell .ost-pharm-sector:focus-visible{outline:2px solid #4586bc!important;outline-offset:3px!important}
+body.app-shell .ost-pharm-sector-copy strong{font-size:.9rem!important;line-height:1.32!important}
+@media(max-width:670px){
+ body.app-shell .ost-pharm-map{
+  grid-template-columns:minmax(0,1fr) 104px minmax(0,1fr)!important;
+  grid-template-rows:repeat(3,minmax(94px,auto))!important;
+  column-gap:4px!important;row-gap:10px!important;
+  min-height:360px!important;padding:14px 0!important;
+ }
+ body.app-shell .ost-pharm-map-center{width:103px!important;height:103px!important}
+ body.app-shell .ost-pharm-map-center svg{width:78px!important;height:78px!important}
+ body.app-shell .ost-pharm-map-center strong{font-size:.62rem!important;margin-top:-8px!important}
+ body.app-shell .ost-pharm-sector{min-height:84px!important;padding:10px!important;gap:7px!important;flex-wrap:wrap!important;align-content:center!important;justify-content:center!important;text-align:center!important}
+ body.app-shell .ost-pharm-sector-icon{width:29px!important;height:30px!important;flex:0 0 29px!important;font-size:1.2rem!important}
+ body.app-shell .ost-pharm-sector-copy{flex:1 1 72px!important;align-items:center!important;gap:1px!important}
+ body.app-shell .ost-pharm-sector-copy strong{font-size:.72rem!important;line-height:1.22!important}
+ body.app-shell .ost-pharm-sector-copy small{font-size:.65rem!important}
+ body.app-shell .ost-sector-chevron{display:none!important}
+}
+@media(max-width:355px){
+ body.app-shell .ost-pharm-map{grid-template-columns:minmax(0,1fr) 84px minmax(0,1fr)!important}
+ body.app-shell .ost-pharm-map-center{width:82px!important;height:82px!important}
+ body.app-shell .ost-pharm-map-center svg{width:64px!important;height:64px!important}
+ body.app-shell .ost-pharm-sector{padding:8px 5px!important}
+}
+
+/* 541 – Lernmodus für Algorithmen: Titel antippen, danach mit Weiter/Zurück navigieren. */
+body.app-shell .ost-flow-timeline{margin-bottom:10px!important;max-width:840px!important}
+body.app-shell .ost-flow-item.ost-interactive-step{display:block!important;position:relative!important;min-height:0!important;padding:0 0 10px 0!important;background:transparent!important;border:0!important}
+body.app-shell .ost-flow-item.ost-interactive-step:not(:last-child)::before{content:''!important;position:absolute!important;left:20px!important;top:38px!important;bottom:-4px!important;width:2px!important;background:#d3e1eb!important;z-index:0!important}
+body.app-shell .ost-flow-trigger{
+ position:relative;display:grid;grid-template-columns:44px minmax(0,1fr) 22px;align-items:center;gap:12px;
+ padding:0 14px 0 0;width:100%;text-align:left;font:inherit;min-height:64px;
+ border:1px solid #dbe6ef;border-radius:17px;background:#fff;color:#1b3c55;cursor:pointer;
+ box-shadow:none;
+}
+body.app-shell .ost-flow-trigger .ost-flow-pin{margin-left:0!important;border-radius:14px!important;width:44px!important;height:44px!important;align-self:center!important;z-index:1!important}
+body.app-shell .ost-flow-trigger-label{font-size:.99rem!important;font-weight:550!important;line-height:1.38!important;overflow-wrap:anywhere}
+body.app-shell .ost-flow-chevron{font-size:1.24rem;color:#7994aa;transition:transform .12s}
+body.app-shell .ost-interactive-step.is-current .ost-flow-trigger{border-color:#9fbfd3!important;background:#fbfdff!important}
+body.app-shell .ost-interactive-step.is-current .ost-flow-trigger-label{font-weight:720!important}
+body.app-shell .ost-interactive-step.is-current .ost-flow-chevron{transform:rotate(180deg)}
+body.app-shell .ost-flow-content{box-sizing:border-box;margin:0 0 4px 56px;padding:12px 16px;border:1px solid #dce8f1;border-radius:0 0 16px 16px;background:#fff;color:#426074;font-size:.95rem;line-height:1.5}
+body.app-shell .ost-flow-content[hidden],body.app-shell .ost-flow-content:empty{display:none!important}
+body.app-shell .ost-flow-content p{margin:0}
+body.app-shell .ost-flow-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;max-width:840px;margin:0 auto 12px}
+body.app-shell .ost-flow-counter{font-size:.85rem;font-weight:730;color:#41617a}
+body.app-shell .ost-flow-show-all{font-size:.83rem;font-weight:670;color:#2d668c;border:0;background:none;padding:8px;cursor:pointer}
+body.app-shell .ost-flow-actions{display:flex;gap:12px;max-width:840px;margin:12px auto 20px}
+body.app-shell .ost-flow-actions button{flex:1;border:1px solid #cfe1ec;border-radius:14px;background:#fff;padding:12px 18px;font:inherit;font-weight:640;color:#254b65;cursor:pointer}
+body.app-shell .ost-flow-actions button:last-child{background:#e8f3fa;border-color:#b9d6e6}
+body.app-shell .ost-flow-actions button:disabled{opacity:.35;cursor:default}
+@media(max-width:620px){body.app-shell .ost-flow-trigger{grid-template-columns:40px minmax(0,1fr) 18px;gap:10px;padding-right:11px}body.app-shell .ost-flow-trigger .ost-flow-pin{width:40px!important;height:40px!important}body.app-shell .ost-flow-trigger-label{font-size:.94rem!important}body.app-shell .ost-flow-content{margin-left:50px}}
