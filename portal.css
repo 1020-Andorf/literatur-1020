@@ -3011,3 +3011,100 @@ body.page-editor .editor-items .ux-field :is(input,select,textarea){border-radiu
 body.page-home .ost-main-destinations{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:680px}
 body.page-home .ost-main-destinations>a{min-height:70px!important}
 @media(max-width:550px){.clinical-combined-hub summary{padding:12px;min-height:60px}.clinical-combined-links{padding-left:54px}.clinical-content-tabs a{font-size:.79rem;padding:10px 3px}.clinical-list-entry{padding:11px 12px}}
+
+/* Clinical Flow 545 — genuine unified application shell */
+:root{--cf-navy:#13334f;--cf-teal:#138993;--cf-muted:#6a8296;--cf-line:#e5edf3;--cf-surface:#fff;--cf-bg:#f8fafc;--cf-radius:17px}
+html,body,body.app-shell{min-height:100%!important;height:auto!important;overflow-y:auto!important;background:var(--cf-bg)!important;color:var(--cf-navy)!important}
+body.app-shell{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif!important}
+body.app-shell .desktop-sidebar{display:none!important}
+body.app-shell .main{width:min(100%,1160px)!important;max-width:1160px!important;margin:0 auto!important;padding:24px 20px 110px!important;overflow:visible!important}
+body.app-shell .topbar{box-shadow:none!important;border-bottom:1px solid var(--cf-line)!important;background:rgba(255,255,255,.95)!important}
+body.app-shell .topbar-inner{max-width:1160px!important;height:62px!important}
+body.app-shell .top-action{width:37px!important;height:37px!important;border-radius:10px!important;border:0!important;box-shadow:none!important;background:#f0f6f9!important;color:#28536b!important}
+body.app-shell .top-action svg{width:19px!important;height:19px!important}
+body.app-shell .brand strong{font-size:1rem!important;letter-spacing:-.01em!important}
+.clinical-desktop-header{display:none}
+body.app-shell h1,body.app-shell h2,body.app-shell h3{color:var(--cf-navy);letter-spacing:-.025em}
+body.app-shell .page-banner{background:transparent!important;padding:0!important;border:0!important;box-shadow:none!important;margin:8px 0 15px!important;border-radius:0!important}
+body.app-shell .page-banner h1{font-size:clamp(1.32rem,2.5vw,1.7rem)!important;line-height:1.25!important}
+body.app-shell .section{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+body.app-shell .section-head{margin:0 0 11px!important;min-height:26px!important}
+body.app-shell .section-head h2{font-size:1.03rem!important;font-weight:780!important}
+body.app-shell .section-head a{color:var(--cf-teal)!important;font-weight:650!important}
+body.app-shell .ost-outline-icon{width:23px!important;height:23px!important}
+body.app-shell.page-home .ost-home-intro{margin:0 0 14px!important}
+body.app-shell.page-home .ost-home-intro>span{color:var(--cf-teal)!important}
+body.app-shell.page-home .ost-home-intro h1{font-size:clamp(1.5rem,3vw,2rem)!important}
+body.app-shell .dashboard-search{margin:0 0 18px!important}
+body.app-shell .global-search,body.app-shell :is(.ost-module-toolbar input,.diag-search,.searchbar input,.searchbar select){background:#fff!important;border:1px solid var(--cf-line)!important;border-radius:14px!important;box-shadow:none!important}
+body.app-shell.page-home .ost-main-destinations{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;max-width:none!important}
+body.app-shell.page-home .ost-main-destinations>a,body.app-shell.page-home .ost-main-destinations>a:nth-child(n){display:flex!important;align-items:flex-start!important;justify-content:flex-start!important;gap:13px!important;min-height:104px!important;padding:19px 17px!important;background:#fff!important;border:1px solid var(--cf-line)!important;border-radius:17px!important;box-shadow:none!important;color:var(--cf-navy)!important;text-align:left!important}
+body.app-shell.page-home .ost-main-destinations>a>svg{flex:none!important;width:29px!important;height:29px!important;color:#23778b!important;margin-top:2px!important}
+body.app-shell.page-home .ost-main-destinations>a>span{display:grid!important;gap:4px!important;min-width:0!important;font-size:1rem!important;line-height:1.25!important}
+body.app-shell.page-home .ost-main-destinations>a strong{font-size:.98rem!important;font-weight:770!important}
+body.app-shell.page-home .ost-main-destinations>a small{display:block!important;font-size:.74rem!important;color:var(--cf-muted)!important;font-weight:450!important;line-height:1.35!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(1){background:#f1f7ff!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(2){background:#fff8ef!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(3){background:#f7f3ff!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(4){background:#edf9f3!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5){background:#f2f8ff!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(6){background:#fff3f5!important}
+body.app-shell.page-home .clinical-quick-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+body.app-shell.page-home .clinical-quick-grid a{min-height:77px!important;padding:11px 6px!important;gap:7px!important;border:1px solid var(--cf-line)!important;border-radius:14px!important;background:#fff!important;box-shadow:none!important}
+body.app-shell.page-home .clinical-quick-grid svg{width:23px!important;height:23px!important}
+body.app-shell.page-home .clinical-quick-grid span{font-size:.75rem!important}
+body.app-shell.page-home .dashboard-news .news-item,body.app-shell.page-home .dashboard-news .news-item:first-child{background:#fff!important;border:1px solid var(--cf-line)!important;border-left:1px solid var(--cf-line)!important;border-radius:14px!important;min-height:48px!important;box-shadow:none!important}
+body.app-shell .clinical-recent-grid>a{background:#fff!important;border:1px solid var(--cf-line)!important;box-shadow:none!important}
+body.app-shell .ost-week-bottom .week-card{background:#fff!important;border:1px solid var(--cf-line)!important;box-shadow:none!important}
+body.app-shell:not(.page-home) :is(.ost-link-directory>a,.clinical-list-entry,.skill-card,.lit-topic,.ost-module-sheet-link,.editor-subgroup-tile,.ost-order-entry,.row-card){background:#fff!important;border:1px solid var(--cf-line)!important;border-radius:14px!important;box-shadow:none!important}
+body.app-shell:not(.page-home) .ost-link-directory{gap:8px!important}
+body.app-shell:not(.page-home) .ost-link-directory>a{min-height:64px!important;padding:13px 14px!important}
+body.app-shell:not(.page-home) .ost-link-directory>a strong{font-weight:680!important}
+body.app-shell:not(.page-home) .clinical-combined-hub{border:1px solid var(--cf-line)!important;border-radius:14px!important;box-shadow:none!important}
+body.app-shell .clinical-combined-hub summary{min-height:58px!important}
+body.app-shell .clinical-bottom-nav{background:#fff!important;box-shadow:0 -5px 22px rgba(18,57,84,.04)!important}
+body.app-shell .btn.primary,body.app-shell .editor-toolbar-actions [data-save]{background:var(--cf-teal)!important;border-color:var(--cf-teal)!important;color:#fff!important}
+body.app-shell :is(.ost-step-card,.ost-flow-phase,.flow-node,.diag-symptom-shell,.ost-disease-part){box-shadow:none!important;border-color:var(--cf-line)!important}
+/* Redaction restructured as one coherent app */
+body.page-editor .editor-dashboard{background:transparent!important;border:0!important;box-shadow:none!important}
+body.page-editor .editor-grouped-menu{margin-bottom:16px!important}
+body.page-editor .editor-primary-groups{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+body.page-editor .editor-primary-groups button{min-height:74px!important;padding:12px 9px!important;background:#fff!important;border:1px solid var(--cf-line)!important;border-radius:14px!important;box-shadow:none!important}
+body.page-editor .editor-primary-groups button.active{background:#e9f7f7!important;border-color:#82ccd0!important}
+body.page-editor .editor-primary-groups button span{color:var(--cf-teal)!important}
+body.page-editor .editor-group-subtitle{color:var(--cf-muted)!important;font-size:.79rem!important;line-height:1.35!important;margin:12px 0 8px!important}
+body.page-editor .editor-subgroup-tiles{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+body.page-editor .editor-subgroup-tile{min-height:60px!important;display:flex!important;align-items:center!important;gap:9px!important;padding:12px!important;text-align:left!important}
+body.page-editor .editor-subgroup-tile.active{background:#eff8f8!important;border-color:#a8d8db!important}
+body.page-editor .editor-subgroup-tile strong{font-size:.85rem!important;line-height:1.22!important}
+body.page-editor .editor-toolbar{display:flex!important;align-items:center!important;justify-content:space-between!important;flex-wrap:wrap!important;gap:10px!important;border:0!important;border-bottom:1px solid var(--cf-line)!important;padding:9px 0 14px!important;border-radius:0!important}
+body.page-editor .editor-toolbar h2{font-size:1.1rem!important}
+body.page-editor .editor-toolbar p{display:none!important}
+body.page-editor .editor-toolbar-actions{display:flex!important;gap:8px!important}
+body.page-editor .ost-entry-picker{border:0!important;background:transparent!important;padding:0!important}
+body.page-editor .editor-items{margin-top:14px!important}
+body.page-editor .editor-items :is(input,select,textarea){background:#fff!important;border-color:var(--cf-line)!important}
+@media(min-width:900px){
+ .clinical-desktop-header{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:22px;padding:0 max(24px,calc((100vw - 1160px)/2));height:68px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--cf-line);box-shadow:0 3px 12px rgba(20,59,87,.03)}
+ .clinical-logo{font-weight:850;color:var(--cf-navy);white-space:nowrap;font-size:1.12rem}
+ .clinical-logo strong{color:var(--cf-teal)}
+ .clinical-desktop-links{flex:1;display:flex;align-items:center;justify-content:center;gap:clamp(12px,1.8vw,29px)}
+ .clinical-desktop-links a{font-size:.81rem;font-weight:620;color:#527083;white-space:nowrap}
+ .clinical-desktop-links a:hover{color:var(--cf-teal)}
+ .clinical-desktop-editor svg{width:22px;height:22px;color:var(--cf-teal)}
+ body.app-shell .topbar{display:none!important}
+ body.app-shell .main{padding:30px 30px 110px!important}
+ body.app-shell.page-home .ost-main-destinations{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body.app-shell.page-home .clinical-quick-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+ body.page-editor .editor-primary-groups{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+ body.page-editor .editor-subgroup-tiles{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:600px){
+ body.app-shell .main{padding:16px 14px 100px!important}
+ body.app-shell.page-home .ost-main-destinations>a{padding:15px 12px!important;min-height:102px!important;gap:9px!important;flex-direction:column!important}
+ body.app-shell.page-home .ost-main-destinations>a>span strong{font-size:.91rem!important}
+ body.app-shell.page-home .ost-main-destinations>a>span small{font-size:.69rem!important}
+ body.app-shell.page-home .ost-main-destinations>a>svg{width:25px!important;height:25px!important}
+ body.page-editor .editor-primary-groups{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ body.page-editor .editor-subgroup-tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
