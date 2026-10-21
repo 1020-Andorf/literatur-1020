@@ -1855,3 +1855,62 @@ body.page-algorithmen .algorithm-detail .detail-lead p{margin-top:6px}
   .body-hotspot.hotspot-blood{top:67%}
   .body-hotspot.hotspot-kidney{top:66%}
 }
+
+/* 533: single consistent surface language and clickable model */
+:root{--ost-model-ink:#173650;--ost-model-border:#dce6ed}
+body.app-shell:not(.page-home) :is(.ost-link-directory>a,.skill-card,.scheme-tile,.row-card,.meeting-tile,.ost-checklist-card,.diag-system-tile,.diag-symptom-shell,.editor-primary-groups>button,.editor-subgroup-tile),
+body.app-shell:not(.page-home) :is(.ost-link-directory>a,.skill-card,.scheme-tile,.row-card,.meeting-tile,.ost-checklist-card,.editor-primary-groups>button,.editor-subgroup-tile):nth-child(n){background:#fff!important;border:1px solid #dce6ed!important;box-shadow:none!important}
+body.app-shell:not(.page-home) :is(.scheme-section,.skill-groups,.page-banner,.section,.ost-body-hero,.ost-module-detail,.diag-topic-block,.detail-lead){background:transparent!important;box-shadow:none!important;border-color:transparent!important}
+body.app-shell:not(.page-home) .scheme-tile:hover,body.app-shell:not(.page-home) .skill-card:hover{background:#f7fafd!important}
+body.app-shell:not(.page-home) .main{overflow:visible!important;min-height:calc(100vh - 100px)}
+html,body{overflow-y:auto!important;overflow-x:hidden!important;height:auto!important}
+.ost-model-screen{max-width:900px;margin:0 auto;padding:5px 0 22px}
+.ost-model-search{display:flex;align-items:center;gap:12px;border:1px solid #dce6ed;border-radius:18px;background:#fff;padding:0 15px;margin-bottom:10px;box-shadow:0 5px 15px rgba(17,51,77,.035)}
+.ost-model-search span{font-size:25px;color:#6584a3}
+.ost-model-search input{height:50px;flex:1;min-width:0;border:0!important;background:transparent!important;outline:none!important;font:inherit;color:#18354e}
+.ost-model-intro{color:#658199;text-align:center;font-size:.88rem;margin:12px 0 8px}
+.ost-model-stage{margin:auto;max-width:460px;min-width:0;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible}
+.ost-model-art{position:relative;width:100%;max-width:440px;margin:auto}
+.ost-model-art img{display:block;width:100%;height:auto;user-select:none;pointer-events:none;filter:drop-shadow(0 8px 17px rgba(29,63,90,.08))}
+.ost-organ-hit{position:absolute;display:block;z-index:2;background:rgba(255,255,255,0)!important;border:0!important;padding:0!important;cursor:pointer;box-shadow:none!important;overflow:visible}
+.ost-organ-indicator{position:absolute;width:18px;height:18px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:3px solid #fff;background:#2a87c5;box-shadow:0 0 0 3px rgba(45,125,190,.24),0 2px 8px #325f8040;transition:transform .15s}
+.hit-heart .ost-organ-indicator{background:#d7485c;box-shadow:0 0 0 3px #d7485c39}
+.hit-abdomen .ost-organ-indicator{background:#cf9450}
+.hit-kidney .ost-organ-indicator{background:#438b7a}
+.hit-movement .ost-organ-indicator{background:#7c9a5c}
+.ost-organ-hit:focus-visible .ost-organ-indicator,.ost-organ-hit:hover .ost-organ-indicator{transform:translate(-50%,-50%) scale(1.24)}
+.ost-organ-tip{position:absolute;left:55%;top:calc(50% + 13px);padding:6px 10px;border:1px solid #dce6ed;border-radius:999px;background:#fff;color:#193954;font-size:.74rem;font-weight:700;white-space:nowrap;box-shadow:0 3px 12px #1636511b;pointer-events:none}
+.hit-brain .ost-organ-tip,.hit-lungs .ost-organ-tip,.hit-kidney .ost-organ-tip{left:auto;right:60%}
+.ost-model-hint{text-align:center;color:#728a9d;font-size:.83rem;margin:3px 0 0}
+.ost-model-results[hidden]{display:none!important}
+.ost-model-results{max-width:660px;margin:10px auto}
+.ost-model-results h3{margin:0 0 12px;color:#203e59}
+.overlay-panel.ost-med-sheet{max-width:650px!important;width:min(95vw,650px)!important;padding:0!important;border-radius:28px!important;overflow:hidden!important;box-shadow:0 25px 75px #12364c36!important}
+.ost-med-sheet .overlay-head{display:flex!important;align-items:center!important;padding:20px 22px 12px!important;background:#fff!important;border-bottom:1px solid #e6edf3!important;position:static!important;min-height:64px!important}
+.ost-med-sheet [data-overlay-title]{display:block!important;font-size:1.23rem!important;font-weight:750!important;line-height:1.3!important;color:#193950!important}
+.ost-med-sheet .overlay-body{padding:18px 20px 24px!important;max-height:min(75vh,710px)!important;overflow:auto!important;background:#fff!important}
+.ost-med-sheet .close{position:static!important;margin-left:auto!important;flex:none!important;width:40px!important;height:40px!important;background:#f3f7fa!important;border:1px solid #e0e8ee!important;border-radius:13px!important}
+.ost-sheet-info{display:flex;align-items:center;gap:14px;color:#556e84;line-height:1.6;margin-bottom:18px}
+.ost-sheet-emoji{display:grid;place-items:center;flex:none;width:52px;height:52px;border-radius:16px;background:#f0f6fb;font-size:1.6rem}
+.ost-sheet-info p{margin:0}
+.ost-sheet-rows,.ost-diag-condition-list{display:grid;gap:8px}
+.ost-sheet-row{display:grid;grid-template-columns:40px minmax(0,1fr) 18px;gap:12px;align-items:center;width:100%;text-align:left;min-height:61px;padding:11px 13px;border:1px solid #e0e9ef;border-radius:16px;background:#fff;color:#1c3b57;cursor:pointer;font:inherit}
+.ost-sheet-row:hover{background:#f8fbfd}
+.ost-sheet-row>span:nth-child(2){min-width:0}
+.ost-sheet-row strong{display:block;font-weight:650}
+.ost-sheet-row small{display:block;color:#708598;margin-top:2px;font-size:.8rem;line-height:1.4;max-height:38px;overflow:hidden}
+.ost-sheet-row-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#eef5fa;font-size:1.25rem}
+.ost-sheet-row b{font-size:1.3rem;font-weight:400;color:#859aac}
+.ost-article-sheet .ost-sheet-intro{margin:0 0 15px;color:#627e94;line-height:1.6}
+.ost-sheet-figure{display:block;max-width:100%;max-height:280px;object-fit:contain;margin:12px auto;border-radius:14px}
+.ost-sheet-source{border-top:1px solid #e0e8ee;margin-top:17px;padding-top:14px;font-size:.9rem;overflow-wrap:anywhere}
+.ost-sheet-subheading{font-size:1rem;color:#173952;margin:10px 0}
+.ost-diag-symptom{padding:10px 0 18px;border-top:1px solid #ecf1f5}
+.ost-diag-symptom h4{font-size:.95rem;color:#49657d;margin:4px 0 9px}
+.ost-sheet-overline{color:#7890a4;font-size:.8rem;font-weight:700;letter-spacing:.025em;margin-bottom:12px}
+.ost-disease-part{background:#f7fafc;border:1px solid #e7eef3;border-radius:16px;padding:15px;margin-bottom:11px}
+.ost-disease-part h3{font-size:.94rem;margin:0 0 8px;color:#193c59}
+.ost-disease-part p{margin:0;line-height:1.65;color:#405c73}
+.ost-disease-cave{background:#fff4f4;border-color:#f1d9dc}
+.ost-disease-cave h3{color:#b72f3a}
+@media(max-width:620px){.ost-model-stage{max-width:420px}.ost-organ-indicator{width:16px;height:16px}.ost-organ-tip{font-size:.68rem;padding:5px 7px}.ost-med-sheet .overlay-body{max-height:76dvh!important}}
