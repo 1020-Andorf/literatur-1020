@@ -104,68 +104,68 @@
   {
     "id": "thorax",
     "icon": "heart",
-    "title": "Thoraxschmerz",
+    "title": "Thoraxschmer",
     "causes": [
       {
         "name": "Akutes Koronarsyndrom",
+        "info": "Myokardischämie meist durch Plaqueruptur und Thrombus Druck/Enge, Ausstrahlung, Übelkeit, EKG kann initial unauffällig sein CAVE: 12-Kanal-EKG und serieller Verlauf, atypische Symptome.",
         "physiology": "Akute Myokardischämie durch Plaqueruptur und thrombotische Koronarobstruktion. Dadurch sinken myokardiale Sauerstoffversorgung und Pumpfunktion, was arrhythmische und hämodynamische Folgen haben kann.",
         "findings": "Typisch sind retrosternaler Druck oder Enge, Ausstrahlung, Dyspnoe, Übelkeit und Kaltschweißigkeit. Ein 12-Kanal-EKG kann ST-Veränderungen zeigen, initial aber auch unauffällig sein.",
         "cave": "Atypische oder schmerzfreie Verläufe kommen vor. Bei Dyspnoe, Oberbauchbeschwerden oder Schwäche ACS mitdenken.",
-        "info": "Myokardischämie meist durch Plaqueruptur und Thrombus Druck/Enge, Ausstrahlung, Übelkeit, EKG kann initial unauffällig sein CAVE: 12-Kanal-EKG und serieller Verlauf, atypische Symptome.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
         "name": "Akutes Aortensyndrom",
+        "info": "Einriss der Aortenintima oder intramurales Hämatom plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich CAVE: Schock und Organischämie.",
         "physiology": "Einriss der Aortenintima oder intramurales Hämatom mit Gefahr der Organmalperfusion und Ruptur. Je nach Ausdehnung können Herz, Gehirn oder Extremitäten mitbetroffen sein.",
         "findings": "Typisch sind plötzlich stärkste thorakale oder dorsale Schmerzen, eventuell Puls- oder Blutdruckdifferenzen, Synkope oder neurologische Ausfälle.",
         "cave": "Schmerzqualität alleine ist unzuverlässig. Hypotonie, neue Neurologie oder Zeichen der Minderperfusion sind hochgefährlich.",
-        "info": "Einriss der Aortenintima oder intramurales Hämatom plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich CAVE: Schock und Organischämie.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Aortensyndrom%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
         "name": "Lungenembolie",
+        "info": "Pulmonalarterieller Gefäßverschluss atemabhängiger Schmerz, Tachykardie, Dyspnoe CAVE: Synkope und Hypotonie.",
         "physiology": "Verschluss einer Lungenarterie durch thromboembolisches Material mit Perfusionsstörung und möglicher akuter Rechtsherzbelastung. Die Ventilation kann erhalten sein, der Gasaustausch aber deutlich gestört sein.",
         "findings": "Akute Dyspnoe, Tachypnoe, Tachykardie, pleuritischer Thoraxschmerz, manchmal Synkope oder Hämoptyse. Die SpO₂ kann trotz relevanter Embolie anfangs normal sein.",
         "cave": "Hypotonie, Synkope und Zeichen des Schocks sprechen für eine Hochrisiko-Embolie. Immobilisation, OP, Tumor oder TVT-Anamnese gezielt erfragen.",
-        "info": "Pulmonalarterieller Gefäßverschluss atemabhängiger Schmerz, Tachykardie, Dyspnoe CAVE: Synkope und Hypotonie.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Lungenembolie%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
         "name": "Pneumothorax",
+        "info": "Luft im Pleuraspalt abrupt einsetzender einseitiger pleuritischer Schmerz und Dyspnoe CAVE: Spannungskomponente.",
         "physiology": "Luft im Pleuraspalt hebt den negativen intrapleuralen Druck auf und verursacht einen partiellen oder kompletten Lungenkollaps. Bei Spannungskomponente sinkt der venöse Rückstrom zusätzlich.",
         "findings": "Plötzlicher einseitiger Thoraxschmerz, Dyspnoe, abgeschwächtes Atemgeräusch, oft Tachykardie. Bei größerem Pneumothorax auch Hypoxämie.",
         "cave": "Bei zunehmender Atemnot, Schock oder einseitig fehlendem Atemgeräusch Spannungspneumothorax klinisch sofort mitdenken.",
-        "info": "Luft im Pleuraspalt abrupt einsetzender einseitiger pleuritischer Schmerz und Dyspnoe CAVE: Spannungskomponente.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Pneumothorax%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
         "name": "Perikarditis",
+        "info": "Entzündung des Herzbeutels lage- und atemabhängiger Schmerz, Besserung im Sitzen, ggf. diffuse ST-Hebungen CAVE: Tamponadezeichen.",
         "physiology": "Entzündung des Herzbeutels mit Reizung der perikardialen Schmerzfasern. Bei Ergussentwicklung kann die diastolische Füllung des Herzens beeinträchtigt sein.",
         "findings": "Häufig lage- und atemabhängiger Thoraxschmerz, Besserung im Sitzen, ggf. Fieber oder diffuse EKG-Veränderungen.",
         "cave": "Bei Hypotonie, Halsvenenstauung oder deutlicher Dyspnoe an Perikardtamponade denken.",
-        "info": "Entzündung des Herzbeutels lage- und atemabhängiger Schmerz, Besserung im Sitzen, ggf. diffuse ST-Hebungen CAVE: Tamponadezeichen.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Perikarditis%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
         "name": "Muskuloskelettaler Thoraxschmerz",
+        "info": "Reizung von Muskeln, Rippen oder Gelenken oft bewegungs-/druckabhängig CAVE: Druckschmerz schließt ACS nicht sicher aus.",
         "physiology": "Muskuloskelettaler Thoraxschmerz: Entscheidend ist die Auswirkung auf Herzzeitvolumen, Blutdruck und Organperfusion.",
         "findings": "oft bewegungs-/druckabhängig. Vitalparameter, Hautperfusion, EKG und Begleitsymptome zusammen bewerten.",
         "cave": "Druckschmerz schließt ACS nicht sicher aus. Hypotonie, Synkope oder akute Instabilität bedeuten präklinisch hohe Dringlichkeit.",
-        "info": "Reizung von Muskeln, Rippen oder Gelenken oft bewegungs-/druckabhängig CAVE: Druckschmerz schließt ACS nicht sicher aus.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Muskuloskelettaler%20Thoraxschmerz%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
         "name": "Ösophagealer Reflux",
+        "info": "Rückfluss von Magensäure in die Speiseröhre brennender retrosternaler Schmerz, nach Essen/Liegen CAVE: ACS nicht allein anhand Sodbrennen ausschließen.",
         "physiology": "Ösophagealer Reflux: Entscheidend ist die Auswirkung auf Herzzeitvolumen, Blutdruck und Organperfusion.",
         "findings": "brennender retrosternaler Schmerz, nach Essen/Liegen. Vitalparameter, Hautperfusion, EKG und Begleitsymptome zusammen bewerten.",
         "cave": "ACS nicht allein anhand Sodbrennen ausschließen. Hypotonie, Synkope oder akute Instabilität bedeuten präklinisch hohe Dringlichkeit.",
-        "info": "Rückfluss von Magensäure in die Speiseröhre brennender retrosternaler Schmerz, nach Essen/Liegen CAVE: ACS nicht allein anhand Sodbrennen ausschließen.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=%C3%96sophagealer%20Reflux%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
@@ -183,7 +183,8 @@
       "Schwere Dyspnoe"
     ],
     "group": "Kreislauf",
-    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten."
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten.",
+    "related": []
   },
   {
     "id": "bewusstsein",
