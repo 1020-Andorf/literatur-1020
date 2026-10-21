@@ -2094,3 +2094,86 @@ body.app-shell .algorithm-link-list li small{display:block!important;margin-top:
 body.app-shell .algorithm-link-list li>a{white-space:nowrap!important;text-decoration:none!important;color:#426783!important;font-size:.85rem!important;font-weight:650!important}
 body.app-shell .detail-page .detail-section:has(.algorithm-material-lists){padding:15px 0!important;border:0!important;background:transparent!important;box-shadow:none!important}
 @media(max-width:460px){body.app-shell .algorithm-link-list>li{grid-template-columns:25px minmax(0,1fr)!important}body.app-shell .algorithm-link-list li>a{grid-column:2;justify-self:start}}
+
+/* OST 1020 v536: overlay safety, clearer learning sequences and editorial ordering. */
+/* Aktuelles: reserve space for closing control without an empty header strip. */
+body .overlay-panel.ost-news-modal{padding:13px 15px 16px!important}
+body .overlay-panel.ost-news-modal .overlay-head{
+  position:absolute!important;right:13px!important;top:13px!important;
+  width:42px!important;height:42px!important;min-height:42px!important;
+  z-index:5!important;padding:0!important;margin:0!important;
+  border:0!important;box-shadow:none!important;
+}
+body .overlay-panel.ost-news-modal .close{
+  width:42px!important;height:42px!important;margin:0!important;
+  border:1px solid #dce7ee!important;border-radius:12px!important;
+  background:#f3f8fb!important;color:#254862!important;
+}
+body .overlay-panel.ost-news-modal .overlay-body{
+  padding:2px 55px 2px 3px!important;margin:0!important;
+  box-sizing:border-box!important;min-width:0!important;
+}
+body .overlay-panel.ost-news-modal .news-detail,
+body .overlay-panel.ost-news-modal .news-detail p{
+  padding:0!important;margin:0!important;border:0!important;
+  background:transparent!important;overflow-wrap:anywhere!important;
+}
+
+/* Mobile sheet: body stays scroll-locked while modal content scrolls; tap backdrop to close. */
+html.ost-overlay-open,body.ost-overlay-open{overscroll-behavior:none!important}
+.overlay.show{overscroll-behavior:contain!important}
+.overlay-panel.ost-simple-anatomy-sheet .overlay-head{
+  padding:7px 12px 0!important;min-height:46px!important;
+  align-items:center!important;justify-content:flex-end!important;
+}
+.overlay-panel.ost-simple-anatomy-sheet .close{width:35px!important;height:35px!important;border:0!important;background:transparent!important;color:#7a95a6!important}
+.ost-anat-back{display:flex;align-items:center;gap:8px;padding:8px 10px;border:0;border-radius:11px;background:#edf5fa;color:#244960;font:inherit;font-size:.88rem;font-weight:650;cursor:pointer;margin:0 0 13px;max-width:100%}
+.ost-anat-back:hover{background:#e2eef7}
+.ost-anat-back span{font-size:1.25rem}
+
+/* Algorithmus and Merkhilfe: readable checklist/letter markers instead of large numeric blocks. */
+body.app-shell .flow-node.ost-teaching-step{
+ display:grid!important;grid-template-columns:34px minmax(0,1fr)!important;
+ gap:13px!important;align-items:start!important;min-height:58px!important;
+ background:#fff!important;border:1px solid #dfe8ef!important;
+ border-radius:14px!important;padding:14px 16px!important;
+ margin:0!important;box-shadow:none!important;
+}
+body.app-shell .flow-node.ost-teaching-step>.flow-step-marker{
+ display:grid!important;place-items:center!important;width:34px!important;height:34px!important;
+ min-width:34px!important;margin:0!important;border-radius:10px!important;
+ background:#eaf2f8!important;color:#1b4d6e!important;font-size:1.08rem!important;
+ font-weight:760!important;line-height:1!important;
+}
+body.app-shell .flow-node.ost-teaching-step.ost-algorithm-step>.flow-step-marker{
+ border-radius:50%!important;background:#eaf2f7!important;
+ font-size:1.6rem!important;font-weight:450!important;
+}
+body.app-shell .flow-node.ost-teaching-step .flow-step-copy{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px;line-height:1.56;color:#233f56;padding-top:3px;font-weight:450}
+body.app-shell .flow-node.ost-teaching-step .flow-step-heading{font-size:1rem!important;font-weight:680!important;color:#153952!important}
+body.app-shell .flow-node.ost-teaching-step .flow-step-text{min-width:0;overflow-wrap:anywhere}
+body.app-shell .ost-teaching-arrow{color:#aec2d1!important;font-size:17px!important;line-height:24px!important;margin:2px 0!important}
+body.app-shell .scheme-visual>.flow-node.ost-teaching-step,
+body.app-shell .schema-visual>.flow-node.ost-teaching-step{min-height:56px!important}
+
+/* Editing order for whole lists and individual points. */
+.ost-order-editor{margin:24px 0 10px;border:1px solid #dce6ec;border-radius:17px;background:#fbfdfe;padding:14px}
+.ost-order-title{display:flex;flex-direction:column;gap:4px;margin:0 0 12px}
+.ost-order-title strong{font-size:1.04rem;color:#1d3b52}
+.ost-order-title small{font-size:.82rem;line-height:1.5;color:#6a8396}
+.ost-order-group{display:grid;gap:7px;margin-top:12px}
+.ost-order-group h3{font-size:.93rem;color:#2c5066;margin:10px 0 2px}
+.ost-order-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;background:#fff;border:1px solid #e1e9ef;border-radius:11px;padding:8px 10px;min-height:48px}
+.ost-order-entry>span{font-size:.91rem;font-weight:540;color:#253e55;overflow-wrap:anywhere}
+.ost-order-buttons{display:flex;gap:6px}
+.ost-order-buttons button,.repeat-move-actions button{display:grid;place-items:center;width:36px;height:34px;background:#f3f8fb;border:1px solid #dce6ee;border-radius:9px;color:#1c4b6d;cursor:pointer;font:inherit;font-size:1.1rem}
+.ost-order-buttons button:disabled{opacity:.32;cursor:default}
+.ost-order-unsaved{margin:6px 0;color:#8f5151;font-size:.83rem}
+.repeat-row{min-width:0}
+.repeat-row .repeat-move-actions{display:flex;gap:4px;align-items:center}
+.repeat-row>input{min-width:0;flex:1}
+@media(max-width:540px){
+ .ost-order-entry{padding:8px}
+ .ost-order-buttons button,.repeat-move-actions button{width:32px;height:32px}
+ .repeat-row{flex-wrap:wrap!important}
+}

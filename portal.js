@@ -69,6 +69,7 @@ function chrome(){
  if(hb)hb.innerHTML=svg.home;
  document.body.insertAdjacentHTML('beforeend',`<div class="overlay"><div class="shade" data-overlay-close></div><section class="overlay-panel" role="dialog" aria-modal="true"><div class="overlay-head"><h2 data-overlay-title></h2><button class="close" data-overlay-close>✕</button></div><div class="overlay-body" data-overlay-body></div></section></div>`);
  $$('[data-overlay-close]').forEach(x=>x.onclick=closeOverlay);
+ $('.overlay')?.addEventListener('click',e=>{if(e.target===$('.overlay'))closeOverlay()});
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&$('.overlay')?.classList.contains('show'))closeOverlay()});
 
  {
@@ -350,7 +351,7 @@ function pickByPattern(items,pattern){return items.find(x=>pattern.test([x.title
 function interactiveBodyMap(groups,mode){
  const rects={brain:[43,6,15,12],lungs:[30,25,19,18],heart:[50,29,13,13],abdomen:[38,47,26,15],kidney:[40,61,24,10],movement:[36,72,30,19]};
  const elements=groups.map(g=>{const r=rects[g.id]||[40,40,20,12];return `<button type="button" class="ost-organ-hit hit-${g.id}" data-body-zone="${g.id}" style="left:${r[0]}%;top:${r[1]}%;width:${r[2]}%;height:${r[3]}%" aria-label="${esc(g.label)} öffnen"><span class="ost-organ-indicator"></span><span class="ost-organ-tip">${esc(g.label)}</span></button>`}).join('');
- return `<div class="ost-model-stage ${mode==='diagnosis'?'ost-diagnosis-model':''}"><div class="ost-model-art"><img src="assets/koerpermodell-533.svg" alt="Anatomisches Körpermodell, Organe direkt antippen" draggable="false" loading="eager">${elements}</div><p class="ost-model-hint">Organ antippen, um Themen zu öffnen</p></div>`;
+ return `<div class="ost-model-stage ${mode==='diagnosis'?'ost-diagnosis-model':''}"><div class="ost-model-art"><img src="assets/koerpermodell-536.svg" alt="Anatomisches Körpermodell, Organe direkt antippen" draggable="false" loading="eager">${elements}</div><p class="ost-model-hint">Organ antippen, um Themen zu öffnen</p></div>`;
 }
 function renderModuleText(raw){
  const lines=String(raw||'').split(/\r?\n/);let list=false;const out=[];
@@ -392,9 +393,13 @@ async function modulePage(){
   ];
   const map=interactiveBodyMap(groups,'anatomy');
   $('[data-main]').innerHTML=`<div class="ost-model-screen"><label class="ost-model-search"><span>⌕</span><input type="search" data-module-search placeholder="Anatomie durchsuchen …" aria-label="Anatomie durchsuchen"></label><div class="ost-model-intro">Tippe direkt auf ein Organ oder eine Körperregion</div>${map}<section class="ost-model-results" data-module-list hidden></section></div>`;
-  const showArticle=x=>open(x.title,`<article class="ost-article-sheet"><p class="ost-sheet-intro">${esc(x.summary||x.category||'Anatomie & Physiologie')}</p>${x.image?`<img class="ost-sheet-figure" src="${esc(x.image)}" alt="${esc(x.imageCaption||x.title)}" onerror="this.remove()">`:''}<div class="ost-module-body">${renderModuleText(x.body)}</div>${x.sources?`<aside class="ost-sheet-source"><strong>Quellen</strong><p>${esc(x.sources)}</p></aside>`:''}<p class="diag-hint">Fachliche Inhalte anhand lokaler Vorgaben prüfen.</p></article>`,{sheet:true});
-  const showGroup=g=>{const matched=items.filter(x=>g.pattern.test([x.title,x.category,x.summary,x.synonyms].join(' ')));const render=matched.length?matched.map(x=>`<button class="ost-sheet-row" data-anat-item="${esc(x.id)}"><span class="ost-sheet-row-icon">${g.icon}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join(''):'<p>Für diese Körperregion ist noch kein Artikel hinterlegt.</p>';
-   open(g.label,`<div class="ost-sheet-rows ost-anatomy-only-list">${render}</div>`,{sheet:true,simpleAnatomy:true});$('[data-overlay-body]').onclick=e=>{const b=e.target.closest('[data-anat-item]');if(b){const x=items.find(x=>x.id===b.dataset.anatItem);if(x)showArticle(x)}};
+  const showArticle=(x,origin)=>{
+   const backText=origin?`Zurück zu ${esc(origin.label)}`:'Zurück zum Körpermodell';
+   open(x.title,`<article class="ost-article-sheet"><button type="button" class="ost-anat-back" data-anat-back aria-label="${backText}"><span aria-hidden="true">←</span> ${backText}</button><p class="ost-sheet-intro">${esc(x.summary||x.category||'Anatomie & Physiologie')}</p>${x.image?`<img class="ost-sheet-figure" src="${esc(x.image)}" alt="${esc(x.imageCaption||x.title)}" onerror="this.remove()">`:''}<div class="ost-module-body">${renderModuleText(x.body)}</div>${x.sources?`<aside class="ost-sheet-source"><strong>Quellen</strong><p>${esc(x.sources)}</p></aside>`:''}<p class="diag-hint">Fachliche Inhalte anhand lokaler Vorgaben prüfen.</p></article>`,{sheet:true});
+   $('[data-overlay-body]').onclick=e=>{if(e.target.closest('[data-anat-back]')){if(origin)showGroup(origin);else closeOverlay()}};
+  };
+  const showGroup=g=>{const matched=items.filter(x=>g.pattern.test([x.title,x.category,x.summary,x.synonyms].join(' ')));const render=matched.length?matched.map(x=>`<button type="button" class="ost-sheet-row" data-anat-item="${esc(x.id)}"><span class="ost-sheet-row-icon">${g.icon}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join(''):'<p>Für diese Körperregion ist noch kein Artikel hinterlegt.</p>';
+   open(g.label,`<div class="ost-sheet-rows ost-anatomy-only-list">${render}</div>`,{sheet:true,simpleAnatomy:true});$('[data-overlay-body]').onclick=e=>{const b=e.target.closest('[data-anat-item]');if(b){const x=items.find(x=>x.id===b.dataset.anatItem);if(x)showArticle(x,g)}};
   };
   $('[data-main]').onclick=e=>{const b=e.target.closest('[data-body-zone]');if(b){const g=groups.find(x=>x.id===b.dataset.bodyZone);if(g)showGroup(g)}};
   $('[data-module-search]').oninput=e=>{const q=normalizedSearch(e.target.value.trim()),box=$('[data-module-list]');if(!q){box.hidden=true;box.innerHTML='';return}const hits=items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body,x.synonyms].join(' ')).includes(q));box.hidden=false;box.innerHTML=`<h3>Suchergebnisse</h3>${hits.map(x=>`<button class="ost-sheet-row" data-search-anat="${esc(x.id)}"><span>📘</span><strong>${esc(x.title)}</strong><b>›</b></button>`).join('')||'<p>Keine Treffer</p>'}`;box.onclick=event=>{const b=event.target.closest('[data-search-anat]');if(b){const item=items.find(x=>x.id===b.dataset.searchAnat);if(item)showArticle(item)}}};
@@ -570,12 +575,20 @@ async function algorithmsPage(){
  const d=await get('algorithms');
  const params=new URLSearchParams(location.search),id=params.get('id'),x=d.find(v=>v.id===id);
  if(x){
-   const steps=arr(x.steps),flow=steps.map((st,i)=>`<div class="flow-node"><span>${i+1}</span><strong>${esc(st)}</strong></div>${i<steps.length-1?'<div class="flow-arrow">↓</div>':''}`).join('');
+   const steps=arr(x.steps),flow=steps.map((st,i)=>{
+    const schema=x.category?.startsWith('Schema');
+    const acronym=schema?String(st).match(/^\s*([A-ZÄÖÜ]{1,3})\s*[–—-]\s*/):null;
+    const marker=acronym?acronym[1]:'•';
+    const phrase=acronym?String(st).slice(acronym[0].length):String(st);
+    const headingMatch=phrase.match(/^([^:：]{2,48}):\s*(.+)$/);
+    const formatted=headingMatch?`<strong class="flow-step-heading">${esc(headingMatch[1])}</strong><span class="flow-step-text">${esc(headingMatch[2])}</span>`:`<span class="flow-step-text">${esc(phrase)}</span>`;
+    return `<div class="flow-node ost-teaching-step ${schema?'ost-schema-step':'ost-algorithm-step'}"><span class="flow-step-marker" aria-hidden="true">${esc(marker)}</span><div class="flow-step-copy">${formatted}</div></div>${i<steps.length-1?'<div class="flow-arrow ost-teaching-arrow" aria-hidden="true">↓</div>':''}`;
+   }).join('');
    const mat=x.materials||{background:[],checklists:[]};
    const safeMedia=url=>{try{const u=new URL(url,location.href);return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return ''}};
    const image=safeMedia(x.imageUrl);
    const materialList=(key,title,items)=>`<section class="algorithm-list-group"><h3>${title}</h3>${arr(items).length?`<ul class="algorithm-link-list">${arr(items).map(m=>{const u=safeMedia(m.url);return `<li><span class="algorithm-list-icon">${key==='background'?'📘':'✅'}</span><div><strong>${esc(m.title||'Material')}</strong>${m.note?`<small>${esc(m.note)}</small>`:''}</div>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">Öffnen ↗</a>`:''}</li>`}).join('')}</ul>`:'<p class="algorithm-empty">Noch keine Materialien hinterlegt.</p>'}</section>`;
-   $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page algorithm-detail"><div class="detail-lead"><span class="detail-big-icon">${ostIcon('notes')}</span><div><h2>${esc(x.title)}</h2><p>${esc(x.category||'')} · ${esc(x.stand||'')}</p></div></div>${image?`<figure class="algorithm-figure"><img src="${esc(image)}" alt="${esc(x.title)} – Schema oder Algorithmus" loading="lazy"><figcaption>${esc(x.imageCaption||x.title)}</figcaption></figure>`:''}<section class="${x.category?.startsWith('Schema')?'schema-visual':'flowchart standalone'} ${x.id==='schema-pat'?'schema-triangle':''}">${x.id==='schema-pat'?`<div class="pat-visual"><div>👶<strong>Erscheinungsbild</strong><span>TICLS</span></div><div>🫁<strong>Atemarbeit</strong><span>Geräusche, Einziehungen</span></div><div>🩸<strong>Hautdurchblutung</strong><span>Farbe, Marmorierung</span></div></div>`:''}${flow}</section><section class="guideline-box"><h3>Leitlinie / Quelle</h3><p>${esc(x.source||'Noch keine Quelleninformation hinterlegt.')}</p>${x.sourceUrl?`<a class="btn primary" href="${esc(x.sourceUrl)}" target="_blank" rel="noopener">Original öffnen ↗</a>`:''}</section><section class="detail-section"><h2>Materialien</h2><div class="algorithm-material-lists">${materialList('background','Hintergrundinformationen',mat.background||[])}${materialList('checklists','Checklisten',mat.checklists||[])}</div></section></section>`;
+   $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page algorithm-detail"><div class="detail-lead"><span class="detail-big-icon">${ostIcon('notes')}</span><div><h2>${esc(x.title)}</h2><p>${esc(x.category||'')} · ${esc(x.stand||'')}</p></div></div>${image?`<figure class="algorithm-figure"><img src="${esc(image)}" alt="${esc(x.title)} – Schema oder Algorithmus" loading="lazy" onerror="this.closest('figure')?.remove()"><figcaption>${esc(x.imageCaption||x.title)}</figcaption></figure>`:''}<section class="${x.category?.startsWith('Schema')?'schema-visual':'flowchart standalone'} ${x.id==='schema-pat'?'schema-triangle':''}">${x.id==='schema-pat'?`<div class="pat-visual"><div>👶<strong>Erscheinungsbild</strong><span>TICLS</span></div><div>🫁<strong>Atemarbeit</strong><span>Geräusche, Einziehungen</span></div><div>🩸<strong>Hautdurchblutung</strong><span>Farbe, Marmorierung</span></div></div>`:''}${flow}</section><section class="guideline-box"><h3>Leitlinie / Quelle</h3><p>${esc(x.source||'Noch keine Quelleninformation hinterlegt.')}</p>${x.sourceUrl?`<a class="btn primary" href="${esc(x.sourceUrl)}" target="_blank" rel="noopener">Original öffnen ↗</a>`:''}</section><section class="detail-section"><h2>Materialien</h2><div class="algorithm-material-lists">${materialList('background','Hintergrundinformationen',mat.background||[])}${materialList('checklists','Checklisten',mat.checklists||[])}</div></section></section>`;
    const catalog=await contentCatalog();$('.algorithm-detail')?.insertAdjacentHTML('beforeend',relatedHtml(x,catalog));
    return
  }
@@ -694,7 +707,7 @@ async function editor(){
  const editorCatalog=await contentCatalog();
  const splitLines=v=>String(v||'').split(/\n+/).map(x=>x.trim()).filter(Boolean);
  const field=(label,value,key,type='text')=>`<label class="ux-field"><span>${label}</span>${type==='textarea'?`<textarea data-k="${key}">${esc(Array.isArray(value)?value.join('\n'):value||'')}</textarea>`:`<input data-k="${key}" type="${type}" value="${esc(value??'')}">`}</label>`;
- const listEditor=(items,key,placeholder)=>`<div class="repeat-list" data-list-key="${key}">${arr(items).map((v,i)=>`<div class="repeat-row"><input value="${esc(v)}" data-list-item="${i}" placeholder="${placeholder}"><button type="button" data-remove-row>✕</button></div>`).join('')}<button type="button" class="small-add" data-add-row="${key}">+ Punkt</button></div>`;
+ const listEditor=(items,key,placeholder)=>`<div class="repeat-list" data-list-key="${key}">${arr(items).map((v,i)=>`<div class="repeat-row"><input value="${esc(v)}" data-list-item="${i}" placeholder="${placeholder}"><div class="repeat-move-actions"><button type="button" data-move-list="up" aria-label="Punkt nach oben verschieben" title="Nach oben">↑</button><button type="button" data-move-list="down" aria-label="Punkt nach unten verschieben" title="Nach unten">↓</button></div><button type="button" data-remove-row aria-label="Punkt entfernen">✕</button></div>`).join('')}<button type="button" class="small-add" data-add-row="${key}">+ Punkt</button></div>`;
 
  const editorDrafts=new Map();
  let currentEditorState=null;
@@ -719,10 +732,15 @@ async function editor(){
    let filterTerm='';
    const render=()=>{
      if(name==='news'){itemsBox.innerHTML=d.map((x,i)=>renderCard(name,x,i)).join('');return}
-     const options=d.map((x,i)=>({i,label:String(x.title||x.name||x.key||'Eintrag '+(i+1)),search:normalizedSearch([x.title,x.authors,x.journal,Array.isArray(x.topics)?x.topics.join(' '):x.topics].join(' '))})).sort((a,b)=>a.label.localeCompare(b.label,'de'));
+     const isSortable=['algorithms','skills','guide','changes','differential','meetings'].includes(name);
+     const options=d.map((x,i)=>({i,label:String(x.title||x.name||x.key||'Eintrag '+(i+1)),search:normalizedSearch([x.title,x.authors,x.journal,Array.isArray(x.topics)?x.topics.join(' '):x.topics].join(' '))}));
+     if(!isSortable)options.sort((a,b)=>a.label.localeCompare(b.label,'de'));
      const visible=name==='articles'&&filterTerm?options.filter(x=>x.search.includes(normalizedSearch(filterTerm))):options;
+     const orderKey=x=>name==='algorithms'?(String(x.category||'').startsWith('Schema')?'Merkhilfen':'Algorithmen'):'Einträge';
+     const orderGroups=isSortable?[...new Set(d.map(orderKey))]:[];
+     const orderTools=isSortable?`<section class="ost-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Liste</strong><small>Mit ↑ und ↓ sortieren, anschließend oben „Speichern“ wählen.</small></div><p class="ost-order-unsaved" data-order-unsaved aria-live="polite"></p>${orderGroups.map(group=>`<div class="ost-order-group">${orderGroups.length>1?`<h3>${esc(group)}</h3>`:''}${d.map((x,i)=>({x,i})).filter(({x})=>orderKey(x)===group).map(({x,i},pos,all)=>`<div class="ost-order-entry"><span>${esc(String(x.title||x.name||x.key||'Eintrag '+(i+1)))}</span><div class="ost-order-buttons"><button type="button" data-order-dir="up" data-order-index="${i}" aria-label="${esc(String(x.title||x.name||'Eintrag'))} nach oben" ${pos===0?'disabled':''}>↑</button><button type="button" data-order-dir="down" data-order-index="${i}" aria-label="${esc(String(x.title||x.name||'Eintrag'))} nach unten" ${pos===all.length-1?'disabled':''}>↓</button></div></div>`).join('')}</div>`).join('')}</section>`:'';
      const pickerTop=name==='articles'?`<div class="literature-admin-stats"><div><strong>${d.length}</strong><span>Artikel gesamt</span></div><div><strong>${new Set(d.flatMap(x=>Array.isArray(x.topics)?x.topics:[x.topics]).filter(Boolean)).size}</strong><span>Themen</span></div></div><div class="editor-grid two literature-editor-tools"><label class="ux-field"><span>Literatur suchen</span><input data-article-filter placeholder="Titel, Autor:in, Journal …" value="${esc(filterTerm)}"></label><label class="ux-field"><span>Eintrag auswählen</span><select data-editor-pick><option value="-1">– Bitte auswählen –</option>${visible.map(x=>`<option value="${x.i}" ${selectedIndex===x.i?'selected':''}>${esc(x.label)}</option>`).join('')}</select></label></div>`:`<div class="ost-entry-picker"><label>Eintrag auswählen<select data-editor-pick><option value="-1">– Bitte auswählen –</option>${options.map(x=>`<option value="${x.i}" ${selectedIndex===x.i?'selected':''}>${esc(x.label)}</option>`).join('')}</select></label></div>`;
-     itemsBox.innerHTML=pickerTop+(selectedIndex>=0&&d[selectedIndex]?renderCard(name,d[selectedIndex],selectedIndex):'<p class="diag-hint">Wähle einen Eintrag aus, um das Bearbeitungsfenster zu öffnen.</p>');
+     itemsBox.innerHTML=pickerTop+(selectedIndex>=0&&d[selectedIndex]?renderCard(name,d[selectedIndex],selectedIndex):'<p class="diag-hint">Wähle einen Eintrag aus, um das Bearbeitungsfenster zu öffnen.</p>')+orderTools;
      itemsBox.querySelector('[data-editor-pick]')?.addEventListener('change',e=>{sync();selectedIndex=Number(e.target.value);render();openCard(selectedIndex)});
      itemsBox.querySelector('[data-article-filter]')?.addEventListener('input',e=>{filterTerm=e.target.value;if(selectedIndex>=0&&!visible.some(v=>v.i===selectedIndex))selectedIndex=-1;render();});
    };render();
@@ -744,6 +762,28 @@ async function editor(){
        const newsItem={id:'news-'+Date.now(),title:'Neu: '+title,category,date:today,text:'Neuer oder aktualisierter Inhalt: '+title,link,active:true,relatedSection:name,relatedId:String(entry.id||title)};
        const saved=await save('news',[newsItem,...current]);
        alert(saved?'Meldung unter Aktuelles veröffentlicht.':'Meldung nur lokal gespeichert – Worker-Synchronisierung prüfen.');return;
+     }
+     const moveOrder=e.target.closest('[data-order-dir]');if(moveOrder){
+       sync();const i=Number(moveOrder.dataset.orderIndex),direction=moveOrder.dataset.orderDir==='up'?-1:1;
+       const groupKey=x=>name==='algorithms'?(String(x.category||'').startsWith('Schema')?'schema':'algorithm'):'all';
+       if(!d[i])return;
+       const others=d.map((x,j)=>({x,j})).filter(({x})=>groupKey(x)===groupKey(d[i]));
+       const position=others.findIndex(v=>v.j===i),neighbor=others[position+direction];
+       if(!neighbor)return;
+       const j=neighbor.j,previouslySelected=d[selectedIndex];
+       [d[i],d[j]]=[d[j],d[i]];
+       selectedIndex=previouslySelected?d.indexOf(previouslySelected):-1;
+       render();if(selectedIndex>=0)openCard(selectedIndex);
+       const notice=box.querySelector('[data-order-unsaved]');
+       if(notice)notice.textContent='Reihenfolge geändert – bitte Speichern anklicken.';
+       return;
+     }
+     const moveList=e.target.closest('[data-move-list]');if(moveList){
+       const row=moveList.closest('.repeat-row'),list=row?.closest('[data-list-key]');
+       if(!row||!list)return;
+       if(moveList.dataset.moveList==='up'&&row.previousElementSibling?.classList.contains('repeat-row'))list.insertBefore(row,row.previousElementSibling);
+       else if(moveList.dataset.moveList==='down'&&row.nextElementSibling?.classList.contains('repeat-row'))list.insertBefore(row.nextElementSibling,row);
+       return;
      }
      const del=e.target.closest('[data-del]');if(del){const i=+del.dataset.del;sync();d.splice(i,1);render();return}
      const addRow=e.target.closest('[data-add-row]');if(addRow){
