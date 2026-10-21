@@ -305,7 +305,7 @@ async function home(){
  $('[data-main]').innerHTML=`<section class="ost-home-intro"><span>OST 1020</span><div class="ost-home-title-row"><h1>Wissenssammlung</h1></div></section>
  <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen durchsuchen …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
  <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
- <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html">${ostIcon('book')}<span>Wissen</span></a><a href="training.html">${ostIcon('training')}<span>Training</span></a><a href="termine.html">${ostIcon('calendar')}<span>Termine</span></a><a href="dienstbesprechungen.html">${ostIcon('users')}<span>Besprechungen</span></a><a href="lehrmeinung.html">${ostIcon('changes')}<span>Lehrmeinung</span></a></nav></section>
+ <section class="section ost-shortcuts"><div class="section-head"><h2>Menü</h2></div><nav class="ost-main-destinations" aria-label="Hauptmenü"><a href="wissen.html">${ostIcon('book')}<span>Wissen & Nachschlagen</span></a><a href="algorithmen.html">${ostIcon('checklist')}<span>Algorithmen & Materialien</span></a><a href="training.html">${ostIcon('training')}<span>Training</span></a><a href="termine.html">${ostIcon('calendar')}<span>Organisation</span></a></nav><div class="clinical-org-links"><a href="dienstbesprechungen.html">Besprechungen</a><a href="lehrmeinung.html">Lehrmeinung</a></div></section>
  <section class="clinical-quick-section"><div class="section-head"><h2>Schnellzugriff</h2></div><nav class="clinical-quick-grid" aria-label="Häufige Inhalte"><a href="algorithmen.html">${ostIcon('heart')}<span>Algorithmen</span></a><a href="differential.html">${ostIcon('search')}<span>Diagnostik</span></a><a href="themen.html?bereich=pharm">${ostIcon('pill')}<span>Pharma</span></a><a href="themen.html?bereich=anatomy">${ostIcon('anatomy')}<span>Anatomie</span></a><a href="skilltraining.html">${ostIcon('training')}<span>Skills</span></a><a href="literatur.html">${ostIcon('book')}<span>Literatur</span></a></nav></section>
  <section class="clinical-recent-section"><div class="section-head"><h2>Zuletzt angesehen</h2></div><div class="clinical-recent-grid">${recent.slice(0,4).map(item=>`<a href="${esc(item.href||'wissen.html')}">${ostIcon('book')}<span>${esc(item.label||item.title||'Inhalt')}</span><b>›</b></a>`).join('')||'<div class="clinical-recent-empty">Deine zuletzt geöffneten Inhalte erscheinen hier.</div>'}</div></section>
  <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Alle Termine →</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section><div class="ost-home-admin-footer"><a class="ost-home-editor" href="editor.html" aria-label="Redaktion öffnen">✎ Redaktion</a></div>`;
@@ -474,8 +474,13 @@ async function moduleEditor(box,initialModule='pharm'){
 }
 
 async function wissenPage(){
- const links=[['notes','Algorithmen & Merkhilfen','algorithmen.html','Strukturierte Abläufe und Untersuchungsschemata'],['guideline','Leitlinien / Guidelines','leitlinien.html','Quellen, Fachgesellschaften und Empfehlungen'],['book','Literatursammlung','literatur.html','Artikel, Lehrbücher und Forschung'],['search','Diagnostik','differential.html','Leitsymptome und Krankheitsbilder'],['pill','Pharmakologie','themen.html?bereich=pharm','Übersicht und Nachschlagen'],['heart','Anatomie & Physiologie','themen.html?bereich=anatomy','Übersicht und Nachschlagen'],['dictionary','Befundwörterbuch','themen.html?bereich=befund','Fachbegriffe und Abkürzungen']];
- $('[data-main]').innerHTML=`<h1 class="ost-visually-hidden">Wissen</h1><div class="ost-link-directory ost-tonal-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ostIcon(ico)}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
+ const sections=[
+ {id:'klinisch',icon:'anatomy',title:'Körper & Diagnostik',sub:'Organe, Symptome, Befunde',links:[['anatomy','Anatomie & Physiologie','themen.html?bereich=anatomy'],['search','Symptome & Krankheitsbilder','differential.html'],['dictionary','Befundwörterbuch','themen.html?bereich=befund']]},
+ {id:'praxis',icon:'checklist',title:'Algorithmen & Checklisten',sub:'Abläufe, Merkhilfen und Materialien',links:[['notes','Algorithmen','algorithmen.html?typ=algorithmen'],['book','Merkhilfen & Schemata','algorithmen.html?typ=merkhilfen'],['checklist','Checklisten','algorithmen.html?typ=checklisten']]},
+ {id:'pharma',icon:'pill',title:'Pharmakologie',sub:'Wirkstoffgruppen und Medikamente',links:[['pill','Pharmakologie öffnen','themen.html?bereich=pharm']]},
+ {id:'literatur',icon:'book',title:'Literatur & Leitlinien',sub:'Nachlesen und Vertiefen',links:[['book','Literatursammlung','literatur.html'],['guideline','Leitlinien / Guidelines','leitlinien.html']]}
+ ];
+ $('[data-main]').innerHTML=`<section class="clinical-combined-intro"><h1>Wissen</h1><p>Alles Wichtige, sinnvoll verbunden.</p></section><div class="clinical-combined-hubs">${sections.map((g,i)=>`<details class="clinical-combined-hub" ${i===0?'open':''}><summary><span class="clinical-combined-icon">${ostIcon(g.icon)}</span><span class="clinical-combined-heading"><strong>${g.title}</strong><small>${g.sub}</small></span><span class="clinical-combined-chevron">⌄</span></summary><div class="clinical-combined-links">${g.links.map(([ico,title,href])=>`<a href="${href}">${ostIcon(ico)}<span>${title}</span><b>›</b></a>`).join('')}</div></details>`).join('')}</div><div class="clinical-combined-footer"><a href="skilltraining.html">${ostIcon('training')} Skilltraining öffnen →</a></div>`;
 }
 async function trainingPage(){
  const links=[['training','Skilltraining','skilltraining.html','Fertigkeiten, Materialien und Abläufe'],['device','MPG-Informationen','themen.html?bereich=mpg','Geräte, Spezifikationen und Bedienungsanleitungen'],['checklist','Checklisten','themen.html?bereich=checklists','PDF-Checklisten und Übungsunterlagen'],['screen','Simulations Guide','simulation.html','Quick Guide für den Simulator'],['question','FAQ zu Simulationstrainings','simulation-faq.html','Häufige Fragen zur Vorbereitung und Durchführung']];
@@ -665,9 +670,18 @@ async function algorithmsPage(){
    const catalog=await contentCatalog();$('.algorithm-detail')?.insertAdjacentHTML('beforeend',relatedHtml(x,catalog));
    return
  }
- const types=['Schema','Algorithmus'];
- const tile=x=>`<a class="scheme-tile" href="algorithmen.html?id=${encodeURIComponent(x.id)}"><span class="scheme-icon">${ostIcon(x.category?.startsWith('Schema')?'notes':'checklist')}</span><h2>${esc(x.title)}</h2><span class="scheme-more">Ansehen →</span></a>`;
- $('[data-main]').innerHTML=`<section class="page-banner"><h1>Algorithmen & Merkhilfen</h1></section><section class="scheme-section"><h2>Algorithmen</h2><div class="scheme-grid ost-tonal-grid">${d.filter(x=>!x.category?.startsWith('Schema')).map(tile).join('')}</div></section><section class="scheme-section"><h2>Merkhilfen</h2><div class="scheme-grid ost-tonal-grid">${d.filter(x=>x.category?.startsWith('Schema')).map(tile).join('')}</div></section>`;
+ const type=new URLSearchParams(location.search).get('typ')||'algorithmen';
+ const allowed=['algorithmen','merkhilfen','checklisten'];
+ const selected=allowed.includes(type)?type:'algorithmen';
+ const tabs=[['algorithmen','Algorithmen'],['merkhilfen','Merkhilfen'],['checklisten','Checklisten']];
+ const tile=x=>`<a class="clinical-list-entry" href="algorithmen.html?id=${encodeURIComponent(x.id)}"><span class="clinical-entry-icon">${ostIcon(x.category?.startsWith('Schema')?'notes':'checklist')}</span><span>${esc(x.title)}</span><b>›</b></a>`;
+ const records=selected==='merkhilfen'?d.filter(x=>x.category?.startsWith('Schema')):d.filter(x=>!x.category?.startsWith('Schema'));
+ let list=records.map(tile).join('');
+ if(selected==='checklisten'){
+  const modules=await get('knowledgeModules');
+  list=(Array.isArray(modules)?modules:[]).filter(x=>x.module==='checklists'&&x.status!=='draft').map(x=>`<a class="clinical-list-entry" href="themen.html?bereich=checklists"><span class="clinical-entry-icon">${ostIcon('checklist')}</span><span>${esc(x.title)}</span><b>↗</b></a>`).join('');
+ }
+ $('[data-main]').innerHTML=`<section class="clinical-combined-intro"><h1>Algorithmen & Materialien</h1></section><nav class="clinical-content-tabs" aria-label="Inhaltstyp">${tabs.map(([id,label])=>`<a href="algorithmen.html?typ=${id}" class="${id===selected?'is-active':''}" ${id===selected?'aria-current="page"':''}>${label}</a>`).join('')}</nav><div class="clinical-content-list">${list||'<p class="empty">Noch keine Inhalte hinterlegt.</p>'}</div>`;
 }
 async function meetingsPage(){
  const d=await get('meetings'),p=new URLSearchParams(location.search),item=d.find(x=>x.id===p.get('id'));

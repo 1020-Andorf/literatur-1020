@@ -2981,3 +2981,33 @@ body.page-editor :is(.ost-entry-picker,.literature-editor-tools,.ux-edit-card,.e
 body.page-editor .editor-items .ux-field :is(input,select,textarea){border-radius:12px!important;border-color:var(--clinical-stroke)!important}
 @media(min-width:900px){body.page-editor .main{max-width:880px!important}}
 @media(prefers-reduced-motion:reduce){body.app-shell *,body.app-shell *::before,body.app-shell *::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* OST 1020 Clinical Flow 544 — consolidated, compact responsive navigation */
+.clinical-combined-intro{margin:0 0 14px}.clinical-combined-intro h1{font-size:1.48rem;letter-spacing:-.025em;margin:0 0 3px;color:#183a52}.clinical-combined-intro p{margin:0;color:#718394;font-size:.9rem}
+.clinical-combined-hubs{max-width:790px;display:grid;gap:10px}
+.clinical-combined-hub{background:#fff;border:1px solid #e2e9ee;border-radius:18px;overflow:hidden}
+.clinical-combined-hub summary{list-style:none;display:flex;align-items:center;gap:13px;padding:15px 16px;min-height:64px;cursor:pointer}
+.clinical-combined-hub summary::-webkit-details-marker{display:none}
+.clinical-combined-icon{width:36px;height:36px;display:grid;place-items:center;color:#24627a;flex:none}
+.clinical-combined-icon svg{width:25px;height:25px}
+.clinical-combined-heading{min-width:0;flex:1;display:grid;gap:3px}
+.clinical-combined-heading strong{color:#173c56;font-size:1rem;font-weight:700}
+.clinical-combined-heading small{font-size:.81rem;color:#74889a;line-height:1.3}
+.clinical-combined-chevron{font-size:22px;color:#8497a8;transition:transform .15s}
+.clinical-combined-hub[open] .clinical-combined-chevron{transform:rotate(180deg)}
+.clinical-combined-links{display:grid;padding:0 12px 10px 62px}
+.clinical-combined-links a{display:flex;align-items:center;gap:10px;padding:12px 4px;color:#234760;text-decoration:none;border-top:1px solid #eff2f5;font-weight:520;font-size:.95rem}
+.clinical-combined-links svg{width:18px;height:18px;color:#5e92a0;flex:none}
+.clinical-combined-links a span{flex:1}.clinical-combined-links b{color:#899bab;font-size:19px;font-weight:400}
+.clinical-combined-footer{margin:16px 0;max-width:790px}.clinical-combined-footer a{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;color:#37798a;text-decoration:none}
+.clinical-combined-footer svg{width:18px;height:18px}
+.clinical-content-tabs{display:flex;gap:4px;max-width:790px;background:#eaf0f3;padding:4px;border-radius:14px;margin:10px 0 16px}
+.clinical-content-tabs a{flex:1;text-align:center;text-decoration:none;font-size:.87rem;font-weight:650;padding:11px 6px;color:#547084;border-radius:11px}
+.clinical-content-tabs a.is-active{background:#fff;color:#176c7b;box-shadow:0 1px 5px #1d445510}
+.clinical-content-list{max-width:790px;display:grid;gap:8px}
+.clinical-list-entry{display:flex;align-items:center;gap:12px;padding:12px 16px;min-height:63px;background:#fff;border:1px solid #e2e9ee;border-radius:15px;text-decoration:none;color:#204259;font-size:.94rem;font-weight:550}
+.clinical-entry-icon{display:grid;place-items:center;width:30px;flex:none;color:#36788b}.clinical-entry-icon svg{width:23px;height:23px}.clinical-list-entry>span:nth-child(2){flex:1}.clinical-list-entry b{font-weight:400;font-size:20px;color:#8b9ca8}
+.clinical-org-links{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}.clinical-org-links a{font-size:.85rem;padding:8px 12px;border-radius:99px;color:#527083;text-decoration:none;background:#f2f7f9}
+body.page-home .ost-main-destinations{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:680px}
+body.page-home .ost-main-destinations>a{min-height:70px!important}
+@media(max-width:550px){.clinical-combined-hub summary{padding:12px;min-height:60px}.clinical-combined-links{padding-left:54px}.clinical-content-tabs a{font-size:.79rem;padding:10px 3px}.clinical-list-entry{padding:11px 12px}}
