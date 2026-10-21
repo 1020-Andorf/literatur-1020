@@ -2177,3 +2177,78 @@ body.app-shell .schema-visual>.flow-node.ost-teaching-step{min-height:56px!impor
  .ost-order-buttons button,.repeat-move-actions button{width:32px;height:32px}
  .repeat-row{flex-wrap:wrap!important}
 }
+
+/* OST 1020 v537: outside-tap overlays, simplified headings, stronger body model and colorful schemas */
+
+/* No X buttons in content overlays; close via backdrop or navigation buttons. */
+.overlay .overlay-head .close{display:none!important}
+.overlay-panel.ost-news-modal .overlay-head,
+.overlay-panel.ost-simple-anatomy-sheet .overlay-head{
+  display:none!important;
+}
+.overlay-panel.ost-news-modal .overlay-body{
+  padding:8px 6px 6px!important;
+}
+
+/* Remove subtitle lines in the most prominent places. */
+body.app-shell :is(
+  .ost-module-kicker,
+  .ost-module-lead,
+  .ost-sheet-intro,
+  .diag-summary-kicker,
+  .page-banner.compact-banner p,
+  .detail-lead p,
+  .diag-symptom-shell-head p,
+  .ost-link-directory small,
+  .meeting-date,
+  .meeting-summary
+){display:none!important}
+
+/* Use the prepared PNG body image with clear tappable hotspots. */
+.ost-model-art{
+  border-radius:28px;
+  padding:10px 0 0;
+}
+.ost-model-art img{
+  border-radius:26px;
+  background:linear-gradient(180deg,#fbfdff 0%,#f3f7fb 100%);
+}
+.ost-organ-hit{border-radius:24px}
+.ost-organ-indicator{
+  width:20px;height:20px;
+  border:3px solid #fff;
+}
+.ost-organ-tip{
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(4px);
+}
+
+/* Colorful schemas like OPQRST. */
+body.app-shell .ost-schema-step.tone-1{background:#eff6ff!important;border-color:#cfe2ff!important}
+body.app-shell .ost-schema-step.tone-1>.flow-step-marker{background:#2f80ed!important;color:#fff!important}
+body.app-shell .ost-schema-step.tone-2{background:#eefaf5!important;border-color:#cdeede!important}
+body.app-shell .ost-schema-step.tone-2>.flow-step-marker{background:#20b77a!important;color:#fff!important}
+body.app-shell .ost-schema-step.tone-3{background:#fff7eb!important;border-color:#f5dfb7!important}
+body.app-shell .ost-schema-step.tone-3>.flow-step-marker{background:#f0a22e!important;color:#fff!important}
+body.app-shell .ost-schema-step.tone-4{background:#f8f0ff!important;border-color:#e5d4ff!important}
+body.app-shell .ost-schema-step.tone-4>.flow-step-marker{background:#9b62d9!important;color:#fff!important}
+body.app-shell .ost-schema-step.tone-5{background:#fff0f3!important;border-color:#f4ccd7!important}
+body.app-shell .ost-schema-step.tone-5>.flow-step-marker{background:#d94f74!important;color:#fff!important}
+body.app-shell .ost-schema-step.tone-6{background:#edf8fb!important;border-color:#cdebf4!important}
+body.app-shell .ost-schema-step.tone-6>.flow-step-marker{background:#3aa3bf!important;color:#fff!important}
+
+/* Nicer symbols for process flows. */
+body.app-shell .ost-algorithm-step.tone-1>.flow-step-marker{background:#eef6ff!important;color:#2f80ed!important}
+body.app-shell .ost-algorithm-step.tone-2>.flow-step-marker{background:#eefaf5!important;color:#20b77a!important}
+body.app-shell .ost-algorithm-step.tone-3>.flow-step-marker{background:#fff7eb!important;color:#f0a22e!important}
+body.app-shell .ost-algorithm-step.tone-4>.flow-step-marker{background:#f8f0ff!important;color:#9b62d9!important}
+body.app-shell .ost-algorithm-step.tone-5>.flow-step-marker{background:#fff0f3!important;color:#d94f74!important}
+body.app-shell .ost-algorithm-step.tone-6>.flow-step-marker{background:#edf8fb!important;color:#3aa3bf!important}
+body.app-shell .ost-algorithm-step>.flow-step-marker{
+  font-size:1.15rem!important;
+  font-weight:800!important;
+}
+body.app-shell .ost-teaching-arrow{font-size:19px!important}
+
+/* Inline back button on diagnostic detail pages. */
+.diag-inline-back{margin-bottom:16px!important}
