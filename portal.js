@@ -259,7 +259,7 @@ function ostIcon(key){return `<svg class="ost-outline-icon" viewBox="0 0 24 24" 
 function normalizedTitle(t){return String(t||'').replace(/^[^\p{L}\p{N}]+/gu,'').replace(/\s+/g,' ').trim()}
 function headerTitle(){
  const params=new URLSearchParams(location.search);
- const map={home:'Wissenssammlung',wissen:'Wissen',training:'Training',events:'Termine',news:'Aktuelles',meetings:'Dienstbesprechungen',editor:'Redaktion',differential:'Diagnostik',algorithms:'Algorithmen & Merkhilfen',literature:'Literatursammlung',guidelines:'Leitlinien / Guidelines',abcde:'ABCDE-Schema',changes:'Lehrmeinung',skills:'Skilltraining',guide:'Simulations Guide',faq:'FAQ zu Simulationstrainings'};
+ const map={home:'Wissenssammlung',wissen:'Wissen',topics:'Patientenbeurteilung',training:'Training',events:'Termine',news:'Aktuelles',meetings:'Dienstbesprechungen',editor:'Redaktion',differential:'Diagnostik',algorithms:'Algorithmen & Merkhilfen',literature:'Literatursammlung',guidelines:'Leitlinien / Guidelines',abcde:'ABCDE-Schema',changes:'Lehrmeinung',skills:'Skilltraining',guide:'Simulations Guide',faq:'FAQ zu Simulationstrainings'};
  if(page==='modules'){
   const slug=params.get('bereich')||'pharm';
   return (MODULE_TYPES[slug]&&MODULE_TYPES[slug].title)||'Wissensbereich';
@@ -298,32 +298,31 @@ function toggleFavorite(href){let f=favorites();f=f.includes(href)?f.filter(x=>x
 // Meldungen werden 30 Tage nach ihrem Datum ausgeblendet, nicht aus dem Datenspeicher gelöscht.
 function visibleNews(items){const now=new Date();now.setHours(12,0,0,0);return (Array.isArray(items)?items:[]).filter(n=>{if(n.active===false)return false;if(!n.date)return true;const d=new Date(String(n.date).slice(0,10)+'T12:00:00');if(Number.isNaN(d.getTime()))return true;const days=(now-d)/86400000;return days<30&&days>=-1}).sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')))}
 async function home(){
- const [news,events,arts,ab,diff,skillsData,algs,changes]=await Promise.all([get('news'),get('events'),articles(),get('abcde'),get('differential'),get('skills'),get('algorithms'),get('changes')]);
+ const [news,events]=await Promise.all([get('news'),get('events')]);
  const now=new Date(),today=now.toISOString().slice(0,10),active=visibleNews(news).slice(0,3);
- const upcoming=(events||[]).filter(x=>x.date>=today).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,3);
- const monday=new Date(now);monday.setHours(12,0,0,0);monday.setDate(now.getDate()-((now.getDay()+6)%7));
- const week=Array.from({length:7},(_,i)=>{const d=new Date(monday);d.setDate(monday.getDate()+i);const key=d.toISOString().slice(0,10),hits=(events||[]).filter(e=>e.date===key);return {d,key,hits}});
- const weekHtml=week.map(({d,key,hits})=>`<a class="week-day ${key===today?'today':''} ${hits.length?'has-event':''}" href="termine.html"><span>${d.toLocaleDateString('de-DE',{weekday:'short'}).replace('.','')}</span><strong>${d.getDate()}</strong>${hits.length?`<em>${hits.length}</em>`:''}</a>`).join('');
- const eventHtml=upcoming.map(e=>{const count=arr(e.attendees).length,cap=Number(e.capacity)||10;return `<a class="week-event" href="termine.html"><span class="week-event-date">${new Date(e.date+'T12:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'short'})}</span><span class="week-event-copy"><strong>${esc(e.title)}</strong><small>${esc(e.time||'')} · ${esc(e.location||'')}</small></span><span class="week-event-count">👥 ${count}/${cap}</span></a>`}).join('')||'<div class="empty compact">Keine Termine in nächster Zeit.</div>';
  const recent=(()=>{try{return JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){return[]}})();
- const index=[...(arts||[]).map(x=>({label:x.title,sub:'Literatur',href:'literatur.html'})),...(ab||[]).map(x=>({label:`${x.key} – ${x.title}`,sub:'ABCDE',href:'abcde.html'})),...(diff||[]).map(x=>({label:x.title,sub:'Diagnostik',href:'differential.html'})),...(skillsData||[]).flatMap(g=>g.skills.map(s=>({label:s.name,sub:g.name,href:'skilltraining.html'}))),...(algs||[]).map(x=>({label:x.title,sub:'Algorithmus',href:'algorithmen.html'})),...(changes||[]).map(x=>({label:x.title,sub:'Lehrmeinung',href:'lehrmeinung.html'}))];
- $('[data-main]').innerHTML=`<section class="ost-home-intro"><span>OST 1020</span><div class="ost-home-title-row"><h1>Wissenssammlung</h1></div></section>
- <section class="dashboard-search"><div class="global-search"><span>⌕</span><input data-global-search placeholder="Wissen durchsuchen …"><button data-search-clear aria-label="Suche löschen">✕</button></div><div class="search-results hidden" data-search-results></div></section>
- <section class="section section-first compact-news"><div class="section-head"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="news-list dashboard-news">${active.map((n,i)=>newsHtml(n,i)).join('')||'<div class="empty">Keine Meldungen</div>'}</div></section>
- <section class="section ost-shortcuts"><div class="section-head"><h2>Entdecken</h2></div><nav class="ost-main-destinations" aria-label="Themenbereiche">
- <a href="wissen.html">${ostIcon('book')}<span><strong>Wissen</strong><small>Algorithmen & Merkschemata</small></span></a>
- <a href="themen.html?bereich=anatomy">${ostIcon('anatomy')}<span><strong>Anatomie</strong><small>Körper & Organsysteme</small></span></a>
- <a href="differential.html">${ostIcon('search')}<span><strong>Diagnostik</strong><small>Symptome & Krankheitsbilder</small></span></a>
- <a href="themen.html?bereich=pharm">${ostIcon('pill')}<span><strong>Pharmakologie</strong><small>Wirkstoffe & Medikamente</small></span></a>
- <a href="training.html">${ostIcon('training')}<span><strong>Training</strong><small>Skills & Checklisten</small></span></a>
- <a href="termine.html">${ostIcon('calendar')}<span><strong>Organisation</strong><small>Termine & Aktuelles</small></span></a></nav></section>
- <section class="clinical-quick-section"><div class="section-head"><h2>Schnellzugriff</h2></div><nav class="clinical-quick-grid" aria-label="Häufige Inhalte"><a href="algorithmen.html">${ostIcon('heart')}<span>Algorithmen</span></a><a href="differential.html">${ostIcon('search')}<span>Diagnostik</span></a><a href="themen.html?bereich=pharm">${ostIcon('pill')}<span>Pharma</span></a><a href="themen.html?bereich=anatomy">${ostIcon('anatomy')}<span>Anatomie</span></a><a href="skilltraining.html">${ostIcon('training')}<span>Skills</span></a><a href="literatur.html">${ostIcon('book')}<span>Literatur</span></a></nav></section>
- <section class="clinical-recent-section"><div class="section-head"><h2>Zuletzt angesehen</h2></div><div class="clinical-recent-grid">${recent.slice(0,4).map(item=>`<a href="${esc(item.href||'wissen.html')}">${ostIcon('book')}<span>${esc(item.label||item.title||'Inhalt')}</span><b>›</b></a>`).join('')||'<div class="clinical-recent-empty">Deine zuletzt geöffneten Inhalte erscheinen hier.</div>'}</div></section>
- <section class="section ost-week-bottom"><div class="section-head"><h2>Diese Woche</h2><a href="termine.html">Alle Termine →</a></div><div class="week-card"><div class="week-strip">${weekHtml}</div><div class="week-events">${eventHtml}</div></div></section><div class="ost-home-admin-footer"><a class="ost-home-editor" href="editor.html" aria-label="Redaktion öffnen">✎ Redaktion</a></div>`;
- const q=$('[data-global-search]'),results=$('[data-search-results]');
- let catalog=[];contentCatalog().then(c=>{catalog=c;if(q.value.trim())drawSearch()}).catch(()=>{});
- const drawSearch=()=>{const term=q.value.trim();if(!term){results.classList.add('hidden');results.innerHTML='';return}const hits=catalogSearch(catalog,term);const groups=[...new Set(hits.map(x=>x.type))];results.innerHTML=groups.map(type=>`<div class="ost-search-group"><h3>${esc(LINK_TYPES[type][0])}</h3>${hits.filter(x=>x.type===type).map(x=>`<a href="${esc(x.href)}"><span><strong>${esc(x.title)}</strong></span><b>›</b></a>`).join('')}</div>`).join('')||'<div class="empty compact">Keine Treffer.</div>';results.classList.remove('hidden')};q.oninput=drawSearch;$('[data-search-clear]').onclick=()=>{q.value='';drawSearch();q.focus()};
- $('[data-main]').addEventListener('click',e=>{const n=e.target.closest('[data-news]');if(n){const x=active[+n.dataset.news];if(x)open(x.title,`<section class="overlay-section news-detail"><div class="ost-news-rich">${renderModuleText(x.text||'')}</div>${x.link?`<a class="btn primary" href="${esc(x.link)}">Inhalt öffnen →</a>`:''}</section>`,{news:true});}});
+ const upcoming=(events||[]).filter(x=>x.date>=today).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,2);
+ const destinations=[
+  ['topics','Patientenbeurteilung','Organe · Symptome · Erkrankungen','themen-uebersicht.html','anatomy','Anatomie, Diagnostik und Fachbegriffe'],
+  ['algorithms','Algorithmen & Checklisten','Abläufe · Merkschemata · Materialien','algorithmen.html','checklist','Lernen und schnell nachschlagen'],
+  ['pharma','Pharmakologie','Wirkstoffe · Fachwissen','themen.html?bereich=pharm','pill','Medikamente und Wirkstoffgruppen'],
+  ['skills','Skilltraining','Praktische Fertigkeiten','skilltraining.html','training','Skills und Simulation'],
+  ['literature','Literatur & Leitlinien','Nachlesen · Vertiefen','literatur.html','book','Fachtexte und Quellen'],
+  ['organisation','Aktuelles & Termine','Meldungen · Veranstaltungen','aktuelles.html','calendar','Dienstbesprechungen und Änderungen']
+ ];
+ $('[data-main]').innerHTML=`<div class="cf-home"><section class="cf-hero"><div class="cf-hero-copy"><span class="cf-eyebrow">OST 1020 · WISSEN. TRAINING. PRAXIS.</span><h1>Alles Wissen. Ein Einstieg.</h1><p>Medizinische Themen, Abläufe und Skills – miteinander verknüpft.</p></div><div class="cf-hero-symbol" aria-hidden="true">${ostIcon('anatomy')}</div></section>
+ <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
+ <nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass,title,detail,href,ico,desc])=>`<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong><small>${detail}</small></a>`).join('')}</nav>
+ <section class="cf-section"><div class="cf-section-title"><h2>Schnellzugriff</h2><a href="wissen.html">Alle Themen →</a></div><div class="cf-quick">${[['Herz & Kreislauf','herz'],['Atmung','atmung'],['Neurologie','neurologie'],['OPQRST','opqrst'],['Reanimation','reanimation']].map(([name,q])=>`<a href="themen-uebersicht.html?suche=${q}">${esc(name)}<span>↗</span></a>`).join('')}</div></section>
+ <section class="cf-section"><div class="cf-section-title"><h2>Zuletzt angesehen</h2></div><div class="cf-simple-list">${recent.length?recent.slice(0,3).map(x=>`<a href="${esc(x.href||'wissen.html')}">${ostIcon('book')}<span>${esc(x.label||'Inhalt')}</span><b>›</b></a>`).join(''):'<p class="cf-muted">Hier erscheinen deine zuletzt geöffneten Inhalte.</p>'}</div></section>
+ <section class="cf-section cf-home-updates"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n,i)=>`<button type="button" data-news="${i}">${ostIcon('news')}<span>${esc(n.title)}</span><b>›</b></button>`).join('')||'<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
+ <section class="cf-section"><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div><div class="cf-simple-list">${upcoming.map(e=>`<a href="termine.html">${ostIcon('calendar')}<span>${esc(e.title)}</span><small>${esc(e.date||'')}</small></a>`).join('')||'<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
+ <a class="cf-admin-entry" href="editor.html">${ostIcon('edit')} Redaktion öffnen</a></div>`;
+ const q=$('[data-global-search]'),results=$('[data-search-results]');let cat=[];
+ contentCatalog().then(data=>{cat=data;if(q.value)draw()}).catch(()=>{});
+ function draw(){const term=q.value.trim();results.classList.toggle('hidden',!term);if(!term){results.innerHTML='';return}const hits=catalogSearch(cat,term);results.innerHTML=hits.map(x=>`<a href="${esc(x.href)}"><strong>${esc(x.title)}</strong><small>${esc(LINK_TYPES[x.type]?.[0]||'Thema')}</small></a>`).join('')||'<p>Keine Treffer.</p>'}
+ q.oninput=draw;
+ $('[data-main]').addEventListener('click',e=>{const b=e.target.closest('[data-news]');if(!b)return;const n=active[+b.dataset.news];if(n)open(n.title,`<section class="overlay-section news-detail"><div class="ost-news-rich">${renderModuleText(n.text||'')}</div></section>`,{news:true})});
 }
 
 const MODULE_TYPES={"pharm":{"title":"Pharmakologie","icon":"⚕️","area":"wissen"},"anatomy":{"title":"Anatomie & Physiologie","icon":"🫀","area":"wissen"},"befund":{"title":"Befundwörterbuch","icon":"📖","area":"wissen"},"mpg":{"title":"MPG-Informationen","icon":"🩺","area":"training"},"checklists":{"title":"Checklisten","icon":"📄","area":"training"}};
@@ -484,9 +483,29 @@ async function moduleEditor(box,initialModule='pharm'){
  render();
 }
 
+const CF_TOPICS=[
+ {id:'herz',label:'Herz & Kreislauf',icon:'heart',terms:['herz','kreislauf','koronar','cardio','kardio','ekg','rhythm','infarkt','cpr','reanimation','aorta','schock']},
+ {id:'atmung',label:'Atmung & Atemwege',icon:'device',terms:['atem','lungen','lunge','asthma','copd','hypox','dyspnoe','bronch','respira','pneumo']},
+ {id:'neurologie',label:'Neurologie',icon:'anatomy',terms:['gehirn','nerv','schlaganfall','krampf','stroke','bewusst','neuro','ictus','ticls']},
+ {id:'abdomen',label:'Abdomen & Stoffwechsel',icon:'search',terms:['bauch','abdomen','magen','niere','stoffwechsel','diabet','zucker','leber','verdau','gastro']},
+ {id:'trauma',label:'Trauma & Bewegung',icon:'checklist',terms:['trauma','fraktur','verletz','wirbel','lagerung','schiene','beweg','knoche','blutung']},
+ {id:'grundlagen',label:'Weitere Fachthemen',icon:'book',terms:[]}
+];
+function cfTopicMatch(item,topic){if(topic.id==='grundlagen')return false;const text=normalizedSearch([item.title,item.text].join(' '));return topic.terms.some(term=>text.includes(normalizedSearch(term)))}
+async function topicHub(){
+ const params=new URLSearchParams(location.search),search=params.get('suche')||'',selected=params.get('thema')||'';
+ const cat=await contentCatalog();
+ const pick=t=>cat.filter(x=>cfTopicMatch(x,t));
+ const itemLink=x=>`<a href="${esc(x.href||'wissen.html')}" class="cf-topic-result"><span class="cf-result-icon">${ostIcon(x.type==='algorithms'?'checklist':x.type==='articles'?'book':x.type==='knowledgeModules'?'anatomy':'search')}</span><span><strong>${esc(x.title)}</strong><small>${esc(LINK_TYPES[x.type]?.[0]||'Fachwissen')}</small></span><b>›</b></a>`;
+ $('[data-main]').innerHTML=`<div class="cf-topic-page"><div class="cf-page-heading"><span class="cf-eyebrow">KLINISCHES WISSEN</span><h1>Patientenbeurteilung</h1><p>Organe, Beschwerden, Erkrankungen und passende Materialien an einem Ort.</p></div><div class="cf-topic-search">${ostIcon('search')}<input type="search" data-topic-search placeholder="Thema oder Krankheitsbild suchen …" value="${esc(search)}"></div><div class="cf-topic-grid">${CF_TOPICS.filter(t=>t.id!=='grundlagen').map(t=>`<button type="button" class="cf-topic-choice ${selected===t.id?'selected':''}" data-topic="${t.id}"><span>${ostIcon(t.icon)}</span><strong>${t.label}</strong><small>${pick(t).length} verknüpfte Inhalte</small></button>`).join('')}</div><section class="cf-topic-output" data-topic-output></section></div>`;
+ const out=$('[data-topic-output]'),input=$('[data-topic-search]');let active=CF_TOPICS.find(x=>x.id===selected)||null;
+ function draw(){const q=input.value.trim();const term=normalizedSearch(q);let matches=q?catalogSearch(cat,q):active?pick(active):[];if(!q&&!active){out.innerHTML='<div class="cf-empty-state">Wähle eine Körperregion oder suche direkt nach einem medizinischen Begriff.</div>';return}const groups=[['knowledgeModules','Anatomie · Pharmakologie · Befunde'],['differential','Symptome & Erkrankungen'],['algorithms','Algorithmen & Merkschemata'],['articles','Literatur & Leitlinien'],['skills','Skilltraining'],['changes','Lehrmeinungsänderungen']];out.innerHTML=`<h2>${q?'Suchergebnisse für „'+esc(q)+'“':esc(active.label)}</h2><div class="cf-topic-related">${groups.map(([type,label])=>{const items=matches.filter(x=>x.type===type);return items.length?`<details class="cf-topic-group" open><summary><strong>${label}</strong><span>${items.length} ›</span></summary><div>${items.slice(0,12).map(itemLink).join('')}${items.length>12?`<p class="cf-muted">Weitere ${items.length-12} Treffer über die Suche erreichbar.</p>`:''}</div></details>`:''}).join('')||'<p class="cf-muted">Keine zugehörigen Inhalte vorhanden.</p>'}</div>`}
+ input.oninput=()=>{active=null;$$('[data-topic]').forEach(b=>b.classList.remove('selected'));draw()};
+ $('[data-main]').addEventListener('click',e=>{const b=e.target.closest('[data-topic]');if(!b)return;active=CF_TOPICS.find(t=>t.id===b.dataset.topic);input.value='';$$('[data-topic]').forEach(x=>x.classList.toggle('selected',x===b));draw();out.scrollIntoView({behavior:'smooth',block:'start'})});draw();
+}
 async function wissenPage(){
  const sections=[
- {id:'klinisch',icon:'anatomy',title:'Körper & Diagnostik',sub:'Organe, Symptome, Befunde',links:[['anatomy','Anatomie & Physiologie','themen.html?bereich=anatomy'],['search','Symptome & Krankheitsbilder','differential.html'],['dictionary','Befundwörterbuch','themen.html?bereich=befund']]},
+ {id:'klinisch',icon:'anatomy',title:'Körper & Diagnostik',sub:'Organe, Symptome, Befunde',links:[['anatomy','Thematische Übersicht','themen-uebersicht.html'],['anatomy','Anatomie & Physiologie','themen.html?bereich=anatomy'],['search','Symptome & Krankheitsbilder','differential.html'],['dictionary','Befundwörterbuch','themen.html?bereich=befund']]},
  {id:'praxis',icon:'checklist',title:'Algorithmen & Checklisten',sub:'Abläufe, Merkhilfen und Materialien',links:[['notes','Algorithmen','algorithmen.html?typ=algorithmen'],['book','Merkhilfen & Schemata','algorithmen.html?typ=merkhilfen'],['checklist','Checklisten','algorithmen.html?typ=checklisten']]},
  {id:'pharma',icon:'pill',title:'Pharmakologie',sub:'Wirkstoffgruppen und Medikamente',links:[['pill','Pharmakologie öffnen','themen.html?bereich=pharm']]},
  {id:'literatur',icon:'book',title:'Literatur & Leitlinien',sub:'Nachlesen und Vertiefen',links:[['book','Literatursammlung','literatur.html'],['guideline','Leitlinien / Guidelines','leitlinien.html']]}
@@ -1012,6 +1031,7 @@ async function init(){
  rememberPage();
  if(page==='home')await home();
  else if(page==='wissen')await wissenPage();
+ else if(page==='topics')await topicHub();
  else if(page==='modules')await modulePage();
  else if(page==='training')await trainingPage();
  else if(page==='guidelines')await guidelinesPage();
