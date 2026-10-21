@@ -2022,3 +2022,75 @@ body.app-shell:not(.page-home) .page-banner:not(:has(h1,button,input,select,p,a,
 /* Scrollbare Dialoginhalte bleiben im Dialog – nie die Hauptseite blockieren. */
 .overlay-panel{overflow-y:auto!important;overscroll-behavior:contain}
 .overlay-panel.ost-med-sheet .overlay-body{overflow-y:auto!important}
+
+/* OST1020 v535: ruhigere Startseite, rahmenlose Symbole, echte Overlay-Sperre */
+html.ost-overlay-open,html.ost-overlay-open body.ost-overlay-open,
+body.app-shell.ost-overlay-open{
+  overflow:hidden!important;height:100%!important;max-height:100%!important;
+  overscroll-behavior:none!important;
+}
+body.app-shell.ost-overlay-open{position:fixed!important;overflow:hidden!important}
+.overlay.show{position:fixed!important;inset:0!important;z-index:1000!important;overflow:hidden!important;touch-action:none}
+.overlay.show .overlay-panel{touch-action:pan-y;overscroll-behavior:contain!important;max-height:calc(100dvh - 24px)!important}
+.overlay-panel.ost-med-sheet{display:flex!important;flex-direction:column!important;max-height:min(86dvh,850px)!important;overflow:hidden!important}
+.overlay-panel.ost-med-sheet .overlay-head{flex:0 0 auto!important}
+.overlay-panel.ost-med-sheet .overlay-body{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch}
+
+/* Alle zusätzlichen Rahmen und Flächen um SVG-Icons entfernen – Kacheln selbst bleiben klar abgegrenzt. */
+body.app-shell :is(
+ .ost-link-directory>a>span:first-child,.scheme-icon,.row-icon,.skill-icon,
+ .meeting-tile-icon,.diag-group-badge,.diag-result-icon,.ost-checklist-icon,
+ .editor-primary-groups button>span:first-child,.editor-subgroup-tile>span:first-child,
+ .ost-sheet-row-icon,.detail-big-icon,.ost-main-destinations a>svg,
+ .ost-main-destinations a>span:has(svg)
+){
+ background:transparent!important;border:0!important;box-shadow:none!important;
+ outline:0!important;
+}
+body.app-shell .ost-link-directory>a>span:first-child{width:36px!important;height:36px!important;min-width:36px!important}
+body.app-shell .ost-link-directory>a>span:first-child svg{width:28px!important;height:28px!important}
+body.app-shell .ost-sheet-row-icon{width:34px!important;height:34px!important}
+body.app-shell :is(.ost-sheet-row,.diag-disease-chip,.algorithm-link-list li):hover{background:#f8fafc!important}
+
+/* Aktuelles: keine rot eingefärbten Felder, keine grellen seitlichen Warnstreifen. */
+body.app-shell.page-home .compact-news .section-head h2{color:#163851!important;font-weight:690!important}
+body.app-shell.page-home .dashboard-news .news-item,
+body.app-shell.page-home .dashboard-news .news-item:first-child{
+ background:#fff!important;border:1px solid #dde6ed!important;
+ border-radius:17px!important;box-shadow:none!important;min-height:61px!important;
+ padding:12px 17px!important;
+}
+body.app-shell.page-home .dashboard-news .news-item::before{display:none!important;content:none!important}
+body.app-shell.page-home .dashboard-news .news-item h3{color:#1d3d59!important;font-weight:510!important}
+body.app-shell.page-home .dashboard-news .news-item .arrow{color:#809bae!important}
+body.app-shell.page-home .compact-news .section-head a{color:#638097!important}
+
+/* Anatomie-Overlay: absichtlich NUR die Themenliste und die unaufdringliche Schließen-Schaltfläche. */
+.overlay-panel.ost-simple-anatomy-sheet .overlay-head{padding:8px 17px 0!important;min-height:47px!important;justify-content:flex-end!important;border:0!important}
+.overlay-panel.ost-simple-anatomy-sheet [data-overlay-title]{display:none!important}
+.overlay-panel.ost-simple-anatomy-sheet .overlay-body{padding:7px 18px 20px!important}
+.ost-anatomy-only-list .ost-sheet-row{min-height:62px!important}
+.ost-anatomy-only-list .ost-sheet-row strong{font-size:1rem!important;font-weight:570!important}
+.ost-anatomy-only-list .ost-sheet-row small{display:none!important}
+
+/* Diagnostik: zuerst typische Symptome, danach eine saubere Krankheitsbilderliste. */
+.ost-diag-symptom-overview{background:#f4f8fb;border:1px solid #e3eaf0;border-radius:17px;padding:15px 16px;margin:0 0 16px}
+.ost-diag-symptom-overview h3{font-size:1rem;margin:0 0 12px;color:#213e57}
+.ost-diag-symptom-chips{display:flex;gap:7px;flex-wrap:wrap}
+.ost-diag-symptom-chips>span{display:inline-flex;align-items:center;background:#fff;border:1px solid #dde7ee;border-radius:30px;padding:8px 12px;color:#3c5b72;font-size:.88rem;line-height:1.3}
+.ost-med-sheet .ost-sheet-subheading{margin:16px 0 12px!important;font-size:1.08rem!important}
+.ost-diag-condition-list .ost-sheet-row{min-height:62px!important}
+
+/* Algorithmus-Material und Checklisten: eine Ebene statt mehrerer verschachtelter Karten. */
+body.app-shell .algorithm-material-lists{display:grid!important;grid-template-columns:1fr!important;gap:14px!important}
+body.app-shell .algorithm-material-lists .algorithm-list-group{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;margin:0!important}
+body.app-shell .algorithm-material-lists .algorithm-list-group h3{font-size:1.07rem!important;margin:0 0 10px!important}
+body.app-shell .algorithm-link-list{display:grid!important;gap:8px!important;margin:0!important;padding:0!important;list-style:none!important}
+body.app-shell .algorithm-link-list>li{display:grid!important;grid-template-columns:28px minmax(0,1fr) auto!important;align-items:center!important;gap:12px!important;margin:0!important;padding:13px 14px!important;min-height:65px!important;border:1px solid #e1e9ef!important;border-radius:15px!important;background:#fff!important;box-shadow:none!important}
+body.app-shell .algorithm-link-list li>span.algorithm-list-icon{width:28px!important;height:28px!important;background:transparent!important;border:0!important;display:grid!important;place-items:center!important;font-size:1.2rem!important}
+body.app-shell .algorithm-link-list li>div{min-width:0!important;overflow-wrap:anywhere!important}
+body.app-shell .algorithm-link-list li strong{display:block!important;font-size:.93rem!important;line-height:1.3!important}
+body.app-shell .algorithm-link-list li small{display:block!important;margin-top:4px!important;color:#73899c!important;line-height:1.4!important;font-size:.82rem!important}
+body.app-shell .algorithm-link-list li>a{white-space:nowrap!important;text-decoration:none!important;color:#426783!important;font-size:.85rem!important;font-weight:650!important}
+body.app-shell .detail-page .detail-section:has(.algorithm-material-lists){padding:15px 0!important;border:0!important;background:transparent!important;box-shadow:none!important}
+@media(max-width:460px){body.app-shell .algorithm-link-list>li{grid-template-columns:25px minmax(0,1fr)!important}body.app-shell .algorithm-link-list li>a{grid-column:2;justify-self:start}}

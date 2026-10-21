@@ -51,7 +51,7 @@ function chrome(){
  document.body.classList.add('app-shell',`page-${page}`); if(window.matchMedia('(min-width: 1100px)').matches) document.body.classList.add('desktop-has-sidebar');
  const bb=$('[data-back-btn]'),hb=$('[data-home-btn]');
  if(bb){bb.innerHTML=svg.back;bb.onclick=()=>{
-  if($('.overlay')?.classList.contains('show')){$('.overlay').classList.remove('show');return}
+  if($('.overlay')?.classList.contains('show')){closeOverlay();return}
   const params=new URLSearchParams(location.search);
   if(page==='modules'&&params.has('id')){params.delete('id');location.href='themen.html?'+params.toString();return}
   if(page==='modules'){if(params.has('id')){params.delete('id');location.href='themen.html?'+params.toString();return}if(['mpg','checklists'].includes(params.get('bereich'))){location.href='training.html';return}}
@@ -68,7 +68,8 @@ function chrome(){
  }}
  if(hb)hb.innerHTML=svg.home;
  document.body.insertAdjacentHTML('beforeend',`<div class="overlay"><div class="shade" data-overlay-close></div><section class="overlay-panel" role="dialog" aria-modal="true"><div class="overlay-head"><h2 data-overlay-title></h2><button class="close" data-overlay-close>✕</button></div><div class="overlay-body" data-overlay-body></div></section></div>`);
- $$('[data-overlay-close]').forEach(x=>x.onclick=()=>$('.overlay').classList.remove('show'));
+ $$('[data-overlay-close]').forEach(x=>x.onclick=closeOverlay);
+ document.addEventListener('keydown',event=>{if(event.key==='Escape'&&$('.overlay')?.classList.contains('show'))closeOverlay()});
 
  {
   const menu=[
@@ -103,13 +104,38 @@ function showFeedback(){
  open('Fehler melden',panel);
  $('[data-fb-submit]').onclick=async()=>{const title=$('[data-fb-title]').value.trim(),message=$('[data-fb-message]').value.trim(),status=$('[data-fb-status]');if(title.length<3||message.length<10){status.textContent='Bitte ein Thema und eine ausführlichere Beschreibung angeben.';return}if(!API){status.textContent='Worker nicht konfiguriert.';return}try{const r=await fetch(`${API}/feedback`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,message,href:location.href})});const out=await r.json();status.textContent=r.ok?'Danke, Meldung gespeichert.':out.error||'Speichern fehlgeschlagen.';if(r.ok)$('[data-fb-submit]').disabled=true}catch{status.textContent='Verbindung fehlgeschlagen.'}}
 }
+let overlayReturnScroll=0;
+function closeOverlay(){
+ const modal=$('.overlay');
+ if(!modal?.classList.contains('show'))return;
+ modal.classList.remove('show');
+ $('.overlay-panel')?.classList.remove('ost-med-sheet','ost-news-modal','ost-simple-anatomy-sheet');
+ document.body.classList.remove('ost-overlay-open');
+ document.documentElement.classList.remove('ost-overlay-open');
+ document.body.style.position='';
+ document.body.style.top='';
+ document.body.style.left='';
+ document.body.style.right='';
+ document.body.style.width='';
+ window.scrollTo(0,overlayReturnScroll);
+}
 function open(title,html,options={}){
+ const modal=$('.overlay');
+ if(!modal?.classList.contains('show')){
+  overlayReturnScroll=window.scrollY||document.documentElement.scrollTop||0;
+  document.documentElement.classList.add('ost-overlay-open');
+  document.body.classList.add('ost-overlay-open');
+  Object.assign(document.body.style,{position:'fixed',top:`-${overlayReturnScroll}px`,left:'0',right:'0',width:'100%'});
+ }
  $('.overlay-panel')?.classList.toggle('ost-news-modal',!!options.news);
  $('.overlay-panel')?.classList.toggle('ost-med-sheet',!!options.sheet);
+ $('.overlay-panel')?.classList.toggle('ost-simple-anatomy-sheet',!!options.simpleAnatomy);
  $('[data-overlay-body]').onclick=null;
  $('[data-overlay-title]').textContent=options.news?'':title;
  $('[data-overlay-body]').innerHTML=html;
- $('.overlay').classList.add('show');
+ modal.classList.add('show');
+ const panel=$('.overlay-panel');if(panel)panel.scrollTop=0;
+ const scroll=$('[data-overlay-body]');if(scroll)scroll.scrollTop=0;
 }
 function mergeDiagnostics(remote){
  const base=clone(D.differential||[]),incoming=Array.isArray(remote)?remote:[];
@@ -367,8 +393,8 @@ async function modulePage(){
   const map=interactiveBodyMap(groups,'anatomy');
   $('[data-main]').innerHTML=`<div class="ost-model-screen"><label class="ost-model-search"><span>⌕</span><input type="search" data-module-search placeholder="Anatomie durchsuchen …" aria-label="Anatomie durchsuchen"></label><div class="ost-model-intro">Tippe direkt auf ein Organ oder eine Körperregion</div>${map}<section class="ost-model-results" data-module-list hidden></section></div>`;
   const showArticle=x=>open(x.title,`<article class="ost-article-sheet"><p class="ost-sheet-intro">${esc(x.summary||x.category||'Anatomie & Physiologie')}</p>${x.image?`<img class="ost-sheet-figure" src="${esc(x.image)}" alt="${esc(x.imageCaption||x.title)}" onerror="this.remove()">`:''}<div class="ost-module-body">${renderModuleText(x.body)}</div>${x.sources?`<aside class="ost-sheet-source"><strong>Quellen</strong><p>${esc(x.sources)}</p></aside>`:''}<p class="diag-hint">Fachliche Inhalte anhand lokaler Vorgaben prüfen.</p></article>`,{sheet:true});
-  const showGroup=g=>{const matched=items.filter(x=>g.pattern.test([x.title,x.category,x.summary,x.synonyms].join(' ')));const render=matched.length?matched.map(x=>`<button class="ost-sheet-row" data-anat-item="${esc(x.id)}"><span class="ost-sheet-row-icon">${g.icon}</span><span><strong>${esc(x.title)}</strong><small>${esc(x.summary||x.category||'Fachartikel')}</small></span><b>›</b></button>`).join(''):'<p>Für diese Körperregion ist noch kein Artikel hinterlegt.</p>';
-   open(g.label,`<section class="ost-sheet-info"><span class="ost-sheet-emoji">${g.icon}</span><p>${esc(g.desc)}</p></section><div class="ost-sheet-rows">${render}</div>`,{sheet:true});$('[data-overlay-body]').onclick=e=>{const b=e.target.closest('[data-anat-item]');if(b){const x=items.find(x=>x.id===b.dataset.anatItem);if(x)showArticle(x)}};
+  const showGroup=g=>{const matched=items.filter(x=>g.pattern.test([x.title,x.category,x.summary,x.synonyms].join(' ')));const render=matched.length?matched.map(x=>`<button class="ost-sheet-row" data-anat-item="${esc(x.id)}"><span class="ost-sheet-row-icon">${g.icon}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join(''):'<p>Für diese Körperregion ist noch kein Artikel hinterlegt.</p>';
+   open(g.label,`<div class="ost-sheet-rows ost-anatomy-only-list">${render}</div>`,{sheet:true,simpleAnatomy:true});$('[data-overlay-body]').onclick=e=>{const b=e.target.closest('[data-anat-item]');if(b){const x=items.find(x=>x.id===b.dataset.anatItem);if(x)showArticle(x)}};
   };
   $('[data-main]').onclick=e=>{const b=e.target.closest('[data-body-zone]');if(b){const g=groups.find(x=>x.id===b.dataset.bodyZone);if(g)showGroup(g)}};
   $('[data-module-search]').oninput=e=>{const q=normalizedSearch(e.target.value.trim()),box=$('[data-module-list]');if(!q){box.hidden=true;box.innerHTML='';return}const hits=items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body,x.synonyms].join(' ')).includes(q));box.hidden=false;box.innerHTML=`<h3>Suchergebnisse</h3>${hits.map(x=>`<button class="ost-sheet-row" data-search-anat="${esc(x.id)}"><span>📘</span><strong>${esc(x.title)}</strong><b>›</b></button>`).join('')||'<p>Keine Treffer</p>'}`;box.onclick=event=>{const b=event.target.closest('[data-search-anat]');if(b){const item=items.find(x=>x.id===b.dataset.searchAnat);if(item)showArticle(item)}}};
@@ -519,9 +545,13 @@ async function differentialPage(){
    const parts=[['Pathophysiologie',c.physiology],['Typische Befunde',c.findings],['Präklinische Einordnung',c.info],['CAVE',c.cave]].filter(pair=>pair[1]);
    open(c.name,`<div class="ost-disease-info"><div class="ost-sheet-overline">${esc(x.title)}</div>${parts.map(([title,value])=>`<section class="ost-disease-part ${title==='CAVE'?'ost-disease-cave':''}"><h3>${esc(title)}</h3><p>${esc(value)}</p></section>`).join('')||'<p>Keine Detailbeschreibung vorhanden.</p>'}<p class="diag-hint">Lernmaterial; lokale SOPs und freigegebene Leitlinien sind maßgeblich.</p></div>`,{sheet:true});
  };
- const showDiseaseGroup=g=>{const group=sorted.find(s=>s.meta.label===g.group);if(!group)return;
-   open(g.label,`<section class="ost-sheet-info"><p>${esc(g.desc)}</p></section><h3 class="ost-sheet-subheading">Leitsymptome & Krankheitsbilder</h3><div class="ost-diag-sheet-groups">${group.items.map(x=>`<section class="ost-diag-symptom"><h4>${esc(x.title)}</h4><div class="ost-diag-condition-list">${arr(x.causes).map((raw,i)=>{const c=typeof raw==='string'?{name:raw}:raw;return `<button class="ost-sheet-row" data-diag-item="${esc(x.id)}" data-diag-index="${i}"><span class="ost-sheet-row-icon">🩺</span><span><strong>${esc(c.name)}</strong></span><b>›</b></button>`}).join('')}</div></section>`).join('')}</div>`,{sheet:true});
-   $('[data-overlay-body]').onclick=e=>{const b=e.target.closest('[data-diag-item]');if(!b)return;const x=group.items.find(v=>v.id===b.dataset.diagItem);if(!x)return;const c=arr(x.causes)[Number(b.dataset.diagIndex)];if(c)diseaseInfo(x,typeof c==='string'?{name:c}:c,Number(b.dataset.diagIndex))};
+ const showDiseaseGroup=g=>{
+  const group=sorted.find(entry=>entry.meta.label===g.group);if(!group)return;
+  const symptoms=group.items.map(x=>x.title).filter(Boolean);
+  const unique=new Set();
+  const diseases=group.items.flatMap(x=>arr(x.causes).map((raw,i)=>({x,i,c:typeof raw==='string'?{name:raw}:raw}))).filter(entry=>{const name=String(entry.c.name||'').trim().toLocaleLowerCase('de');if(!name||unique.has(name))return false;unique.add(name);return true});
+  open(g.label,`<section class="ost-diag-symptom-overview"><h3>Typische Symptome</h3><div class="ost-diag-symptom-chips">${symptoms.map(name=>`<span>${esc(name)}</span>`).join('')}</div></section><h3 class="ost-sheet-subheading">Krankheitsbilder</h3><div class="ost-diag-condition-list">${diseases.map(entry=>`<button class="ost-sheet-row" data-diag-item="${esc(entry.x.id)}" data-diag-index="${entry.i}"><span class="ost-sheet-row-icon">${diseaseIcon(entry.c.name)}</span><span><strong>${esc(entry.c.name)}</strong></span><b>›</b></button>`).join('')}</div>`,{sheet:true});
+  $('[data-overlay-body]').onclick=e=>{const b=e.target.closest('[data-diag-item]');if(!b)return;const x=group.items.find(v=>v.id===b.dataset.diagItem);if(!x)return;const c=arr(x.causes)[Number(b.dataset.diagIndex)];if(c)diseaseInfo(x,typeof c==='string'?{name:c}:c,Number(b.dataset.diagIndex))};
  };
  $('[data-main]').innerHTML=`<div class="ost-model-screen"><label class="ost-model-search"><span>⌕</span><input type="search" data-diag-search placeholder="Diagnostik durchsuchen …" aria-label="Diagnostik durchsuchen"></label><div class="ost-model-intro">Tippe direkt auf eine Körperregion</div>${interactiveBodyMap(bodyGroups,'diagnosis')}<section class="ost-model-results" data-diag-search-results hidden></section></div>`;
  $('[data-main]').onclick=e=>{const b=e.target.closest('[data-body-zone]');if(b){const g=bodyGroups.find(x=>x.id===b.dataset.bodyZone);if(g)showDiseaseGroup(g)}};
