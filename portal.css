@@ -2831,3 +2831,77 @@ body.app-shell .ost-flow-actions button{flex:1;border:1px solid #cfe1ec;border-r
 body.app-shell .ost-flow-actions button:last-child{background:#e8f3fa;border-color:#b9d6e6}
 body.app-shell .ost-flow-actions button:disabled{opacity:.35;cursor:default}
 @media(max-width:620px){body.app-shell .ost-flow-trigger{grid-template-columns:40px minmax(0,1fr) 18px;gap:10px;padding-right:11px}body.app-shell .ost-flow-trigger .ost-flow-pin{width:40px!important;height:40px!important}body.app-shell .ost-flow-trigger-label{font-size:.94rem!important}body.app-shell .ost-flow-content{margin-left:50px}}
+
+/* OST 1020 v542 – a single coherent, mobile-first design system */
+:root{--ui-bg:#f4f7fa;--ui-white:#fff;--ui-ink:#193852;--ui-muted:#627b91;--ui-border:#dce7ee;--ui-accent:#27638a;--ui-radius:17px;--ui-space:14px}
+html,body,body.app-shell{height:auto!important;min-height:100%!important;overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior-y:auto!important}
+body.app-shell{background:var(--ui-bg)!important;color:var(--ui-ink)!important}
+body.app-shell [data-main]{height:auto!important;min-height:0!important;overflow:visible!important}
+/* Never pin the desktop content in an inner non-scrollable region. */
+@media(min-width:900px){body.app-shell .main{height:auto!important;min-height:100vh!important;overflow:visible!important;width:auto!important;max-width:980px!important;margin-left:auto!important;margin-right:auto!important;padding-bottom:80px!important}body.app-shell .desktop-sidebar{overflow-y:auto!important}}
+body.app-shell :is(.scheme-tile,.skill-card,.row-card,.meeting-tile,.ost-checklist-card,.ost-module-sheet-link,.ost-link-directory>a,.diag-system-tile,.editor-subgroup-tile,.editor-primary-groups>button){background:#fff!important;border:1px solid var(--ui-border)!important;border-radius:var(--ui-radius)!important;box-shadow:none!important}
+body.app-shell :is(.scheme-tile,.skill-card,.row-card,.meeting-tile,.ost-link-directory>a,.diag-system-tile):hover{background:#f8fbfd!important}
+body.app-shell :is(.scheme-icon,.skill-icon,.row-icon,.detail-big-icon,.ost-link-directory>a>span:first-child){background:transparent!important;border:0!important;box-shadow:none!important}
+body.app-shell :is(.scheme-tile,.skill-card,.row-card,.ost-link-directory>a){min-height:58px!important}
+body.app-shell :is(.page-banner,.section,.detail-section,.guideline-box){box-shadow:none!important}
+body.app-shell .page-banner{background:transparent!important;border:0!important;padding:0!important;margin:0 0 13px!important}
+body.app-shell .page-banner h1{font-weight:730!important;font-size:clamp(1.2rem,3vw,1.65rem)!important}
+/* Navigation uses the same compact visual pattern on iPhone and desktop. */
+body.app-shell .topbar{background:#fff!important;box-shadow:none!important;border-bottom:1px solid var(--ui-border)!important;min-height:60px!important}
+body.app-shell .topbar [data-back-btn],body.app-shell .topbar [data-home-btn]{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:12px!important;width:40px!important;height:40px!important}
+body.app-shell .topbar [data-back-btn]:hover,body.app-shell .topbar [data-home-btn]:hover{background:#eef4f8!important}
+/* Keep all original editor controls and maintenance operations, simplify the workflow. */
+body.page-editor .main{max-width:840px!important}
+body.page-editor .ost-editor-overview{margin:0 0 15px!important;border:1px solid var(--ui-border)!important;background:#fff!important;border-radius:16px!important;padding:10px 14px!important}
+body.page-editor .ost-editor-overview>summary{font-size:.88rem!important;color:var(--ui-muted)!important;cursor:pointer!important;list-style:revert!important}
+body.page-editor .editor-dashboard{display:block!important;width:100%!important;max-width:100%!important;background:transparent!important;border:0!important;padding:0!important;gap:0!important}
+body.page-editor .editor-dashboard>.editor-nav{display:none!important}
+body.page-editor .editor-mobile-picker{display:none!important}
+body.page-editor .editor-grouped-menu{display:block!important;width:100%!important;max-width:100%!important;padding:0!important;margin:0 0 18px!important;border:0!important;box-shadow:none!important;background:transparent!important}
+body.page-editor .editor-primary-groups{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;margin:0 0 12px!important}
+body.page-editor .editor-primary-groups>button{min-height:66px!important;display:flex!important;flex-direction:column!important;gap:5px!important;padding:10px 6px!important;text-align:center!important}
+body.page-editor .editor-primary-groups>button>span{display:flex!important;align-items:center!important;justify-content:center!important;height:23px!important;border:0!important;background:transparent!important}
+body.page-editor .editor-primary-groups strong{font-size:.81rem!important;line-height:1.25!important;font-weight:600!important}
+body.page-editor .editor-primary-groups button.active{background:#eaf3f8!important;border-color:#aacadb!important;box-shadow:none!important}
+body.page-editor .editor-group-subtitle{font-size:.86rem!important;color:var(--ui-muted)!important;font-weight:550!important;margin:10px 0 8px!important}
+body.page-editor .editor-subgroup-tiles{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin-bottom:14px!important}
+body.page-editor .editor-subgroup-tile{min-height:48px!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:9px!important;text-align:left!important;padding:10px 12px!important}
+body.page-editor .editor-subgroup-tile>span{width:22px!important;height:22px!important;flex:0 0 22px!important;background:transparent!important;border:0!important}
+body.page-editor .editor-subgroup-tile strong{font-size:.88rem!important;font-weight:560!important}
+body.page-editor .editor-subgroup-tile.active{background:#eaf3f8!important;border-color:#aacadb!important}
+body.page-editor .editor-content{width:100%!important;min-width:0!important;max-width:100%!important;margin:0!important;border:0!important;box-shadow:none!important;background:transparent!important;padding:0!important}
+body.page-editor .editor-toolbar{background:#fff!important;border:1px solid var(--ui-border)!important;border-radius:18px!important;padding:14px!important;margin-bottom:14px!important;display:flex!important;gap:12px!important;align-items:center!important;justify-content:space-between!important;flex-wrap:wrap!important}
+body.page-editor .editor-toolbar p{display:none!important}
+body.page-editor .editor-toolbar h2{margin:0!important;font-size:1.08rem!important}
+body.page-editor .editor-toolbar-actions{display:flex!important;gap:8px!important;flex-wrap:wrap!important}
+body.page-editor .editor-items{width:100%!important;min-width:0!important;display:block!important}
+body.page-editor :is(.ost-entry-picker,.literature-editor-tools,.ux-edit-card,.editor-subsection,.ost-order-editor,.ost-editor-empty){background:#fff!important;border:1px solid var(--ui-border)!important;border-radius:16px!important;padding:14px!important;margin-bottom:12px!important;box-shadow:none!important}
+body.page-editor .ux-field input,body.page-editor .ux-field textarea,body.page-editor select{max-width:100%!important;box-sizing:border-box!important}
+body.page-editor .editor-subsection h3{font-size:1rem!important;margin:0 0 12px!important}
+body.page-editor .ux-edit-card>summary{min-height:52px!important;font-weight:650!important}
+body.page-editor .admin-tools{margin:24px 0!important;opacity:.92}
+body.page-editor .ost-editor-overview:not([open])>:not(summary){display:none!important}
+/* Educational views: one compact consistent accordion pattern instead of competing step tools. */
+body.app-shell .algorithm-detail{max-width:790px!important;margin:0 auto!important}
+body.app-shell .ost-steps-deck{background:transparent!important;border:0!important;padding:0!important}
+body.app-shell .ost-flow-toolbar{max-width:100%!important;margin:4px 0 10px!important}
+body.app-shell .ost-flow-timeline{max-width:100%!important;margin:0!important}
+body.app-shell .ost-flow-item.ost-interactive-step{padding:0 0 9px!important}
+body.app-shell .ost-flow-item.ost-interactive-step::before{display:none!important}
+body.app-shell .ost-flow-trigger{min-height:61px!important;grid-template-columns:38px minmax(0,1fr) 20px!important;gap:11px!important;border-radius:16px!important;padding:8px 12px!important;border:1px solid var(--ui-border)!important;background:#fff!important}
+body.app-shell .ost-flow-trigger .ost-flow-pin{width:38px!important;height:38px!important;border:0!important;border-radius:12px!important;font-size:1.04rem!important}
+body.app-shell .ost-flow-trigger-label{font-size:.96rem!important;font-weight:570!important}
+body.app-shell .ost-interactive-step.is-current .ost-flow-trigger{background:#f7fbfd!important;border-color:#9ebfd4!important}
+body.app-shell .ost-flow-content{margin:0 8px!important;border-radius:0 0 13px 13px!important;border:1px solid #dce8f0!important;border-top:0!important;padding:12px 16px!important;background:#fff!important}
+body.app-shell .ost-flow-actions{display:none!important}
+body.app-shell .ost-flow-counter{font-size:.78rem!important;color:var(--ui-muted)!important;font-weight:550!important}
+body.app-shell .ost-flow-show-all{border:1px solid var(--ui-border)!important;border-radius:999px!important;padding:8px 12px!important;background:#fff!important}
+body.app-shell .ost-interactive-step.tone-1 .ost-flow-pin{background:#eaf3fe!important;color:#2275c6!important}
+body.app-shell .ost-interactive-step.tone-2 .ost-flow-pin{background:#eaf8f1!important;color:#16865d!important}
+body.app-shell .ost-interactive-step.tone-3 .ost-flow-pin{background:#fff5e7!important;color:#b68028!important}
+body.app-shell .ost-interactive-step.tone-4 .ost-flow-pin{background:#f5edfd!important;color:#8254bd!important}
+body.app-shell .ost-interactive-step.tone-5 .ost-flow-pin{background:#fff0f4!important;color:#bc536f!important}
+body.app-shell .ost-interactive-step.tone-6 .ost-flow-pin{background:#e8f7fb!important;color:#208aa8!important}
+body.app-shell .algorithm-material-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))!important;gap:9px!important}
+body.app-shell .algorithm-material-tile{background:#fff!important;border:1px solid var(--ui-border)!important;box-shadow:none!important}
+@media(max-width:620px){body.page-editor .editor-primary-groups{grid-template-columns:repeat(3,minmax(0,1fr))!important}body.page-editor .editor-subgroup-tiles{grid-template-columns:1fr!important}body.app-shell .ost-flow-trigger{grid-template-columns:36px minmax(0,1fr) 18px!important}body.app-shell .ost-flow-trigger .ost-flow-pin{width:36px!important;height:36px!important}}
