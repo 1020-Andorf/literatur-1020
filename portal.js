@@ -67,7 +67,7 @@ function chrome(){
   location.href=parents[page]||'index.html';
  }}
  if(hb)hb.innerHTML=svg.home;
- document.body.insertAdjacentHTML('beforeend',`<div class="overlay"><div class="shade" data-overlay-close></div><section class="overlay-panel" role="dialog" aria-modal="true"><div class="overlay-head"><h2 data-overlay-title></h2></div><div class="overlay-body" data-overlay-body></div></section></div>`);
+ document.body.insertAdjacentHTML('beforeend',`<div class="overlay"><div class="shade" data-overlay-close></div><section class="overlay-panel" role="dialog" aria-modal="true" aria-label="Inhalt"><button type="button" class="ost-overlay-dismiss" data-overlay-close aria-label="Overlay schließen" title="Schließen">×</button><div class="overlay-head"><h2 data-overlay-title></h2></div><div class="overlay-body" data-overlay-body></div></section></div>`);
  $$('[data-overlay-close]').forEach(x=>x.onclick=closeOverlay);
  $('.overlay')?.addEventListener('click',e=>{if(e.target===$('.overlay'))closeOverlay()});
  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&$('.overlay')?.classList.contains('show'))closeOverlay()});
@@ -383,7 +383,7 @@ async function modulePage(){
   const draw=()=>{const term=normalizedSearch($('[data-checklist-search]').value);const hits=items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body].join(' ')).includes(term)).sort((a,b)=>String(a.title).localeCompare(String(b.title),'de'));$('[data-checklist-list]').innerHTML=hits.map(x=>`<article class="ost-checklist-card"><span class="ost-checklist-icon" aria-hidden="true">${ostIcon('checklist')}</span><div class="ost-checklist-info"><h2>${esc(x.title)}</h2>${x.category?`<div class="ost-checklist-category">${esc(x.category)}</div>`:''}${x.summary?`<p>${esc(x.summary)}</p>`:''}${x.body?`<div class="ost-checklist-body">${renderModuleText(x.body)}</div>`:''}</div>${x.documentUrl&&/^https:\/\/[^\s"<>]+$/i.test(x.documentUrl)?`<a class="ost-checklist-download" href="${esc(x.documentUrl)}" target="_blank" rel="noopener noreferrer" download>PDF öffnen <span aria-hidden="true">↗</span></a>`:'<span class="ost-checklist-missing">Noch kein PDF</span>'}</article>`).join('')||'<p class="empty">Noch keine Checklisten vorhanden.</p>'};$('[data-checklist-search]').oninput=draw;draw();return;
  }
  const base=`<section class="page-banner"><h1>${esc(meta.title)}</h1></section>`;
- if(current){const itemIcon=moduleItemIcon(current,slug);$('[data-main]').innerHTML=base+`<article class="ost-module-detail"><div class="ost-module-detail-head"><span class="ost-module-symbol">${esc(itemIcon)}</span><div><div class="ost-module-kicker">${esc(current.category||meta.title)}</div><h2>${esc(current.title)}</h2></div></div>${current.summary?`<p class="ost-module-lead">${esc(current.summary)}</p>`:''}${current.image&&/^(https:\/\/[^\s]+|assets\/[a-zA-Z0-9._\/-]+\.(svg|png|webp|jpg|jpeg))$/i.test(current.image)?`<figure class="ost-figure"><img class="ost-anatomy-figure" src="${esc(current.image)}" alt="${esc(current.imageCaption||'Lernabbildung: '+current.title)}" loading="lazy"><figcaption>${esc(current.imageCaption||'Schematische Lernabbildung')}</figcaption></figure>`:''}<div class="ost-module-body">${renderModuleText(current.body)}</div>${current.sources?`<section class="ost-module-sources"><h3>Quellen</h3><p>${esc(current.sources).replace(/\n/g,'<br>')}</p></section>`:''}<p class="diag-hint">Inhalte vor klinischer Anwendung anhand freigegebener lokaler Vorgaben prüfen.${current.reviewDue?' Nächste Prüfung: '+esc(current.reviewDue):''}</p></article>`;const cat=await contentCatalog();$('[data-main]').insertAdjacentHTML('beforeend',relatedHtml(current,cat));return}
+ if(current && slug!=='pharm'){const itemIcon=moduleItemIcon(current,slug);$('[data-main]').innerHTML=base+`<article class="ost-module-detail"><div class="ost-module-detail-head"><span class="ost-module-symbol">${esc(itemIcon)}</span><div><div class="ost-module-kicker">${esc(current.category||meta.title)}</div><h2>${esc(current.title)}</h2></div></div>${current.summary?`<p class="ost-module-lead">${esc(current.summary)}</p>`:''}${current.image&&/^(https:\/\/[^\s]+|assets\/[a-zA-Z0-9._\/-]+\.(svg|png|webp|jpg|jpeg))$/i.test(current.image)?`<figure class="ost-figure"><img class="ost-anatomy-figure" src="${esc(current.image)}" alt="${esc(current.imageCaption||'Lernabbildung: '+current.title)}" loading="lazy"><figcaption>${esc(current.imageCaption||'Schematische Lernabbildung')}</figcaption></figure>`:''}<div class="ost-module-body">${renderModuleText(current.body)}</div>${current.sources?`<section class="ost-module-sources"><h3>Quellen</h3><p>${esc(current.sources).replace(/\n/g,'<br>')}</p></section>`:''}<p class="diag-hint">Inhalte vor klinischer Anwendung anhand freigegebener lokaler Vorgaben prüfen.${current.reviewDue?' Nächste Prüfung: '+esc(current.reviewDue):''}</p></article>`;const cat=await contentCatalog();$('[data-main]').insertAdjacentHTML('beforeend',relatedHtml(current,cat));return}
  if(slug==='anatomy'){
   const groups=[
    {id:'brain',label:'Gehirn & Nervensystem',icon:'🧠',pattern:/gehirn|nerven|neuro|sinne/i,desc:'Gehirn, Nerven und Signalverarbeitung'},
@@ -405,6 +405,44 @@ async function modulePage(){
   };
   $('[data-main]').onclick=e=>{const b=e.target.closest('[data-body-zone]');if(b){const g=groups.find(x=>x.id===b.dataset.bodyZone);if(g)showGroup(g)}};
   $('[data-module-search]').oninput=e=>{const q=normalizedSearch(e.target.value.trim()),box=$('[data-module-list]');if(!q){box.hidden=true;box.innerHTML='';return}const hits=items.filter(x=>normalizedSearch([x.title,x.category,x.summary,x.body,x.synonyms].join(' ')).includes(q));box.hidden=false;box.innerHTML=`<h3>Suchergebnisse</h3>${hits.map(x=>`<button class="ost-sheet-row" data-search-anat="${esc(x.id)}"><span>📘</span><strong>${esc(x.title)}</strong><b>›</b></button>`).join('')||'<p>Keine Treffer</p>'}`;box.onclick=event=>{const b=event.target.closest('[data-search-anat]');if(b){const item=items.find(x=>x.id===b.dataset.searchAnat);if(item)showArticle(item)}}};
+  return;
+ }
+ if(slug==='pharm'){
+  const definitions=[
+   {id:'pain',label:'Schmerz & Analgesie',icon:'✚',group:'Therapie',match:/analget|schmerz|opioid|antipyret|nsaid|antirheumat|paracetamol|morphin|fentanyl/i},
+   {id:'sedation',label:'Sedierung & Narkose',icon:'☾',group:'Therapie',match:/sedati|narkose|anästhe|hypnot|benzodia|anxiol/i},
+   {id:'cardio',label:'Herz & Kreislauf',icon:'♡',group:'Organsystem',match:/sympatho|katechol|antiarrhythm|kardio|herz|kreislauf|vagol|vaso|antiangin/i},
+   {id:'air',label:'Atemwege',icon:'↝',group:'Organsystem',match:/bronch|asthma|respira|lunge|atem|inhal/i},
+   {id:'blood',label:'Gerinnung & Blut',icon:'◈',group:'Organsystem',match:/antithrom|gerinn|blut|antikoag|thrombol|hämosta/i},
+   {id:'other',label:'Weitere Medikamente',icon:'✳',group:'Weitere',match:/.*/}
+  ];
+  const assigned=new Set();
+  const groups=definitions.map((g,i)=>{const related=items.filter(x=>{
+   if(assigned.has(x.id))return false;
+   const match=i===definitions.length-1||g.match.test([x.title,x.category,x.synonyms].join(' '));
+   if(match)assigned.add(x.id);return match;
+  });return {...g,items:related}}).filter(g=>g.items.length);
+  const byId=id=>items.find(x=>x.id===id);
+  const goArticle=(x,g)=>{
+   if(!x)return;
+   const origin=g||groups.find(group=>group.items.some(item=>item.id===x.id));
+   open(x.title,`<article class="ost-pharm-article"><button type="button" class="ost-anat-back" data-pharm-back><span aria-hidden="true">←</span> ${origin?'Zurück zu '+esc(origin.label):'Zurück zur Auswahl'}</button>${x.image?`<img class="ost-sheet-figure" src="${esc(x.image)}" alt="${esc(x.imageCaption||x.title)}" onerror="this.remove()">`:''}<div class="ost-module-body">${renderModuleText(x.body)}</div>${x.sources?`<aside class="ost-sheet-source"><strong>Quellen</strong><p>${esc(x.sources)}</p></aside>`:''}<p class="diag-hint">Lerninhalte – lokale SOP, Fachinformation, Kontraindikationen und Dosierungen vor Anwendung prüfen.</p></article>`,{sheet:true});
+   $('[data-overlay-body]').onclick=e=>{if(e.target.closest('[data-pharm-back]'))origin?goGroup(origin):closeOverlay()};
+  };
+  const goGroup=g=>{
+   open(g.label,`<section class="ost-pharm-group-sheet"><div class="ost-sheet-rows">${g.items.map(x=>`<button type="button" class="ost-sheet-row" data-pharm-item="${esc(x.id)}"><span class="ost-sheet-row-icon">${esc(moduleItemIcon(x,slug))}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join('')}</div></section>`,{sheet:true});
+   $('[data-overlay-body]').onclick=e=>{const b=e.target.closest('[data-pharm-item]');if(b)goArticle(byId(b.dataset.pharmItem),g)};
+  };
+  $('[data-main]').innerHTML=`<section class="ost-pharm-explorer"><label class="ost-model-search"><span aria-hidden="true">⌕</span><input type="search" data-pharm-search placeholder="Wirkstoffgruppe oder Medikament suchen …" aria-label="Pharmakologie durchsuchen"></label><div class="ost-pharm-intro">Wähle einen Wirkungsbereich</div><nav class="ost-pharm-map" aria-label="Interaktive Pharmakologie"><div class="ost-pharm-map-center" aria-hidden="true"><svg viewBox="0 0 96 96" fill="none"><g transform="rotate(-45 48 48)"><rect x="12" y="31" width="72" height="34" rx="17" fill="#f6fbff" stroke="#326b8f" stroke-width="3"/><path d="M48 31v34" stroke="#326b8f" stroke-width="3"/><path d="M48 33h19c9 0 15 7 15 15S76 63 67 63H48z" fill="#dcecf6"/></g><path d="M43 48h10M48 43v10" stroke="#244866" stroke-width="3" stroke-linecap="round"/></svg><span>PHARMA</span></div>${groups.map((g,i)=>`<button type="button" class="ost-pharm-sector sector-${g.id}" data-pharm-group="${g.id}" style="--sector:${i}"><span class="ost-pharm-sector-icon" aria-hidden="true">${g.icon}</span><span class="ost-pharm-sector-copy"><strong>${esc(g.label)}</strong><small>${g.items.length} ${g.items.length===1?'Thema':'Themen'}</small></span><span class="ost-sector-chevron" aria-hidden="true">›</span></button>`).join('')}</nav><div data-pharm-results class="ost-pharm-results" hidden></div></section>`;
+  $('[data-main]').addEventListener('click',e=>{const b=e.target.closest('[data-pharm-group]');if(b){const g=groups.find(x=>x.id===b.dataset.pharmGroup);if(g)goGroup(g)}else{const item=e.target.closest('[data-pharm-search-item]');if(item){const x=byId(item.dataset.pharmSearchItem);if(x)goArticle(x)}}});
+  const search=$('[data-pharm-search]'),results=$('[data-pharm-results]');
+  search.addEventListener('input',()=>{const term=normalizedSearch(search.value.trim());
+   results.hidden=!term;
+   if(!term){results.innerHTML='';return}
+   const found=items.filter(x=>normalizedSearch([x.title,x.category,x.synonyms,x.summary,x.body].join(' ')).includes(term));
+   results.innerHTML=found.length?`<h3>${found.length} Suchtreffer</h3><div class="ost-sheet-rows">${found.map(x=>`<button type="button" class="ost-sheet-row" data-pharm-search-item="${esc(x.id)}"><span class="ost-sheet-row-icon">${esc(moduleItemIcon(x,slug))}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join('')}</div>`:'<p class="empty">Keine Einträge gefunden.</p>';
+  });
+  if(current)goArticle(current);
   return;
  }
  const openModuleSheet=item=>open(item.title,`<article class="ost-article-sheet ost-pharm-sheet">${item.image?`<img class="ost-sheet-figure" src="${esc(item.image)}" alt="${esc(item.imageCaption||item.title)}" onerror="this.remove()">`:''}<div class="ost-module-body">${renderModuleText(item.body)}</div>${item.sources?`<aside class="ost-sheet-source"><strong>Quellen</strong><p>${esc(item.sources)}</p></aside>`:''}<p class="diag-hint">Technische Angaben und Fachinhalte anhand lokaler Vorgaben, Herstellerdokumentation und freigegebener SOPs prüfen.</p></article>`,{sheet:true});
@@ -586,20 +624,20 @@ async function algorithmsPage(){
  const params=new URLSearchParams(location.search),id=params.get('id'),x=d.find(v=>v.id===id);
  if(x){
    const steps=arr(x.steps),schema=x.category?.startsWith('Schema');
-   const cards=steps.map((st,i)=>{
+   const timeline=steps.map((st,i)=>{
     const acronym=schema?String(st).match(/^\s*([A-ZÄÖÜ]{1,3})\s*[–—-]\s*/):null;
     const marker=schema&&acronym?acronym[1]:'';
     const phrase=acronym?String(st).slice(acronym[0].length):String(st);
     const headingMatch=phrase.match(/^([^:：]{2,48}):\s*(.+)$/);
-    const formatted=headingMatch?`<strong class="flow-step-heading">${esc(headingMatch[1])}</strong><span class="flow-step-text">${esc(headingMatch[2])}</span>`:`<span class="flow-step-text">${esc(phrase)}</span>`;
-    return `<article class="ost-step-card ${schema?'ost-schema-step':'ost-algorithm-step'} tone-${(i%6)+1}"><div class="ost-step-card-head">${schema&&marker?`<span class="flow-step-marker" aria-hidden="true">${esc(marker)}</span>`:''}</div><div class="flow-step-copy">${formatted}</div></article>`;
+    const formatted=headingMatch?`<strong class="ost-flow-heading">${esc(headingMatch[1])}</strong><span class="ost-flow-description">${esc(headingMatch[2])}</span>`:`<span class="ost-flow-description">${esc(phrase)}</span>`;
+    return `<article class="ost-flow-item ${schema?'is-schema':''} tone-${(i%6)+1}"><span class="ost-flow-pin" aria-hidden="true">${marker?esc(marker):'<span class="ost-flow-dot"></span>'}</span><div class="ost-flow-panel">${formatted}</div></article>`;
    }).join('');
    const mat=x.materials||{background:[],checklists:[]};
    const safeMedia=url=>{try{const u=new URL(url,location.href);return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return ''}};
    const image=safeMedia(x.imageUrl);
    const materials=[...(mat.background||[]).map(m=>({...m,kind:'background'})),...(mat.checklists||[]).map(m=>({...m,kind:'checklist'}))];
    const materialTiles=materials.length?`<div class="algorithm-material-grid">${materials.map(m=>{const u=safeMedia(m.url);return `<a class="algorithm-material-tile" ${u?`href="${esc(u)}" target="_blank" rel="noopener noreferrer"`:'role="group"'}><span>${m.kind==='background'?'📘':'✅'}</span><strong>${esc(m.title||'Material')}</strong><small>${esc(m.note|| (m.kind==='background'?'Hintergrundinformation':'Checkliste'))}${u?' · Öffnen ↗':''}</small></a>`}).join('')}</div>`:'<p class="algorithm-empty">Noch keine Materialien hinterlegt.</p>';
-   $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page algorithm-detail"><div class="detail-lead"><span class="detail-big-icon">${ostIcon('notes')}</span><div><h2>${esc(x.title)}</h2></div></div>${image?`<figure class="algorithm-figure"><img src="${esc(image)}" alt="${esc(x.title)} – Schema oder Algorithmus" loading="lazy" onerror="this.closest('figure')?.remove()"><figcaption>${esc(x.imageCaption||x.title)}</figcaption></figure>`:''}<section class="ost-steps-deck ${schema?'is-schema':''}">${x.id==='schema-pat'?`<div class="pat-visual"><div>👶<strong>Erscheinungsbild</strong><span>TICLS</span></div><div>🫁<strong>Atemarbeit</strong><span>Geräusche, Einziehungen</span></div><div>🩸<strong>Hautdurchblutung</strong><span>Farbe, Marmorierung</span></div></div>`:''}<div class="ost-steps-carousel">${cards}</div></section><section class="detail-section"><h2>Materialien</h2>${materialTiles}</section></section>`;
+   $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page algorithm-detail"><div class="detail-lead"><span class="detail-big-icon">${ostIcon('notes')}</span><div><h2>${esc(x.title)}</h2></div></div>${image?`<figure class="algorithm-figure"><img src="${esc(image)}" alt="${esc(x.title)} – Schema oder Algorithmus" loading="lazy" onerror="this.closest('figure')?.remove()"><figcaption>${esc(x.imageCaption||x.title)}</figcaption></figure>`:''}<section class="ost-steps-deck ${schema?'is-schema':''}">${x.id==='schema-pat'?`<div class="pat-visual"><div>👶<strong>Erscheinungsbild</strong><span>TICLS</span></div><div>🫁<strong>Atemarbeit</strong><span>Geräusche, Einziehungen</span></div><div>🩸<strong>Hautdurchblutung</strong><span>Farbe, Marmorierung</span></div></div>`:''}<div class="ost-flow-timeline">${timeline}</div></section><section class="detail-section"><h2>Materialien</h2>${materialTiles}</section></section>`;
    const catalog=await contentCatalog();$('.algorithm-detail')?.insertAdjacentHTML('beforeend',relatedHtml(x,catalog));
    return
  }

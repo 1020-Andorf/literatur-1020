@@ -2539,3 +2539,160 @@ body.app-shell .ost-step-card .flow-step-marker{font-weight:800}
 body.app-shell .ost-step-card:not(.ost-schema-step) .flow-step-copy{align-self:center}
 body.app-shell .algorithm-detail>.detail-lead{display:none!important}
 body.app-shell .algorithm-detail .guideline-box{display:none!important}
+
+/* OST 1020 – v540: integrated mobile title bar, dependable desktop document scroll,
+   subtle overlay close and new guided pharmacology / algorithm layouts. */
+
+/* Make the document, not its contents or sidebar, the scroll container on desktop. */
+@media (min-width:1100px){
+ html:not(.ost-overlay-open){overflow-x:hidden!important;overflow-y:scroll!important;height:auto!important;scrollbar-width:auto!important;scrollbar-gutter:stable!important}
+ body.app-shell:not(.ost-overlay-open),body.app-shell:not(.ost-overlay-open).desktop-has-sidebar{
+   display:block!important;position:static!important;height:auto!important;min-height:100vh!important;
+   max-height:none!important;overflow:visible!important;overscroll-behavior-y:auto!important
+ }
+ body.app-shell:not(.ost-overlay-open)>.main,
+ body.app-shell:not(.ost-overlay-open).desktop-has-sidebar .main{
+   display:block!important;position:relative!important;height:auto!important;max-height:none!important;
+   min-height:calc(100vh - 50px)!important;overflow:visible!important;overscroll-behavior:auto!important
+ }
+ body.app-shell.desktop-has-sidebar .desktop-sidebar{overflow-y:auto!important}
+ html:not(.ost-overlay-open)::-webkit-scrollbar{display:block!important;width:11px!important}
+ html:not(.ost-overlay-open)::-webkit-scrollbar-thumb{background:#bfcfdc!important;border-radius:12px!important}
+}
+
+/* Treat the top controls and page title as one light navigation bar on phones. */
+@media(max-width:1099px){
+ body.app-shell:not(.page-home) .topbar,
+ body.app-shell:not(.page-home).subpage-topbar .topbar{
+   position:sticky!important;top:0!important;left:auto!important;right:auto!important;
+   width:100%!important;min-width:0!important;min-height:0!important;height:auto!important;
+   z-index:1100!important;background:rgba(250,252,254,.97)!important;
+   border:0!important;border-bottom:1px solid #e5edf3!important;
+   box-shadow:none!important;backdrop-filter:blur(18px)!important;pointer-events:auto!important
+ }
+ body.app-shell:not(.page-home) .topbar-inner,
+ body.app-shell:not(.page-home).subpage-topbar .topbar-inner{
+   display:flex!important;align-items:center!important;flex-wrap:nowrap!important;
+   min-height:54px!important;height:auto!important;max-width:none!important;
+   gap:2px!important;padding:6px 12px!important;margin:0 auto!important;
+ }
+ body.app-shell:not(.page-home) .topbar .top-action{
+   flex:0 0 40px!important;width:40px!important;height:40px!important;
+   border:0!important;border-radius:12px!important;background:transparent!important;
+   color:#24485f!important;box-shadow:none!important;display:grid!important;place-items:center!important
+ }
+ body.app-shell:not(.page-home) .topbar .top-action:hover,
+ body.app-shell:not(.page-home) .topbar .top-action:focus-visible{background:#eaf2f7!important;outline-offset:0}
+ body.app-shell:not(.page-home) .topbar .top-action svg{width:23px!important;height:23px!important}
+ body.app-shell:not(.page-home) .topbar .brand{
+   display:block!important;min-width:0!important;flex:1 1 auto!important;
+   overflow:visible!important;align-self:center!important;
+   margin:0!important;padding:0 0 0 8px!important;text-align:left!important
+ }
+ body.app-shell:not(.page-home) .topbar .brand strong{
+   display:block!important;max-width:100%!important;
+   font-size:clamp(.93rem,3.5vw,1.06rem)!important;line-height:1.38!important;
+   padding:2px 0 4px!important;margin:0!important;
+   font-weight:730!important;letter-spacing:.018em!important;
+   white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important
+ }
+ body.app-shell:not(.page-home) .main{padding-top:14px!important}
+}
+
+/* Overlay dismiss: visible on every overlay, but lighter than content/navigation. */
+body.app-shell .overlay-panel>.ost-overlay-dismiss{
+ position:absolute!important;z-index:35!important;right:12px!important;top:12px!important;
+ display:grid!important;place-items:center!important;width:30px!important;height:30px!important;
+ padding:0!important;border:1px solid #e5edf2!important;border-radius:50%!important;
+ background:rgba(247,250,252,.97)!important;color:#708595!important;
+ box-shadow:none!important;font-family:inherit!important;font-size:22px!important;font-weight:350!important;
+ line-height:1!important;cursor:pointer!important
+}
+body.app-shell .overlay-panel>.ost-overlay-dismiss:hover,
+body.app-shell .overlay-panel>.ost-overlay-dismiss:focus-visible{background:#eaf3f8!important;color:#173b56!important}
+body.app-shell .overlay-panel .overlay-head{padding-right:46px!important}
+body.app-shell .overlay-panel.ost-med-sheet .overlay-head{padding-right:55px!important}
+body.app-shell .overlay-panel.ost-news-modal .overlay-body{padding-right:0!important;padding-top:34px!important}
+body.app-shell .overlay-panel.ost-simple-anatomy-sheet .overlay-body{padding-top:43px!important}
+
+/* Guided, interactive pharmacology: six category petals surrounding a central medicine symbol. */
+.ost-pharm-explorer{max-width:960px;margin:0 auto;display:grid;gap:15px}
+.ost-pharm-intro{text-align:center;font-size:.87rem;color:#648097;font-weight:550;margin:4px 0 0}
+.ost-pharm-map{
+ display:grid;position:relative;grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:13px;max-width:700px;width:100%;margin:0 auto;
+ padding:14px;border:1px solid #dce7ef;border-radius:28px;
+ background:radial-gradient(circle at center,#e9f4fb 0%,#f6fbfd 42%,#fff 82%);
+}
+.ost-pharm-map-center{
+ grid-column:1/-1;grid-row:2;
+ justify-self:center;display:flex;flex-direction:column;align-items:center;justify-content:center;
+ width:132px;height:132px;margin:10px auto;border-radius:50%;
+ background:#fff;border:1px solid #d9e7f1;box-shadow:0 12px 25px rgba(36,76,106,.08)
+}
+.ost-pharm-map-center svg{width:86px;height:86px}
+.ost-pharm-map-center span{color:#527692;font-size:.67rem;font-weight:800;letter-spacing:.1em;margin-top:-7px}
+.ost-pharm-sector{
+ display:flex;align-items:center;text-align:left;gap:10px;min-width:0;min-height:82px;
+ padding:13px;border:1px solid #d9e7ef;border-radius:19px;
+ background:#fff;color:#20415c;box-shadow:0 5px 16px rgba(25,54,82,.035);
+ cursor:pointer
+}
+.ost-pharm-sector:hover,.ost-pharm-sector:focus-visible{border-color:#b4d0e2;background:#f9fcff;outline-offset:3px}
+.ost-pharm-sector-icon{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border-radius:13px;background:#edf4fa;color:#37749d;font-size:1.55rem}
+.ost-pharm-sector-copy{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.ost-pharm-sector-copy strong{font-size:.94rem;font-weight:715;line-height:1.3;overflow-wrap:anywhere}
+.ost-pharm-sector-copy small{font-size:.75rem;color:#7a92a5}
+.ost-sector-chevron{font-size:1.3rem;color:#92a9ba;flex:0 0 auto}
+.ost-pharm-sector.sector-pain .ost-pharm-sector-icon{background:#fdf0f2;color:#be506d}
+.ost-pharm-sector.sector-sedation .ost-pharm-sector-icon{background:#f4f0fd;color:#8c69ba}
+.ost-pharm-sector.sector-cardio .ost-pharm-sector-icon{background:#fff0f0;color:#bf5760}
+.ost-pharm-sector.sector-air .ost-pharm-sector-icon{background:#eaf8fb;color:#479bb0}
+.ost-pharm-sector.sector-blood .ost-pharm-sector-icon{background:#eff7f2;color:#4b947a}
+.ost-pharm-sector.sector-other .ost-pharm-sector-icon{background:#fcf7ed;color:#af8b3e}
+.ost-pharm-results[hidden]{display:none!important}
+.ost-pharm-results{max-width:700px;width:100%;margin:0 auto}
+.ost-pharm-results h3{font-size:1rem;margin:4px 0 12px}
+.ost-pharm-article .ost-module-body{font-size:.97rem;line-height:1.6}
+@media(max-width:620px){
+ .ost-pharm-map{gap:9px;padding:10px;border-radius:23px}
+ .ost-pharm-map-center{width:106px;height:106px;margin:6px auto}
+ .ost-pharm-map-center svg{width:69px;height:69px}
+ .ost-pharm-sector{gap:8px;min-height:77px;padding:9px 10px;border-radius:16px}
+ .ost-pharm-sector-icon{flex:0 0 31px;width:31px;height:34px;font-size:1.25rem;border-radius:10px}
+ .ost-pharm-sector-copy strong{font-size:.8rem}
+ .ost-pharm-sector-copy small{font-size:.69rem}
+ .ost-sector-chevron{display:none}
+}
+
+/* Vertical, connected algorithm flow: read naturally without horizontal scrolling. */
+body.app-shell .ost-steps-deck{display:block!important;margin:6px 0 24px!important}
+body.app-shell .ost-flow-timeline{display:grid!important;gap:0!important;max-width:840px;width:100%;margin:0 auto;padding:3px 0!important}
+body.app-shell .ost-flow-item{
+ display:grid;position:relative;grid-template-columns:44px minmax(0,1fr);gap:13px;
+ padding:0 0 13px!important;align-items:start;background:transparent!important;border:0!important;
+}
+body.app-shell .ost-flow-item:not(:last-child)::before{
+ content:'';position:absolute;z-index:0;left:21px;top:38px;bottom:-2px;
+ width:2px;border-radius:99px;background:#cfdee8
+}
+body.app-shell .ost-flow-pin{
+ position:relative;z-index:2;display:grid!important;place-items:center!important;
+ width:44px;height:44px;border-radius:15px;border:1px solid #d5e7f2;
+ background:#eaf4fb!important;color:#3a779e;font-weight:850;font-size:1.1rem
+}
+body.app-shell .ost-flow-dot{width:11px;height:11px;border-radius:50%;background:currentColor}
+body.app-shell .ost-flow-panel{
+ display:flex!important;flex-direction:column;gap:5px;
+ padding:15px 17px;min-height:58px;background:#fff!important;
+ border:1px solid #dce7ee!important;border-radius:17px;box-shadow:none!important;
+}
+body.app-shell .ost-flow-heading{font-size:1.02rem;font-weight:760;color:#183955;line-height:1.28}
+body.app-shell .ost-flow-description{font-size:1rem;color:#2c4f66;line-height:1.52;overflow-wrap:anywhere}
+body.app-shell .ost-flow-item.tone-1 .ost-flow-pin{background:#e6f3ff!important;color:#2778c5;border-color:#d2e7fa}
+body.app-shell .ost-flow-item.tone-2 .ost-flow-pin{background:#eaf9f2!important;color:#21966d;border-color:#d0ecdf}
+body.app-shell .ost-flow-item.tone-3 .ost-flow-pin{background:#fff6e5!important;color:#c68e2d;border-color:#f3e3c1}
+body.app-shell .ost-flow-item.tone-4 .ost-flow-pin{background:#f3edff!important;color:#8965c8;border-color:#e3d6f5}
+body.app-shell .ost-flow-item.tone-5 .ost-flow-pin{background:#fff0f2!important;color:#c35c75;border-color:#f1d7dd}
+body.app-shell .ost-flow-item.tone-6 .ost-flow-pin{background:#e7f8fc!important;color:#2694b3;border-color:#cfeef5}
+@media(min-width:900px){body.app-shell .ost-flow-timeline{max-width:780px}}
