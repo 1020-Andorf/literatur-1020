@@ -1914,3 +1914,111 @@ html,body{overflow-y:auto!important;overflow-x:hidden!important;height:auto!impo
 .ost-disease-cave{background:#fff4f4;border-color:#f1d9dc}
 .ost-disease-cave h3{color:#b72f3a}
 @media(max-width:620px){.ost-model-stage{max-width:420px}.ost-organ-indicator{width:16px;height:16px}.ost-organ-tip{font-size:.68rem;padding:5px 7px}.ost-med-sheet .overlay-body{max-height:76dvh!important}}
+
+/* ==============================================================
+   OST 1020 534 – klare Flächen, Desktop-Scroll und konsistente Karten
+   ============================================================= */
+:root{
+  --ost-neutral-bg:#f4f7fb;
+  --ost-neutral-line:#dce6ef;
+  --ost-neutral-ink:#173650;
+}
+html,body{
+  min-height:100%!important;
+  height:auto!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  scrollbar-width:thin!important;
+  scrollbar-color:#c1d1de transparent!important;
+}
+html::-webkit-scrollbar,body::-webkit-scrollbar{display:block!important;width:9px!important;height:9px!important}
+html::-webkit-scrollbar-thumb,body::-webkit-scrollbar-thumb{background:#c1d1de!important;border-radius:12px!important}
+html::-webkit-scrollbar-track,body::-webkit-scrollbar-track{background:transparent!important}
+body.app-shell,.main,body.app-shell .main{
+  height:auto!important;
+  max-height:none!important;
+  overflow-y:visible!important;
+}
+body.app-shell{min-height:100vh!important;background:var(--ost-neutral-bg)!important}
+body.app-shell .main{min-height:calc(100vh - 100px)!important;padding-bottom:54px!important}
+@media(min-width:1100px){
+ body.app-shell.desktop-has-sidebar .main{overflow:visible!important;max-height:none!important;min-height:100vh!important}
+ body.app-shell.desktop-has-sidebar .desktop-sidebar{
+  background:transparent!important;
+  border:none!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  padding-left:12px!important;
+  padding-right:12px!important;
+ }
+ body.app-shell.desktop-has-sidebar .desktop-sidebar-nav{min-height:0}
+}
+
+/* Keine großen weißen Rahmen mehr um die Startseiten-Abschnitte.
+   Die fünf Hauptmenü-Kacheln behalten ihre dezenten Farben. */
+body.app-shell.page-home :is(.compact-news,.ost-shortcuts,.ost-week-bottom),
+body.app-shell.page-home .main > .section,
+body.app-shell.page-home .main > .section.section-first{
+  background:transparent!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+  padding:0!important;
+}
+body.app-shell.page-home :is(.compact-news,.ost-shortcuts,.ost-week-bottom)::before,
+body.app-shell.page-home :is(.compact-news,.ost-shortcuts,.ost-week-bottom)::after{box-shadow:none!important;border:0!important}
+body.app-shell.page-home .dashboard-news,
+body.app-shell.page-home .news-list.dashboard-news,
+body.app-shell.page-home .ost-main-destinations{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+  padding:0!important;
+}
+body.app-shell.page-home .week-card{
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+  padding:0!important;
+}
+body.app-shell.page-home .week-strip,
+body.app-shell.page-home .week-events{background:transparent!important;border-color:transparent!important;box-shadow:none!important}
+body.app-shell.page-home .ost-main-destinations>a{border:1px solid #dbe6ec!important;box-shadow:none!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+1){background:#eff6fb!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+2){background:#eef7f4!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+3){background:#f3f1f9!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n+4){background:#faf6ee!important}
+body.app-shell.page-home .ost-main-destinations>a:nth-child(5n){background:#faf2f3!important}
+
+/* In allen Untermenüs weiß; keine rotierenden Pastellflächen. */
+body.app-shell:not(.page-home) :is(
+ .ost-link-directory>a,.skill-card,.scheme-tile,.row-card,.meeting-tile,
+ .ost-checklist-card,.diag-system-tile,.diag-symptom-shell,.diag-disease-chip,
+ .ost-sheet-row,.ost-body-group,.lit-topic,.lit-article-card,.editor-primary-groups>button,
+ .editor-subgroup-tile
+),
+body.app-shell:not(.page-home) :is(.ost-link-directory>a,.skill-card,.scheme-tile,.row-card,.meeting-tile,.ost-checklist-card,.editor-primary-groups>button,.editor-subgroup-tile):nth-child(n){
+ background:#fff!important;
+ border-color:var(--ost-neutral-line)!important;
+ box-shadow:none!important;
+}
+body.app-shell:not(.page-home) .ost-tonal-grid>*:nth-child(n),
+body.app-shell:not(.page-home) .ost-tonal-list>*:nth-child(n),
+body.app-shell:not(.page-home) .skill-grid>*:nth-child(n){background:#fff!important}
+
+/* Abschnittsüberschriften ohne verschachtelte Zierrahmen. */
+body.app-shell:not(.page-home) :is(.section,.scheme-section,.skill-groups,.diag-group-overview){
+ background:transparent!important;
+ border:0!important;
+ box-shadow:none!important;
+ outline:0!important;
+}
+body.app-shell:not(.page-home) .page-banner{background:transparent!important;border:0!important;box-shadow:none!important}
+body.app-shell:not(.page-home) .page-banner:not(:has(h1,button,input,select,p,a,.toolbar)){display:none!important}
+
+/* Scrollbare Dialoginhalte bleiben im Dialog – nie die Hauptseite blockieren. */
+.overlay-panel{overflow-y:auto!important;overscroll-behavior:contain}
+.overlay-panel.ost-med-sheet .overlay-body{overflow-y:auto!important}

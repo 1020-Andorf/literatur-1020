@@ -147,7 +147,32 @@ function seedModules(data){
  const known=new Set(data.map(x=>x.id));
  return [...merged,...seed.filter(x=>!known.has(x.id))]
 }
-async function get(name){if(API){try{const r=await fetch(`${API}/content/${name}`,{cache:'no-store'});if(r.ok){const data=await r.json();return name==='differential'?mergeDiagnostics(data):name==='knowledgeModules'?seedModules(data):data}}catch(e){}}try{const l=localStorage.getItem(LS+name);if(l){const data=JSON.parse(l);return name==='differential'?mergeDiagnostics(data):name==='knowledgeModules'?seedModules(data):data}}catch(e){}return name==='knowledgeModules'?seedModules(clone(D[name]||[])):clone(D[name]||[])}
+async function get(name){
+ if(API){
+  try{
+   const r=await fetch(`${API}/content/${name}`,{cache:'no-store'});
+   if(r.ok){
+    const data=await r.json();
+    if(Array.isArray(data)){
+     // Ein leerer API-Bestand darf vorhandene Basisthemen nicht versehentlich ausblenden.
+     if(!data.length&&['skills','changes','algorithms','guide'].includes(name)&&Array.isArray(D[name])&&D[name].length)return clone(D[name]);
+     return name==='differential'?mergeDiagnostics(data):name==='knowledgeModules'?seedModules(data):data;
+    }
+   }
+  }catch(e){}
+ }
+ try{
+  const l=localStorage.getItem(LS+name);
+  if(l){const data=JSON.parse(l);if(Array.isArray(data))return name==='differential'?mergeDiagnostics(data):name==='knowledgeModules'?seedModules(data):data}
+ }catch(e){}
+ if(name==='knowledgeModules')return seedModules(clone(D[name]||[]));
+ if(Array.isArray(D[name])&&D[name].length)return clone(D[name]);
+ // Die bestehende statische Datendatei verwenden, wenn der Worker nicht erreichbar ist.
+ if(['events','meetings'].includes(name)){
+  try{const r=await fetch(`data/${name}.json`,{cache:'no-store'});if(r.ok){const data=await r.json();if(Array.isArray(data))return data}}catch(e){}
+ }
+ return clone(D[name]||[]);
+}
 async function articles(){if(API){try{const r=await fetch(`${API}/articles`,{cache:'no-store'});if(r.ok)return await r.json()}catch(e){}}return clone(D.articles||[])}
 async function save(name,data){
  localStorage.setItem(LS+name,JSON.stringify(data));
@@ -505,6 +530,85 @@ async function differentialPage(){
 
 }
 
+async function simpleCards(name,title,mode){
+ const d=await get(name);const emo={lungs:'🫁',heart:'❤️',brain:'🧠',bolt:'⚡',abdomen:'🩺',syringe:'💉',clock:'🕒',bandage:'🩹',stethoscope:'🩺',search:'🔎'};
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>${title}</h1></section><div class="list ost-tonal-list">${d.map((x,i)=>`<button class="row-card" data-i="${i}"><span class="row-icon">${mode==='diff'?(emo[x.icon]||x.icon||'🩺'):esc(x.icon|| (mode==='change'?'🔄':mode==='guide'?'🖥️':'📋'))}</span><span><strong>${esc(x.title||x.name)}</strong></span><span class="arrow">›</span></button>`).join('')}</div>`;
+ $('[data-main]').onclick=e=>{const b=e.target.closest('[data-i]');if(!b)return;const x=d[+b.dataset.i];let html='';if(mode==='diff')html=`<section class="overlay-section"><h3>Mögliche Ursachen</h3>${arr(x.causes).map(v=>`<button class="overlay-row"><span class="oi">🔎</span><span><strong>${esc(v)}</strong></span><span class="arrow">›</span></button>`).join('')}</section><section class="overlay-section"><h3>Wichtige Fragen</h3><ul>${arr(x.questions).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></section><section class="overlay-section warning"><h3>Red Flags</h3><ul>${arr(x.redflags).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></section>`;else if(mode==='alg')html=`<section class="overlay-section"><h3>Ablauf</h3><ul>${arr(x.steps).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></section><section class="overlay-section"><h3>Quelle</h3><div class="news-text">${esc(x.source||'')}</div></section>`;else if(mode==='change')html=`<section class="overlay-section"><h3>Bisher</h3><div class="news-text">${esc(x.old||'')}</div></section><section class="overlay-section"><h3>Neu</h3><div class="news-text">${esc(x.new||'')}</div></section><section class="overlay-section"><h3>Quelle</h3><div class="news-text">${esc(x.source||'')}</div></section>`;else if(mode==='guide')html=`<section class="overlay-section"><h3>Schritte</h3><ul>${arr(x.steps).map(v=>`<li>${esc(v)}</li>`).join('')}</ul></section>`;else html=`<section class="overlay-section"><div class="news-text">${esc(x.note||x.description||'')}</div></section>`;open(x.title||x.name,html)}
+}
+
+async function algorithmsPage(){
+ const d=await get('algorithms');
+ const params=new URLSearchParams(location.search),id=params.get('id'),x=d.find(v=>v.id===id);
+ if(x){
+   const steps=arr(x.steps),flow=steps.map((st,i)=>`<div class="flow-node"><span>${i+1}</span><strong>${esc(st)}</strong></div>${i<steps.length-1?'<div class="flow-arrow">↓</div>':''}`).join('');
+   const mat=x.materials||{background:[],checklists:[]};
+   const safeMedia=url=>{try{const u=new URL(url,location.href);return ['http:','https:'].includes(u.protocol)?u.href:''}catch{return ''}};
+   const image=safeMedia(x.imageUrl);
+   const materialList=(key,title,items)=>`<section class="algorithm-list-group"><h3>${title}</h3>${arr(items).length?`<ul class="algorithm-link-list">${arr(items).map(m=>{const u=safeMedia(m.url);return `<li><span class="algorithm-list-icon">${key==='background'?'📘':'✅'}</span><div><strong>${esc(m.title||'Material')}</strong>${m.note?`<small>${esc(m.note)}</small>`:''}</div>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">Öffnen ↗</a>`:''}</li>`}).join('')}</ul>`:'<p class="algorithm-empty">Noch keine Materialien hinterlegt.</p>'}</section>`;
+   $('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page algorithm-detail"><div class="detail-lead"><span class="detail-big-icon">${ostIcon('notes')}</span><div><h2>${esc(x.title)}</h2><p>${esc(x.category||'')} · ${esc(x.stand||'')}</p></div></div>${image?`<figure class="algorithm-figure"><img src="${esc(image)}" alt="${esc(x.title)} – Schema oder Algorithmus" loading="lazy"><figcaption>${esc(x.imageCaption||x.title)}</figcaption></figure>`:''}<section class="${x.category?.startsWith('Schema')?'schema-visual':'flowchart standalone'} ${x.id==='schema-pat'?'schema-triangle':''}">${x.id==='schema-pat'?`<div class="pat-visual"><div>👶<strong>Erscheinungsbild</strong><span>TICLS</span></div><div>🫁<strong>Atemarbeit</strong><span>Geräusche, Einziehungen</span></div><div>🩸<strong>Hautdurchblutung</strong><span>Farbe, Marmorierung</span></div></div>`:''}${flow}</section><section class="guideline-box"><h3>Leitlinie / Quelle</h3><p>${esc(x.source||'Noch keine Quelleninformation hinterlegt.')}</p>${x.sourceUrl?`<a class="btn primary" href="${esc(x.sourceUrl)}" target="_blank" rel="noopener">Original öffnen ↗</a>`:''}</section><section class="detail-section"><h2>Materialien</h2><div class="algorithm-material-lists">${materialList('background','Hintergrundinformationen',mat.background||[])}${materialList('checklists','Checklisten',mat.checklists||[])}</div></section></section>`;
+   const catalog=await contentCatalog();$('.algorithm-detail')?.insertAdjacentHTML('beforeend',relatedHtml(x,catalog));
+   return
+ }
+ const types=['Schema','Algorithmus'];
+ const tile=x=>`<a class="scheme-tile" href="algorithmen.html?id=${encodeURIComponent(x.id)}"><span class="scheme-icon">${ostIcon(x.category?.startsWith('Schema')?'notes':'checklist')}</span><h2>${esc(x.title)}</h2><span class="scheme-more">Ansehen →</span></a>`;
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Algorithmen & Merkhilfen</h1></section><section class="scheme-section"><h2>Algorithmen</h2><div class="scheme-grid ost-tonal-grid">${d.filter(x=>!x.category?.startsWith('Schema')).map(tile).join('')}</div></section><section class="scheme-section"><h2>Merkhilfen</h2><div class="scheme-grid ost-tonal-grid">${d.filter(x=>x.category?.startsWith('Schema')).map(tile).join('')}</div></section>`;
+}
+async function meetingsPage(){
+ const d=await get('meetings'),p=new URLSearchParams(location.search),item=d.find(x=>x.id===p.get('id'));
+ const safe=u=>{try{const a=new URL(u);return ['https:','http:'].includes(a.protocol)?a.href:''}catch{return ''}};
+ const asset=f=>{const url=safe(f.url),kind=/\.(png|jpe?g|gif|webp|svg)(?:[?#]|$)/i.test(url)?'image':/\.pdf(?:[?#]|$)/i.test(url)?'pdf':/\.(pptx?|key)(?:[?#]|$)/i.test(url)?'slide':'link';return `<article class="meeting-resource"><span class="meeting-file-icon">${{image:'🖼️',pdf:'📄',slide:'📊',link:'🔗'}[kind]}</span><div><strong>${esc(f.title||'Material')}</strong><p>${esc(f.note||'')}</p>${kind==='image'&&url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${esc(url)}" alt="${esc(f.title||'Grafik')}"></a>`:''}${url?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Material öffnen ↗</a>`:'<small>Kein Link hinterlegt</small>'}</div></article>`};
+ if(item){$('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(item.title)}</h1></section><article class="meeting-detail"><div class="meeting-meta"><span>${esc(item.date||'')}</span><span>${esc(item.category||'Dienstbesprechung')}</span>${item.speaker?`<span>Referent:in: ${esc(item.speaker)}</span>`:''}</div><p class="meeting-summary">${esc(item.summary||'Keine Zusammenfassung hinterlegt.')}</p><h2>Vorträge, Grafiken und Links</h2><div class="meeting-resources">${arr(item.files).map(asset).join('')||'<p>Noch keine Materialien.</p>'}</div></article>`;return}
+ const unique=[...new Map(d.map(x=>[x.id,x])).values()].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Dienstbesprechungen</h1></section><div class="meeting-grid ost-tonal-grid">${unique.map(x=>`<a class="meeting-tile" href="dienstbesprechungen.html?id=${encodeURIComponent(x.id)}"><span class="meeting-tile-icon">${ostIcon('users')}</span><span class="meeting-date">${esc(x.date||'Dienstbesprechung')} · ${esc(x.category||'Allgemein')}</span><h2>${esc(x.title)}</h2><p>${esc(x.summary||'Materialien ansehen').slice(0,170)}</p><span class="meeting-tile-cta">Materialsammlung ansehen →</span></a>`).join('')||'<div class="empty">Noch keine Dienstbesprechungen hinterlegt. In der Redaktion können Einträge erstellt werden.</div>'}</div>`;
+}
+
+async function skills(){
+ const d=await get('skills');
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Skilltraining</h1></section><section class="skill-groups">${d.map((g,gi)=>`<div><div class="skill-group-head"><h2>${esc(g.name)}</h2></div><div class="skill-grid ost-tonal-grid">${g.skills.map((sk,si)=>`<button class="skill-card" data-g="${gi}" data-s="${si}"><span class="skill-icon">${ostIcon('training')}</span><span><strong>${esc(sk.name)}</strong></span><span class="arrow">›</span></button>`).join('')}</div></div>`).join('')}</section>`;
+ $('[data-main]').onclick=e=>{const b=e.target.closest('[data-g][data-s]');if(!b)return;const sk=d[+b.dataset.g].skills[+b.dataset.s],sections=sk.sections||[{title:'Ablauf',items:arr(sk.items)}];open(sk.name,sections.map((sec,sidx)=>`<section class="overlay-section skill-overlay-section"><div class="skill-overlay-head"><span>${String(sidx+1).padStart(2,'0')}</span><h3>${esc(sec.title)}</h3></div>${arr(sec.items).length?`<ul class="skill-detail-list">${arr(sec.items).map((v,i)=>`<li><span class="skill-point">${i+1}</span><span>${esc(v)}</span></li>`).join('')}</ul>`:'<div class="skill-empty">Noch keine Inhalte</div>'}</section>`).join(''))}
+}
+async function changesPage(){
+ const d=await get('changes'),params=new URLSearchParams(location.search),id=params.get('id'),x=d.find(v=>v.id===id);
+ if(x){$('[data-main]').innerHTML=`<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page change-detail">${x.imageUrl?`<img class="change-image" src="${esc(x.imageUrl)}" alt="${esc(x.title)}">`:''}<div class="before-after"><section class="compare-card old"><span>BISHER</span><h3>Alt</h3><p>${esc(x.old||'')}</p></section><section class="compare-card new"><span>NEU</span><h3>Neu</h3><p>${esc(x.new||'')}</p></section></div><section class="guideline-box"><h3>Quelle / Einordnung</h3><p>${esc(x.source||'')}</p></section><section class="guideline-box change-validity"><h3>Gültigkeit</h3><p>${esc(x.validity||'Noch nicht hinterlegt')}</p></section></section>`;const catalog=await contentCatalog();$('.change-detail')?.insertAdjacentHTML('beforeend',relatedHtml(x,catalog));return}
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list ost-tonal-list">${d.map(x=>`<a class="row-card" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">${ostIcon('changes')}</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`
+}
+async function guidePage(){
+ const d=await get('guide');
+ const flat=d.flatMap((x,i)=>arr(x.steps).map((st,j)=>({title:x.title,icon:x.icon||'🖥️',step:st,group:i,index:j}))),nodes=[];
+ d.forEach((x,i)=>{nodes.push(`<div class="sim-flow-group"><div class="sim-flow-title"><span>${esc(x.icon||'🖥️')}</span><strong>${esc(x.title)}</strong></div>${arr(x.steps).map((st,j)=>`<div class="flow-node sim-node"><span>${j+1}</span><strong>${esc(st)}</strong></div>${j<arr(x.steps).length-1?'<div class="flow-arrow">↓</div>':''}`).join('')}</div>${i<d.length-1?'<div class="sim-group-arrow">↓</div>':''}`)});
+ $('[data-main]').innerHTML=`<section class="page-banner"><h1>Simulations Guide</h1></section><section class="simulation-flow">${nodes.join('')}</section>`
+}
+
+function monthKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
+function dayKey(y,m,d){return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`}
+function eventHasEnded(ev){if(!ev?.date)return false;const time=/^([01]\d|2[0-3]):[0-5]\d$/.test(String(ev.time||'').trim())?String(ev.time).trim():'23:59';const end=new Date(`${ev.date}T${time}:59`);return !Number.isNaN(end.getTime())&&Date.now()>end.getTime()}
+function attendeeEntries(value){return Array.isArray(value)?value.map(a=>typeof a==='string'?{clientId:a,name:'',registeredAt:''}:a).filter(a=>a&&a.clientId):[]}
+function attendeeJoined(value,clientId){return attendeeEntries(value).some(a=>a.clientId===clientId)}
+function exportAttendancePdf(ev){
+ const people=attendeeEntries(ev.attendees),date=ev.date?new Date(ev.date+'T12:00:00').toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}):'',time=ev.time||'',place=ev.location||'';
+ const cp={196:196,214:214,220:220,228:228,246:246,252:252,223:223,8364:128,8211:150,8212:151,8216:145,8217:146,8220:147,8221:148};
+ const pdfStr=value=>{let out='';for(const ch of String(value??'')){const c=ch.codePointAt(0);if(ch==='\\'||ch==='('||ch===')')out+='\\'+ch;else if(c>=32&&c<=126)out+=ch;else{const b=cp[c]??63;out+='\\'+b.toString(8).padStart(3,'0')}}return out};
+ const wrap=(text,max=74)=>{const words=String(text||'').split(/\s+/).filter(Boolean),lines=[];let line='';for(const w of words){if(!line){line=w;continue}if((line+' '+w).length<=max)line+=' '+w;else{lines.push(line);line=w}}if(line)lines.push(line);return lines.length?lines:['']};
+ const pages=[];let page=[],y=790;
+ const text=(x,yy,size,value,bold=false)=>page.push(`BT /${bold?'F2':'F1'} ${size} Tf ${x} ${yy} Td (${pdfStr(value)}) Tj ET`);
+ const rule=(yy)=>page.push(`0.79 0.16 0.20 RG 0.8 w 50 ${yy} m 545 ${yy} l S`);
+ const header=(continuation=false)=>{text(50,790,19,continuation?'Teilnehmerliste - Fortsetzung':'Teilnehmerliste',true);text(50,762,15,ev.title||'Termin',true);text(50,742,10,`Datum: ${date}${time?'  |  Uhrzeit: '+time:''}`);text(50,727,10,`Ort: ${place||'-'}`);text(50,712,10,`Teilnehmende: ${people.length}${ev.capacity?' / '+ev.capacity:''}`);rule(698);y=675};
+ const next=()=>{if(page.length)pages.push(page.join('\n'));page=[];header(pages.length>0)};
+ header(false);
+ if(!people.length){text(50,y,11,'Keine Teilnehmenden eingetragen.');}
+ people.forEach((person,i)=>{const reg=person.registeredAt?new Date(person.registeredAt).toLocaleString('de-DE'):'';const name=person.name||'Ohne Namensangabe';const lines=wrap(`${i+1}. ${name}`,70);const needed=lines.length*15+(reg?13:0)+7;if(y-needed<55)next();lines.forEach((ln,li)=>{text(50+(li?18:0),y,11,ln,li===0);y-=15});if(reg){text(68,y,9,`Anmeldung: ${reg}`);y-=13}y-=7});
+ if(page.length)pages.push(page.join('\n'));
+ const objects={1:'<< /Type /Catalog /Pages 2 0 R >>',3:'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>',4:'<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>'};
+ const kids=[];pages.forEach((content,i)=>{const pid=5+i*2,cid=pid+1;kids.push(`${pid} 0 R`);objects[pid]=`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents ${cid} 0 R >>`;objects[cid]=`<< /Length ${content.length} >>\nstream\n${content}\nendstream`});objects[2]=`<< /Type /Pages /Kids [${kids.join(' ')}] /Count ${pages.length} >>`;
+ const max=Math.max(...Object.keys(objects).map(Number));let out='%PDF-1.4\n',offsets=[0];for(let i=1;i<=max;i++){offsets[i]=out.length;out+=`${i} 0 obj\n${objects[i]}\nendobj\n`}const xref=out.length;out+=`xref\n0 ${max+1}\n0000000000 65535 f \n`;for(let i=1;i<=max;i++)out+=`${String(offsets[i]).padStart(10,'0')} 00000 n \n`;out+=`trailer\n<< /Size ${max+1} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF`;
+ const blob=new Blob([out],{type:'application/pdf'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`Teilnehmerliste-${String(ev.date||'Termin')}-${String(ev.title||'').replace(/[^a-zA-Z0-9äöüÄÖÜß]+/g,'-').replace(/^-|-$/g,'')||'Termin'}.pdf`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)
+}
+function askParticipantName(defaultName=''){
+ return new Promise(resolve=>{
+  const modal=document.createElement('div');modal.className='rsvp-modal show';modal.innerHTML=`<div class="rsvp-shade" data-rsvp-close></div><section class="rsvp-dialog" role="dialog" aria-modal="true" aria-labelledby="rsvp-title"><button class="rsvp-x" data-rsvp-close aria-label="Schließen">✕</button><div class="rsvp-symbol">👤</div><h2 id="rsvp-title">Teilnahme anmelden</h2><p>Bitte Vor- und Nachnamen eingeben. Der Name wird für die Teilnehmerliste dieses Termins gespeichert.</p><label><span>Name</span><input data-rsvp-name autocomplete="name" maxlength="100" placeholder="Vor- und Nachname" value="${esc(defaultName)}"></label><div class="rsvp-actions"><button class="btn" data-rsvp-close>Abbrechen</button><button class="btn primary" data-rsvp-submit>Anmelden</button></div></section>`;document.body.appendChild(modal);const input=$('[data-rsvp-name]',modal);const finish=v=>{modal.remove();resolve(v)};$$('[data-rsvp-close]',modal).forEach(b=>b.onclick=()=>finish(null));$('[data-rsvp-submit]',modal).onclick=()=>{const name=input.value.trim();if(!name){input.classList.add('invalid');input.focus();return}localStorage.setItem('ost1020-participant-name',name);finish(name)};input.oninput=()=>input.classList.remove('invalid');input.onkeydown=e=>{if(e.key==='Enter')$('[data-rsvp-submit]',modal).click();if(e.key==='Escape')finish(null)};setTimeout(()=>{input.focus();input.select()},20)
+ })
+}
+async function toggleRsvp(eventId,clientId,name=''){if(!API)return null;try{const r=await fetch(`${API}/events/rsvp/${encodeURIComponent(eventId)}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({clientId,name})});const body=await r.json();if(!r.ok){alert(body.error||'Serverfehler');return null}return body}catch(e){alert('Verbindung zum Server fehlgeschlagen');return null}}
 async function eventsPage(){let d=await get('events');let cursor=new Date();cursor.setDate(1);let selected='';const clientId=localStorage.getItem('ost1020-client-id')||(()=>{const id='c-'+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem('ost1020-client-id',id);return id})();$('[data-main]').innerHTML=`<section class="page-banner"><h1>Termine</h1></section><section class="calendar" data-cal></section><section class="section"><div class="section-head"><h2 data-list-title>Kommende Termine</h2></div><div class="event-list" data-events></div></section>`;
  function drawCal(){
   const y=cursor.getFullYear(),m=cursor.getMonth(),first=new Date(y,m,1),offset=(first.getDay()+6)%7,daysInMonth=new Date(y,m+1,0).getDate();
@@ -514,7 +618,10 @@ async function eventsPage(){let d=await get('events');let cursor=new Date();curs
   });
   $('[data-cal]').innerHTML=`<div class="cal-head"><button type="button" class="cal-nav" data-prev aria-label="Vorheriger Monat">‹</button><strong>${cursor.toLocaleDateString('de-DE',{month:'long',year:'numeric'})}</strong><button type="button" class="cal-nav" data-next aria-label="Nächster Monat">›</button></div><div class="cal-week">${['Mo','Di','Mi','Do','Fr','Sa','So'].map(v=>`<span>${v}</span>`).join('')}</div><div class="cal-grid">${cells.join('')}</div><p class="cal-help">Tage mit Punkt haben Termine · Tag auswählen, um Termine anzuzeigen.</p>`;
  }
- function drawEvents(){const now=new Date();const today=dayKey(now.getFullYear(),now.getMonth(),now.getDate());let list=d.filter(e=>selected?e.date===selected:!eventHasEnded(e)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));$('[data-list-title]').textContent=selected?new Date(selected+'T12:00:00').toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}):'Kommende Termine';$('[data-events]').innerHTML=list.map(e=>{const attendees=attendeeEntries(e.attendees),cap=Number(e.capacity)||10,joined=attendeeJoined(e.attendees,clientId),waitlisted=(Array.isArray(e.waitlist)?e.waitlist:[]).some(a=>a.clientId===clientId),count=attendees.length,pct=Math.min(100,Math.round(count/cap*100)),ended=eventHasEnded(e);return `<article class="event-card"><span class="event-icon">${e.category==='Skilltraining'?'🫁':e.category==='Simulationstraining'?'❤️':'📅'}</span><span><span class="cat-pill">${esc(e.category||'Termin')}</span><h3>${esc(e.title)}</h3><div class="event-meta">🕒 ${esc(e.time)} · 📍 ${esc(e.location)}</div></span><span class="event-right"><div class="participants">👥 ${count}/${cap}</div><div class="progress"><span style="width:${pct}%"></span></div><button class="join-btn ${joined?'joined':''}" data-rsvp="${esc(e.id)}" ${ended?'disabled aria-disabled="true"':''}>${ended?'Termin vorbei':joined?'Teilnahme zurückziehen':waitlisted?'Warteliste verlassen':count>=cap?'Auf Warteliste':'Teilnehmen'}</button></span></article>`}).join('')||'<div class="empty">Keine Termine</div>'}
+ function drawEvents(){const now=new Date();const today=dayKey(now.getFullYear(),now.getMonth(),now.getDate());let list=d.filter(e=>selected?e.date===selected:!eventHasEnded(e)).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+ const archive=!selected&&!list.length&&d.some(e=>eventHasEnded(e));
+ if(archive)list=d.filter(eventHasEnded).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time)).slice(0,8);
+ $('[data-list-title]').textContent=selected?new Date(selected+'T12:00:00').toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}):archive?'Vergangene Termine':'Kommende Termine';$('[data-events]').innerHTML=list.map(e=>{const attendees=attendeeEntries(e.attendees),cap=Number(e.capacity)||10,joined=attendeeJoined(e.attendees,clientId),waitlisted=(Array.isArray(e.waitlist)?e.waitlist:[]).some(a=>a.clientId===clientId),count=attendees.length,pct=Math.min(100,Math.round(count/cap*100)),ended=eventHasEnded(e);return `<article class="event-card"><span class="event-icon">${e.category==='Skilltraining'?'🫁':e.category==='Simulationstraining'?'❤️':'📅'}</span><span><span class="cat-pill">${esc(e.category||'Termin')}</span><h3>${esc(e.title)}</h3><div class="event-meta">🕒 ${esc(e.time)} · 📍 ${esc(e.location)}</div></span><span class="event-right"><div class="participants">👥 ${count}/${cap}</div><div class="progress"><span style="width:${pct}%"></span></div><button class="join-btn ${joined?'joined':''}" data-rsvp="${esc(e.id)}" ${ended?'disabled aria-disabled="true"':''}>${ended?'Termin vorbei':joined?'Teilnahme zurückziehen':waitlisted?'Warteliste verlassen':count>=cap?'Auf Warteliste':'Teilnehmen'}</button></span></article>`}).join('')||'<div class="empty">Keine Termine vorhanden. Weitere Termine können in der Redaktion angelegt werden.</div>'}
  $('[data-main]').onclick=async e=>{if(e.target.closest('[data-prev]')){cursor.setMonth(cursor.getMonth()-1);selected='';drawCal();drawEvents();return}if(e.target.closest('[data-next]')){cursor.setMonth(cursor.getMonth()+1);selected='';drawCal();drawEvents();return}const day=e.target.closest('[data-date]');if(day){selected=day.dataset.date;const sd=new Date(selected+'T12:00:00');cursor=new Date(sd.getFullYear(),sd.getMonth(),1);drawCal();drawEvents();return}const r=e.target.closest('[data-rsvp]');if(r){const x=d.find(v=>v.id===r.dataset.rsvp);if(!x||eventHasEnded(x))return;const joined=attendeeJoined(x.attendees,clientId),waitlisted=(Array.isArray(x.waitlist)?x.waitlist:[]).some(a=>a.clientId===clientId);let name='';if(joined||waitlisted){if(!confirm(waitlisted?'Wartelisteneintrag wirklich entfernen?':'Teilnahme wirklich zurückziehen?'))return}else{name=await askParticipantName(localStorage.getItem('ost1020-participant-name')||'');if(name===null)return}r.disabled=true;const result=await toggleRsvp(r.dataset.rsvp,clientId,name);if(result&&result.events)d=result.events;else if(API){alert('Anmeldung konnte nicht synchronisiert werden. Bitte erneut versuchen.')}else{alert('Für verbindliche Anmeldungen muss der Worker verbunden sein.')}drawCal();drawEvents()}};drawCal();drawEvents()}
 
 async function uploadMedia(file){
