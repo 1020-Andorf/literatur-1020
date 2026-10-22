@@ -146,7 +146,7 @@ function open(title,html,options={}){
  $('.overlay-panel')?.classList.toggle('ost-med-sheet',!!options.sheet);
  $('.overlay-panel')?.classList.toggle('ost-simple-anatomy-sheet',!!options.simpleAnatomy);
  $('[data-overlay-body]').onclick=null;
- $('[data-overlay-title]').textContent=options.news?'':title;
+ $('[data-overlay-title]').textContent=title;
  $('[data-overlay-body]').innerHTML=html;
  modal.classList.add('show');
  const panel=$('.overlay-panel');if(panel)panel.scrollTop=0;
@@ -322,7 +322,7 @@ async function home(){
  <section class="cf-section cf548-menu"><div class="cf-section-title"><h2>Menü</h2></div><nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass,title,href,ico])=>`<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong></a>`).join('')}</nav></section>
  <section class="cf-section cf548-reading" data-reading-section><div class="cf-section-title"><h2>Lesetipps</h2><a href="literatur.html">Literatur-Archiv →</a></div><div class="cf548-reading-list">${picks.length?picks.map(a=>{const link=external(a);return `<a class="cf548-reading-item" href="${link?esc(link):'literatur.html'}" ${link?'target="_blank" rel="noopener noreferrer"':''}><span class="cf548-reading-icon">${ostIcon('book')}</span><span><strong>${esc(a.title)}</strong>${a.why?`<small>${esc(String(a.why).replace(/[*#\[\]]/g,'').slice(0,110))}</small>`:''}</span><b>↗</b></a>`}).join(''):'<p class="cf-muted">Lesetipps lassen sich in der Redaktion unter Literatur & Lesetipps auswählen.</p>'}</div></section>
  <section class="cf-section cf548-dates" data-events-section><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div><div class="cf-simple-list">${upcoming.map(e=>`<a href="termine.html"><span>${esc(e.title)}</span><small>${esc(e.date||'')}</small></a>`).join('')||'<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
- <a class="cf-admin-entry" href="editor.html">${ostIcon('edit')} Redaktion</a></div>`;
+ <a class="cf-admin-entry cf550-admin-entry" href="editor.html" aria-label="Redaktion öffnen"><span class="cf550-admin-icon">${ostIcon('edit')}</span><span>Redaktion</span><span class="cf550-admin-arrow" aria-hidden="true">›</span></a></div>`;
  if(!picks.length)$('[data-reading-section]')?.remove();
  if(!upcoming.length)$('[data-events-section]')?.remove();
  const q=$('[data-global-search]'),results=$('[data-search-results]');let cat=[];
@@ -563,7 +563,7 @@ async function topicHub(){
   const diseaseGroups=tab==='diseases'?`<div class="cf549-disease-groups">${sets.symptoms.map((sym,si)=>{const entries=sets.diseases.map((entry,i)=>({...entry,i})).filter(entry=>entry.source===sym);if(!entries.length)return '';return `<details class="cf549-disease-group" ${si===0?'open':''}><summary><span>${esc(sym.title)}</span><span class="cf549-group-count">${entries.length}</span><span class="cf549-expand" aria-hidden="true"></span></summary><div class="cf547-rows">${entries.map(entry=>row('disease:'+entry.i,'heart',entry.c.name)).join('')}</div></details>`}).join('')}</div>`:'';
   const rowsHtml=tab==='diseases'?diseaseGroups:`<div class="cf547-rows">${cards.map(x=>row(x.key,x.ico,x.title)).join('')||'<p class="cf547-empty">Noch keine Inhalte vorhanden.</p>'}</div>`;
   const hero=active.image?`<img src="assets/anatomie/${active.image}.svg" loading="lazy" alt="Anatomie ${esc(active.label)}">`:`${ostIcon(active.icon)}`;
-  view.innerHTML=`<section class="cf549-organ-hero"><div class="cf549-organ-graphic">${hero}</div></section><nav class="cf547-tabs cf549-organ-tabs" aria-label="Wissen: ${esc(active.label)}">${CF_ORGAN_TABS.map(([id,label,ico])=>`<button type="button" data-cf-tab="${id}" class="${tab===id?'selected':''}" aria-pressed="${tab===id}">${ostIcon(ico)}<span>${label}</span></button>`).join('')}</nav><section class="cf547-content"><h2>${esc(CF_ORGAN_TABS.find(x=>x[0]===tab)[1])}</h2>${rowsHtml}</section>`;
+  view.innerHTML=`<nav class="cf547-tabs cf549-organ-tabs cf550-responsive-tabs" aria-label="Themenbereiche: ${esc(active.label)}">${CF_ORGAN_TABS.map(([id,label,ico])=>`<button type="button" data-cf-tab="${id}" class="${tab===id?'selected':''}" aria-pressed="${tab===id}">${ostIcon(ico)}<span>${label}</span></button>`).join('')}</nav><section class="cf547-content"><h2>${esc(CF_ORGAN_TABS.find(x=>x[0]===tab)[1])}</h2>${rowsHtml}</section>`;
   view.onclick=e=>{
    const bt=e.target.closest('[data-cf-tab]');if(bt){tab=bt.dataset.cfTab;history.replaceState(null,'','themen-uebersicht.html?thema='+encodeURIComponent(active.id)+'&ansicht='+encodeURIComponent(tab));const y=window.scrollY;draw();window.scrollTo(0,y);return}
    const item=e.target.closest('[data-cf-open]');if(!item)return;
@@ -619,7 +619,7 @@ async function materialHub(){
  const refs=[...new Map((Array.isArray(a)?a:[]).filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl)).map(x=>[x.sourceUrl,{title:x.source||'Leitlinie / Fachquelle',sourceUrl:x.sourceUrl}])).values()];
  const categories=[['guidelines','Leitlinien','guideline'],['checklists','Checklisten','checklist'],['mnemonics','Merkhilfen & Schemata','notes'],['literature','Literatur-Archiv','book']];
  const param=new URLSearchParams(location.search).get('typ');let active=categories.some(c=>c[0]===param)?param:'guidelines';
- const main=$('[data-main]');main.innerHTML=`<section class="cf547 cf547-materials"><span class="cf-eyebrow">WISSEN VERTIEFEN</span><h1>Materialien</h1><p class="cf547-training-intro">Freigegebene Nachschlagehilfen, Übungsunterlagen und Fachliteratur.</p><nav class="cf547-tabs">${categories.map(([id,label,ico])=>`<button data-mat-tab="${id}" class="${active===id?'selected':''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
+ const main=$('[data-main]');main.innerHTML=`<section class="cf547 cf547-materials"><span class="cf-eyebrow">WISSEN VERTIEFEN</span><h1>Materialien</h1><p class="cf547-training-intro">Freigegebene Nachschlagehilfen, Übungsunterlagen und Fachliteratur.</p><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id,label,ico])=>`<button data-mat-tab="${id}" class="${active===id?'selected':''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
  const box=$('[data-material-list]');let visible=[];
  const linkrow=(title,sub,key,ico)=>`<button type="button" class="cf547-row" data-mat-id="${esc(key)}"><span class="cf547-row-icon">${ostIcon(ico)}</span><span><strong>${esc(title)}</strong>${sub?`<small>${esc(sub)}</small>`:''}</span><b>›</b></button>`;
  function render(){
@@ -900,14 +900,14 @@ async function editor(){
  }
  const tabs=[['abcde','ABCDE'],['news','Aktuelles'],['meetings','Dienstbesprechungen'],['differential','Krankheitsbilder'],['articles','Literatur & Lesetipps'],['changes','Lehrmeinungsänderungen'],['skills','Skilltraining'],['attendance','Teilnehmerlisten'],['events','Termine'],['modules','Wissensbereiche']];
  const tabIcons={abcde:ostIcon('notes'),algorithms:ostIcon('notes'),news:ostIcon('news'),meetings:ostIcon('users'),differential:ostIcon('search'),articles:ostIcon('book'),changes:ostIcon('changes'),guide:ostIcon('screen'),skills:ostIcon('training'),attendance:ostIcon('group'),events:ostIcon('calendar'),modules:ostIcon('book')};
- $('[data-main]').innerHTML=`<section class="page-banner"><div class="page-banner-row"><h1>Redaktion</h1><button class="editor-shortcut" data-lock-editor>🔒 Sperren</button></div></section><details class="ost-editor-overview" data-editor-overview><summary>Verwaltung & Prüfstatus</summary><div class="ost-editor-overview-head"><h2>Redaktions-Dashboard</h2><small>Live-Übersicht aus vorhandenen Daten</small></div><div class="ost-editor-stats" data-editor-stats><div>Lade Übersicht …</div></div><div class="ost-editor-actions"><button type="button" class="btn" data-open-review>Prüffristen</button><button type="button" class="btn" data-open-feedback>Fehlermeldungen</button><button type="button" class="btn" data-open-history>Versionsverlauf</button><button type="button" class="btn" data-open-backup>Backup</button></div></details><section class="admin-tools"><details><summary>🗄️ Wartung, Versionen &amp; Meldungen</summary><div class="admin-tools-actions"><button class="btn" data-admin-history>Versionsverlauf</button><button class="btn" data-admin-backup>Backup erstellen</button><button class="btn" data-admin-status>Backups anzeigen</button><button class="btn" data-admin-feedback>Meldungen ansehen</button><button class="btn" data-admin-review>Prüffristen</button></div><div class="admin-tools-results" data-admin-results></div></details></section><section class="editor-dashboard"><aside class="editor-nav">${tabs.map((t,i)=>`<button class="editor-nav-btn ${i?'':'active'}" data-tab="${t[0]}"><span>${tabIcons[t[0]]||'📋'}</span><strong>${t[1]}</strong></button>`).join('')}</aside><section class="editor-content" data-edit></section></section>`;
+ $('[data-main]').innerHTML=`<section class="page-banner"><div class="page-banner-row"><h1>Redaktion</h1><button class="editor-shortcut" data-lock-editor>🔒 Sperren</button></div></section><section class="admin-tools cf550-editor-management"><details><summary>Verwaltung</summary><div class="ost-editor-stats" data-editor-stats><div>Lade Übersicht …</div></div><div class="ost-editor-actions"><button type="button" class="btn" data-open-review>Prüffristen</button><button type="button" class="btn" data-open-feedback>Fehlermeldungen</button><button type="button" class="btn" data-open-history>Versionsverlauf</button><button type="button" class="btn" data-open-backup>Backup erstellen</button><button type="button" class="btn" data-open-status>Backups ansehen</button></div><div class="admin-tools-actions cf550-management-actions" hidden><button class="btn" data-admin-history>Versionsverlauf</button><button class="btn" data-admin-backup>Backup erstellen</button><button class="btn" data-admin-status>Backups anzeigen</button><button class="btn" data-admin-feedback>Meldungen ansehen</button><button class="btn" data-admin-review>Prüffristen</button></div><div class="admin-tools-results" data-admin-results></div></details></section><section class="editor-dashboard"><aside class="editor-nav">${tabs.map((t,i)=>`<button class="editor-nav-btn ${i?'':'active'}" data-tab="${t[0]}"><span>${tabIcons[t[0]]||'📋'}</span><strong>${t[1]}</strong></button>`).join('')}</aside><section class="editor-content" data-edit></section></section>`;
  const maintenance=$('.admin-tools');if(maintenance)$('[data-main]').appendChild(maintenance);
  $('[data-lock-editor]').onclick=()=>{sessionStorage.removeItem('ost1020-editor-pin');editor()};
  const overviewSources=await Promise.all([get('algorithms'),get('differential'),get('changes'),get('news')]);
  const allOverview=overviewSources.flat();const due=allOverview.filter(x=>x.reviewDue&&x.reviewDue<=new Date().toISOString().slice(0,10));const lacking=allOverview.filter(x=>(x.reviewDue||x.lastReviewed)&&!x.reviewOwner);const drafts=allOverview.filter(x=>x.status==='draft');
  $('[data-editor-stats]').innerHTML=`<div><strong>${allOverview.length}</strong><span>Inhalte</span></div><div><strong>${due.length}</strong><span>Prüffrist fällig</span></div><div><strong>${drafts.length}</strong><span>Markierte Entwürfe</span></div><div><strong>${lacking.length}</strong><span>Ohne Prüfverantwortliche</span></div>`;
  const openAdmin=id=>{const d=$('.admin-tools details');d.open=true;$('[data-admin-'+id+']')?.click();d.scrollIntoView({behavior:'smooth',block:'start'})};
- $('[data-open-review]').onclick=()=>openAdmin('review');$('[data-open-feedback]').onclick=()=>openAdmin('feedback');$('[data-open-history]').onclick=()=>openAdmin('history');$('[data-open-backup]').onclick=()=>openAdmin('backup');
+ $('[data-open-review]').onclick=()=>openAdmin('review');$('[data-open-feedback]').onclick=()=>openAdmin('feedback');$('[data-open-history]').onclick=()=>openAdmin('history');$('[data-open-backup]').onclick=()=>openAdmin('backup');$('[data-open-status]').onclick=()=>openAdmin('status');
  const adminResult=$('[data-admin-results]');
  const adminRequest=async(path,options={})=>{if(!API)throw Error('Worker nicht konfiguriert');const pin=sessionStorage.getItem('ost1020-editor-pin')||'';const r=await fetch(`${API}${path}`,{...options,headers:{'X-Admin-Pin':pin,'Content-Type':'application/json',...(options.headers||{})}});const data=await r.json();if(!r.ok)throw Error(data.error||'HTTP '+r.status);return data};
  const showAdminError=e=>{adminResult.textContent='Fehler: '+e.message};
@@ -940,7 +940,7 @@ async function editor(){
      box.onclick=async e=>{const pdf=e.target.closest('[data-attendance-pdf]');if(pdf){e.preventDefault();e.stopPropagation();const ev=d.find(x=>x.id===pdf.dataset.attendancePdf);if(ev)exportAttendancePdf(ev);return}const clear=e.target.closest('[data-attendance-clear]');if(clear){e.preventDefault();e.stopPropagation();const ev=d.find(x=>x.id===clear.dataset.attendanceClear);if(!ev)return;if(!confirm(`Teilnehmerliste für „${ev.title}“ wirklich leeren?`))return;ev.attendees=[];clear.disabled=true;const ok=await save('events',d);if(!ok&&!API)localStorage.setItem(LS+'events',JSON.stringify(d));await draw('attendance')}};
      return
    }
-   box.innerHTML=`<div class="editor-toolbar"><div><h2>${tabs.find(t=>t[0]===name)?.[1]||name}</h2><p>Inhalt auswählen und einfach bearbeiten.</p></div><div class="editor-toolbar-actions"><button class="btn primary" data-add>+ Neu</button><button class="btn" data-save>Speichern</button></div></div><div class="clinical-editor-path"><span>1 · Bereich</span><b>›</b><span>2 · Eintrag</span><b>›</b><strong>3 · Bearbeiten</strong></div><div class="editor-items" data-items></div>`;
+   box.innerHTML=`<div class="editor-toolbar"><div><h2>${tabs.find(t=>t[0]===name)?.[1]||name}</h2><p>Inhalt auswählen und einfach bearbeiten.</p></div><div class="editor-toolbar-actions"><button class="btn primary" data-add>+ Neu</button><button class="btn" data-save>Speichern</button></div></div><div class="editor-items" data-items></div>`;
    const itemsBox=$('[data-items]',box);
    let selectedIndex=-1;
    let filterTerm='';
@@ -1091,7 +1091,7 @@ async function editor(){
  let moduleRequested='anatomy';
  const groupedEditorMenu=document.createElement('div');
  groupedEditorMenu.className='editor-grouped-menu ost-editor-workflow';
- groupedEditorMenu.innerHTML=`<nav class="editor-primary-groups" aria-label="Redaktion Hauptbereiche">${editorGroups.map(g=>`<button type="button" data-editor-group="${g.id}" aria-pressed="false"><span>${g.icon}</span><strong>${g.title}</strong></button>`).join('')}</nav><div class="editor-group-subtitle" data-editor-group-label></div><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
+ groupedEditorMenu.innerHTML=`<div class="cf550-editor-choice"><label for="cf550-editor-group-picker">Bereich auswählen</label><select id="cf550-editor-group-picker" data-editor-group-picker>${editorGroups.map(g=>`<option value="${g.id}">${g.title}</option>`).join('')}</select></div><nav class="editor-primary-groups cf550-editor-hidden-primary" aria-label="Redaktion Hauptbereiche">${editorGroups.map(g=>`<button type="button" data-editor-group="${g.id}" aria-pressed="false"><span>${g.icon}</span><strong>${g.title}</strong></button>`).join('')}</nav><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
  $('.editor-dashboard').insertBefore(groupedEditorMenu,$('.editor-content'));
  $('.editor-dashboard').after($('.admin-tools'));
  const syncGroupedEditorMenu=tab=>{
@@ -1100,12 +1100,13 @@ async function editor(){
    const active=b.dataset.editorGroup===group.id;
    b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
   });
-  $('[data-editor-group-label]',groupedEditorMenu).textContent='Bereich auswählen · '+group.title;
+  const groupPicker=groupedEditorMenu.querySelector('[data-editor-group-picker]');if(groupPicker)groupPicker.value=group.id;
   $('.editor-subgroup-tiles',groupedEditorMenu).innerHTML=group.items.map(id=>{
     const item=tabs.find(t=>t[0]===id)|| (extraLabels[id]?[id,extraLabels[id][0]]:null);if(!item)return '';
     return `<button type="button" class="editor-subgroup-tile ${tab===id?'active':''}" data-editor-subtab="${id}" aria-pressed="${String(tab===id)}"><span>${extraLabels[id]?.[1]||tabIcons[id]||'📋'}</span><strong>${esc(item[1])}</strong></button>`;
   }).join('');
  };
+ groupedEditorMenu.querySelector('[data-editor-group-picker]').addEventListener('change',e=>{const button=groupedEditorMenu.querySelector('[data-editor-group="'+e.target.value+'"]');if(button)button.click()});
  groupedEditorMenu.addEventListener('click',e=>{
   const groupButton=e.target.closest('[data-editor-group]');
   const subButton=e.target.closest('[data-editor-subtab]');

@@ -3635,3 +3635,246 @@ body.app-shell .cf549-disease-group>.cf547-rows{display:grid;grid-template-colum
 body.app-shell .cf549-disease-group .cf547-row{min-height:48px!important}
 /* Metadata text is never repeated in the header or at the bottom of the page. */
 body.app-shell .cf548-reading .cf-muted{display:none!important}
+
+/* =============================================================
+   OST 1020 — 550 · EINE Navigation, kompakte Untermenüs, eine Verwaltung
+   ============================================================= */
+:root{--cf550-navy:#1a3a50;--cf550-muted:#637e91;--cf550-line:#d9e5ec;--cf550-blue:#1978a4;--cf550-tint:#e6f4fa}
+
+/* Shared knowledge/material selector — no sideways swiping, same logic as Training. */
+body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs){
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  align-items:stretch!important;
+  gap:6px!important;
+  width:100%!important;
+  max-width:100%!important;
+  padding:6px!important;
+  margin:0 0 12px!important;
+  overflow:visible!important;
+  scrollbar-width:none!important;
+  background:#fff!important;
+  border:1px solid var(--cf550-line)!important;
+  border-radius:16px!important;
+}
+body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs)>button{
+  display:flex!important;
+  flex:initial!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:5px!important;
+  min-width:0!important;
+  width:100%!important;
+  min-height:65px!important;
+  padding:9px 6px!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  hyphens:auto!important;
+  font-size:.79rem!important;
+  font-weight:650!important;
+  line-height:1.2!important;
+  text-align:center!important;
+  border:1px solid transparent!important;
+  border-radius:12px!important;
+  color:var(--cf550-muted)!important;
+  background:transparent!important;
+}
+body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs)>button.selected{
+  background:var(--cf550-tint)!important;
+  border-color:#c6e5ef!important;
+  color:#11698e!important;
+}
+body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs)>button svg{
+  width:23px!important;height:23px!important;flex:0 0 23px!important;
+}
+body.app-shell .cf549-knowledge .cf547-search{
+  margin-bottom:10px!important;
+}
+body.app-shell .cf549-knowledge .cf547-heading:empty,
+body.app-shell .cf549-knowledge .cf549-organ-hero,
+body.app-shell .cf549-knowledge .cf549-organ-graphic{
+  display:none!important;
+}
+body.app-shell .cf549-knowledge .cf547-content{
+  margin:0!important;padding:14px!important;border-radius:16px!important;
+  box-shadow:none!important;
+}
+body.app-shell .cf549-knowledge .cf547-content>h2{
+  margin:0 0 10px!important;font-size:1rem!important;letter-spacing:0!important;
+}
+body.app-shell .cf547-materials .cf547-content{
+  padding:14px!important;border-radius:16px!important;box-shadow:none!important;
+}
+body.app-shell .cf547-materials .cf547-content-title>span{font-size:.75rem!important}
+body.app-shell .cf547-materials .cf547-row,
+body.app-shell .cf549-knowledge .cf547-row{
+  border-radius:13px!important;min-height:56px!important;
+  padding:10px 12px!important;
+}
+body.app-shell .cf547-materials .cf547-rows{gap:8px!important}
+body.app-shell .cf547-materials .cf547-row strong,
+body.app-shell .cf549-knowledge .cf547-row strong{font-weight:625!important;font-size:.9rem!important}
+
+@media(max-width:700px){
+ body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs){
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:5px!important;
+ }
+ body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs)>button{
+   min-height:57px!important;font-size:.81rem!important;
+   flex-direction:row!important;padding:8px 7px!important;gap:7px!important;
+ }
+ body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs)>button svg{
+   width:20px!important;height:20px!important;flex:0 0 20px!important;
+ }
+}
+@media(max-width:350px){
+ body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs)>button{font-size:.72rem!important;gap:4px!important}
+ body.app-shell :is(.cf549-organ-tabs.cf550-responsive-tabs,.cf550-material-tabs.cf550-responsive-tabs)>button svg{width:17px!important;height:17px!important;flex-basis:17px!important}
+}
+
+/* News sheet: centered heading with clear reserved space for the subtle close button. */
+body.app-shell .overlay-panel.ost-news-modal{
+  padding:18px 17px 20px!important;
+}
+body.app-shell .overlay-panel.ost-news-modal .overlay-head{
+  display:flex!important;
+  position:relative!important;
+  top:auto!important;left:auto!important;right:auto!important;
+  width:100%!important;min-height:34px!important;
+  align-items:center!important;justify-content:center!important;
+  border:0!important;border-bottom:1px solid #e7eef3!important;
+  padding:2px 34px 13px!important;
+  margin:0 0 14px!important;
+  background:transparent!important;box-shadow:none!important;
+}
+body.app-shell .overlay-panel.ost-news-modal [data-overlay-title]{
+  display:block!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  text-align:center!important;
+  color:var(--cf550-navy)!important;
+  font-size:clamp(1.02rem,3.8vw,1.28rem)!important;
+  font-weight:740!important;
+  letter-spacing:-.015em!important;
+  line-height:1.3!important;
+  white-space:normal!important;overflow-wrap:anywhere!important;
+  margin:0!important;
+}
+body.app-shell .overlay-panel.ost-news-modal .overlay-body,
+body.app-shell .overlay-panel.ost-news-modal .news-detail{
+  margin:0!important;padding:0!important;
+}
+body.app-shell .overlay-panel.ost-news-modal>.ost-overlay-dismiss{
+  right:10px!important;top:12px!important;
+  width:28px!important;height:28px!important;
+}
+
+/* One compact editor workflow. Primary tile buttons stay in DOM but not on screen. */
+body.page-editor .cf550-editor-choice{
+  display:grid!important;gap:6px!important;width:100%!important;
+  margin-bottom:11px!important;
+}
+body.page-editor .cf550-editor-choice>label{
+  color:var(--cf550-muted)!important;font-size:.77rem!important;
+  font-weight:650!important;
+}
+body.page-editor .cf550-editor-choice select{
+  display:block!important;width:100%!important;min-width:0!important;
+  min-height:47px!important;border:1px solid var(--cf550-line)!important;
+  border-radius:13px!important;padding:9px 14px!important;
+  background:#fff!important;color:var(--cf550-navy)!important;
+  font-size:.97rem!important;font-weight:650!important;
+}
+body.page-editor .editor-grouped-menu .cf550-editor-hidden-primary{
+  display:none!important;
+}
+body.page-editor .editor-grouped-menu .editor-subgroup-tiles{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:7px!important;
+  margin-bottom:10px!important;
+  width:100%!important;
+}
+body.page-editor .editor-grouped-menu .editor-subgroup-tile{
+  display:flex!important;flex-direction:row!important;align-items:center!important;
+  justify-content:flex-start!important;min-width:0!important;
+  min-height:51px!important;padding:9px 10px!important;
+  border-radius:13px!important;background:#fff!important;
+  border:1px solid var(--cf550-line)!important;
+  box-shadow:none!important;text-align:left!important;
+}
+body.page-editor .editor-grouped-menu .editor-subgroup-tile.active{
+  background:var(--cf550-tint)!important;border-color:#a9d2df!important;
+}
+body.page-editor .editor-grouped-menu .editor-subgroup-tile>span:first-child{
+  display:grid!important;place-items:center!important;
+  min-width:25px!important;width:25px!important;height:25px!important;
+  margin:0 8px 0 0!important;padding:0!important;
+  border:0!important;background:transparent!important;
+}
+body.page-editor .editor-grouped-menu .editor-subgroup-tile svg{width:20px!important;height:20px!important}
+body.page-editor .editor-grouped-menu .editor-subgroup-tile strong{
+  font-size:.83rem!important;font-weight:650!important;
+  line-height:1.3!important;overflow-wrap:anywhere!important;
+}
+body.page-editor .editor-dashboard{
+  display:block!important;min-width:0!important;
+  max-width:100%!important;
+}
+body.page-editor .editor-dashboard>.editor-nav{display:none!important}
+body.page-editor .editor-dashboard>.editor-content{
+  width:100%!important;min-width:0!important;max-width:100%!important;
+  padding:0!important;margin:0!important;
+}
+body.page-editor .cf550-editor-management{
+  width:100%!important;max-width:1060px!important;
+  margin:20px auto!important;padding:0!important;
+  border:1px solid var(--cf550-line)!important;
+  border-radius:14px!important;background:#fff!important;
+  box-shadow:none!important;
+}
+body.page-editor .cf550-editor-management>details>summary{
+  padding:13px 15px!important;cursor:pointer!important;
+  font-weight:680!important;font-size:.86rem!important;color:var(--cf550-navy)!important;
+}
+body.page-editor .cf550-editor-management .ost-editor-stats,
+body.page-editor .cf550-editor-management .ost-editor-actions,
+body.page-editor .cf550-editor-management .admin-tools-results{
+  margin:9px 14px!important;
+}
+body.page-editor .cf550-editor-management .cf550-management-actions{display:none!important}
+body.page-editor .cf550-editor-management .ost-editor-actions{display:flex!important;flex-wrap:wrap!important;gap:6px!important}
+body.page-editor .editor-toolbar{padding:10px 0!important;margin-bottom:10px!important;}
+body.page-editor .editor-toolbar h2{font-size:1rem!important}
+body.page-editor .editor-toolbar-actions .btn{min-height:40px!important}
+body.page-editor .editor-grouped-menu{margin:0 auto 13px!important;max-width:1060px!important}
+@media(max-width:690px){
+ body.page-editor .editor-grouped-menu .editor-subgroup-tiles{
+   grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ }
+ body.page-editor .editor-grouped-menu .editor-subgroup-tile{min-height:47px!important}
+ body.page-editor .editor-grouped-menu .editor-subgroup-tile strong{font-size:.79rem!important}
+}
+
+/* Clear, dedicated editor link on the home page. */
+body.app-shell.page-home .cf550-admin-entry{
+  display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  gap:10px!important;margin:0 auto!important;
+  padding:9px 13px!important;
+  border:1px solid var(--cf550-line)!important;
+  border-radius:12px!important;background:#fff!important;
+  color:#234c63!important;text-decoration:none!important;
+  font-size:.83rem!important;font-weight:660!important;
+  box-shadow:none!important;
+}
+body.app-shell.page-home .cf550-admin-icon{
+  display:grid!important;place-items:center!important;width:30px!important;height:30px!important;
+  border-radius:9px!important;background:#e7f4f8!important;color:#1e6c8a!important;
+}
+body.app-shell.page-home .cf550-admin-icon svg{
+  display:block!important;width:19px!important;height:19px!important;
+  margin:0!important;
+}
+body.app-shell.page-home .cf550-admin-arrow{font-size:1.35rem;color:#8fa6b7;font-weight:400}
