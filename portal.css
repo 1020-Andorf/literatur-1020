@@ -3255,3 +3255,228 @@ body.app-shell .cf-quick a{background:#fff!important;border-color:#e1eaf1!import
 .cf547-mnemonic-step>span{width:29px;height:29px;border-radius:10px;background:#e7f4fd;display:grid;place-items:center;flex-shrink:0;font-weight:800;color:#2a7cb8}
 @media(max-width:760px){body.app-shell .cf-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.app-shell .cf-home-grid>.cf-destination{min-height:141px!important;padding:15px!important}.cf547-organs{grid-template-columns:1fr}.cf547-topic-hero{grid-template-columns:1fr 36%;gap:7px;padding:16px;min-height:145px}.cf547-topic-hero img{max-height:120px}.cf547-topic-hero p{font-size:.82rem}.cf547-tabs button{font-size:.79rem;padding:8px 10px}.cf547-content{padding:15px}.cf547-rows{grid-template-columns:1fr}.cf547-training-secondary{grid-template-columns:1fr}}
 @media(max-width:360px){.cf547-topic-hero{grid-template-columns:1fr}.cf547-topic-hero img{max-width:220px;margin:auto}body.app-shell .cf-home-grid{gap:8px!important}body.app-shell .cf-home-grid>.cf-destination{padding:13px!important}}
+
+/* OST 1020 548 – coherent compact navigation, safe scrolling and literature tips */
+:root{
+  --cf548-ink:#19374e;
+  --cf548-muted:#688095;
+  --cf548-line:#dae5ec;
+  --cf548-bg:#f4f8fb;
+}
+html,body,body.app-shell{
+  width:100%!important;
+  height:auto!important;
+  min-height:100%!important;
+  overflow-x:clip!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:auto!important;
+  scroll-behavior:auto;
+}
+body.app-shell,body.app-shell :is(input,select,button,textarea){font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important}
+body.app-shell{background:var(--cf548-bg)!important;color:var(--cf548-ink)!important;font-size:15px!important}
+body.app-shell .topbar,
+body.app-shell.page-home .topbar{
+  display:block!important;
+  position:relative!important;
+  top:auto!important;
+  background:transparent!important;
+  border:0!important;
+  border-bottom:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  min-height:0!important;
+  padding:0!important;
+  z-index:10!important;
+}
+body.app-shell .topbar-inner{
+  height:48px!important;
+  min-height:48px!important;
+  width:min(100%,1060px)!important;
+  max-width:1060px!important;
+  margin:0 auto!important;
+  padding:2px clamp(14px,2.5vw,26px)!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:7px!important;
+}
+body.app-shell .top-action{
+  display:grid!important;
+  place-items:center!important;
+  flex:0 0 34px!important;
+  width:34px!important;
+  height:34px!important;
+  min-width:34px!important;
+  border:none!important;
+  border-radius:9px!important;
+  padding:6px!important;
+  background:transparent!important;
+  color:#31576e!important;
+  box-shadow:none!important;
+}
+body.app-shell .top-action:hover{background:#e7eff5!important}
+body.app-shell .top-action svg{width:20px!important;height:20px!important}
+body.app-shell .brand{min-width:0!important;margin:0 0 0 6px!important}
+body.app-shell .brand strong{
+  display:block!important;
+  color:#244459!important;
+  font-size:.91rem!important;
+  font-weight:720!important;
+  letter-spacing:0!important;
+  line-height:1.3!important;
+  text-overflow:ellipsis!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+}
+body.app-shell .clinical-desktop-header,
+body.app-shell .desktop-sidebar,
+body.app-shell .clinical-bottom-nav{display:none!important}
+body.app-shell .main{
+  display:block!important;
+  width:min(100%,1060px)!important;
+  max-width:1060px!important;
+  height:auto!important;
+  max-height:none!important;
+  min-height:0!important;
+  overflow:visible!important;
+  margin:0 auto!important;
+  padding:8px clamp(14px,2.5vw,26px) calc(46px + env(safe-area-inset-bottom,0px))!important;
+  position:relative!important;
+}
+/* The back/home controls replace repeating breadcrumbs and redundant bars. */
+body.app-shell :is(.cf547-breadcrumb,.cf-topic-breadcrumb,.diag-breadcrumb,.clinical-editor-path,.ost-breadcrumb,.breadcrumbs){display:none!important}
+body.app-shell .cf-home{max-width:1010px!important}
+body.app-shell .cf548-home{display:grid!important;gap:18px!important}
+body.app-shell .cf548-home .cf548-welcome{padding:0!important;margin:0!important}
+body.app-shell .cf548-welcome .cf-eyebrow{color:#bd4050!important;letter-spacing:.075em!important;font-size:.64rem!important}
+body.app-shell .cf548-welcome h1{
+  margin:3px 0 0!important;
+  color:#1c3a52!important;
+  font-size:clamp(1.48rem,3.2vw,2rem)!important;
+  line-height:1.18!important;
+  letter-spacing:-.028em!important;
+  font-weight:760!important;
+}
+body.app-shell .cf548-home .cf-search{margin:0!important}
+body.app-shell .cf548-home .cf-section{margin:0!important;min-width:0!important}
+body.app-shell .cf548-home .cf-section-title{margin:0 0 9px!important;gap:10px!important}
+body.app-shell .cf548-home .cf-section-title h2{
+  font-size:1.01rem!important;
+  font-weight:735!important;
+  letter-spacing:-.015em!important;
+}
+body.app-shell .cf548-home .cf-section-title a{color:#4a7c96!important;font-size:.78rem!important;white-space:nowrap!important}
+body.app-shell .cf548-home .cf-simple-list{display:grid!important;grid-template-columns:1fr!important;gap:7px!important}
+body.app-shell .cf548-home .cf-simple-list :is(button,a){
+  min-height:43px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  padding:10px 13px!important;
+  background:#fff!important;
+  border:1px solid var(--cf548-line)!important;
+  box-shadow:none!important;
+  border-radius:13px!important;
+  text-align:left!important;
+  font-size:.88rem!important;
+  font-weight:520!important;
+  color:var(--cf548-ink)!important;
+}
+body.app-shell .cf548-home .cf-simple-list :is(button,a) span{flex:1!important;min-width:0!important}
+body.app-shell .cf548-home .cf-simple-list :is(button,a) b{font-size:1.2rem!important;color:#8ca2b4!important}
+body.app-shell .cf548-home .cf-home-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:9px!important;
+  margin:0!important;
+  max-width:none!important;
+}
+body.app-shell .cf548-home .cf-home-grid>.cf-destination{
+  display:flex!important;
+  min-width:0!important;
+  min-height:90px!important;
+  flex-direction:row!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  padding:12px 13px!important;
+  border:1px solid #d9e5ed!important;
+  border-radius:15px!important;
+  box-shadow:none!important;
+  text-align:left!important;
+}
+body.app-shell .cf548-home .cf-home-grid .cf-destination-icon{
+  display:grid!important;
+  place-items:center!important;
+  width:38px!important;
+  height:38px!important;
+  flex:0 0 38px!important;
+  margin:0!important;
+  border-radius:11px!important;
+  background:#ffffffa8!important;
+}
+body.app-shell .cf548-home .cf-home-grid .cf-destination-icon svg{width:21px!important;height:21px!important}
+body.app-shell .cf548-home .cf-home-grid .cf-destination strong{
+  display:block!important;
+  min-width:0!important;
+  font-size:.88rem!important;
+  line-height:1.28!important;
+  font-weight:650!important;
+  overflow-wrap:anywhere!important;
+  hyphens:auto!important;
+  letter-spacing:-.005em!important;
+}
+body.app-shell .cf548-home .cf-home-grid .cf-destination small{display:none!important}
+body.app-shell .cf548-home .cf548-reading-list{display:grid;gap:8px}
+body.app-shell .cf548-home .cf548-reading-item{
+  display:flex;align-items:center;gap:11px;
+  min-height:66px;padding:12px 14px;
+  border:1px solid var(--cf548-line);border-radius:14px;
+  background:#fff;color:var(--cf548-ink);
+  text-decoration:none;
+}
+body.app-shell .cf548-reading-icon{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:10px;background:#eaf4f7;color:#276f84}
+body.app-shell .cf548-reading-icon svg{width:20px;height:20px}
+body.app-shell .cf548-reading-item>span:nth-child(2){flex:1;min-width:0}
+body.app-shell .cf548-reading-item strong{display:block;font-size:.86rem;font-weight:690;line-height:1.4}
+body.app-shell .cf548-reading-item small{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;font-size:.73rem;color:#6d8396;margin-top:3px}
+body.app-shell .cf548-reading-item b{color:#8aa1b4}
+body.app-shell .cf548-home .cf-admin-entry{justify-self:center!important;padding:8px 16px!important;font-size:.8rem!important;margin:4px 0 0!important}
+/* Archive: one compact index + tag filters, no nested groups */
+body.app-shell .cf548-archive{max-width:940px;margin:0 auto}
+body.app-shell .cf548-archive-head{margin-bottom:16px}
+body.app-shell .cf548-archive-head h1{font-size:clamp(1.45rem,3vw,1.85rem)!important;font-weight:760;margin:0 0 4px!important}
+body.app-shell .cf548-archive-head p{margin:0;font-size:.85rem;color:var(--cf548-muted)}
+body.app-shell .cf548-archive-controls{display:grid;grid-template-columns:minmax(0,2fr) minmax(150px,1fr);gap:9px;margin-bottom:12px}
+body.app-shell .cf548-archive-controls input,
+body.app-shell .cf548-archive-controls select{width:100%;min-width:0;height:44px;padding:9px 12px;font:inherit;font-size:.86rem;border-radius:13px;border:1px solid var(--cf548-line);background:#fff;color:var(--cf548-ink)}
+body.app-shell .cf548-archive-count{font-size:.76rem;color:var(--cf548-muted);margin:0 0 10px}
+body.app-shell .cf548-archive-list{display:grid;gap:9px}
+body.app-shell .cf548-archive-card{display:flex;align-items:flex-start;gap:12px;min-width:0;padding:14px;border-radius:15px;border:1px solid var(--cf548-line);background:#fff}
+body.app-shell .cf548-archive-icon{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:12px;background:#edf5fa;color:#287293}
+body.app-shell .cf548-archive-icon svg{width:21px;height:21px}
+body.app-shell .cf548-archive-copy{min-width:0;flex:1}
+body.app-shell .cf548-archive-copy h2{margin:0 0 3px!important;font-size:.93rem!important;line-height:1.4!important;letter-spacing:0!important}
+body.app-shell .cf548-archive-copy p{margin:0 0 7px!important;font-size:.74rem;line-height:1.35;color:var(--cf548-muted)}
+body.app-shell .cf548-tag-list{display:flex;flex-wrap:wrap;gap:5px}
+body.app-shell .cf548-tag-list button{padding:3px 7px!important;border-radius:999px;border:0;background:#edf5f9;color:#52758a;font-size:.68rem;line-height:1.35;cursor:pointer}
+body.app-shell .cf548-archive-open{align-self:center;padding:5px;color:#497d99;font-size:1.1rem;text-decoration:none}
+/* Editor feature controls */
+body.page-editor .cf548-editor-feature{border:1px solid #cbdfe5;border-radius:14px;padding:14px;margin:14px 0;background:#f5fbfc}
+body.page-editor .cf548-feature-label{display:flex;align-items:center;gap:10px;font-size:.9rem;font-weight:710;line-height:1.35}
+body.page-editor .cf548-feature-label input{width:20px;height:20px;flex:0 0 20px;accent-color:#178c98}
+body.page-editor .cf548-editor-feature>.ux-field{margin-top:12px;max-width:260px}
+body.page-editor .cf548-editor-feature>p{margin:8px 0 0;font-size:.76rem;color:var(--cf548-muted)}
+@media(max-width:730px){
+ body.app-shell .cf548-home{gap:16px!important}
+ body.app-shell .cf548-home .cf-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+ body.app-shell .cf548-home .cf-home-grid>.cf-destination{min-height:74px!important;padding:10px 11px!important;gap:9px!important}
+ body.app-shell .cf548-home .cf-home-grid .cf-destination-icon{width:35px!important;height:35px!important;flex-basis:35px!important}
+ body.app-shell .cf548-home .cf-home-grid .cf-destination strong{font-size:.81rem!important}
+ body.app-shell .cf548-archive-controls{grid-template-columns:1fr!important}
+ body.app-shell .cf548-archive-controls input,body.app-shell .cf548-archive-controls select{height:43px}
+}
+@media(max-width:380px){
+ body.app-shell .cf548-home .cf-home-grid .cf-destination-icon{width:30px!important;height:30px!important;flex-basis:30px!important}
+ body.app-shell .cf548-home .cf-home-grid>.cf-destination{gap:7px!important;padding:9px!important}
+ body.app-shell .cf548-home .cf-home-grid .cf-destination strong{font-size:.77rem!important}
+}
