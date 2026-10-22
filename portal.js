@@ -58,12 +58,13 @@ function chrome(){
   if(page==='meetings'&&params.has('id')){location.href='dienstbesprechungen.html';return}
   if(page==='algorithms'&&params.has('id')){location.href='algorithmen.html';return}
   if(page==='changes'&&params.has('id')){location.href='lehrmeinung.html';return}
+  if(page==='topics'&&params.has('thema')){location.href='themen-uebersicht.html';return}
   if(page==='differential'){
    if(params.has('disease')){params.delete('disease');location.href='differential.html'+(params.size?'?'+params:'');return}
    if(params.has('id')){params.delete('id');location.href='differential.html'+(params.size?'?'+params:'');return}
    if(params.has('group')){location.href='differential.html';return}
   }
-  const parents={wissen:'index.html',training:'index.html',events:'index.html',modules:'wissen.html',news:'index.html',meetings:'index.html',editor:'index.html',differential:'wissen.html',algorithms:'wissen.html',literature:'wissen.html',guidelines:'wissen.html',abcde:'wissen.html',changes:'index.html',skills:'training.html',guide:'training.html',faq:'training.html'};
+  const parents={topics:'index.html',wissen:'index.html',training:'index.html',events:'index.html',modules:'wissen.html',news:'index.html',meetings:'index.html',editor:'index.html',differential:'wissen.html',algorithms:'wissen.html',literature:'wissen.html',guidelines:'wissen.html',abcde:'wissen.html',changes:'index.html',skills:'training.html',guide:'training.html',faq:'training.html'};
   location.href=parents[page]||'index.html';
  }}
  if(hb)hb.innerHTML=svg.home;
@@ -75,8 +76,9 @@ function chrome(){
  {
   const menu=[
    {id:'home',label:'Start',href:'index.html',icon:svg.home,match:['home']},
-   {id:'wissen',label:'Wissen',href:'wissen.html',icon:svg.books,match:['wissen','differential','algorithms','literature','guidelines','abcde','modules']},
+   {id:'wissen',label:'Klinisches Wissen',href:'themen-uebersicht.html',icon:svg.books,match:['wissen','differential','algorithms','literature','guidelines','abcde','modules']},
    {id:'training',label:'Training',href:'training.html',icon:svg.skill,match:['training','skills','guide','faq']},
+   {id:'materials',label:'Materialien',href:'materialien.html',icon:ostIcon('book'),match:['materials','guidelines','literature']},
    {id:'events',label:'Termine',href:'termine.html',icon:svg.calendar,match:['events']},
    {id:'meetings',label:'Dienstbesprechungen',href:'dienstbesprechungen.html',icon:ostIcon('users'),match:['meetings']},
    {id:'changes',label:'Lehrmeinungsänderungen',href:'lehrmeinung.html',icon:ostIcon('changes'),match:['changes']}
@@ -86,7 +88,7 @@ function chrome(){
   const desktopTop=document.createElement('nav');
   desktopTop.className='clinical-desktop-header';
   desktopTop.setAttribute('aria-label','Bereiche');
-  desktopTop.innerHTML=`<a class="clinical-logo" href="index.html">OST <strong>1020</strong></a><div class="clinical-desktop-links"><a href="index.html">Start</a><a href="wissen.html">Wissen</a><a href="themen.html?bereich=anatomy">Anatomie</a><a href="differential.html">Diagnostik</a><a href="themen.html?bereich=pharm">Pharmakologie</a><a href="training.html">Training</a><a href="termine.html">Termine</a></div><a class="clinical-desktop-editor" href="editor.html" aria-label="Redaktion">${ostIcon('edit')}</a>`;
+  desktopTop.innerHTML=`<a class="clinical-logo" href="index.html">OST <strong>1020</strong></a><div class="clinical-desktop-links"><a href="index.html">Start</a><a href="themen-uebersicht.html">Klinisches Wissen</a><a href="training.html">Training</a><a href="materialien.html">Materialien</a><a href="termine.html">Termine</a><a href="dienstbesprechungen.html">Besprechungen</a></div><a class="clinical-desktop-editor" href="editor.html" aria-label="Redaktion">${ostIcon('edit')}</a>`;
   document.body.prepend(desktopTop);
   const sidebar=document.createElement('aside');
   sidebar.className='desktop-sidebar';
@@ -104,7 +106,7 @@ function chrome(){
   if(topbar&&page!=='home'){document.body.classList.add('ost-compact-header')}
   const bottom=document.createElement('nav');
   bottom.className='clinical-bottom-nav';bottom.setAttribute('aria-label','Schnellnavigation');
-  bottom.innerHTML=`<a href="index.html" ${page==='home'?'aria-current="page"':''}>${svg.home}<span>Start</span></a><a href="wissen.html" ${['wissen','algorithms','differential','modules','literature','guidelines'].includes(page)?'aria-current="page"':''}>${svg.books}<span>Wissen</span></a><a href="training.html" ${['training','skills','guide','faq'].includes(page)?'aria-current="page"':''}>${svg.skill}<span>Training</span></a><a href="editor.html" ${page==='editor'?'aria-current="page"':''}>${ostIcon('edit')}<span>Redaktion</span></a>`;
+  bottom.innerHTML=`<a href="index.html" ${page==='home'?'aria-current="page"':''}>${svg.home}<span>Start</span></a><a href="themen-uebersicht.html" ${['wissen','topics','differential','modules'].includes(page)?'aria-current="page"':''}>${svg.books}<span>Wissen</span></a><a href="training.html" ${['training','skills','guide','faq'].includes(page)?'aria-current="page"':''}>${svg.skill}<span>Training</span></a><a href="materialien.html" ${['materials','guidelines','literature'].includes(page)?'aria-current="page"':''}>${ostIcon('book')}<span>Materialien</span></a>`;
   document.body.appendChild(bottom);
  }
 
@@ -209,7 +211,7 @@ async function get(name){
  }
  return clone(D[name]||[]);
 }
-async function articles(){if(API){try{const r=await fetch(`${API}/articles`,{cache:'no-store'});if(r.ok)return await r.json()}catch(e){}}return clone(D.articles||[])}
+async function articles(){if(API){try{const r=await fetch(`${API}/articles`,{cache:'no-store'});if(r.ok)return await r.json()}catch(e){}}try{const r=await fetch('data/articles.json',{cache:'no-store'});if(r.ok){const rows=await r.json();if(Array.isArray(rows))return rows}}catch(e){}return clone(D.articles||[])}
 async function save(name,data){
  localStorage.setItem(LS+name,JSON.stringify(data));
  if(API){try{const pin=sessionStorage.getItem('ost1020-editor-pin')||'';const url=`${API}/content/${name}`;const r=await fetch(url,{method:'PUT',headers:{'Content-Type':'application/json','X-Admin-Pin':pin},body:JSON.stringify(data)});if(r.status===401){sessionStorage.removeItem('ost1020-editor-pin');throw new Error('PIN abgelaufen oder ungültig')}return r.ok}catch(e){}}
@@ -221,7 +223,7 @@ async function save(name,data){
 const LINK_TYPES={knowledgeModules:['Weitere Themen','themen.html'],algorithms:['Algorithmen & Schemata','algorithmen.html'],differential:['Diagnostik','differential.html'],articles:['Literatur','literatur.html'],skills:['Skilltraining','skilltraining.html'],changes:['Lehrmeinung','lehrmeinung.html']};
 function contentLink(type,id,module){if(type==='knowledgeModules')return 'themen.html?bereich='+encodeURIComponent(module||'pharm')+'&id='+encodeURIComponent(id);const base=LINK_TYPES[type]?.[1];return base?(type==='algorithms'||type==='changes'?base+'?id='+encodeURIComponent(id):type==='differential'?base+'?id='+encodeURIComponent(id):base):''}
 function relRefs(x){return Array.isArray(x?.related)?x.related.filter(r=>r&&typeof r.type==='string'&&typeof r.id==='string'):[]}
-async function contentCatalog(){const [a,d,c,sk,li,km]=await Promise.all([get('algorithms'),get('differential'),get('changes'),get('skills'),articles(),get('knowledgeModules')]);const result=[];function add(type,x,extra=''){if(!x||!x.id)return;result.push({type,id:String(x.id),title:String(x.title||x.name||''),text:[x.title,x.name,x.category,x.group,x.source,x.why,x.info,x.description,x.physiology,x.findings,x.redflags,extra,arr(x.synonyms).join(' ')].filter(Boolean).join(' '),href:contentLink(type,String(x.id),x.module)})}a.forEach(x=>add('algorithms',x,arr(x.steps).join(' ')));d.forEach(x=>add('differential',x,[...arr(x.causes).map(c=>typeof c==='object'?[c.name,c.info,c.physiology,c.findings].join(' '):c),...arr(x.questions)].join(' ')));c.forEach(x=>add('changes',x,[x.old,x.new,x.validity].join(' ')));sk.forEach(g=>g.skills?.forEach(x=>add('skills',{...x,id:x.id||'skill:'+g.name+':'+x.name},g.name)));li.forEach(x=>add('articles',x,arr(x.topics).join(' ')));(Array.isArray(km)?km:[]).filter(x=>MODULE_TYPES[x.module]&&x.status!=='draft').forEach(x=>add('knowledgeModules',x,[x.body,x.summary,x.sources].join(' ')));return result}
+async function contentCatalog(){const [d,c,sk,li,km]=await Promise.all([get('differential'),get('changes'),get('skills'),articles(),get('knowledgeModules')]);const result=[];function add(type,x,extra=''){if(!x||!x.id)return;result.push({type,id:String(x.id),title:String(x.title||x.name||''),text:[x.title,x.name,x.category,x.group,x.source,x.why,x.info,x.description,x.physiology,x.findings,x.redflags,extra,arr(x.synonyms).join(' ')].filter(Boolean).join(' '),href:contentLink(type,String(x.id),x.module)})}d.forEach(x=>add('differential',x,[...arr(x.causes).map(c=>typeof c==='object'?[c.name,c.info,c.physiology,c.findings].join(' '):c),...arr(x.questions)].join(' ')));c.forEach(x=>add('changes',x,[x.old,x.new,x.validity].join(' ')));sk.forEach(g=>g.skills?.forEach(x=>add('skills',{...x,id:x.id||'skill:'+g.name+':'+x.name},g.name)));li.forEach(x=>add('articles',x,arr(x.topics).join(' ')));(Array.isArray(km)?km:[]).filter(x=>MODULE_TYPES[x.module]&&x.status!=='draft').forEach(x=>add('knowledgeModules',x,[x.body,x.summary,x.sources].join(' ')));return result}
 function relatedHtml(item,catalog){const cards=relRefs(item).map(r=>catalog.find(c=>c.type===r.type&&c.id===r.id)).filter(Boolean);return cards.length?`<section class="ost-related"><h3>Passende Inhalte</h3><div class="ost-related-list">${cards.map(c=>`<a href="${esc(c.href)}"><span>${esc(LINK_TYPES[c.type][0])}</span><strong>${esc(c.title)}</strong><b>›</b></a>`).join('')}</div></section>`:''}
 function normalizedSearch(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('de').replace(/ß/g,'ss')}
 const SEARCH_SYNONYMS=[['atemnot','dyspnoe'],['herzinfarkt','acs','akutes koronarsyndrom'],['schlaganfall','stroke'],['bewusstlos','bewusstseinsstorung'],['wiederbelebung','reanimation','cpr']];
@@ -259,7 +261,7 @@ function ostIcon(key){return `<svg class="ost-outline-icon" viewBox="0 0 24 24" 
 function normalizedTitle(t){return String(t||'').replace(/^[^\p{L}\p{N}]+/gu,'').replace(/\s+/g,' ').trim()}
 function headerTitle(){
  const params=new URLSearchParams(location.search);
- const map={home:'Wissenssammlung',wissen:'Wissen',topics:'Patientenbeurteilung',training:'Training',events:'Termine',news:'Aktuelles',meetings:'Dienstbesprechungen',editor:'Redaktion',differential:'Diagnostik',algorithms:'Algorithmen & Merkhilfen',literature:'Literatursammlung',guidelines:'Leitlinien / Guidelines',abcde:'ABCDE-Schema',changes:'Lehrmeinung',skills:'Skilltraining',guide:'Simulations Guide',faq:'FAQ zu Simulationstrainings'};
+ const map={home:'Wissenssammlung',wissen:'Klinisches Wissen',topics:'Klinisches Wissen',training:'Training',events:'Termine',news:'Aktuelles',meetings:'Dienstbesprechungen',editor:'Redaktion',differential:'Diagnostik',algorithms:'Algorithmen & Merkhilfen',literature:'Literatursammlung',guidelines:'Leitlinien / Guidelines',abcde:'ABCDE-Schema',changes:'Lehrmeinungsänderungen',materials:'Materialien',skills:'Training · Skills',guide:'Training · Simulation',faq:'Training · FAQ'};
  if(page==='modules'){
   const slug=params.get('bereich')||'pharm';
   return (MODULE_TYPES[slug]&&MODULE_TYPES[slug].title)||'Wissensbereich';
@@ -291,7 +293,7 @@ function cleanupDuplicatePageHeading(){
 
 function newsHtml(n,i=''){const map={Lehrmeinung:'🔄',Leitlinie:'📋',Ausbildung:'🎓',Termin:'📅',Simulationstraining:'🖥️',Organisation:'📣',Literatur:'📚'};const c=n.category||'Organisation';return `<button class="news-item news-title-only" data-news="${i}"><h3>${esc(n.title)}</h3><span class="arrow" aria-hidden="true">›</span></button>`}
 const RECENT_KEY='ost1020-recent-pages',FAV_KEY='ost1020-favorites';
-function rememberPage(){if(page==='home'||page==='editor')return;const labels={home:'Start',wissen:'Wissen',news:'Aktuelles',literature:'Literatursammlung',abcde:'ABCDE-Schema',differential:'Diagnostik',skills:'Skilltraining',algorithms:'Algorithmen & Merkhilfen',meetings:'Dienstbesprechungen',changes:'Lehrmeinungsänderungen',events:'Termine',guide:'Quick Guide Simulation',materials:'Materialien'};const href=location.pathname.split('/').pop()||'index.html';let r=[];try{r=JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){}r=[{page,label:labels[page]||document.title,href},...r.filter(x=>x.page!==page)].slice(0,4);localStorage.setItem(RECENT_KEY,JSON.stringify(r))}
+function rememberPage(){if(page==='home'||page==='editor')return;const labels={home:'Start',topics:'Klinisches Wissen',wissen:'Klinisches Wissen',news:'Aktuelles',literature:'Literatursammlung',abcde:'ABCDE-Schema',differential:'Diagnostik',skills:'Training · Skills',algorithms:'Algorithmen & Merkhilfen',meetings:'Dienstbesprechungen',changes:'Lehrmeinungsänderungen',events:'Termine',guide:'Quick Guide Simulation',materials:'Materialien'};const href=location.pathname.split('/').pop()||'index.html';let r=[];try{r=JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){}r=[{page,label:labels[page]||document.title,href},...r.filter(x=>x.page!==page)].slice(0,4);localStorage.setItem(RECENT_KEY,JSON.stringify(r))}
 function favorites(){try{return JSON.parse(localStorage.getItem(FAV_KEY)||'[]')}catch(e){return[]}}
 function toggleFavorite(href){let f=favorites();f=f.includes(href)?f.filter(x=>x!==href):[...f,href];localStorage.setItem(FAV_KEY,JSON.stringify(f));return f.includes(href)}
 
@@ -303,17 +305,17 @@ async function home(){
  const recent=(()=>{try{return JSON.parse(localStorage.getItem(RECENT_KEY)||'[]')}catch(e){return[]}})();
  const upcoming=(events||[]).filter(x=>x.date>=today).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)).slice(0,2);
  const destinations=[
-  ['topics','Klinisches Wissen','Organe · Physiologie · Erkrankungen · Medikamente','themen-uebersicht.html','anatomy','Medizinische Inhalte nach Organsystem'],
-  ['materials','Leitlinien & Merkhilfen','Leitlinien · Checklisten · Merkschemata','materialien.html','book','Nachschlagen und Lernen'],
-  ['skills','Training','Skills · Geräte · Übungschecklisten','training.html','training','Praxis und Übungen'],
-  ['events','Termine','Fortbildungen · Kalender','termine.html','calendar','Alle Termine'],
-  ['meetings','Besprechungen & Vorträge','Protokolle · Präsentationen','dienstbesprechungen.html','users','Besprechungen und Vorträge'],
-  ['changes','Lehrmeinungsänderungen','Aktuelle Änderungen','lehrmeinung.html','changes','Neuerungen im Überblick']
+  ['topics','Klinisches Wissen','Organe · Physiologie · Erkrankungen','themen-uebersicht.html','anatomy'],
+  ['training','Training','Skills · Geräte · Übungschecklisten','training.html','training'],
+  ['literature','Materialien','Leitlinien · Merkhilfen · Literatur','materialien.html','book'],
+  ['events','Termine','Fortbildungen · Kalender','termine.html','calendar'],
+  ['meetings','Besprechungen & Vorträge','Protokolle · Präsentationen','dienstbesprechungen.html','users'],
+  ['changes','Lehrmeinungsänderungen','Änderungen · Freigaben','lehrmeinung.html','changes']
  ];
- $('[data-main]').innerHTML=`<div class="cf-home"><section class="cf-hero"><div class="cf-hero-copy"><span class="cf-eyebrow">OST 1020 · WISSEN. TRAINING. PRAXIS.</span><h1>Alles Wissen. Ein Einstieg.</h1><p>Medizinische Themen, Abläufe und Skills – miteinander verknüpft.</p></div><div class="cf-hero-symbol" aria-hidden="true">${ostIcon('anatomy')}</div></section>
+ $('[data-main]').innerHTML=`<div class="cf-home"><section class="cf-hero"><div class="cf-hero-copy"><span class="cf-eyebrow">OST 1020 · WISSEN. TRAINING. PRAXIS.</span><h1>Alles Wissen. Ein Einstieg.</h1><p>Einfach auswählen, gezielt nachschlagen, Inhalte sinnvoll verknüpfen.</p></div><div class="cf-hero-symbol" aria-hidden="true">${ostIcon('anatomy')}</div></section>
  <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
  <nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass,title,detail,href,ico,desc])=>`<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong><small>${detail}</small></a>`).join('')}</nav>
- <section class="cf-section"><div class="cf-section-title"><h2>Schnellzugriff</h2><a href="wissen.html">Alle Themen →</a></div><div class="cf-quick">${[['Herz & Kreislauf','herz'],['Atmung','atmung'],['Neurologie','neurologie'],['OPQRST','opqrst'],['Reanimation','reanimation']].map(([name,q])=>`<a href="themen-uebersicht.html?suche=${q}">${esc(name)}<span>↗</span></a>`).join('')}</div></section>
+ <section class="cf-section"><div class="cf-section-title"><h2>Schnellzugriff</h2><a href="themen-uebersicht.html">Alle Themen →</a></div><div class="cf-quick">${[['Herz & Kreislauf','herz'],['Atmung','atmung'],['Neurologie','neurologie'],['Abdomen','abdomen'],['Niere','niere']].map(([name,q])=>`<a href="themen-uebersicht.html?thema=${q}">${esc(name)}<span>↗</span></a>`).join('')}</div></section>
  <section class="cf-section"><div class="cf-section-title"><h2>Zuletzt angesehen</h2></div><div class="cf-simple-list">${recent.length?recent.slice(0,3).map(x=>`<a href="${esc(x.href||'wissen.html')}">${ostIcon('book')}<span>${esc(x.label||'Inhalt')}</span><b>›</b></a>`).join(''):'<p class="cf-muted">Hier erscheinen deine zuletzt geöffneten Inhalte.</p>'}</div></section>
  <section class="cf-section cf-home-updates"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n,i)=>`<button type="button" data-news="${i}">${ostIcon('news')}<span>${esc(n.title)}</span><b>›</b></button>`).join('')||'<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
  <section class="cf-section"><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div><div class="cf-simple-list">${upcoming.map(e=>`<a href="termine.html">${ostIcon('calendar')}<span>${esc(e.title)}</span><small>${esc(e.date||'')}</small></a>`).join('')||'<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
@@ -484,37 +486,123 @@ async function moduleEditor(box,initialModule='pharm'){
 }
 
 const CF_TOPICS=[
- {id:'herz',label:'Herz & Kreislauf',icon:'heart',terms:['herz','kreislauf','koronar','cardio','kardio','ekg','rhythm','infarkt','cpr','reanimation','aorta','schock']},
- {id:'atmung',label:'Atmung & Atemwege',icon:'device',terms:['atem','lungen','lunge','asthma','copd','hypox','dyspnoe','bronch','respira','pneumo']},
- {id:'neurologie',label:'Neurologie',icon:'anatomy',terms:['gehirn','nerv','schlaganfall','krampf','stroke','bewusst','neuro','ictus','ticls']},
- {id:'abdomen',label:'Abdomen & Stoffwechsel',icon:'search',terms:['bauch','abdomen','magen','niere','stoffwechsel','diabet','zucker','leber','verdau','gastro']},
- {id:'trauma',label:'Trauma & Bewegung',icon:'checklist',terms:['trauma','fraktur','verletz','wirbel','lagerung','schiene','beweg','knoche','blutung']},
- {id:'grundlagen',label:'Weitere Fachthemen',icon:'book',terms:[]}
+ {id:'herz',label:'Herz & Kreislauf',icon:'heart',image:'herz',groups:['Kreislauf'],anatomy:/herz|kreislauf|blut und sauerstoff/i,pharma:/sympathomim|katechol|antiarrhythm|antithromb|volumen/i,terms:['herz','kreislauf','koronar','cardio','kardio','ekg','rhythm','infarkt','aorta','schock','synkope','palpitation','thorax','reanimation','cpr']},
+ {id:'atmung',label:'Atmung & Atemwege',icon:'device',image:'atmung',groups:['Atmung','Atemweg'],anatomy:/atmung|gasaustausch/i,pharma:/bronchodil|glukokortikoid/i,terms:['atem','lungen','lunge','asthma','copd','hypox','dyspnoe','bronch','respira','pneumo','stridor','husten']},
+ {id:'neurologie',label:'Neurologie',icon:'anatomy',image:'gehirn',groups:['Neurologie'],anatomy:/gehirn|nervensystem/i,pharma:/antikonvuls|sedativ/i,terms:['gehirn','nerv','schlaganfall','krampf','stroke','bewusst','neuro','schwindel','kopfschmerz']},
+ {id:'abdomen',label:'Abdomen & Stoffwechsel',icon:'search',image:'bauch',groups:['Abdomen','Stoffwechsel','Infektion'],anatomy:/verdau|leber|stoffwechsel|säure-basen/i,pharma:/antiemet|glukoseregulation|volumen/i,terms:['bauch','abdomen','magen','stoffwechsel','diabet','zucker','leber','verdau','gastro','metabol','übelkeit']},
+ {id:'niere',label:'Niere & Harnsystem',icon:'pill',image:'niere',groups:['Urologie','Geburtshilfe'],anatomy:/niere|flüssigkeitshaushalt|säure-basen/i,pharma:/volumen|elektrolyte/i,terms:['niere','harn','uro','flüssigkeit','elektrolyt','diure','geburtshilfe','gynäk']},
+ {id:'trauma',label:'Trauma & Bewegung',icon:'training',image:null,groups:['Trauma','Umwelt'],anatomy:/bewegung|knochen|muskel/i,pharma:/analget|schmerz/i,terms:['trauma','fraktur','verletz','wirbel','lagerung','schiene','beweg','knochen','blutung']}
 ];
-function cfTopicMatch(item,topic){if(topic.id==='grundlagen')return false;const text=normalizedSearch([item.title,item.text].join(' '));return topic.terms.some(term=>text.includes(normalizedSearch(term)))}
+const CF_ORGAN_TABS=[['anatomy','Anatomie & Physiologie','book'],['symptoms','Symptome','search'],['diseases','Erkrankungen','heart'],['pharma','Medikamente','pill'],['materials','Materialien','guideline'],['terms','Fachbegriffe','dictionary']];
+const cfTopicContains=(value,topic)=>{const text=normalizedSearch(value);return topic.terms.some(term=>text.includes(normalizedSearch(term)))};
 async function topicHub(){
- const params=new URLSearchParams(location.search),search=params.get('suche')||'',selected=params.get('thema')||'';
+ const params=new URLSearchParams(location.search),initial=params.get('thema')||'',search=params.get('suche')||'';
+ const [modules,differentials,literature,mnemonicStore]=await Promise.all([get('knowledgeModules'),get('differential'),articles(),get('algorithms')]);
+ const km=(Array.isArray(modules)?modules:[]).filter(x=>x.status!=='draft');
  const cat=await contentCatalog();
- const pick=t=>cat.filter(x=>cfTopicMatch(x,t));
- const itemLink=x=>`<a href="${esc(x.href||'wissen.html')}" class="cf-topic-result"><span class="cf-result-icon">${ostIcon(x.type==='algorithms'?'checklist':x.type==='articles'?'book':x.type==='knowledgeModules'?'anatomy':'search')}</span><span><strong>${esc(x.title)}</strong><small>${esc(LINK_TYPES[x.type]?.[0]||'Fachwissen')}</small></span><b>›</b></a>`;
- $('[data-main]').innerHTML=`<div class="cf-topic-page"><div class="cf-page-heading"><span class="cf-eyebrow">KLINISCHES WISSEN</span><h1>Klinisches Wissen</h1><p>Organe, Beschwerden, Erkrankungen und passende Materialien an einem Ort.</p></div><div class="cf-topic-search">${ostIcon('search')}<input type="search" data-topic-search placeholder="Thema oder Krankheitsbild suchen …" value="${esc(search)}"></div><div class="cf-topic-grid">${CF_TOPICS.filter(t=>t.id!=='grundlagen').map(t=>`<button type="button" class="cf-topic-choice ${selected===t.id?'selected':''}" data-topic="${t.id}"><span>${ostIcon(t.icon)}</span><strong>${t.label}</strong><small>${pick(t).length} verknüpfte Inhalte</small></button>`).join('')}</div><section class="cf-topic-output" data-topic-output></section></div>`;
- const out=$('[data-topic-output]'),input=$('[data-topic-search]');let active=CF_TOPICS.find(x=>x.id===selected)||null;
- function draw(){const q=input.value.trim();const term=normalizedSearch(q);let matches=q?catalogSearch(cat,q):active?pick(active):[];if(!q&&!active){out.innerHTML='<div class="cf-empty-state">Wähle eine Körperregion oder suche direkt nach einem medizinischen Begriff.</div>';return}const groups=[['knowledgeModules','Anatomie · Physiologie · Medikamente · Befunde'],['differential','Symptome & Erkrankungen'],['articles','Literatur & Leitlinien'],['changes','Lehrmeinungsänderungen']];out.innerHTML=`<h2>${q?'Suchergebnisse für „'+esc(q)+'“':esc(active.label)}</h2><div class="cf-topic-related">${groups.map(([type,label])=>{const items=matches.filter(x=>x.type===type);return items.length?`<details class="cf-topic-group" open><summary><strong>${label}</strong><span>${items.length} ›</span></summary><div>${items.slice(0,12).map(itemLink).join('')}${items.length>12?`<p class="cf-muted">Weitere ${items.length-12} Treffer über die Suche erreichbar.</p>`:''}</div></details>`:''}).join('')||'<p class="cf-muted">Keine zugehörigen Inhalte vorhanden.</p>'}</div>`}
- input.oninput=()=>{active=null;$$('[data-topic]').forEach(b=>b.classList.remove('selected'));draw()};
- $('[data-main]').addEventListener('click',e=>{const b=e.target.closest('[data-topic]');if(!b)return;active=CF_TOPICS.find(t=>t.id===b.dataset.topic);input.value='';$$('[data-topic]').forEach(x=>x.classList.toggle('selected',x===b));draw();out.scrollIntoView({behavior:'smooth',block:'start'})});draw();
+ const area=$('[data-main]');let active=CF_TOPICS.find(t=>t.id===initial)||null,tab='anatomy';
+ const organCard=t=>`<button type="button" class="cf547-organ" data-cf-organ="${t.id}"><span class="cf547-organ-icon">${ostIcon(t.icon)}</span><span><strong>${esc(t.label)}</strong><small>Physiologie · Beschwerden · Erkrankungen</small></span><b>›</b></button>`;
+ area.innerHTML=`<div class="cf547 clinical-knowledge"><div class="cf547-breadcrumb"><a href="index.html">Start</a><span>›</span><span>Klinisches Wissen</span></div><div class="cf547-heading" data-cf-heading></div><div class="cf547-search">${ostIcon('search')}<input data-cf-search type="search" placeholder="Symptom, Erkrankung, Medikament suchen …" value="${esc(search)}" aria-label="Klinische Inhalte durchsuchen"></div><div data-cf-view></div></div>`;
+ const heading=$('[data-cf-heading]'),view=$('[data-cf-view]'),input=$('[data-cf-search]');
+ function info(t){
+  const symptoms=differentials.filter(d=>t.groups.includes(d.group));
+  const diseases=[];const names=new Set();symptoms.forEach(d=>arr(d.causes).forEach((c,index)=>{const a=typeof c==='string'?{name:c}:c;if(!a.name)return;const k=normalizedSearch(a.name);if(names.has(k))return;names.add(k);diseases.push({c:a,source:d,index})}));
+  const anatomy=km.filter(x=>x.module==='anatomy'&&t.anatomy.test(x.title));
+  const pharma=km.filter(x=>x.module==='pharm'&&t.pharma.test(x.title));
+  const terms=km.filter(x=>x.module==='befund'&&cfTopicContains([x.title,x.summary,x.body].join(' '),t)).slice(0,24);
+  const materials=[...literature.filter(x=>cfTopicContains([x.title,arr(x.topics).join(' '),x.why].join(' '),t)).map(x=>({kind:'article',record:x,title:x.title,description:arr(x.topics).join(' · ')})),...km.filter(x=>x.module==='checklists'&&cfTopicContains([x.title,x.summary].join(' '),t)).map(x=>({kind:'checklist',record:x,title:x.title,description:'Übungscheckliste'})),...(Array.isArray(mnemonicStore)?mnemonicStore:[]).filter(x=>String(x.category||'').startsWith('Schema')&&cfTopicContains(x.title,t)).map(x=>({kind:'mnemonic',record:x,title:x.title,description:'Merkschema'}))];
+  return {symptoms,diseases,anatomy,pharma,terms,materials};
+ }
+ const clinicalRow=(id,ico,title,secondary='')=>`<button class="cf547-row" data-cf-open="${esc(id)}"><span class="cf547-row-icon">${ostIcon(ico)}</span><span><strong>${esc(title)}</strong>${secondary?`<small>${esc(secondary)}</small>`:''}</span><b>›</b></button>`;
+ const openModule=(x)=>open(x.title,`<article class="cf547-sheet">${x.summary?`<p class="cf547-lead">${esc(x.summary)}</p>`:''}<div class="ost-module-body">${renderModuleText(x.body)}</div>${x.sources?`<section class="cf547-source"><strong>Quellen</strong><p>${esc(x.sources)}</p></section>`:''}</article>`,{sheet:true});
+ const openDisease=(c,x)=>open(c.name,`<article class="cf547-sheet"><p class="cf547-lead">Leitsymptom: ${esc(x.title)}</p>${[['Pathophysiologie',c.physiology],['Typische Befunde',c.findings],['Einordnung',c.info],['Warnzeichen',c.cave]].filter(z=>z[1]).map(([title,body])=>`<section class="cf547-source"><strong>${title}</strong><p>${esc(body)}</p></section>`).join('')||'<p>Zu diesem Krankheitsbild liegen noch keine fachlichen Details vor.</p>'}<p class="diag-hint">Für die Versorgung gelten die lokalen freigegebenen SOPs.</p></article>`,{sheet:true});
+ let visibleRows=[];
+ function draw(){
+  const q=input.value.trim();visibleRows=[];
+  if(q){
+   active=null;
+   heading.innerHTML='<h1>Suche in Klinischem Wissen</h1><p>Alle Organgruppen und Inhalte in einer Ansicht.</p>';
+   const results=catalogSearch(cat,q).filter(x=>x.type!=='algorithms');
+   view.innerHTML=`<div class="cf547-results"><h2>${results.length} Suchtreffer</h2>${results.map(x=>`<a class="cf547-row" href="${esc(x.href||'themen-uebersicht.html')}"><span class="cf547-row-icon">${ostIcon(x.type==='articles'?'book':'search')}</span><span><strong>${esc(x.title)}</strong><small>${esc(LINK_TYPES[x.type]?.[0]||'Wissen')}</small></span><b>›</b></a>`).join('')||'<p class="cf547-empty">Keine Treffer.</p>'}</div>`;
+   return;
+  }
+  if(!active){
+   heading.innerHTML='<span class="cf-eyebrow">KLINISCHES WISSEN</span><h1>Welches Organsystem?</h1><p>Wähle eine Organgruppe. Alle zugehörigen Fachthemen sind dort zusammengeführt.</p>';
+   view.innerHTML=`<div class="cf547-organs">${CF_TOPICS.map(organCard).join('')}</div>`;return;
+  }
+  const sets=info(active);
+  heading.innerHTML=`<div class="cf547-topic-heading"><button class="cf547-topic-back" type="button" data-cf-back aria-label="Zurück zu den Organgruppen">${svg.back} Organgruppen</button><span class="cf-eyebrow">KLINISCHES WISSEN</span><h1>${esc(active.label)}</h1></div>`;
+  const hero=active.image?`<img src="assets/anatomie/${active.image}.svg" loading="lazy" alt="Schematische Übersicht ${esc(active.label)}">`:`<div class="cf547-hero-icon">${ostIcon(active.icon)}</div>`;
+  let cards=[];
+  if(tab==='anatomy')cards=sets.anatomy.map(x=>({key:'module:'+x.id,ico:'anatomy',title:x.title,subtitle:x.category}));
+  if(tab==='symptoms')cards=sets.symptoms.map(x=>({key:'symptom:'+x.id,ico:'search',title:x.title,subtitle:arr(x.causes).length+' Krankheitsbilder'}));
+  if(tab==='diseases')cards=sets.diseases.map((x,i)=>({key:'disease:'+i,ico:'heart',title:x.c.name,subtitle:x.source.title}));
+  if(tab==='pharma')cards=sets.pharma.map(x=>({key:'module:'+x.id,ico:'pill',title:x.title,subtitle:x.category}));
+  if(tab==='terms')cards=sets.terms.map(x=>({key:'module:'+x.id,ico:'dictionary',title:x.title,subtitle:shortModuleExplanation(x).slice(0,95)}));
+  if(tab==='materials')cards=sets.materials.map((x,i)=>({key:'article:'+i,ico:x.kind==='checklist'?'checklist':x.kind==='mnemonic'?'notes':'book',title:x.title,subtitle:x.description}));
+  visibleRows=cards;
+  view.innerHTML=`<section class="cf547-topic-hero"><div><span class="cf-eyebrow">ORGANGRUPPE</span><h2>${esc(active.label)}</h2><p>Physiologie, Symptome, Erkrankungen, Medikamente und Material – direkt miteinander verbunden.</p></div>${hero}</section><nav class="cf547-tabs" aria-label="Inhalte zu ${esc(active.label)}">${CF_ORGAN_TABS.map(([id,label,ico])=>`<button type="button" data-cf-tab="${id}" class="${tab===id?'selected':''}" aria-pressed="${tab===id}">${ostIcon(ico)}<span>${label}</span></button>`).join('')}</nav><div class="cf547-content"><div class="cf547-content-title"><h2>${esc(CF_ORGAN_TABS.find(x=>x[0]===tab)?.[1])}</h2><span>${cards.length} Einträge</span></div><div class="cf547-rows">${cards.map(x=>clinicalRow(x.key,x.ico,x.title,x.subtitle)).join('')||'<p class="cf547-empty">Für diesen Bereich sind noch keine freigegebenen Inhalte hinterlegt.</p>'}</div></div><div class="cf547-footnote">Lernunterlagen · Fachliche Angaben anhand eurer lokalen Lehrmeinung prüfen.</div>`;
+  view.onclick=e=>{
+   const back=e.target.closest('[data-cf-back]');if(back){active=null;tab='anatomy';history.replaceState(null,'','themen-uebersicht.html');draw();window.scrollTo({top:0,behavior:'smooth'});return}
+   const bt=e.target.closest('[data-cf-tab]');if(bt){tab=bt.dataset.cfTab;draw();return}
+   const row=e.target.closest('[data-cf-open]');if(!row)return;
+   const key=row.dataset.cfOpen;
+   if(key.startsWith('module:')){const x=[...sets.anatomy,...sets.pharma,...sets.terms].find(v=>String(v.id)===key.slice(7));if(x)openModule(x)}
+   else if(key.startsWith('symptom:')){const x=sets.symptoms.find(v=>String(v.id)===key.slice(8));if(x)open(x.title,`<div class="cf547-sheet">${x.theory?`<p>${esc(x.theory)}</p>`:''}<h3>Wichtige Fragen</h3><ul>${arr(x.questions).map(q=>`<li>${esc(q)}</li>`).join('')}</ul><h3>Warnzeichen</h3><ul>${arr(x.redflags).map(q=>`<li>${esc(q)}</li>`).join('')}</ul></div>`,{sheet:true})}
+   else if(key.startsWith('disease:')){const x=sets.diseases[Number(key.slice(8))];if(x)openDisease(x.c,x.source)}
+   else if(key.startsWith('article:')){const x=sets.materials[Number(key.slice(8))];if(x){const r=x.record;const url=x.kind==='checklist'?r.documentUrl:(r.freeUrl||r.publisherUrl||'');const description=x.kind==='mnemonic'?arr(r.steps).map((st,i)=>`<div class="cf547-mnemonic-step"><span>${i+1}</span>${esc(st)}</div>`).join(''):x.kind==='checklist'?renderModuleText(r.body||r.summary||''):esc(r.why||'Fachliteratur zum ausgewählten Organsystem.');open(x.title,`<div class="cf547-sheet">${description}${/^https?:\/\//i.test(url)?`<p><a class="btn primary" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Dokument / Quelle öffnen ↗</a></p>`:''}</div>`,{sheet:true})}}
+  };
+ }
+ view.addEventListener('click',e=>{const b=e.target.closest('[data-cf-organ]');if(!b)return;active=CF_TOPICS.find(t=>t.id===b.dataset.cfOrgan)||null;tab='anatomy';history.replaceState(null,'','themen-uebersicht.html?thema='+encodeURIComponent(active.id));draw();});
+ input.oninput=()=>draw();draw();
 }
 async function wissenPage(){
- const sections=[
- {id:'klinisch',icon:'anatomy',title:'Körper & Diagnostik',sub:'Organe, Symptome, Befunde',links:[['anatomy','Thematische Übersicht','themen-uebersicht.html'],['anatomy','Anatomie & Physiologie','themen.html?bereich=anatomy'],['search','Symptome & Krankheitsbilder','differential.html'],['dictionary','Befundwörterbuch','themen.html?bereich=befund']]},
- {id:'praxis',icon:'checklist',title:'Algorithmen & Checklisten',sub:'Abläufe, Merkhilfen und Materialien',links:[['notes','Algorithmen','algorithmen.html?typ=algorithmen'],['book','Merkhilfen & Schemata','algorithmen.html?typ=merkhilfen'],['checklist','Checklisten','algorithmen.html?typ=checklisten']]},
- {id:'pharma',icon:'pill',title:'Pharmakologie',sub:'Wirkstoffgruppen und Medikamente',links:[['pill','Pharmakologie öffnen','themen.html?bereich=pharm']]},
- {id:'literatur',icon:'book',title:'Literatur & Leitlinien',sub:'Nachlesen und Vertiefen',links:[['book','Literatursammlung','literatur.html'],['guideline','Leitlinien / Guidelines','leitlinien.html']]}
- ];
- $('[data-main]').innerHTML=`<section class="clinical-combined-intro"><h1>Wissen</h1><p>Alles Wichtige, sinnvoll verbunden.</p></section><div class="clinical-combined-hubs">${sections.map((g,i)=>`<details class="clinical-combined-hub" ${i===0?'open':''}><summary><span class="clinical-combined-icon">${ostIcon(g.icon)}</span><span class="clinical-combined-heading"><strong>${g.title}</strong><small>${g.sub}</small></span><span class="clinical-combined-chevron">⌄</span></summary><div class="clinical-combined-links">${g.links.map(([ico,title,href])=>`<a href="${href}">${ostIcon(ico)}<span>${title}</span><b>›</b></a>`).join('')}</div></details>`).join('')}</div><div class="clinical-combined-footer"><a href="skilltraining.html">${ostIcon('training')} Skilltraining öffnen →</a></div>`;
+ location.replace('themen-uebersicht.html'+location.search);
 }
 async function trainingPage(){
- const links=[['training','Skills','skilltraining.html','Praktische Fertigkeiten'],['device','MPG-Informationen','themen.html?bereich=mpg','Geräte, Spezifikationen und Bedienungsanleitungen'],['checklist','Übungschecklisten','themen.html?bereich=checklists','Checklisten für Training und Übungen'],['screen','Simulation','simulation.html','Übungen am Simulator'],['question','FAQ zu Simulationstrainings','simulation-faq.html','Häufige Fragen zur Vorbereitung und Durchführung']];
- $('[data-main]').innerHTML=`<h1 class="ost-visually-hidden">Training</h1><div class="ost-link-directory ost-tonal-directory">${links.map(([ico,title,url,sub])=>`<a href="${url}"><span>${ostIcon(ico)}</span><div><span class="directory-item-name">${title}</span></div><b>›</b></a>`).join('')}</div>`;
+ const [groups,modules]=await Promise.all([get('skills'),get('knowledgeModules')]);
+ const km=(Array.isArray(modules)?modules:[]).filter(x=>x.status!=='draft');
+ const skillsList=Array.isArray(groups)?groups:[];
+ const nav=[['skills','Skills','training'],['devices','Geräte','device'],['checklists','Übungschecklisten','checklist']];
+ let selected=new URLSearchParams(location.search).get('typ')||'skills';if(!nav.some(n=>n[0]===selected))selected='skills';
+ const main=$('[data-main]');
+ main.innerHTML=`<section class="cf547 cf547-training"><span class="cf-eyebrow">OST 1020 · TRAINING</span><h1>Training</h1><p class="cf547-training-intro">Praktische Fertigkeiten, Geräte und Übungschecklisten an einem Ort.</p><nav class="cf547-tabs" aria-label="Trainingstyp">${nav.map(([id,label,ico])=>`<button data-training-tab="${id}" class="${selected===id?'selected':''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-training-content></section><div class="cf547-training-secondary"><a href="simulation.html">${ostIcon('screen')} Simulations Guide <span>↗</span></a><a href="simulation-faq.html">${ostIcon('question')} Fragen zu Simulationstrainings <span>↗</span></a></div></section>`;
+ const out=$('[data-training-content]');
+ function render(){
+  $$('[data-training-tab]',main).forEach(b=>b.classList.toggle('selected',b.dataset.trainingTab===selected));
+  if(selected==='skills'){
+   out.innerHTML=`<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g,i)=>`<details class="cf547-training-group" ${i===0?'open':''}><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span>⌄</span></summary><div>${arr(g.skills).map((sk,j)=>`<button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button>`).join('')}</div></details>`).join('')}</div>`;
+  }else{
+   const type=selected==='devices'?'mpg':'checklists';const items=km.filter(x=>x.module===type);
+   out.innerHTML=`<h2>${selected==='devices'?'Geräte':'Übungschecklisten'}</h2><div class="cf547-rows">${items.map(x=>`<button class="cf547-row" data-training-module="${esc(x.id)}"><span class="cf547-row-icon">${ostIcon(selected==='devices'?'device':'checklist')}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join('')||'<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
+  }
+ }
+ main.addEventListener('click',e=>{
+  const tab=e.target.closest('[data-training-tab]');if(tab){selected=tab.dataset.trainingTab;history.replaceState(null,'','training.html?typ='+selected);render();return}
+  const skill=e.target.closest('[data-training-skill]');if(skill){const [gi,si]=skill.dataset.trainingSkill.split('-').map(Number);const x=skillsList[gi]?.skills?.[si];if(!x)return;open(x.name,`<div class="cf547-sheet">${arr(x.sections).map(sec=>`<section class="cf547-source"><h3>${esc(sec.title)}</h3><ul>${arr(sec.items).map(it=>`<li>${esc(it)}</li>`).join('')}</ul></section>`).join('')}</div>`,{sheet:true})}
+  const item=e.target.closest('[data-training-module]');if(item){const x=km.find(v=>String(v.id)===item.dataset.trainingModule);if(!x)return;const url=x.documentUrl||'';open(x.title,`<div class="cf547-sheet"><p>${esc(x.summary||'')}</p>${renderModuleText(x.body)}${/^https?:\/\//i.test(url)?`<a class="btn primary" href="${esc(url)}" target="_blank" rel="noopener noreferrer">PDF öffnen ↗</a>`:''}</div>`,{sheet:true})}
+ });render();
+}
+async function materialHub(){
+ const [modules,a,docs]=await Promise.all([get('knowledgeModules'),get('algorithms'),articles()]);
+ const km=Array.isArray(modules)?modules:[];
+ const checklists=km.filter(x=>x.module==='checklists'&&x.status!=='draft');
+ const mnemonics=(Array.isArray(a)?a:[]).filter(x=>String(x.category||'').startsWith('Schema'));
+ const refs=[...new Map((Array.isArray(a)?a:[]).filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl)).map(x=>[x.sourceUrl,{title:x.source||'Leitlinie / Fachquelle',sourceUrl:x.sourceUrl}])).values()];
+ const categories=[['guidelines','Leitlinien','guideline'],['checklists','Checklisten','checklist'],['mnemonics','Merkhilfen & Schemata','notes'],['literature','Literatur','book']];
+ const param=new URLSearchParams(location.search).get('typ');let active=categories.some(c=>c[0]===param)?param:'guidelines';
+ const main=$('[data-main]');main.innerHTML=`<section class="cf547 cf547-materials"><span class="cf-eyebrow">WISSEN VERTIEFEN</span><h1>Materialien</h1><p class="cf547-training-intro">Freigegebene Nachschlagehilfen, Übungsunterlagen und Fachliteratur.</p><nav class="cf547-tabs">${categories.map(([id,label,ico])=>`<button data-mat-tab="${id}" class="${active===id?'selected':''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
+ const box=$('[data-material-list]');let visible=[];
+ const linkrow=(title,sub,key,ico)=>`<button type="button" class="cf547-row" data-mat-id="${esc(key)}"><span class="cf547-row-icon">${ostIcon(ico)}</span><span><strong>${esc(title)}</strong>${sub?`<small>${esc(sub)}</small>`:''}</span><b>›</b></button>`;
+ function render(){
+  $$('[data-mat-tab]',main).forEach(b=>b.classList.toggle('selected',b.dataset.matTab===active));
+  if(active==='guidelines')visible=refs.map(x=>({title:x.title,sub:'Externe Leitlinie / Quelle',url:x.sourceUrl}));
+  else if(active==='checklists')visible=checklists.map(x=>({title:x.title,sub:x.summary||'Übungscheckliste',url:x.documentUrl||'',x}));
+  else if(active==='mnemonics')visible=mnemonics.map(x=>({title:x.title,sub:'Merkschema',x}));
+  else visible=docs.map(x=>({title:x.title,sub:arr(x.topics).join(' · '),url:x.freeUrl||x.publisherUrl,x}));
+  box.innerHTML=`<div class="cf547-content-title"><h2>${esc(categories.find(x=>x[0]===active)[1])}</h2><span>${visible.length} Einträge</span></div><div class="cf547-rows">${visible.map((x,i)=>linkrow(x.title,x.sub,String(i),categories.find(x=>x[0]===active)[2])).join('')||'<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
+ }
+ main.onclick=e=>{const b=e.target.closest('[data-mat-tab]');if(b){active=b.dataset.matTab;history.replaceState(null,'','materialien.html?typ='+active);render();return}const r=e.target.closest('[data-mat-id]');if(!r)return;const x=visible[Number(r.dataset.matId)];if(!x)return;if(x.url&&/^https?:\/\//i.test(x.url)){open(x.title,`<section class="cf547-sheet"><p>${esc(x.sub)}</p><a class="btn primary" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">Quelle / Dokument öffnen ↗</a></section>`,{sheet:true});return}if(active==='mnemonics')open(x.title,`<div class="cf547-sheet">${arr(x.x?.steps).map((step,i)=>`<div class="cf547-mnemonic-step"><span>${i+1}</span>${esc(step)}</div>`).join('')||'<p>Inhalt noch nicht hinterlegt.</p>'}</div>`,{sheet:true});else if(x.x)open(x.title,`<div class="cf547-sheet">${renderModuleText(x.x.body||x.x.why||'')}</div>`,{sheet:true})};render();
 }
 async function guidelinesPage(){
  const a=await get('algorithms');const refs=a.filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl));
@@ -805,7 +893,7 @@ async function editor(){
    const attempt=async()=>{const v=$('[data-pin]').value.trim();if(!v)return;const st=$('[data-pin-status]');st.textContent='Prüfe …';if(await verifyEditorPin(v)){sessionStorage.setItem('ost1020-editor-pin',v);editor()}else{st.textContent='PIN nicht korrekt.';$('[data-pin]').select()}};
    $('[data-unlock]').onclick=attempt;$('[data-pin]').onkeydown=e=>{if(e.key==='Enter')attempt()};return;
  }
- const tabs=[['abcde','ABCDE'],['algorithms','Algorithmen & Merkhilfen'],['news','Aktuelles'],['meetings','Dienstbesprechungen'],['differential','Diagnostik'],['articles','Literatur'],['changes','Lehrmeinungsänderungen'],['guide','Quick Guide Simulation'],['attendance','Teilnehmerlisten'],['events','Termine'],['modules','Wissensbereiche']];
+ const tabs=[['abcde','ABCDE'],['news','Aktuelles'],['meetings','Dienstbesprechungen'],['differential','Diagnostik'],['articles','Literatur'],['changes','Lehrmeinungsänderungen'],['guide','Quick Guide Simulation'],['skills','Skilltraining'],['attendance','Teilnehmerlisten'],['events','Termine'],['modules','Wissensbereiche']];
  const tabIcons={abcde:ostIcon('notes'),algorithms:ostIcon('notes'),news:ostIcon('news'),meetings:ostIcon('users'),differential:ostIcon('search'),articles:ostIcon('book'),changes:ostIcon('changes'),guide:ostIcon('screen'),skills:ostIcon('training'),attendance:ostIcon('group'),events:ostIcon('calendar'),modules:ostIcon('book')};
  $('[data-main]').innerHTML=`<section class="page-banner"><div class="page-banner-row"><h1>Redaktion</h1><button class="editor-shortcut" data-lock-editor>🔒 Sperren</button></div></section><details class="ost-editor-overview" data-editor-overview><summary>Verwaltung & Prüfstatus</summary><div class="ost-editor-overview-head"><h2>Redaktions-Dashboard</h2><small>Live-Übersicht aus vorhandenen Daten</small></div><div class="ost-editor-stats" data-editor-stats><div>Lade Übersicht …</div></div><div class="ost-editor-actions"><button type="button" class="btn" data-open-review>Prüffristen</button><button type="button" class="btn" data-open-feedback>Fehlermeldungen</button><button type="button" class="btn" data-open-history>Versionsverlauf</button><button type="button" class="btn" data-open-backup>Backup</button></div></details><section class="admin-tools"><details><summary>🗄️ Wartung, Versionen &amp; Meldungen</summary><div class="admin-tools-actions"><button class="btn" data-admin-history>Versionsverlauf</button><button class="btn" data-admin-backup>Backup erstellen</button><button class="btn" data-admin-status>Backups anzeigen</button><button class="btn" data-admin-feedback>Meldungen ansehen</button><button class="btn" data-admin-review>Prüffristen</button></div><div class="admin-tools-results" data-admin-results></div></details></section><section class="editor-dashboard"><aside class="editor-nav">${tabs.map((t,i)=>`<button class="editor-nav-btn ${i?'':'active'}" data-tab="${t[0]}"><span>${tabIcons[t[0]]||'📋'}</span><strong>${t[1]}</strong></button>`).join('')}</aside><section class="editor-content" data-edit></section></section>`;
  const maintenance=$('.admin-tools');if(maintenance)$('[data-main]').appendChild(maintenance);
@@ -992,7 +1080,7 @@ async function editor(){
   {id:'literatur',title:'Literatur',icon:ostIcon('book'),items:['articles']},
   {id:'termine',title:'Termine',icon:ostIcon('calendar'),items:['events','attendance']},
   {id:'training',title:'Training',icon:ostIcon('training'),items:['modules:checklists','guide','skills','modules:mpg']},
-  {id:'wissen',title:'Wissen',icon:ostIcon('book'),items:['abcde','algorithms','modules:anatomy','modules:befund','differential','modules:pharm']}
+  {id:'wissen',title:'Wissen',icon:ostIcon('book'),items:['abcde','modules:anatomy','modules:befund','differential','modules:pharm']}
  ];
  const extraLabels={'modules:anatomy':['Anatomie & Physiologie',ostIcon('anatomy')],'modules:befund':['Befundwörterbuch',ostIcon('dictionary')],'modules:pharm':['Pharmakologie',ostIcon('pill')],'modules:mpg':['MPG-Informationen',ostIcon('device')],'modules:checklists':['Checklisten',ostIcon('checklist')]};
  let moduleRequested='pharm';
@@ -1041,11 +1129,11 @@ async function init(){
  else if(page==='abcde')await abcdePage();
  else if(page==='differential')await differentialPage();
  else if(page==='skills')await skills();
- else if(page==='algorithms')await algorithmsPage();
+ else if(page==='algorithms'){location.replace('materialien.html');return}
  else if(page==='changes')await changesPage();
  else if(page==='events')await eventsPage();
  else if(page==='guide')await guidePage();
- else if(page==='materials'){location.replace('algorithmen.html');return}
+ else if(page==='materials')await materialHub();
  else if(page==='meetings')await meetingsPage();
  else if(page==='editor')await editor();
  cleanupDuplicatePageHeading();
