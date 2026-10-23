@@ -58,7 +58,7 @@ function chrome(){
   if(page==='meetings'&&params.has('id')){location.href='dienstbesprechungen.html';return}
   if(page==='algorithms'&&params.has('id')){location.href='algorithmen.html';return}
   if(page==='changes'&&params.has('id')){location.href='lehrmeinung.html';return}
-  if(page==='topics'&&params.has('thema')){location.href='themen-uebersicht.html';return}
+  if(page==='topics'){location.href='index.html';return}
   if(page==='differential'){
    if(params.has('disease')){params.delete('disease');location.href='differential.html'+(params.size?'?'+params:'');return}
    if(params.has('id')){params.delete('id');location.href='differential.html'+(params.size?'?'+params:'');return}
@@ -563,7 +563,7 @@ async function topicHub(){
   organBar.innerHTML=CF_TOPICS.map(t=>`<button class="cf551-tab ${organ.id===t.id?'selected':''}" type="button" data-cf-organ="${esc(t.id)}" aria-pressed="${organ.id===t.id}">${ostIcon(t.icon)}<span>${esc(t.label)}</span></button>`).join('');
   categoryBar.innerHTML=views.map(([key,label,ico])=>`<button class="cf551-tab ${tab===key?'selected':''}" type="button" data-cf-tab="${key}" aria-pressed="${tab===key}">${ostIcon(ico)}<span>${label}</span></button>`).join('');
   const all=entries(),needle=normalizedSearch(input.value.trim());const found=needle?all.filter(x=>normalizedSearch([x.title,x.value?.body,x.value?.info,x.value?.symptoms].join(' ')).includes(needle)):all;
-  if(!found.some(x=>x.id===chosen))chosen=found[0]?.id||'';
+  if(chosen&&!found.some(x=>x.id===chosen))chosen='';
   const current=found.find(x=>x.id===chosen);
   out.innerHTML=found.length?`<div class="cf552-accordion">${found.map(x=>`<details class="cf552-record" data-cf-entry="${esc(x.id)}" ${x.id===chosen?'open':''}><summary><span class="cf552-record-icon">${ostIcon(x.icon)}</span><strong>${esc(x.title)}</strong><span class="cf552-chevron" aria-hidden="true"></span></summary>${article(x)}</details>`).join('')}</div>`:'<div class="cf551-empty">Keine passenden Inhalte gefunden.</div>';
   const records=$$('details[data-cf-entry]',out);
@@ -597,7 +597,7 @@ async function trainingPage(){
  function render(){
   $$('[data-training-tab]',main).forEach(b=>b.classList.toggle('selected',b.dataset.trainingTab===selected));
   if(selected==='skills'){
-   out.innerHTML=`<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g,i)=>`<details class="cf547-training-group" ${i===0?'open':''}><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div>${arr(g.skills).map((sk,j)=>`<button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button>`).join('')}</div></details>`).join('')}</div>`;
+   out.innerHTML=`<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g,i)=>`<details class="cf547-training-group"><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div>${arr(g.skills).map((sk,j)=>`<button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button>`).join('')}</div></details>`).join('')}</div>`;
   }else{
    const type=selected==='devices'?'mpg':'checklists';const items=km.filter(x=>x.module===type);
    out.innerHTML=`<h2>${selected==='devices'?'Geräte':'Übungschecklisten'}</h2><div class="cf547-rows">${items.map(x=>`<button class="cf547-row" data-training-module="${esc(x.id)}"><span class="cf547-row-icon">${ostIcon(selected==='devices'?'device':'checklist')}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join('')||'<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
