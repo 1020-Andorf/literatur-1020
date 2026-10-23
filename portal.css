@@ -4480,55 +4480,108 @@ body.app-shell.page-editor :is(.cf551-editor-pickers select,.cf551-module-picker
   body.app-shell.page-editor .editor-grouped-menu .editor-subgroup-tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
 }
 
-body.app-shell .cf547-materials
-nav.cf547-tabs.cf550-material-tabs > button.selected {
-  background: #bd2734 !important;
-  border-color: #bd2734 !important;
-  color: #ffffff !important;
-}
 
-body.app-shell .cf547-materials
-nav.cf547-tabs.cf550-material-tabs > button.selected svg,
-body.app-shell .cf547-materials
-nav.cf547-tabs.cf550-material-tabs > button.selected svg * {
-  color: #ffffff !important;
-  stroke: #ffffff !important;
-}
+/* OST 1020 – Einheitliche Menüfarben */
 
-
-/* Einheitliches Dunkelrot für aktive Untermenüs */
+/* 1. Nur ausgewählte Navigationskacheln rot */
 body.app-shell :is(
-  .cf551-tab.selected,
-  .cf547-tabs button.selected,
-  .cf550-responsive-tabs button.selected,
-  .cf552-record[open] > summary,
-  .cf553-mnemonic[open] > summary,
-  .cf547-training-group[open] > summary,
-  .cf549-disease-group[open] > summary,
-  .cf552-anatomy-subpoint[open] > summary,
-  .ost-skill-group[open] > summary,
-  .filter-chip.active,
-  .clinical-content-tabs .is-active
+  .cf551-organ-nav .cf551-tab.selected,
+  .cf551-category-nav .cf551-tab.selected,
+  .cf547-training .cf547-tabs > button.selected,
+  .cf547-materials .cf547-tabs > button.selected
 ) {
   background: #bd2734 !important;
   border-color: #bd2734 !important;
   color: #ffffff !important;
 }
 
-/* Weiße Schrift und Symbole */
+/* Weiße Symbole und Beschriftungen */
 body.app-shell :is(
-  .cf551-tab.selected,
-  .cf547-tabs button.selected,
-  .cf550-responsive-tabs button.selected,
-  .cf552-record[open] > summary,
-  .cf553-mnemonic[open] > summary,
-  .cf547-training-group[open] > summary,
-  .cf549-disease-group[open] > summary,
-  .cf552-anatomy-subpoint[open] > summary,
-  .ost-skill-group[open] > summary
+  .cf551-organ-nav .cf551-tab.selected,
+  .cf551-category-nav .cf551-tab.selected,
+  .cf547-training .cf547-tabs > button.selected,
+  .cf547-materials .cf547-tabs > button.selected
 ) :is(span, strong, small, b, svg) {
   color: #ffffff !important;
   stroke: currentColor !important;
 }
+
+/* 2. Aufklappbare Einträge bleiben weiß */
+body.app-shell :is(
+  .cf552-record,
+  .cf553-mnemonic,
+  .cf547-training-group,
+  .cf549-disease-group,
+  .cf552-anatomy-subpoint,
+  .ost-skill-group
+) {
+  background: #ffffff !important;
+  border-color: #dce5eb !important;
+}
+
+/* Auch geöffnete Überschriften bleiben weiß */
+body.app-shell :is(
+  .cf552-record,
+  .cf553-mnemonic,
+  .cf547-training-group,
+  .cf549-disease-group,
+  .cf552-anatomy-subpoint,
+  .ost-skill-group
+)[open] > summary {
+  background: #ffffff !important;
+  border-color: #dce5eb !important;
+  color: #243f50 !important;
+  box-shadow: none !important;
+}
+
+/* Dunkle Schrift und Symbole */
+body.app-shell :is(
+  .cf552-record,
+  .cf553-mnemonic,
+  .cf547-training-group,
+  .cf549-disease-group,
+  .cf552-anatomy-subpoint,
+  .ost-skill-group
+)[open] > summary :is(
+  span, strong, small, b, i, svg
+) {
+  color: #243f50 !important;
+  stroke: currentColor !important;
+}
+
+/* Helle Symbolhintergründe */
+body.app-shell :is(
+  .cf552-record,
+  .cf553-mnemonic,
+  .cf547-training-group,
+  .cf549-disease-group,
+  .ost-skill-group
+)[open] > summary :is(
+  .cf552-record-icon,
+  .cf547-row-icon,
+  .cf549-expand,
+  .ost-skill-acc-icon
+) {
+  background: #eef4f8 !important;
+  color: #243f50 !important;
+}
+
+/* Pfeile und Pluszeichen wieder dunkel */
+body.app-shell :is(
+  .cf552-record,
+  .cf553-mnemonic,
+  .cf552-anatomy-subpoint
+)[open] > summary .cf552-chevron {
+  border-color: #6c8495 !important;
+}
+
+body.app-shell .cf547-training-group[open]
+> summary .cf549-expand,
+body.app-shell .ost-skill-group[open]
+> summary .ost-skill-chevron {
+  color: #243f50 !important;
+  border-color: #6c8495 !important;
+}
+
 
 
