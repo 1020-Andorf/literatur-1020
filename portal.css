@@ -4495,3 +4495,40 @@ nav.cf547-tabs.cf550-material-tabs > button.selected svg * {
   stroke: #ffffff !important;
 }
 
+
+/* Einheitliches Dunkelrot für aktive Untermenüs */
+body.app-shell :is(
+  .cf551-tab.selected,
+  .cf547-tabs button.selected,
+  .cf550-responsive-tabs button.selected,
+  .cf552-record[open] > summary,
+  .cf553-mnemonic[open] > summary,
+  .cf547-training-group[open] > summary,
+  .cf549-disease-group[open] > summary,
+  .cf552-anatomy-subpoint[open] > summary,
+  .ost-skill-group[open] > summary,
+  .filter-chip.active,
+  .clinical-content-tabs .is-active
+) {
+  background: #bd2734 !important;
+  border-color: #bd2734 !important;
+  color: #ffffff !important;
+}
+
+/* Weiße Schrift und Symbole */
+body.app-shell :is(
+  .cf551-tab.selected,
+  .cf547-tabs button.selected,
+  .cf550-responsive-tabs button.selected,
+  .cf552-record[open] > summary,
+  .cf553-mnemonic[open] > summary,
+  .cf547-training-group[open] > summary,
+  .cf549-disease-group[open] > summary,
+  .cf552-anatomy-subpoint[open] > summary,
+  .ost-skill-group[open] > summary
+) :is(span, strong, small, b, svg) {
+  color: #ffffff !important;
+  stroke: currentColor !important;
+}
+
+
