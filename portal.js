@@ -638,12 +638,12 @@
             $('[data-main]').innerHTML = '<p>Bereich nicht gefunden.</p>';
             return;
         }
-        const all = await get('knowledgeModules'), items = (Array.isArray(all) ? all : []).filter(x => x.module === slug && x.status !== 'draft');
+        const all = await get('knowledgeModules'), items = (Array.isArray(all) ? all : []).filter(x => x.module === slug && x.status !== 'draft').sort(ostEditorialOrder);
         const q = new URLSearchParams(location.search).get('id'), current = items.find(x => x.id === q);
         if (slug === 'befund') {
             const base = `<section class="page-banner"><h1>Befundwörterbuch</h1><p>Fachbegriffe und Abkürzungen auf einen Blick.</p></section>`;
             $('[data-main]').innerHTML = base + `<div class="ost-module-toolbar"><input type="search" data-befund-search placeholder="Abkürzung oder Begriff suchen …" aria-label="Befundwörterbuch durchsuchen"></div><div class="ost-dictionary-wrap"><table class="ost-dictionary"><thead><tr><th>Begriff / Abkürzung</th><th>Erklärung</th></tr></thead><tbody data-befund-rows></tbody></table></div>`;
-            const draw = () => { const term = normalizedSearch($('[data-befund-search]').value); const matched = items.filter(x => normalizedSearch([x.title, x.summary, x.body, x.synonyms].join(' ')).includes(term)).sort((a, b) => String(a.title).localeCompare(String(b.title), 'de', { sensitivity: 'base' })); $('[data-befund-rows]').innerHTML = matched.map(x => `<tr><th scope="row">${esc(x.title)}</th><td>${esc(shortModuleExplanation(x) || '–')}</td></tr>`).join('') || '<tr><td colspan="2">Keine Einträge gefunden.</td></tr>'; };
+            const draw = () => { const term = normalizedSearch($('[data-befund-search]').value); const matched = items.filter(x => normalizedSearch([x.title, x.summary, x.body, x.synonyms].join(' ')).includes(term)).sort((a, b) => ostEditorialOrder(a, b) || String(a.title).localeCompare(String(b.title), 'de', { sensitivity: 'base' })); $('[data-befund-rows]').innerHTML = matched.map(x => `<tr><th scope="row">${esc(x.title)}</th><td>${esc(shortModuleExplanation(x) || '–')}</td></tr>`).join('') || '<tr><td colspan="2">Keine Einträge gefunden.</td></tr>'; };
             $('[data-befund-search]').addEventListener('input', draw);
             draw();
             return;
@@ -651,7 +651,7 @@
         if (slug === 'checklists') {
             const base = `<section class="page-banner"><h1>Checklisten</h1></section>`;
             $('[data-main]').innerHTML = base + `<div class="ost-module-toolbar"><input type="search" data-checklist-search placeholder="Checkliste suchen …" aria-label="Checklisten durchsuchen"></div><div class="ost-checklist-list" data-checklist-list></div>`;
-            const draw = () => { const term = normalizedSearch($('[data-checklist-search]').value); const hits = items.filter(x => normalizedSearch([x.title, x.category, x.summary, x.body].join(' ')).includes(term)).sort((a, b) => String(a.title).localeCompare(String(b.title), 'de')); $('[data-checklist-list]').innerHTML = hits.map(x => `<article class="ost-checklist-card"><span class="ost-checklist-icon" aria-hidden="true">${ostIcon('checklist')}</span><div class="ost-checklist-info"><h2>${esc(x.title)}</h2>${x.category ? `<div class="ost-checklist-category">${esc(x.category)}</div>` : ''}${x.summary ? `<p>${esc(x.summary)}</p>` : ''}${x.body ? `<div class="ost-checklist-body">${renderModuleText(x.body)}</div>` : ''}</div>${x.documentUrl && /^https:\/\/[^\s"<>]+$/i.test(x.documentUrl) ? `<a class="ost-checklist-download" href="${esc(x.documentUrl)}" target="_blank" rel="noopener noreferrer" download>PDF öffnen <span aria-hidden="true">↗</span></a>` : '<span class="ost-checklist-missing">Noch kein PDF</span>'}</article>`).join('') || '<p class="empty">Noch keine Checklisten vorhanden.</p>'; };
+            const draw = () => { const term = normalizedSearch($('[data-checklist-search]').value); const hits = items.filter(x => normalizedSearch([x.title, x.category, x.summary, x.body].join(' ')).includes(term)).sort((a, b) => ostEditorialOrder(a, b) || String(a.title).localeCompare(String(b.title), 'de')); $('[data-checklist-list]').innerHTML = hits.map(x => `<article class="ost-checklist-card"><span class="ost-checklist-icon" aria-hidden="true">${ostIcon('checklist')}</span><div class="ost-checklist-info"><h2>${esc(x.title)}</h2>${x.category ? `<div class="ost-checklist-category">${esc(x.category)}</div>` : ''}${x.summary ? `<p>${esc(x.summary)}</p>` : ''}${x.body ? `<div class="ost-checklist-body">${renderModuleText(x.body)}</div>` : ''}</div>${x.documentUrl && /^https:\/\/[^\s"<>]+$/i.test(x.documentUrl) ? `<a class="ost-checklist-download" href="${esc(x.documentUrl)}" target="_blank" rel="noopener noreferrer" download>PDF öffnen <span aria-hidden="true">↗</span></a>` : '<span class="ost-checklist-missing">Noch kein PDF</span>'}</article>`).join('') || '<p class="empty">Noch keine Checklisten vorhanden.</p>'; };
             $('[data-checklist-search]').oninput = draw;
             draw();
             return;
@@ -788,20 +788,53 @@
                 openModuleSheet(current);
         }
     }
+    // Gemeinsame Wissens-Auswahl der Redaktion: Organgruppe vor Inhaltsart.
+    let editorKnowledgeOrgan = 'herz';
+    let editorKnowledgeOrganSetter = null;
     let activeModuleSetter = null;
+    const ostEditorialOrder = (a, b) => {
+        const av = Number(a?.order), bv = Number(b?.order);
+        const ah = a?.order !== undefined && a?.order !== null && Number.isFinite(av);
+        const bh = b?.order !== undefined && b?.order !== null && Number.isFinite(bv);
+        if (!ah && !bh) return 0; // Bestandsreihenfolge nicht heimlich veraendern.
+        return (ah ? av : Number.MAX_SAFE_INTEGER) - (bh ? bv : Number.MAX_SAFE_INTEGER);
+    };
     async function moduleEditor(box, initialModule = 'pharm', editorSection = '') {
         const records = await get('knowledgeModules');
         let items = Array.isArray(records) ? clone(records) : [];
         let active = initialModule;
         let selectedId = '';
-        let organFilter = 'herz';
+        let organFilter = editorSection === 'wissen' ? editorKnowledgeOrgan : 'herz';
+        if (editorSection === 'wissen') editorKnowledgeOrganSetter = id => {
+            organFilter = id;
+            selectedId = '';
+            render();
+        };
         activeModuleSetter = (slug) => { active = slug; selectedId = ''; render(); };
+        const belongsToOrgan = x => {
+            if (!['anatomy', 'befund'].includes(active)) return true;
+            const t = CF_TOPICS.find(t => t.id === organFilter);
+            if (t) {
+                if (x.organGroup) return x.organGroup === t.id;
+                return active === 'anatomy'
+                    ? t.anatomy.test(x.title)
+                    : cfTopicContains([x.title, x.summary, x.body].join(' '), t);
+            }
+            return !CF_TOPICS.some(topic => x.organGroup === topic.id ||
+                (!x.organGroup && (active === 'anatomy'
+                    ? topic.anatomy.test(x.title)
+                    : cfTopicContains([x.title, x.summary, x.body].join(' '), topic))));
+        };
+        const orderedModuleItems = () => items.filter(x => x.module === active && belongsToOrgan(x)).sort(ostEditorialOrder);
+        const moduleOrderPanel = () => {
+            const rows = orderedModuleItems();
+            if (rows.length < 2) return '';
+            return `<section class="ost-order-editor cf562-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Einträge</strong><small>Mit ↑ und ↓ verschieben. Die Reihenfolge wird direkt gespeichert und auf der Website übernommen.</small></div><div class="ost-order-group">${rows.map((x,i) => `<div class="ost-order-entry"><span>${esc(x.title || 'Ohne Titel')}</span><div class="ost-order-buttons"><button type="button" data-mod-order="up" data-mod-order-id="${esc(x.id)}" ${!i ? 'disabled' : ''} aria-label="${esc(x.title)} nach oben">↑</button><button type="button" data-mod-order="down" data-mod-order-id="${esc(x.id)}" ${i === rows.length - 1 ? 'disabled' : ''} aria-label="${esc(x.title)} nach unten">↓</button></div></div>`).join('')}</div></section>`;
+        };
         const anatomyEditorFields = x => `<section class="cf552-subsection-editor"><div class="cf552-subsection-header"><h3>Aufklappbare Unterpunkte</h3><button type="button" class="btn" data-sub-add>+ Unterpunkt</button></div>${(Array.isArray(x.subsections) ? x.subsections : []).map((v, i) => `<div class="cf552-subsection-row" data-sub-index="${i}"><label>Überschrift<input data-sub-title value="${esc(v.title || '')}"></label><label>Inhalt<textarea data-sub-body rows="4">${esc(v.body || '')}</textarea></label><div class="cf552-subsection-actions"><button type="button" data-sub-move="up" ${!i ? 'disabled' : ''}>↑</button><button type="button" data-sub-move="down" ${i === (x.subsections.length - 1) ? 'disabled' : ''}>↓</button><button type="button" data-sub-remove>Entfernen</button></div></div>`).join('')}</section>`;
         const render = () => { const heading = active === 'checklists' ? (editorSection === 'materialien' ? 'Checklisten' : 'Übungschecklisten') : 'Wissensbereiche';
             const description = active === 'checklists' ? 'Checklisten auswählen, bearbeiten oder als PDF ergänzen.' : 'Fachartikel, Begriffe und Geräte pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.';
-            box.innerHTML = `<div class="editor-toolbar"><div><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>Eintrag auswählen<select data-mod-select><option value="">– Bitte auswählen –</option>${items.filter(x => { if (x.module !== active)
-            return false; if (!['anatomy', 'befund'].includes(active))
-            return true; const t = CF_TOPICS.find(t => t.id === organFilter); return t ? (x.organGroup ? x.organGroup === t.id : active === 'anatomy' ? t.anatomy.test(x.title) : cfTopicContains([x.title, x.summary, x.body].join(' '), t)) : !CF_TOPICS.some(t => x.organGroup === t.id || (!x.organGroup && (active === 'anatomy' ? t.anatomy.test(x.title) : cfTopicContains([x.title, x.summary, x.body].join(' '), t)))); }).sort((a, b) => String(a.title).localeCompare(String(b.title), "de")).map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div><p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
+            box.innerHTML = `<div class="editor-toolbar"><div><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) && editorSection !== 'wissen' ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>${editorSection === 'wissen' ? '3. Eintrag auswählen' : 'Eintrag auswählen'}<select data-mod-select><option value="">– Bitte auswählen –</option>${orderedModuleItems().map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div>${moduleOrderPanel()}<p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
         const persist = async () => { const ok = await save('knowledgeModules', items); const el = box.querySelector('[data-mod-note]'); if (el)
             el.textContent = ok ? 'Mit dem Worker synchronisiert.' : 'Lokal gespeichert – Worker-Synchronisierung nicht bestätigt.'; return ok; };
         box.addEventListener('input', e => {
@@ -912,6 +945,22 @@
             await persist();
             render();
             return;
+        } if (e.target.closest('[data-mod-order]')) {
+            const btn = e.target.closest('[data-mod-order]');
+            const rows = orderedModuleItems();
+            const position = rows.findIndex(x => x.id === btn.dataset.modOrderId);
+            const neighbor = rows[position + (btn.dataset.modOrder === 'up' ? -1 : 1)];
+            if (position < 0 || !neighbor) return;
+            // Nur Eintraege derselben Modulart / Organgruppe umsortieren.
+            const ordered = rows.slice();
+            const j = ordered.indexOf(neighbor);
+            [ordered[position], ordered[j]] = [ordered[j], ordered[position]];
+            ordered.forEach((x, i) => { x.order = i + 1; });
+            const ok = await persist();
+            render();
+            const note = box.querySelector('[data-mod-note]');
+            if (note) note.textContent = ok ? 'Reihenfolge gespeichert und synchronisiert.' : 'Reihenfolge nur lokal gespeichert – Worker prüfen.';
+            return;
         } if (e.target.closest('[data-mod-new]')) {
             const id = 'wissen-' + Date.now().toString(36);
             items.unshift({ id, module: active, organGroup: ['anatomy', 'befund'].includes(active) ? organFilter : '', title: 'Neuer Eintrag', category: '', summary: '', body: '', icon: '', image: '', imageCaption: '', sources: '', synonyms: '', reviewOwner: '', reviewDue: '', status: 'draft', related: [] });
@@ -993,6 +1042,9 @@
             const anatomy = km.filter(x => x.module === 'anatomy' && (x.organGroup === t.id || (!x.organGroup && t.anatomy.test(x.title))));
             const terms = km.filter(x => x.module === 'befund' && (x.organGroup === t.id || (!x.organGroup && cfTopicContains([x.title, x.summary, x.body].join(' '), t))));
             const materials = [...literature.filter(x => cfTopicContains([x.title, arr(x.topics).join(' '), x.why].join(' '), t)).map(x => ({ kind: 'article', value: x })), ...km.filter(x => x.module === 'checklists' && cfTopicContains([x.title, x.summary].join(' '), t)).map(x => ({ kind: 'checklist', value: x })), ...(Array.isArray(mnemonicStore) ? mnemonicStore : []).filter(x => String(x.category || '').startsWith('Schema') && cfTopicContains(x.title, t)).map(x => ({ kind: 'mnemonic', value: x }))];
+            diseases.sort((a, b) => ostEditorialOrder(a.value, b.value));
+            anatomy.sort(ostEditorialOrder);
+            terms.sort(ostEditorialOrder);
             return { symptoms, diseases, anatomy, terms, materials };
         };
         const href = (value) => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
@@ -1104,7 +1156,7 @@
             }
             else {
                 const type = selected === 'devices' ? 'mpg' : 'checklists';
-                const items = km.filter(x => x.module === type);
+                const items = km.filter(x => x.module === type).sort(ostEditorialOrder);
                 out.innerHTML = `<h2>${selected === 'devices' ? 'Geräte' : 'Übungschecklisten'}</h2><div class="cf547-rows">${items.map(x => `<button class="cf547-row" data-training-module="${esc(x.id)}"><span class="cf547-row-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join('') || '<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
             }
         }
@@ -1141,7 +1193,7 @@
     async function materialHub() {
         const [modules, algorithms, docs] = await Promise.all([get('knowledgeModules'), get('algorithms'), articles()]);
         const km = Array.isArray(modules) ? modules : [];
-        const checklists = km.filter(x => x.module === 'checklists' && x.status !== 'draft');
+        const checklists = km.filter(x => x.module === 'checklists' && x.status !== 'draft').sort(ostEditorialOrder);
         const mnemonics = (Array.isArray(algorithms) ? algorithms : []).filter(x => String(x.category || '').startsWith('Schema'));
         const refs = [...new Map((Array.isArray(algorithms) ? algorithms : []).filter(x => x.sourceUrl && /^https:\/\//i.test(x.sourceUrl)).map(x => [x.sourceUrl, { title: x.source || 'Leitlinie / Fachquelle', sourceUrl: x.sourceUrl }])).values()];
         const categories = [['guidelines', 'Leitlinien', 'guideline'], ['checklists', 'Checklisten', 'checklist'], ['mnemonics', 'Merkhilfen & Schemata', 'notes'], ['literature', 'Literatur-Archiv', 'book']];
@@ -1815,13 +1867,14 @@
         };
     }
     async function cf551DiseaseEditor(box, d) {
-        let organ = 'herz', selected = '';
+        let organ = editorKnowledgeOrgan, selected = '';
+        editorKnowledgeOrganSetter = id => { organ = id; selected = ''; render(); };
         const groupFor = x => CF_TOPICS.find(t => t.groups.includes(x.group))?.id || 'other';
         const options = () => {
             const values = [];
             d.forEach((sym, si) => arr(sym.causes).forEach((c, ci) => { const v = typeof c === 'string' ? { name: c } : c; if (groupFor(sym) === organ)
                 values.push({ si, ci, c: v, sym, key: si + ':' + ci }); }));
-            return values.sort((a, b) => String(a.c.name || '').localeCompare(String(b.c.name || ''), 'de'));
+            return values.sort((a, b) => ostEditorialOrder(a.c, b.c) || String(a.c.name || '').localeCompare(String(b.c.name || ''), 'de'));
         };
         const field = (label, k, v, large = false) => `<label class="cf551-editor-field"><span>${label}</span>${large ? `<textarea data-disease-field="${k}" rows="${k === 'info' ? 5 : 3}">${esc(v || '')}</textarea>` : `<input data-disease-field="${k}" value="${esc(v || '')}">`}</label>`;
         function current() { return options().find(x => x.key === selected) || null; }
@@ -1834,7 +1887,7 @@
             if (!all.some(x => x.key === selected))
                 selected = all[0]?.key || '';
             const item = current();
-            box.innerHTML = `<section class="cf551-disease-workspace"><div class="cf551-editor-heading"><h2>Krankheitsbilder</h2><div class="cf551-editor-actions"><button type="button" class="btn" data-disease-new>+ Krankheitsbild</button><button type="button" class="btn primary" data-disease-save>Speichern</button></div></div><div class="cf551-editor-pickers"><label>Bereich auswählen<select data-disease-organ>${CF_TOPICS.map(t => `<option value="${t.id}" ${organ === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organ === 'other' ? 'selected' : ''}>Weitere Fachbereiche</option></select></label><label>Krankheitsbild auswählen<select data-disease-pick><option value="">– Bitte auswählen –</option>${all.map(x => `<option value="${x.key}" ${x.key === selected ? 'selected' : ''}>${esc(x.c.name || 'Unbenannt')}</option>`).join('')}</select></label></div><div data-disease-note role="status"></div>${item ? `<div class="cf551-disease-form"><div class="cf551-disease-meta">${field('Krankheitsbild', 'name', item.c.name)}<label class="cf551-editor-field"><span>Leitsymptom (Zuordnung)</span><input data-symptom-title value="${esc(item.sym.title || '')}"></label></div>${field('Typische Symptome', 'symptoms', item.c.symptoms, true)}${field('Erkrankung & Einordnung', 'info', item.c.info, true)}${field('Anatomie / Physiologie', 'physiology', item.c.physiology, true)}${field('Befunde', 'findings', item.c.findings, true)}${field('Relevante Medikamente', 'medications', item.c.medications, true)}${field('Warnzeichen / CAVE', 'cave', item.c.cave, true)}<div class="cf551-disease-meta">${field('Fachquelle URL', 'sourceUrl', item.c.sourceUrl)}${field('Quellenbezeichnung', 'sourceLabel', item.c.sourceLabel)}</div><button class="btn danger" type="button" data-disease-delete>Krankheitsbild löschen</button></div>` : '<div class="cf551-empty-editor">Für diesen Bereich sind noch keine Krankheitsbilder vorhanden. Mit „+ Krankheitsbild“ legst du eines an.</div>'}</section>`;
+            box.innerHTML = `<section class="cf551-disease-workspace"><div class="cf551-editor-heading"><h2>Krankheitsbilder</h2><div class="cf551-editor-actions"><button type="button" class="btn" data-disease-new>+ Krankheitsbild</button><button type="button" class="btn primary" data-disease-save>Speichern</button></div></div><div class="cf551-editor-pickers"><label>3. Krankheitsbild auswählen<select data-disease-pick><option value="">– Bitte auswählen –</option>${all.map(x => `<option value="${x.key}" ${x.key === selected ? 'selected' : ''}>${esc(x.c.name || 'Unbenannt')}</option>`).join('')}</select></label></div><div data-disease-note role="status"></div>${item ? `<div class="cf551-disease-form"><div class="cf551-disease-meta">${field('Krankheitsbild', 'name', item.c.name)}<label class="cf551-editor-field"><span>Leitsymptom (Zuordnung)</span><input data-symptom-title value="${esc(item.sym.title || '')}"></label></div>${field('Typische Symptome', 'symptoms', item.c.symptoms, true)}${field('Erkrankung & Einordnung', 'info', item.c.info, true)}${field('Anatomie / Physiologie', 'physiology', item.c.physiology, true)}${field('Befunde', 'findings', item.c.findings, true)}${field('Relevante Medikamente', 'medications', item.c.medications, true)}${field('Warnzeichen / CAVE', 'cave', item.c.cave, true)}<div class="cf551-disease-meta">${field('Fachquelle URL', 'sourceUrl', item.c.sourceUrl)}${field('Quellenbezeichnung', 'sourceLabel', item.c.sourceLabel)}</div><button class="btn danger" type="button" data-disease-delete>Krankheitsbild löschen</button></div>` : '<div class="cf551-empty-editor">Für diesen Bereich sind noch keine Krankheitsbilder vorhanden. Mit „+ Krankheitsbild“ legst du eines an.</div>'}${all.length > 1 ? `<section class="ost-order-editor cf562-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Krankheitsbilder</strong><small>Mit ↑ und ↓ verschieben. Speichert direkt und wird öffentlich übernommen.</small></div><div class="ost-order-group">${all.map((x,i) => `<div class="ost-order-entry"><span>${esc(x.c.name || 'Ohne Titel')}</span><div class="ost-order-buttons"><button type="button" data-disease-order="up" data-disease-key="${esc(x.key)}" ${!i ? 'disabled' : ''} aria-label="${esc(x.c.name)} nach oben">↑</button><button type="button" data-disease-order="down" data-disease-key="${esc(x.key)}" ${i===all.length-1 ? 'disabled' : ''} aria-label="${esc(x.c.name)} nach unten">↓</button></div></div>`).join('')}</div></section>` : ''}</section>`;
         }
         render();
         box.oninput = e => { if (e.target.matches('[data-disease-field], [data-symptom-title]'))
@@ -1851,6 +1904,25 @@
             render();
         } };
         box.onclick = async (e) => {
+            if (e.target.closest('[data-disease-order]')) {
+                store();
+                const btn = e.target.closest('[data-disease-order]');
+                const rows = options(), position = rows.findIndex(x => x.key === btn.dataset.diseaseKey);
+                const neighbor = rows[position + (btn.dataset.diseaseOrder === 'up' ? -1 : 1)];
+                if (position < 0 || !neighbor) return;
+                const ordered = rows.slice(), j = ordered.indexOf(neighbor);
+                [ordered[position], ordered[j]] = [ordered[j], ordered[position]];
+                ordered.forEach((x, i) => {
+                    // Strings zu editierbaren Objekten wandeln; Zuordnung zum Symptom bleibt bestehen.
+                    const original = d[x.si].causes[x.ci];
+                    d[x.si].causes[x.ci] = { ...(typeof original === 'string' ? { name: original } : original), order: i + 1 };
+                });
+                const ok = await save('differential', d);
+                render();
+                const note = box.querySelector('[data-disease-note]');
+                if (note) note.textContent = ok ? 'Reihenfolge gespeichert und synchronisiert.' : 'Reihenfolge lokal gespeichert – Worker prüfen.';
+                return;
+            }
             if (e.target.closest('[data-disease-save]')) {
                 store();
                 const note = box.querySelector('[data-disease-note]');
@@ -2420,7 +2492,7 @@
         groupedEditorMenu.className = 'editor-grouped-menu ost-editor-workflow cf551-editor-workflow';
         const editorTopLevel = ['wissen', 'training', 'materialien', 'termine', 'dienstbesprechungen', 'lehrmeinung'];
         const editorGroupTile = g => `<button type="button" class="cf555-editor-main-tile" data-editor-main="${g.id}" aria-label="${esc(g.title)}" aria-pressed="false"><span class="cf555-editor-icon">${g.icon}</span><strong>${esc(g.id === 'lehrmeinung' ? 'Lehrmeinung' : g.title)}</strong></button>`;
-        groupedEditorMenu.innerHTML = `<nav class="cf555-editor-main-menu" aria-label="Redaktion: Hauptbereiche">${editorTopLevel.map(id => editorGroupTile(editorGroups.find(g => g.id === id))).join('')}</nav><nav class="cf555-editor-extras" aria-label="Weitere Redaktionsinhalte">${['aktuelles', 'literatur'].map(id => editorGroupTile(editorGroups.find(g => g.id === id))).join('')}</nav><div class="cf550-editor-choice" hidden><label for="cf550-editor-group-picker">Bereich auswählen</label><select id="cf550-editor-group-picker" data-editor-group-picker>${editorGroups.map(g => `<option value="${g.id}">${g.title}</option>`).join('')}</select></div><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
+        groupedEditorMenu.innerHTML = `<nav class="cf555-editor-main-menu" aria-label="Redaktion: Hauptbereiche">${editorTopLevel.map(id => editorGroupTile(editorGroups.find(g => g.id === id))).join('')}</nav><nav class="cf555-editor-extras" aria-label="Weitere Redaktionsinhalte">${['aktuelles', 'literatur'].map(id => editorGroupTile(editorGroups.find(g => g.id === id))).join('')}</nav><div class="cf550-editor-choice" hidden><label for="cf550-editor-group-picker">Bereich auswählen</label><select id="cf550-editor-group-picker" data-editor-group-picker>${editorGroups.map(g => `<option value="${g.id}">${g.title}</option>`).join('')}</select></div><section class="cf562-editor-organs" data-editor-organs hidden><h3>1. Organgruppe</h3><nav class="cf562-editor-organ-grid" aria-label="Organgruppe für Wissen wählen">${CF_TOPICS.map(t => `<button type="button" class="cf562-editor-organ" data-editor-organ="${esc(t.id)}" aria-pressed="false">${ostIcon(t.icon)}<span>${esc(t.label)}</span></button>`).join('')}</nav></section><h3 class="cf562-editor-subheading" data-editor-subheading hidden>2. Inhalte</h3><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
         $('.editor-dashboard').insertBefore(groupedEditorMenu, $('.editor-content'));
         $('.editor-dashboard').after($('.admin-tools'));
         const syncGroupedEditorMenu = tab => {
@@ -2432,6 +2504,14 @@
                 groupPicker.value = group.id;
             groupedEditorMenu.querySelectorAll('[data-editor-main]').forEach(tile => {
                 const active = tile.dataset.editorMain === group.id;
+                tile.classList.toggle('active', active);
+                tile.setAttribute('aria-pressed', String(active));
+            });
+            const organSection = groupedEditorMenu.querySelector('[data-editor-organs]');
+            organSection.hidden = group.id !== 'wissen';
+            groupedEditorMenu.querySelector('[data-editor-subheading]').hidden = group.id !== 'wissen';
+            groupedEditorMenu.querySelectorAll('[data-editor-organ]').forEach(tile => {
+                const active = group.id === 'wissen' && tile.dataset.editorOrgan === editorKnowledgeOrgan;
                 tile.classList.toggle('active', active);
                 tile.setAttribute('aria-pressed', String(active));
             });
@@ -2464,8 +2544,7 @@
             if (id.startsWith('modules:')) {
                 moduleRequested = id.split(':')[1];
                 $('.editor-nav [data-tab="modules"]')?.click();
-                if (activeModuleSetter)
-                    activeModuleSetter(moduleRequested);
+                // Der Editor wird ueber die Navigation mit der neuen Modulart geladen.
             }
             else
                 $('.editor-nav [data-tab="' + id + '"]')?.click();
@@ -2484,6 +2563,17 @@
                 selectEditorGroup(main.dataset.editorMain);
                 return;
             }
+            const organTile = e.target.closest('[data-editor-organ]');
+            if (organTile) {
+                editorKnowledgeOrgan = organTile.dataset.editorOrgan;
+                groupedEditorMenu.querySelectorAll('[data-editor-organ]').forEach(tile => {
+                    const active = tile.dataset.editorOrgan === editorKnowledgeOrgan;
+                    tile.classList.toggle('active', active);
+                    tile.setAttribute('aria-pressed', String(active));
+                });
+                if (editorKnowledgeOrganSetter) editorKnowledgeOrganSetter(editorKnowledgeOrgan);
+                return;
+            }
             const sub = e.target.closest('[data-editor-subtab]');
             if (sub)
                 navigateEditorTab(sub.dataset.editorSubtab);
@@ -2498,7 +2588,8 @@
             return; if (currentEditorState && currentEditorState.view !== 'attendance') {
             readAll(currentEditorState.name, currentEditorState.d, currentEditorState.box);
             editorDrafts.set(currentEditorState.name, currentEditorState.d);
-        } $$('.editor-nav-btn').forEach(x => x.classList.toggle('active', x === b)); if (mobilePick)
+        } editorKnowledgeOrganSetter = null;
+        $$('.editor-nav-btn').forEach(x => x.classList.toggle('active', x === b)); if (mobilePick)
             mobilePick.querySelector('select').value = b.dataset.tab; syncGroupedEditorMenu(b.dataset.tab); draw(b.dataset.tab); };
         const hash = location.hash.replace('#', '');
         const initialTab = hash === 'literatur' ? 'articles' : hash && tabs.some(t => t[0] === hash) ? hash : 'differential';
