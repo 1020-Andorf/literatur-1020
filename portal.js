@@ -481,12 +481,13 @@ async function modulePage(){
 }
 let activeModuleSetter=null;
 async function moduleEditor(box,initialModule='pharm'){
- const records=await get('knowledgeModules');let items=Array.isArray(records)?clone(records):[];let active=initialModule;let selectedId='';activeModuleSetter=(slug)=>{active=slug;selectedId='';render()};
- const render=()=>{box.innerHTML=`<div class="editor-toolbar"><div><h2>Wissensbereiche</h2><p>Fachartikel, Begriffe, MPG-Geräte und Checklisten pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker"><label>Eintrag auswählen<select data-mod-select><option value="">– Bitte auswählen –</option>${items.filter(x=>x.module===active).sort((a,b)=>String(a.title).localeCompare(String(b.title),"de")).map(x=>`<option value="${esc(x.id)}" ${selectedId===x.id?"selected":""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x=>x.module===active&&x.id===selectedId).map(x=>`<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title||'Ohne Titel')}</strong><span>${x.status==='draft'?'Entwurf':'Öffentlich'}</span></summary><div class="ost-module-fields">${moduleFields(x)}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status!=='draft'?'selected':''}>Veröffentlicht</option><option value="draft" ${x.status==='draft'?'selected':''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('')||'<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div><p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`};
+ const records=await get('knowledgeModules');let items=Array.isArray(records)?clone(records):[];let active=initialModule;let selectedId='';let organFilter='herz';activeModuleSetter=(slug)=>{active=slug;selectedId='';render()};
+ const render=()=>{box.innerHTML=`<div class="editor-toolbar"><div><h2>Wissensbereiche</h2><p>Fachartikel, Begriffe, MPG-Geräte und Checklisten pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy','befund'].includes(active)?`<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t=>`<option value="${esc(t.id)}" ${organFilter===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter==='other'?'selected':''}>Weitere Themen</option></select></label>`:''}<label>Eintrag auswählen<select data-mod-select><option value="">– Bitte auswählen –</option>${items.filter(x=>{if(x.module!==active)return false;if(!['anatomy','befund'].includes(active))return true;const t=CF_TOPICS.find(t=>t.id===organFilter);return t?(x.organGroup?x.organGroup===t.id:active==='anatomy'?t.anatomy.test(x.title):cfTopicContains([x.title,x.summary,x.body].join(' '),t)):!CF_TOPICS.some(t=>x.organGroup===t.id||(!x.organGroup&&(active==='anatomy'?t.anatomy.test(x.title):cfTopicContains([x.title,x.summary,x.body].join(' '),t))))}).sort((a,b)=>String(a.title).localeCompare(String(b.title),"de")).map(x=>`<option value="${esc(x.id)}" ${selectedId===x.id?"selected":""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x=>x.module===active&&x.id===selectedId).map(x=>`<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title||'Ohne Titel')}</strong><span>${x.status==='draft'?'Entwurf':'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy','befund'].includes(active)?`<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t=>`<option value="${esc(t.id)}" ${x.organGroup===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup==='other'?'selected':''}>Weitere Themen</option></select></label>`:''}${moduleFields(x)}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status!=='draft'?'selected':''}>Veröffentlicht</option><option value="draft" ${x.status==='draft'?'selected':''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('')||'<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div><p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`};
  const persist=async()=>{const ok=await save('knowledgeModules',items);const el=box.querySelector('[data-mod-note]');if(el)el.textContent=ok?'Mit dem Worker synchronisiert.':'Lokal gespeichert – Worker-Synchronisierung nicht bestätigt.';return ok};
- box.addEventListener('change',async e=>{if(e.target.matches("[data-mod-select]")){selectedId=e.target.value;render();return;}const input=e.target.closest('[data-module-upload]');if(!input?.files?.[0])return;const file=input.files[0];if(file.size>10*1024*1024){alert('Bitte Dateien unter 10 MB wählen.');return}if(input.dataset.moduleUpload==='pdf'&&(file.type!=='application/pdf'||!file.name.toLowerCase().endsWith('.pdf'))){alert('Bitte eine PDF-Datei wählen.');return}const card=input.closest('[data-mod-id]');if(!card)return;const note=card.querySelector('.ost-module-upload-note')||document.createElement('div');note.className='ost-module-upload-note';input.parentElement.after(note);note.textContent='Bild wird hochgeladen …';try{const url=await uploadMedia(file);if(input.dataset.moduleUpload==='pdf'){card.querySelector('[data-mf="documentUrl"]').value=url}else if(input.dataset.moduleUpload==='cover'){card.querySelector('[data-mf="image"]').value=url}else{const field=card.querySelector('[data-mf="body"]');const pos=field.selectionStart??field.value.length;field.setRangeText(`\n\n![${file.name.replace(/\.[^.]+$/,'')}](${url})\n\n`,pos,pos,'end');field.focus()}note.textContent='Hochgeladen – bitte anschließend „Speichern“ wählen.'}catch(err){note.textContent='Upload fehlgeschlagen: '+err.message}input.value=''});
+ box.addEventListener('input',e=>{const field=e.target.closest('[data-mf]');const item=field?.closest('[data-mod-id]');if(field&&item){const x=items.find(i=>i.id===item.dataset.modId);if(x)x[field.dataset.mf]=field.value}});
+ box.addEventListener('change',async e=>{if(e.target.matches('[data-mod-region]')){organFilter=e.target.value;selectedId='';render();return;}if(e.target.matches("[data-mod-select]")){selectedId=e.target.value;render();return;}const input=e.target.closest('[data-module-upload]');if(!input?.files?.[0])return;const file=input.files[0];if(file.size>10*1024*1024){alert('Bitte Dateien unter 10 MB wählen.');return}if(input.dataset.moduleUpload==='pdf'&&(file.type!=='application/pdf'||!file.name.toLowerCase().endsWith('.pdf'))){alert('Bitte eine PDF-Datei wählen.');return}const card=input.closest('[data-mod-id]');if(!card)return;const note=card.querySelector('.ost-module-upload-note')||document.createElement('div');note.className='ost-module-upload-note';input.parentElement.after(note);note.textContent='Bild wird hochgeladen …';try{const url=await uploadMedia(file);if(input.dataset.moduleUpload==='pdf'){card.querySelector('[data-mf="documentUrl"]').value=url}else if(input.dataset.moduleUpload==='cover'){card.querySelector('[data-mf="image"]').value=url}else{const field=card.querySelector('[data-mf="body"]');const pos=field.selectionStart??field.value.length;field.setRangeText(`\n\n![${file.name.replace(/\.[^.]+$/,'')}](${url})\n\n`,pos,pos,'end');field.focus()}note.textContent='Hochgeladen – bitte anschließend „Speichern“ wählen.'}catch(err){note.textContent='Upload fehlgeschlagen: '+err.message}input.value=''});
  box.addEventListener('click',e=>{const btn=e.target.closest('[data-rich]');if(!btn)return;const card=btn.closest('[data-mod-id]'),area=card?.querySelector('[data-mf="body"]');if(!area)return;const a=area.selectionStart,b=area.selectionEnd,v=area.value,sel=v.slice(a,b);if(btn.dataset.rich==="image"){card?.querySelector('[data-module-upload="inline"]')?.click();return;}let replacement='';switch(btn.dataset.rich){case 'heading':replacement='## '+(sel||'Neue Überschrift');break;case 'bold':replacement='**'+(sel||'Wichtiger Begriff')+'**';break;case 'italic':replacement='*'+(sel||'Hervorhebung')+'*';break;case 'list':replacement='- '+(sel||'Listenpunkt');break;case 'image':card?.querySelector('[data-module-upload="inline"]')?.click();return;}area.setRangeText(replacement,a,b,'end');area.focus()});
- box.onclick=async e=>{const tab=e.target.closest('[data-mod-tab]');if(tab){active=tab.dataset.modTab;render();return}if(e.target.closest('[data-mod-seed]')){const seeds=window.OST1020_MODULE_SEED||[];const updates=seeds.filter(seed=>seed.module===active&&items.some(x=>x.id===seed.id&&(x.body!==seed.body||x.image!==seed.image)));if(!updates.length){alert('Für diese Rubrik liegen keine neueren Lerntexte vor.');return}if(!confirm(updates.length+' bestehende Einträge mit erweiterten Lerntexten und Abbildungen aus der Projektversion aktualisieren? Eigene Texte in diesen Einträgen werden ersetzt. Vorher ein Backup der Produktivdaten erstellen.'))return;items=items.map(x=>{const seed=updates.find(y=>y.id===x.id);return seed?{...x,body:seed.body,image:seed.image||x.image,imageCaption:seed.imageCaption||x.imageCaption,sources:x.sources||seed.sources}:x});await persist();render();return}if(e.target.closest('[data-mod-new]')){const id='wissen-'+Date.now().toString(36);items.unshift({id,module:active,title:'Neuer Eintrag',category:'',summary:'',body:'',icon:'',image:'',imageCaption:'',sources:'',synonyms:'',reviewOwner:'',reviewDue:'',status:'draft',related:[]});selectedId=id;render();const el=box.querySelector('[data-mod-id="'+id+'"]');if(el)el.open=true;return}const card=e.target.closest('[data-mod-id]');if(!card)return;const x=items.find(i=>i.id===card.dataset.modId);if(!x)return;if(e.target.closest('[data-mod-delete]')){if(!confirm('Eintrag endgültig löschen?'))return;items=items.filter(i=>i!==x);await persist();render();return}if(e.target.closest('[data-mod-save]')){card.querySelectorAll('[data-mf]').forEach(el=>x[el.dataset.mf]=el.value);if(!x.title.trim()){alert('Titel fehlt.');return}await persist();render()}};
+ box.onclick=async e=>{const tab=e.target.closest('[data-mod-tab]');if(tab){active=tab.dataset.modTab;render();return}if(e.target.closest('[data-mod-seed]')){const seeds=window.OST1020_MODULE_SEED||[];const updates=seeds.filter(seed=>seed.module===active&&items.some(x=>x.id===seed.id&&(x.body!==seed.body||x.image!==seed.image)));if(!updates.length){alert('Für diese Rubrik liegen keine neueren Lerntexte vor.');return}if(!confirm(updates.length+' bestehende Einträge mit erweiterten Lerntexten und Abbildungen aus der Projektversion aktualisieren? Eigene Texte in diesen Einträgen werden ersetzt. Vorher ein Backup der Produktivdaten erstellen.'))return;items=items.map(x=>{const seed=updates.find(y=>y.id===x.id);return seed?{...x,body:seed.body,image:seed.image||x.image,imageCaption:seed.imageCaption||x.imageCaption,sources:x.sources||seed.sources}:x});await persist();render();return}if(e.target.closest('[data-mod-new]')){const id='wissen-'+Date.now().toString(36);items.unshift({id,module:active,organGroup:['anatomy','befund'].includes(active)?organFilter:'',title:'Neuer Eintrag',category:'',summary:'',body:'',icon:'',image:'',imageCaption:'',sources:'',synonyms:'',reviewOwner:'',reviewDue:'',status:'draft',related:[]});selectedId=id;render();const el=box.querySelector('[data-mod-id="'+id+'"]');if(el)el.open=true;return}const card=e.target.closest('[data-mod-id]');if(!card)return;const x=items.find(i=>i.id===card.dataset.modId);if(!x)return;if(e.target.closest('[data-mod-delete]')){if(!confirm('Eintrag endgültig löschen?'))return;items=items.filter(i=>i!==x);await persist();render();return}if(e.target.closest('[data-mod-save]')){card.querySelectorAll('[data-mf]').forEach(el=>x[el.dataset.mf]=el.value);if(!x.title.trim()){alert('Titel fehlt.');return}await persist();render()}};
  render();
 }
 
@@ -501,86 +502,66 @@ const CF_TOPICS=[
 const CF_ORGAN_TABS=[['anatomy','Anatomie & Physiologie','anatomy'],['diseases','Krankheitsbilder','heart'],['terms','Fachbegriffe','dictionary'],['materials','Materialien','book']];
 const cfTopicContains=(value,topic)=>{const text=normalizedSearch(value);return topic.terms.some(term=>text.includes(normalizedSearch(term)))};
 async function topicHub(){
- const params=new URLSearchParams(location.search),initial=params.get('thema')||'',search=params.get('suche')||'';
+ const params=new URLSearchParams(location.search);
  const [modules,differentials,literature,mnemonicStore]=await Promise.all([get('knowledgeModules'),get('differential'),articles(),get('algorithms')]);
  const km=(Array.isArray(modules)?modules:[]).filter(x=>x.status!=='draft');
- const catalog=await contentCatalog(),area=$('[data-main]');
- let active=CF_TOPICS.find(t=>t.id===initial)||null;
- let tab=['anatomy','diseases','terms','materials'].includes(params.get('ansicht'))?params.get('ansicht'):'anatomy';
- const organCard=t=>`<button type="button" class="cf547-organ" data-cf-organ="${esc(t.id)}"><span class="cf547-organ-icon">${ostIcon(t.icon)}</span><strong>${esc(t.label)}</strong><b>›</b></button>`;
- area.innerHTML=`<section class="cf547 clinical-knowledge cf549-knowledge"><div class="cf547-search">${ostIcon('search')}<input data-cf-search type="search" placeholder="Erkrankung, Organ, Fachbegriff suchen …" value="${esc(search)}" aria-label="Wissen durchsuchen"></div><div data-cf-heading class="cf547-heading"></div><div data-cf-view></div></section>`;
- const heading=$('[data-cf-heading]'),view=$('[data-cf-view]'),input=$('[data-cf-search]');
- function info(t){
+ const area=$('[data-main]');
+ let organ=CF_TOPICS.find(t=>t.id===params.get('thema'))||CF_TOPICS[0];
+ const views=[['anatomy','Anatomie & Physiologie','anatomy'],['diseases','Krankheitsbilder','heart'],['symptoms','Symptome','search'],['terms','Fachbegriffe','dictionary'],['materials','Materialien','book']];
+ let tab=views.some(v=>v[0]===params.get('ansicht'))?params.get('ansicht'):'anatomy';
+ let chosen=params.get('eintrag')||'';
+ area.innerHTML=`<section class="cf551-wissen"><div class="cf547-search">${ostIcon('search')}<input data-cf-search type="search" placeholder="Erkrankung, Organ, Fachbegriff suchen …" aria-label="Wissen durchsuchen"></div><nav class="cf551-organ-nav" data-cf-organs aria-label="Organgruppe auswählen"></nav><nav class="cf551-category-nav" data-cf-categories aria-label="Inhaltsart auswählen"></nav><div class="cf551-content" data-cf-content></div></section>`;
+ const input=$('[data-cf-search]',area),organBar=$('[data-cf-organs]',area),categoryBar=$('[data-cf-categories]',area),out=$('[data-cf-content]',area);
+ const plain=(value)=>esc(Array.isArray(value)?value.join(', '):String(value||''));
+ const section=(title,value)=>value?`<section class="cf551-article-section"><h3>${esc(title)}</h3><p>${plain(value)}</p></section>`:'';
+ const info=t=>{
   const symptoms=differentials.filter(d=>t.groups.includes(d.group));
   const diseases=[];const names=new Set();
-  symptoms.forEach(d=>arr(d.causes).forEach((c,index)=>{const a=typeof c==='string'?{name:c}:c;if(!a.name)return;const k=normalizedSearch(a.name);if(names.has(k))return;names.add(k);diseases.push({c:a,source:d,index})}));
-  const anatomy=km.filter(x=>x.module==='anatomy'&&t.anatomy.test(x.title));
-  const terms=km.filter(x=>x.module==='befund'&&cfTopicContains([x.title,x.summary,x.body].join(' '),t));
-  const materials=[
-   ...literature.filter(x=>cfTopicContains([x.title,arr(x.topics).join(' '),x.why].join(' '),t)).map(x=>({kind:'article',record:x,title:x.title})),
-   ...km.filter(x=>x.module==='checklists'&&cfTopicContains([x.title,x.summary].join(' '),t)).map(x=>({kind:'checklist',record:x,title:x.title})),
-   ...(Array.isArray(mnemonicStore)?mnemonicStore:[]).filter(x=>String(x.category||'').startsWith('Schema')&&cfTopicContains(x.title,t)).map(x=>({kind:'mnemonic',record:x,title:x.title}))
-  ];
+  symptoms.forEach(d=>arr(d.causes).forEach((c,index)=>{const value=typeof c==='string'?{name:c}:c;if(!value.name)return;const key=normalizedSearch(value.name);if(names.has(key))return;names.add(key);diseases.push({value,source:d,index})}));
+  const anatomy=km.filter(x=>x.module==='anatomy'&&(x.organGroup===t.id||(!x.organGroup&&t.anatomy.test(x.title))));
+  const terms=km.filter(x=>x.module==='befund'&&(x.organGroup===t.id||(!x.organGroup&&cfTopicContains([x.title,x.summary,x.body].join(' '),t))));
+  const materials=[...literature.filter(x=>cfTopicContains([x.title,arr(x.topics).join(' '),x.why].join(' '),t)).map(x=>({kind:'article',value:x})),...km.filter(x=>x.module==='checklists'&&cfTopicContains([x.title,x.summary].join(' '),t)).map(x=>({kind:'checklist',value:x})),...(Array.isArray(mnemonicStore)?mnemonicStore:[]).filter(x=>String(x.category||'').startsWith('Schema')&&cfTopicContains(x.title,t)).map(x=>({kind:'mnemonic',value:x}))];
   return {symptoms,diseases,anatomy,terms,materials};
- }
- const row=(key,ico,title)=>`<button type="button" class="cf547-row" data-cf-open="${esc(key)}"><span class="cf547-row-icon">${ostIcon(ico)}</span><strong>${esc(title)}</strong><b>›</b></button>`;
- const openModule=x=>open(x.title,`<article class="cf547-sheet"><div class="ost-module-body">${renderModuleText(x.body)}</div>${x.sources?`<section class="cf547-source"><strong>Quellen</strong><p>${esc(x.sources)}</p></section>`:''}</article>`,{sheet:true});
- const openDisease=(entry)=>{
-  const {c,source}=entry;
-  const text=(v)=>esc(Array.isArray(v)?v.join(', '):v||'');
-  const present=(k,v)=>v?`<section class="cf549-disease-section"><h3>${k}</h3><p>${text(v)}</p></section>`:'';
-  const symptoms=c.symptoms||source.title;
-  const medicines=c.medications||c.medication||'';
-  open(c.name,`<article class="cf549-disease-detail">${present('Symptome',symptoms)}${present('Anatomie & Physiologie',c.physiology)}${present('Typische Befunde',c.findings)}${present('Erkrankung / Einordnung',c.info)}${present('Relevante Medikamente',medicines)}${present('Warnzeichen',c.cave)}${c.sourceUrl&&/^https?:\/\//i.test(c.sourceUrl)?`<p><a class="btn primary" href="${esc(c.sourceUrl)}" rel="noopener noreferrer" target="_blank">${esc(c.sourceLabel||'Fachquelle öffnen')} ↗</a></p>`:''}</article>`,{sheet:true});
  };
- let visible=[];
- function draw(){
-  const q=input.value.trim();visible=[];
-  const barTitle=$('.topbar .brand strong');if(barTitle)barTitle.textContent=active?active.label:'Wissen';
-  if(q){
-   const needle=normalizedSearch(q),match=value=>normalizedSearch(value).includes(needle);
-   const diseaseHits=differentials.flatMap(x=>arr(x.causes).map(raw=>({c:typeof raw==='string'?{name:raw}:raw,source:x}))).filter(x=>match([x.c.name,x.c.symptoms,x.c.medications,x.source.title].join(' '))).slice(0,35);
-   const moduleHits=km.filter(x=>['anatomy','befund'].includes(x.module)&&match([x.title,x.summary,x.body].join(' '))).slice(0,24);
-   const otherHits=catalogSearch(catalog,q).filter(x=>['articles','checklists'].includes(x.type)).slice(0,15);
-   heading.innerHTML='';
-   view.innerHTML=`<div class="cf547-results"><h2>Suchergebnisse</h2><div class="cf547-rows">${diseaseHits.map((x,i)=>row('searchd:'+i,'heart',x.c.name)).join('')}${moduleHits.map((x,i)=>row('searchm:'+i,x.module==='anatomy'?'anatomy':'dictionary',x.title)).join('')}${otherHits.map(x=>`<a class="cf547-row" href="${esc(x.href||'materialien.html')}"><span class="cf547-row-icon">${ostIcon('book')}</span><strong>${esc(x.title)}</strong><b>›</b></a>`).join('')}</div>${!diseaseHits.length&&!moduleHits.length&&!otherHits.length?'<p class="cf547-empty">Keine Treffer.</p>':''}</div>`;
-   view.onclick=e=>{const b=e.target.closest('[data-cf-open]');if(!b)return;const key=b.dataset.cfOpen;if(key.startsWith('searchd:')){const entry=diseaseHits[Number(key.slice(8))];if(entry)openDisease(entry)}else if(key.startsWith('searchm:')){const entry=moduleHits[Number(key.slice(8))];if(entry)openModule(entry)}};
-   return;
-  }
-  if(!active){
-   heading.innerHTML='';
-   view.innerHTML=`<div class="cf549-organ-header"><h1>Wissen</h1></div><div class="cf547-organs">${CF_TOPICS.map(organCard).join('')}</div>`;
-   return;
-  }
-  const sets=info(active);
-  heading.innerHTML='';
-  let cards=[];
-  if(tab==='anatomy')cards=sets.anatomy.map(x=>({key:'module:'+x.id,ico:'anatomy',title:x.title}));
-  if(tab==='diseases')cards=sets.diseases.map((x,i)=>({key:'disease:'+i,ico:'heart',title:x.c.name}));
-  if(tab==='terms')cards=sets.terms.map(x=>({key:'module:'+x.id,ico:'dictionary',title:x.title}));
-  if(tab==='materials')cards=sets.materials.map((x,i)=>({key:'material:'+i,ico:x.kind==='checklist'?'checklist':x.kind==='mnemonic'?'notes':'book',title:x.title}));
-  visible=cards;
-  const diseaseGroups=tab==='diseases'?`<div class="cf549-disease-groups">${sets.symptoms.map((sym,si)=>{const entries=sets.diseases.map((entry,i)=>({...entry,i})).filter(entry=>entry.source===sym);if(!entries.length)return '';return `<details class="cf549-disease-group" ${si===0?'open':''}><summary><span>${esc(sym.title)}</span><span class="cf549-group-count">${entries.length}</span><span class="cf549-expand" aria-hidden="true"></span></summary><div class="cf547-rows">${entries.map(entry=>row('disease:'+entry.i,'heart',entry.c.name)).join('')}</div></details>`}).join('')}</div>`:'';
-  const rowsHtml=tab==='diseases'?diseaseGroups:`<div class="cf547-rows">${cards.map(x=>row(x.key,x.ico,x.title)).join('')||'<p class="cf547-empty">Noch keine Inhalte vorhanden.</p>'}</div>`;
-  const hero=active.image?`<img src="assets/anatomie/${active.image}.svg" loading="lazy" alt="Anatomie ${esc(active.label)}">`:`${ostIcon(active.icon)}`;
-  view.innerHTML=`<nav class="cf547-tabs cf549-organ-tabs cf550-responsive-tabs" aria-label="Themenbereiche: ${esc(active.label)}">${CF_ORGAN_TABS.map(([id,label,ico])=>`<button type="button" data-cf-tab="${id}" class="${tab===id?'selected':''}" aria-pressed="${tab===id}">${ostIcon(ico)}<span>${label}</span></button>`).join('')}</nav><section class="cf547-content"><h2>${esc(CF_ORGAN_TABS.find(x=>x[0]===tab)[1])}</h2>${rowsHtml}</section>`;
-  view.onclick=e=>{
-   const bt=e.target.closest('[data-cf-tab]');if(bt){tab=bt.dataset.cfTab;history.replaceState(null,'','themen-uebersicht.html?thema='+encodeURIComponent(active.id)+'&ansicht='+encodeURIComponent(tab));const y=window.scrollY;draw();window.scrollTo(0,y);return}
-   const item=e.target.closest('[data-cf-open]');if(!item)return;
-   const key=item.dataset.cfOpen;
-   if(key.startsWith('module:')){const x=[...sets.anatomy,...sets.terms].find(v=>String(v.id)===key.slice(7));if(x)openModule(x)}
-   else if(key.startsWith('disease:')){const entry=sets.diseases[Number(key.slice(8))];if(entry)openDisease(entry)}
-   else if(key.startsWith('material:')){
-    const entry=sets.materials[Number(key.slice(9))];if(!entry)return;
-    const r=entry.record,link=entry.kind==='checklist'?r.documentUrl:(r.freeUrl||r.publisherUrl||'');
-    const body=entry.kind==='mnemonic'?arr(r.steps).map(st=>`<p class="cf547-mnemonic-step">${esc(st)}</p>`).join(''):entry.kind==='checklist'?renderModuleText(r.body||r.summary||''):renderModuleText(r.why||'');
-    open(entry.title,`<div class="cf547-sheet">${body}${/^https?:\/\//i.test(link)?`<a class="btn primary" href="${esc(link)}" rel="noopener noreferrer" target="_blank">Quelle öffnen ↗</a>`:''}</div>`,{sheet:true});
-   }
-  };
+ const href=(value)=>/^https?:\/\//i.test(String(value||''))?String(value):'';
+ function entries(){
+  const d=info(organ);
+  if(tab==='anatomy')return d.anatomy.map(x=>({id:'anatomy:'+x.id,title:x.title,icon:'anatomy',type:'module',value:x}));
+  if(tab==='terms')return d.terms.map(x=>({id:'term:'+x.id,title:x.title,icon:'dictionary',type:'module',value:x}));
+  if(tab==='symptoms')return d.symptoms.map(x=>({id:'symptom:'+x.id,title:x.title,icon:'search',type:'symptom',value:x}));
+  if(tab==='diseases')return d.diseases.map(({value,source,index})=>({id:'disease:'+source.id+':'+index,title:value.name,icon:'heart',type:'disease',value,source}));
+  return d.materials.map(({kind,value},i)=>({id:'material:'+kind+':'+(value.id||i),title:value.title||'Material',icon:kind==='checklist'?'checklist':'book',type:kind,value}));
  }
- view.addEventListener('click',e=>{const b=e.target.closest('[data-cf-organ]');if(!b)return;active=CF_TOPICS.find(t=>t.id===b.dataset.cfOrgan)||null;tab='anatomy';history.replaceState(null,'','themen-uebersicht.html?thema='+encodeURIComponent(active.id));draw();window.scrollTo({top:0,behavior:'instant'})});
- input.oninput=draw;
- window.addEventListener('popstate',()=>{const p=new URLSearchParams(location.search);active=CF_TOPICS.find(t=>t.id===p.get('thema'))||null;tab=p.get('ansicht')||'anatomy';draw()});
+ function article(item){
+  if(!item)return '<div class="cf551-empty">Hier sind noch keine Inhalte hinterlegt.</div>';
+  const {value:v}=item;let body='';
+  if(item.type==='disease'){
+   const symptom=v.symptoms||item.source.title;
+   body=section('Symptome',symptom)+section('Erkrankung & Einordnung',v.info)+section('Physiologie / Pathophysiologie',v.physiology)+section('Typische Befunde',v.findings)+section('Relevante Medikamente',v.medications||v.medication)+section('Warnzeichen',v.cave);
+   if(href(v.sourceUrl))body+=`<a href="${esc(v.sourceUrl)}" target="_blank" rel="noopener noreferrer" class="cf551-source-link">${esc(v.sourceLabel||'Fachquelle öffnen')} ↗</a>`;
+  }else if(item.type==='symptom')body=section('Einordnung',v.theory)+section('Wichtige Fragen',arr(v.questions).join(' · '))+section('Warnzeichen',arr(v.redflags).join(' · '));
+  else if(item.type==='module')body=(v.image?`<img class="cf551-topic-image" src="${esc(v.image)}" alt="${esc(v.imageCaption||v.title)}" onerror="this.remove()">`:'')+`<div class="ost-module-body">${renderModuleText(v.body)}</div>`+section('Quellen',v.sources);
+  else if(item.type==='mnemonic')body=arr(v.steps).map((s,i)=>`<div class="cf551-memo-step"><span>${i+1}</span><p>${plain(s)}</p></div>`).join('');
+  else if(item.type==='checklist')body=`<div class="ost-module-body">${renderModuleText(v.body||v.summary||'')}</div>`+(href(v.documentUrl)?`<a class="cf551-source-link" href="${esc(v.documentUrl)}" target="_blank" rel="noopener noreferrer">Checkliste öffnen ↗</a>`:'');
+  else body=section('Einordnung',v.why)+(href(v.freeUrl||v.publisherUrl)?`<a class="cf551-source-link" href="${esc(v.freeUrl||v.publisherUrl)}" target="_blank" rel="noopener noreferrer">Artikel öffnen ↗</a>`:'');
+  return `<article class="cf551-article"><h2>${esc(item.title)}</h2>${body||'<p class="cf551-article-blank">Dieser Inhalt kann in der Redaktion ergänzt werden.</p>'}</article>`;
+ }
+ function syncUrl(){const query=new URLSearchParams();query.set('thema',organ.id);query.set('ansicht',tab);if(chosen)query.set('eintrag',chosen);history.replaceState(null,'','themen-uebersicht.html?'+query.toString())}
+ function draw(){
+  const currentTitle=$('.topbar .brand strong');if(currentTitle)currentTitle.textContent=organ.label;
+  organBar.innerHTML=CF_TOPICS.map(t=>`<button class="cf551-tab ${organ.id===t.id?'selected':''}" type="button" data-cf-organ="${esc(t.id)}" aria-pressed="${organ.id===t.id}">${ostIcon(t.icon)}<span>${esc(t.label)}</span></button>`).join('');
+  categoryBar.innerHTML=views.map(([key,label,ico])=>`<button class="cf551-tab ${tab===key?'selected':''}" type="button" data-cf-tab="${key}" aria-pressed="${tab===key}">${ostIcon(ico)}<span>${label}</span></button>`).join('');
+  const all=entries(),needle=normalizedSearch(input.value.trim());const found=needle?all.filter(x=>normalizedSearch([x.title,x.value?.body,x.value?.info,x.value?.symptoms].join(' ')).includes(needle)):all;
+  if(!found.some(x=>x.id===chosen))chosen=found[0]?.id||'';
+  const current=found.find(x=>x.id===chosen);
+  out.innerHTML=`<label class="cf551-item-picker">Eintrag auswählen<select data-cf-item>${found.length?found.map(x=>`<option value="${esc(x.id)}" ${x.id===chosen?'selected':''}>${esc(x.title)}</option>`).join(''):'<option>Keine Treffer</option>'}</select></label>${article(current)}`;
+ }
+ area.addEventListener('click',e=>{
+  const ob=e.target.closest('[data-cf-organ]');if(ob){organ=CF_TOPICS.find(t=>t.id===ob.dataset.cfOrgan)||CF_TOPICS[0];chosen='';input.value='';syncUrl();draw();return}
+  const tb=e.target.closest('[data-cf-tab]');if(tb){tab=tb.dataset.cfTab;chosen='';input.value='';syncUrl();draw();return}
+ });
+ area.addEventListener('change',e=>{if(e.target.matches('[data-cf-item]')){chosen=e.target.value;syncUrl();draw()}});
+ input.addEventListener('input',()=>{chosen='';draw()});
  draw();
 }
 
@@ -891,6 +872,60 @@ function ostRichEditor(key,value,options={}){
  const actions=[['bold','B','Fett'],['italic','I','Kursiv'],['heading','H','Überschrift'],['list','≡','Aufzählung'],['link','↗','Link'],['preview','◉','Vorschau']];
  return `<div class="ost-news-editor"><div class="ost-rich-toolbar ost-content-toolbar" role="toolbar" aria-label="Text formatieren">${actions.map(([action,icon,label])=>`<button type="button" data-editor-rich="${action}" title="${label}" aria-label="${label}">${icon}</button>`).join('')}${options.upload?'<label class="ost-editor-upload">Bild<input type="file" accept="image/png,image/jpeg,image/webp" data-editor-inline-upload></label>':''}</div><textarea class="ost-news-textarea" data-k="${key}" rows="8" placeholder="Text eingeben …">${esc(value||'')}</textarea><div class="ost-editor-preview" data-editor-preview hidden></div><small>**Fett**, *Kursiv*, ## Überschrift, - Liste, [Text](https://...) – Speichern oben.</small></div>`
 }
+async function cf551SymptomEditor(box,d){
+ let organ='herz',selected='';
+ const belongs=x=>CF_TOPICS.find(t=>t.groups.includes(x.group))?.id||'other';
+ const matching=()=>d.map((x,i)=>({x,i})).filter(o=>belongs(o.x)===organ).sort((a,b)=>String(a.x.title||'').localeCompare(String(b.x.title||''),'de'));
+ const current=()=>matching().find(v=>String(v.i)===String(selected));
+ const store=()=>{
+  const item=current();if(!item)return;
+  const e=box.querySelector('.cf551-symptom-form');if(!e)return;
+  item.x.title=e.querySelector('[data-symptom-field="title"]')?.value||'';
+  item.x.theory=e.querySelector('[data-symptom-field="theory"]')?.value||'';
+  item.x.questions=(e.querySelector('[data-symptom-field="questions"]')?.value||'').split(/\n/).map(x=>x.trim()).filter(Boolean);
+  item.x.redflags=(e.querySelector('[data-symptom-field="redflags"]')?.value||'').split(/\n/).map(x=>x.trim()).filter(Boolean);
+ };
+ const render=()=>{
+  const all=matching();if(!all.some(x=>String(x.i)===String(selected)))selected=all[0]?String(all[0].i):'';
+  const cur=current();
+  box.innerHTML=`<section class="cf551-disease-workspace"><div class="cf551-editor-heading"><h2>Symptome</h2><div class="cf551-editor-actions"><button type="button" class="btn" data-symptom-new>+ Symptom</button><button type="button" class="btn primary" data-symptom-save>Speichern</button></div></div><div class="cf551-editor-pickers"><label>Bereich auswählen<select data-symptom-organ>${CF_TOPICS.map(t=>`<option value="${t.id}" ${organ===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organ==='other'?'selected':''}>Weitere Fachbereiche</option></select></label><label>Symptom auswählen<select data-symptom-pick>${all.length?all.map(x=>`<option value="${x.i}" ${String(x.i)===String(selected)?'selected':''}>${esc(x.x.title||'Neues Symptom')}</option>`).join(''):'<option value="">Keine Einträge</option>'}</select></label></div><div role="status" data-symptom-note></div>${cur?`<div class="cf551-disease-form cf551-symptom-form"><label class="cf551-editor-field"><span>Symptom</span><input data-symptom-field="title" value="${esc(cur.x.title||'')}"></label><label class="cf551-editor-field"><span>Einordnung / Hintergrundwissen</span><textarea rows="5" data-symptom-field="theory">${esc(cur.x.theory||'')}</textarea></label><label class="cf551-editor-field"><span>Wichtige Fragen (eine pro Zeile)</span><textarea rows="5" data-symptom-field="questions">${esc(arr(cur.x.questions).join('\n'))}</textarea></label><label class="cf551-editor-field"><span>Warnzeichen (eines pro Zeile)</span><textarea rows="5" data-symptom-field="redflags">${esc(arr(cur.x.redflags).join('\n'))}</textarea></label><button type="button" class="btn danger" data-symptom-delete>Symptom löschen (einschließlich verknüpfter Krankheitsbilder)</button></div>`:'<div class="cf551-empty-editor">Für diese Organgruppe sind noch keine Symptome vorhanden.</div>'}</section>`;
+ };
+ render();
+ box.oninput=e=>{if(e.target.closest('.cf551-symptom-form'))store()};
+ box.onchange=e=>{if(e.target.matches('[data-symptom-organ]')){store();organ=e.target.value;selected='';render()}else if(e.target.matches('[data-symptom-pick]')){store();selected=e.target.value;render()}};
+ box.onclick=async e=>{
+  if(e.target.closest('[data-symptom-save]')){store();const ok=await save('differential',d);const note=box.querySelector('[data-symptom-note]');if(note)note.textContent=ok?'Gespeichert und synchronisiert.':'Lokal gespeichert – Worker-Synchronisierung prüfen.';return}
+  if(e.target.closest('[data-symptom-new]')){store();const t=CF_TOPICS.find(t=>t.id===organ);d.push({id:'symptom-'+Date.now().toString(36),title:'Neues Symptom',group:t?.groups[0]||'Weitere',icon:'',theory:'',questions:[],redflags:[],causes:[]});selected=String(d.length-1);render();return}
+  if(e.target.closest('[data-symptom-delete]')){const o=current();if(!o||!confirm('Symptom und verknüpfte Krankheitsbilder wirklich löschen?'))return;d.splice(o.i,1);selected='';render()}
+ };
+}
+
+async function cf551DiseaseEditor(box,d){
+ let organ='herz',selected='';
+ const groupFor=x=>CF_TOPICS.find(t=>t.groups.includes(x.group))?.id||'other';
+ const options=()=>{
+  const values=[];
+  d.forEach((sym,si)=>arr(sym.causes).forEach((c,ci)=>{const v=typeof c==='string'?{name:c}:c;if(groupFor(sym)===organ)values.push({si,ci,c:v,sym,key:si+':'+ci})}));
+  return values.sort((a,b)=>String(a.c.name||'').localeCompare(String(b.c.name||''),'de'));
+ };
+ const field=(label,k,v,large=false)=>`<label class="cf551-editor-field"><span>${label}</span>${large?`<textarea data-disease-field="${k}" rows="${k==='info'?5:3}">${esc(v||'')}</textarea>`:`<input data-disease-field="${k}" value="${esc(v||'')}">`}</label>`;
+ function current(){return options().find(x=>x.key===selected)||null}
+ function store(){const root=box.querySelector('.cf551-disease-workspace');const item=current();if(!root||!item)return;const parent=d[item.si];if(!parent)return;const old=typeof parent.causes[item.ci]==='string'?{name:parent.causes[item.ci]}:parent.causes[item.ci];root.querySelectorAll('[data-disease-field]').forEach(el=>old[el.dataset.diseaseField]=el.value);parent.causes[item.ci]=old;const symptom=root.querySelector('[data-symptom-title]');if(symptom)parent.title=symptom.value;}
+ function render(){
+  const all=options();if(!all.some(x=>x.key===selected))selected=all[0]?.key||'';
+  const item=current();
+  box.innerHTML=`<section class="cf551-disease-workspace"><div class="cf551-editor-heading"><h2>Krankheitsbilder</h2><div class="cf551-editor-actions"><button type="button" class="btn" data-disease-new>+ Krankheitsbild</button><button type="button" class="btn primary" data-disease-save>Speichern</button></div></div><div class="cf551-editor-pickers"><label>Bereich auswählen<select data-disease-organ>${CF_TOPICS.map(t=>`<option value="${t.id}" ${organ===t.id?'selected':''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organ==='other'?'selected':''}>Weitere Fachbereiche</option></select></label><label>Krankheitsbild auswählen<select data-disease-pick><option value="">– Bitte auswählen –</option>${all.map(x=>`<option value="${x.key}" ${x.key===selected?'selected':''}>${esc(x.c.name||'Unbenannt')}</option>`).join('')}</select></label></div><div data-disease-note role="status"></div>${item?`<div class="cf551-disease-form"><div class="cf551-disease-meta">${field('Krankheitsbild','name',item.c.name)}<label class="cf551-editor-field"><span>Leitsymptom (Zuordnung)</span><input data-symptom-title value="${esc(item.sym.title||'')}"></label></div>${field('Typische Symptome','symptoms',item.c.symptoms,true)}${field('Erkrankung & Einordnung','info',item.c.info,true)}${field('Anatomie / Physiologie','physiology',item.c.physiology,true)}${field('Befunde','findings',item.c.findings,true)}${field('Relevante Medikamente','medications',item.c.medications,true)}${field('Warnzeichen / CAVE','cave',item.c.cave,true)}<div class="cf551-disease-meta">${field('Fachquelle URL','sourceUrl',item.c.sourceUrl)}${field('Quellenbezeichnung','sourceLabel',item.c.sourceLabel)}</div><button class="btn danger" type="button" data-disease-delete>Krankheitsbild löschen</button></div>`:'<div class="cf551-empty-editor">Für diesen Bereich sind noch keine Krankheitsbilder vorhanden. Mit „+ Krankheitsbild“ legst du eines an.</div>'}</section>`;
+ }
+ render();
+ box.oninput=e=>{if(e.target.matches('[data-disease-field], [data-symptom-title]'))store()};
+ box.onchange=e=>{if(e.target.matches('[data-disease-organ]')){store();organ=e.target.value;selected='';render()}else if(e.target.matches('[data-disease-pick]')){store();selected=e.target.value;render()}};
+ box.onclick=async e=>{
+  if(e.target.closest('[data-disease-save]')){store();const note=box.querySelector('[data-disease-note]');const ok=await save('differential',d);if(note)note.textContent=ok?'Gespeichert und synchronisiert.':'Lokal gespeichert – Worker-Synchronisierung bitte prüfen.';return}
+  if(e.target.closest('[data-disease-new]')){store();let sym=d.find(x=>groupFor(x)===organ);if(!sym){const t=CF_TOPICS.find(t=>t.id===organ);sym={id:'symptom-'+Date.now(),group:t?.groups[0]||'Weitere',title:'Neues Leitsymptom',questions:[],redflags:[],causes:[]};d.push(sym)}if(!Array.isArray(sym.causes))sym.causes=[];sym.causes.push({name:'Neues Krankheitsbild',symptoms:'',medications:'',physiology:'',findings:'',info:'',cave:''});selected=d.indexOf(sym)+':'+(sym.causes.length-1);render();return}
+  if(e.target.closest('[data-disease-delete]')){const item=current();if(!item||!confirm('Dieses Krankheitsbild wirklich löschen?'))return;d[item.si].causes.splice(item.ci,1);selected='';render()}
+ };
+}
+
 async function editor(){
  const gate=async()=>{const pin=sessionStorage.getItem('ost1020-editor-pin')||'';if(pin&&await verifyEditorPin(pin))return true;return false};
  if(!(await gate())){
@@ -898,7 +933,7 @@ async function editor(){
    const attempt=async()=>{const v=$('[data-pin]').value.trim();if(!v)return;const st=$('[data-pin-status]');st.textContent='Prüfe …';if(await verifyEditorPin(v)){sessionStorage.setItem('ost1020-editor-pin',v);editor()}else{st.textContent='PIN nicht korrekt.';$('[data-pin]').select()}};
    $('[data-unlock]').onclick=attempt;$('[data-pin]').onkeydown=e=>{if(e.key==='Enter')attempt()};return;
  }
- const tabs=[['abcde','ABCDE'],['news','Aktuelles'],['meetings','Dienstbesprechungen'],['differential','Krankheitsbilder'],['articles','Literatur & Lesetipps'],['changes','Lehrmeinungsänderungen'],['skills','Skilltraining'],['attendance','Teilnehmerlisten'],['events','Termine'],['modules','Wissensbereiche']];
+ const tabs=[['abcde','ABCDE'],['news','Aktuelles'],['meetings','Besprechungen & Vorträge'],['differential','Krankheitsbilder'],['articles','Literatur & Lesetipps'],['changes','Lehrmeinungsänderungen'],['skills','Skills'],['attendance','Teilnehmerlisten'],['events','Termine'],['algorithms','Leitlinien & Merkhilfen'],['modules','Wissensbereiche']];
  const tabIcons={abcde:ostIcon('notes'),algorithms:ostIcon('notes'),news:ostIcon('news'),meetings:ostIcon('users'),differential:ostIcon('search'),articles:ostIcon('book'),changes:ostIcon('changes'),guide:ostIcon('screen'),skills:ostIcon('training'),attendance:ostIcon('group'),events:ostIcon('calendar'),modules:ostIcon('book')};
  $('[data-main]').innerHTML=`<section class="page-banner"><div class="page-banner-row"><h1>Redaktion</h1><button class="editor-shortcut" data-lock-editor>🔒 Sperren</button></div></section><section class="admin-tools cf550-editor-management"><details><summary>Verwaltung</summary><div class="ost-editor-stats" data-editor-stats><div>Lade Übersicht …</div></div><div class="ost-editor-actions"><button type="button" class="btn" data-open-review>Prüffristen</button><button type="button" class="btn" data-open-feedback>Fehlermeldungen</button><button type="button" class="btn" data-open-history>Versionsverlauf</button><button type="button" class="btn" data-open-backup>Backup erstellen</button><button type="button" class="btn" data-open-status>Backups ansehen</button></div><div class="admin-tools-actions cf550-management-actions" hidden><button class="btn" data-admin-history>Versionsverlauf</button><button class="btn" data-admin-backup>Backup erstellen</button><button class="btn" data-admin-status>Backups anzeigen</button><button class="btn" data-admin-feedback>Meldungen ansehen</button><button class="btn" data-admin-review>Prüffristen</button></div><div class="admin-tools-results" data-admin-results></div></details></section><section class="editor-dashboard"><aside class="editor-nav">${tabs.map((t,i)=>`<button class="editor-nav-btn ${i?'':'active'}" data-tab="${t[0]}"><span>${tabIcons[t[0]]||'📋'}</span><strong>${t[1]}</strong></button>`).join('')}</aside><section class="editor-content" data-edit></section></section>`;
  const maintenance=$('.admin-tools');if(maintenance)$('[data-main]').appendChild(maintenance);
@@ -932,6 +967,7 @@ async function editor(){
    editorDrafts.set(sourceName,d);
    currentEditorState={name:sourceName,view:name,d,box};
    if(name==='modules'){await moduleEditor(box,moduleRequested);return}
+   if(name==='differential'){if(symptomEditorMode==='symptoms')await cf551SymptomEditor(box,d);else await cf551DiseaseEditor(box,d);return}
    if(name==='attendance'){
      const today=new Date().toISOString().slice(0,10),current=[...d].filter(ev=>(ev.date||'')>=today).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time)),past=[...d].filter(ev=>(ev.date||'')<today).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time));
      const eventCard=ev=>{const people=attendeeEntries(ev.attendees),dateLabel=ev.date?new Date(ev.date+'T12:00:00').toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'}):'';return `<details class="attendance-event" data-attendance-event="${esc(ev.id)}"><summary class="attendance-event-head"><div><span class="cat-pill">${esc(ev.category||'Termin')}</span><h3>${esc(ev.title)}</h3><p>${esc(dateLabel)}${ev.time?` · ${esc(ev.time)}`:''}${ev.location?` · ${esc(ev.location)}`:''}</p></div><span class="attendance-head-actions"><strong>${people.length}/${Number(ev.capacity)||10}</strong><i class="attendance-chevron" aria-hidden="true"></i></span></summary><div class="attendance-event-body">${people.length?`<div class="attendance-table">${people.map((p,i)=>`<div class="attendance-row"><span class="attendance-no">${i+1}</span><span><strong>${esc(p.name||'Ohne Namensangabe')}</strong><small>${p.registeredAt?`angemeldet ${new Date(p.registeredAt).toLocaleString('de-DE')}`:'älterer Eintrag'}</small></span></div>`).join('')}</div>`:'<div class="empty compact">Noch keine Anmeldungen.</div>'}<div class="attendance-tools"><button class="btn attendance-pdf" data-attendance-pdf="${esc(ev.id)}">PDF exportieren</button>${people.length?`<button class="btn attendance-clear" data-attendance-clear="${esc(ev.id)}">Liste leeren</button>`:''}</div></div></details>`};
@@ -1079,44 +1115,52 @@ async function editor(){
  }
  function blank(n){if(n==='meetings')return{id:'meeting-'+Date.now(),title:'Neue Dienstbesprechung',date:new Date().toISOString().slice(0,10),category:'Fortbildung',speaker:'',summary:'',files:[]};if(n==='skills')return{name:'Neue Kategorie',skills:[]};if(n==='abcde')return{id:'x-'+Date.now(),key:'X',title:'Neuer Bereich',checks:[],actions:[],pitfalls:[]};if(n==='differential')return{id:'symptom-'+Date.now(),title:'Neues Leitsymptom',group:'Weitere',icon:'🩺',questions:[],redflags:[],causes:[]};if(n==='events')return{id:'event-'+Date.now(),title:'Neuer Termin',date:new Date().toISOString().slice(0,10),time:'18:00',location:'',category:'Simulationstraining',capacity:10,attendees:[]};if(n==='algorithms')return{id:'algorithm-'+Date.now(),title:'Neuer Algorithmus',icon:'📋',category:'',stand:'',steps:[],source:'',sourceUrl:'',materials:{background:[],checklists:[]}};if(n==='articles')return{id:'article-'+Date.now(),title:'Neuer Artikel',authors:'',journal:'',year:new Date().getFullYear(),doi:'',topics:[],tags:[],featureRank:1,type:'Fachartikel',read:'',access:'oa',level:'rs-nfs',language:'de',license:'',why:'',publisherUrl:'',freeUrl:'',featured:false,added:new Date().toISOString().slice(0,10),archived:false};if(n==='changes')return{id:'change-'+Date.now(),title:'Neue Lehrmeinungsänderung',category:'',date:new Date().toISOString().slice(0,10),old:'',new:'',source:'',validity:'',imageUrl:''};if(n==='guide')return{id:'guide-'+Date.now(),title:'Neuer Schritt',icon:'🖥️',steps:[]};return{id:'new-'+Date.now(),title:'Neuer Eintrag'}}
  const editorGroups=[
-  {id:'aktuelles',title:'Aktuelles',icon:ostIcon('news'),items:['news']},
-  {id:'dienstbesprechungen',title:'Dienstbesprechungen',icon:ostIcon('users'),items:['meetings']},
-  {id:'lehrmeinung',title:'Lehrmeinung',icon:ostIcon('changes'),items:['changes']},
-  {id:'literatur',title:'Literatur & Lesetipps',icon:ostIcon('book'),items:['articles']},
-  {id:'termine',title:'Termine',icon:ostIcon('calendar'),items:['events','attendance']},
+  {id:'wissen',title:'Wissen',icon:ostIcon('anatomy'),items:['modules:anatomy','differential','symptoms','modules:befund','jump:materialien']},
   {id:'training',title:'Training',icon:ostIcon('training'),items:['skills','modules:mpg','modules:checklists']},
-  {id:'wissen',title:'Wissen',icon:ostIcon('book'),items:['modules:anatomy','differential','modules:befund','abcde']}
+  {id:'materialien',title:'Materialien',icon:ostIcon('book'),items:['algorithms','modules:checklists','articles']},
+  {id:'termine',title:'Termine',icon:ostIcon('calendar'),items:['events','attendance']},
+  {id:'dienstbesprechungen',title:'Besprechungen & Vorträge',icon:ostIcon('users'),items:['meetings']},
+  {id:'lehrmeinung',title:'Lehrmeinungsänderungen',icon:ostIcon('changes'),items:['changes']},
+  {id:'aktuelles',title:'Aktuelles',icon:ostIcon('news'),items:['news']},
+  {id:'literatur',title:'Literatur & Lesetipps',icon:ostIcon('book'),items:['articles']}
  ];
- const extraLabels={'modules:anatomy':['Anatomie & Physiologie',ostIcon('anatomy')],'modules:befund':['Befundwörterbuch',ostIcon('dictionary')],'modules:pharm':['Pharmakologie',ostIcon('pill')],'modules:mpg':['MPG-Informationen',ostIcon('device')],'modules:checklists':['Checklisten',ostIcon('checklist')]};
- let moduleRequested='anatomy';
+ const extraLabels={'modules:anatomy':['Anatomie & Physiologie',ostIcon('anatomy')],'modules:befund':['Fachbegriffe',ostIcon('dictionary')],'modules:mpg':['Geräte',ostIcon('device')],'modules:checklists':['Übungschecklisten',ostIcon('checklist')],'jump:materialien':['Materialien',ostIcon('book')],algorithms:['Leitlinien & Merkhilfen',ostIcon('notes')],differential:['Krankheitsbilder',ostIcon('heart')],symptoms:['Symptome',ostIcon('search')],skills:['Skills',ostIcon('training')],articles:['Literatur-Archiv',ostIcon('book')]};
+ let moduleRequested='anatomy',requestedEditorGroup='wissen',symptomEditorMode='diseases';
  const groupedEditorMenu=document.createElement('div');
- groupedEditorMenu.className='editor-grouped-menu ost-editor-workflow';
- groupedEditorMenu.innerHTML=`<div class="cf550-editor-choice"><label for="cf550-editor-group-picker">Bereich auswählen</label><select id="cf550-editor-group-picker" data-editor-group-picker>${editorGroups.map(g=>`<option value="${g.id}">${g.title}</option>`).join('')}</select></div><nav class="editor-primary-groups cf550-editor-hidden-primary" aria-label="Redaktion Hauptbereiche">${editorGroups.map(g=>`<button type="button" data-editor-group="${g.id}" aria-pressed="false"><span>${g.icon}</span><strong>${g.title}</strong></button>`).join('')}</nav><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
+ groupedEditorMenu.className='editor-grouped-menu ost-editor-workflow cf551-editor-workflow';
+ groupedEditorMenu.innerHTML=`<div class="cf550-editor-choice"><label for="cf550-editor-group-picker">Bereich auswählen</label><select id="cf550-editor-group-picker" data-editor-group-picker>${editorGroups.map(g=>`<option value="${g.id}">${g.title}</option>`).join('')}</select></div><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
  $('.editor-dashboard').insertBefore(groupedEditorMenu,$('.editor-content'));
  $('.editor-dashboard').after($('.admin-tools'));
  const syncGroupedEditorMenu=tab=>{
-  const group=editorGroups.find(g=>g.items.includes(tab)|| (tab==='modules'&&(g.id==='wissen'&&!['mpg','checklists'].includes(moduleRequested)||g.id==='training'&&['mpg','checklists'].includes(moduleRequested))))||editorGroups[0];
-  groupedEditorMenu.querySelectorAll('[data-editor-group]').forEach(b=>{
-   const active=b.dataset.editorGroup===group.id;
-   b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));
-  });
+  const group=editorGroups.find(g=>g.id===requestedEditorGroup&&(g.items.includes(tab)||g.items.includes('modules:'+moduleRequested)))||editorGroups.find(g=>g.items.includes(tab)||tab==='modules'&&g.items.includes('modules:'+moduleRequested))||editorGroups[0];
+  requestedEditorGroup=group.id;
   const groupPicker=groupedEditorMenu.querySelector('[data-editor-group-picker]');if(groupPicker)groupPicker.value=group.id;
-  $('.editor-subgroup-tiles',groupedEditorMenu).innerHTML=group.items.map(id=>{
+  const nav=$('.editor-subgroup-tiles',groupedEditorMenu);
+  nav.hidden=group.items.length<=1;
+  nav.innerHTML=group.items.length<=1?'':group.items.map(id=>{
     const item=tabs.find(t=>t[0]===id)|| (extraLabels[id]?[id,extraLabels[id][0]]:null);if(!item)return '';
-    return `<button type="button" class="editor-subgroup-tile ${tab===id?'active':''}" data-editor-subtab="${id}" aria-pressed="${String(tab===id)}"><span>${extraLabels[id]?.[1]||tabIcons[id]||'📋'}</span><strong>${esc(item[1])}</strong></button>`;
+    const active=id==='modules:'+moduleRequested&&tab==='modules'||id==='symptoms'&&tab==='differential'&&symptomEditorMode==='symptoms'||id==='differential'&&tab==='differential'&&symptomEditorMode==='diseases'||id===tab&&tab!=='differential';
+    return `<button type="button" class="editor-subgroup-tile ${active?'active':''}" data-editor-subtab="${id}" aria-pressed="${String(active)}"><span>${extraLabels[id]?.[1]||tabIcons[id]||ostIcon('book')}</span><strong>${esc(extraLabels[id]?.[0]||item[1])}</strong></button>`;
   }).join('');
  };
- groupedEditorMenu.querySelector('[data-editor-group-picker]').addEventListener('change',e=>{const button=groupedEditorMenu.querySelector('[data-editor-group="'+e.target.value+'"]');if(button)button.click()});
- groupedEditorMenu.addEventListener('click',e=>{
-  const groupButton=e.target.closest('[data-editor-group]');
-  const subButton=e.target.closest('[data-editor-subtab]');
-  const targetId=subButton?.dataset.editorSubtab || editorGroups.find(g=>g.id===groupButton?.dataset.editorGroup)?.items[0];
-  if(targetId){if(targetId.startsWith('modules:')){moduleRequested=targetId.split(':')[1];$('.editor-nav [data-tab="modules"]')?.click();if(activeModuleSetter)activeModuleSetter(moduleRequested)}else $('.editor-nav [data-tab="'+targetId+'"]')?.click();}
+ const navigateEditorTab=id=>{
+  if(id==='jump:materialien'){
+   requestedEditorGroup='materialien';groupedEditorMenu.querySelector('[data-editor-group-picker]').value='materialien';id='algorithms';
+  }
+  if(id==='symptoms'||id==='differential'){symptomEditorMode=id==='symptoms'?'symptoms':'diseases';$('.editor-nav [data-tab="differential"]')?.click();return;}
+  if(id.startsWith('modules:')){
+   moduleRequested=id.split(':')[1];$('.editor-nav [data-tab="modules"]')?.click();if(activeModuleSetter)activeModuleSetter(moduleRequested)
+  }else $('.editor-nav [data-tab="'+id+'"]')?.click();
+ };
+ groupedEditorMenu.querySelector('[data-editor-group-picker]').addEventListener('change',e=>{
+  requestedEditorGroup=e.target.value;
+  const group=editorGroups.find(g=>g.id===requestedEditorGroup);if(group)navigateEditorTab(group.items[0]);
  });
+ groupedEditorMenu.addEventListener('click',e=>{const btn=e.target.closest('[data-editor-subtab]');if(btn)navigateEditorTab(btn.dataset.editorSubtab)});
  const mobilePick=document.createElement('div');mobilePick.className='editor-mobile-picker';mobilePick.innerHTML=`<label for="editor-mobile-select">Redaktionsbereich</label><select id="editor-mobile-select">${tabs.map(t=>`<option value="${t[0]}">${t[1]}</option>`).join('')}</select>`;$('.editor-dashboard').insertBefore(mobilePick,$('.editor-content'));mobilePick.hidden=true;
  mobilePick.querySelector('select').onchange=e=>$('.editor-nav [data-tab="'+e.target.value+'"]')?.click();
  $('.editor-nav').onclick=e=>{const b=e.target.closest('[data-tab]');if(!b)return;if(currentEditorState&&currentEditorState.view!=='attendance'){readAll(currentEditorState.name,currentEditorState.d,currentEditorState.box);editorDrafts.set(currentEditorState.name,currentEditorState.d)}$$('.editor-nav-btn').forEach(x=>x.classList.toggle('active',x===b));if(mobilePick)mobilePick.querySelector('select').value=b.dataset.tab;syncGroupedEditorMenu(b.dataset.tab);draw(b.dataset.tab)};
- const hash=location.hash.replace('#','');const initialTab=hash==='literatur'?'articles':hash&&tabs.some(t=>t[0]===hash)?hash:'news';syncGroupedEditorMenu(initialTab);draw(initialTab)
+ const hash=location.hash.replace('#','');const initialTab=hash==='literatur'?'articles':hash&&tabs.some(t=>t[0]===hash)?hash:'differential';syncGroupedEditorMenu(initialTab);draw(initialTab)
 }
 
 async function init(){
