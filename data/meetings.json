@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "id": "meeting-1792778745581",
+    "title": "Testeintrag",
+    "date": "2026-10-23",
+    "category": "Fortbildung",
+    "speaker": "",
+    "summary": "test",
+    "files": []
+  }
+]
