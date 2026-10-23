@@ -316,7 +316,7 @@ async function home(){
   ['changes','Lehrmeinung','lehrmeinung.html','changes']
  ];
  const external=a=>{const u=String(a.freeUrl||a.publisherUrl||'');return /^https?:\/\//i.test(u)?u:''};
- $('[data-main]').innerHTML=`<div class="cf-home cf548-home"><header class="cf548-welcome"><h1>Wissenssammlung</h1></header>
+ $('[data-main]').innerHTML=`<div class="cf-home cf548-home"><header class="cf548-welcome"><h1>Wissenssammlung <span>OST 1020</span></h1></header>
  <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
  <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n,i)=>`<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('')||'<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
  <section class="cf-section cf548-menu"><div class="cf-section-title"><h2>Menü</h2></div><nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass,title,href,ico])=>`<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong></a>`).join('')}</nav></section>
@@ -610,25 +610,61 @@ async function trainingPage(){
  });render();
 }
 async function materialHub(){
- const [modules,a,docs]=await Promise.all([get('knowledgeModules'),get('algorithms'),articles()]);
+ const [modules,algorithms,docs]=await Promise.all([get('knowledgeModules'),get('algorithms'),articles()]);
  const km=Array.isArray(modules)?modules:[];
  const checklists=km.filter(x=>x.module==='checklists'&&x.status!=='draft');
- const mnemonics=(Array.isArray(a)?a:[]).filter(x=>String(x.category||'').startsWith('Schema'));
- const refs=[...new Map((Array.isArray(a)?a:[]).filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl)).map(x=>[x.sourceUrl,{title:x.source||'Leitlinie / Fachquelle',sourceUrl:x.sourceUrl}])).values()];
+ const mnemonics=(Array.isArray(algorithms)?algorithms:[]).filter(x=>String(x.category||'').startsWith('Schema'));
+ const refs=[...new Map((Array.isArray(algorithms)?algorithms:[]).filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl)).map(x=>[x.sourceUrl,{title:x.source||'Leitlinie / Fachquelle',sourceUrl:x.sourceUrl}])).values()];
  const categories=[['guidelines','Leitlinien','guideline'],['checklists','Checklisten','checklist'],['mnemonics','Merkhilfen & Schemata','notes'],['literature','Literatur-Archiv','book']];
  const param=new URLSearchParams(location.search).get('typ');let active=categories.some(c=>c[0]===param)?param:'guidelines';
- const main=$('[data-main]');main.innerHTML=`<section class="cf547 cf547-materials"><span class="cf-eyebrow">WISSEN VERTIEFEN</span><h1>Materialien</h1><p class="cf547-training-intro">Freigegebene Nachschlagehilfen, Übungsunterlagen und Fachliteratur.</p><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id,label,ico])=>`<button data-mat-tab="${id}" class="${active===id?'selected':''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
+ const main=$('[data-main]');main.innerHTML=`<section class="cf547 cf547-materials cf553-materials"><h1>Materialien</h1><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id,label,ico])=>`<button type="button" data-mat-tab="${id}" class="${active===id?'selected':''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
  const box=$('[data-material-list]');let visible=[];
+ const safeLink=url=>/^https?:\/\//i.test(String(url||''))?String(url):'';
  const linkrow=(title,sub,key,ico)=>`<button type="button" class="cf547-row" data-mat-id="${esc(key)}"><span class="cf547-row-icon">${ostIcon(ico)}</span><span><strong>${esc(title)}</strong>${sub?`<small>${esc(sub)}</small>`:''}</span><b>›</b></button>`;
+ // The same disclosure/list design and interaction as Wissen, not an overlay.
+ const schemaItem=(text,i)=>{
+   const raw=String(text??'');
+   const match=raw.match(/^\s*([A-ZÄÖÜ]{1,3})\s*[–—-]\s*(.*)$/s);
+   const acronym=match?match[1]:'';
+   const value=match?match[2]:raw;
+   const split=value.match(/^([^:：]{2,58}):\s*(.+)$/s);
+   const copy=split?`<div class="cf553-schema-copy"><strong>${esc(split[1])}</strong><span>${esc(split[2])}</span></div>`:`<div class="cf553-schema-copy"><span>${esc(value)}</span></div>`;
+   return `<li class="cf553-schema-step cf553-tone-${i%6+1}"><span class="cf553-schema-marker" aria-hidden="true">${esc(acronym||'•')}</span>${copy}</li>`;
+ };
+ const schemaPanel=x=>{
+   const a=x.x||{},steps=arr(a.steps);
+   const extra=[];
+   const materials=a.materials&&typeof a.materials==='object'?a.materials:{};
+   for(const key of ['background','checklists'])for(const m of arr(materials[key])){const url=safeLink(m?.url);if(url)extra.push(`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title||'Material')} ↗</a>`)}
+   const source=safeLink(a.sourceUrl);
+   return `<div class="cf553-mnemonic-body">${steps.length?`<ol class="cf553-schema-steps">${steps.map(schemaItem).join('')}</ol>`:'<p class="cf547-empty">Für dieses Merkschema sind noch keine Schritte hinterlegt.</p>'}${a.source?`<p class="cf553-schema-source"><strong>Quelle:</strong> ${esc(a.source)}</p>`:''}${source?`<a class="cf553-schema-source-link" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Originalquelle öffnen ↗</a>`:''}${extra.length?`<div class="cf553-schema-resources">${extra.join('')}</div>`:''}</div>`;
+ };
  function render(){
-  $$('[data-mat-tab]',main).forEach(b=>b.classList.toggle('selected',b.dataset.matTab===active));
+  $$('[data-mat-tab]',main).forEach(b=>{const selected=b.dataset.matTab===active;b.classList.toggle('selected',selected);b.setAttribute('aria-pressed',String(selected))});
   if(active==='guidelines')visible=refs.map(x=>({title:x.title,sub:'Externe Leitlinie / Quelle',url:x.sourceUrl}));
   else if(active==='checklists')visible=checklists.map(x=>({title:x.title,sub:x.summary||'Übungscheckliste',url:x.documentUrl||'',x}));
   else if(active==='mnemonics')visible=mnemonics.map(x=>({title:x.title,sub:'Merkschema',x}));
-  else visible=docs.map(x=>({title:x.title,sub:arr(x.topics).join(' · '),url:x.freeUrl||x.publisherUrl,x}));
+  else visible=(Array.isArray(docs)?docs:[]).map(x=>({title:x.title,sub:arr(x.topics).join(' · '),url:x.freeUrl||x.publisherUrl,x}));
+  if(active==='mnemonics'){
+   box.innerHTML=`<div class="cf553-mnemonic-list cf552-accordion">${visible.map((x,i)=>`<details class="cf552-record cf553-mnemonic"><summary><span class="cf552-record-icon">${ostIcon('notes')}</span><strong>${esc(x.title)}</strong><span class="cf552-chevron" aria-hidden="true"></span></summary>${schemaPanel(x)}</details>`).join('')||'<p class="cf547-empty">Hier sind noch keine Merkhilfen oder Schemata hinterlegt.</p>'}</div>`;
+   return;
+  }
   box.innerHTML=`<div class="cf547-content-title"><h2>${esc(categories.find(x=>x[0]===active)[1])}</h2><span>${visible.length} Einträge</span></div><div class="cf547-rows">${visible.map((x,i)=>linkrow(x.title,x.sub,String(i),categories.find(x=>x[0]===active)[2])).join('')||'<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
  }
- main.onclick=e=>{const b=e.target.closest('[data-mat-tab]');if(b){active=b.dataset.matTab;history.replaceState(null,'','materialien.html?typ='+active);render();return}const r=e.target.closest('[data-mat-id]');if(!r)return;const x=visible[Number(r.dataset.matId)];if(!x)return;if(x.url&&/^https?:\/\//i.test(x.url)){open(x.title,`<section class="cf547-sheet"><p>${esc(x.sub)}</p><a class="btn primary" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">Quelle / Dokument öffnen ↗</a></section>`,{sheet:true});return}if(active==='mnemonics')open(x.title,`<div class="cf547-sheet">${arr(x.x?.steps).map((step,i)=>`<div class="cf547-mnemonic-step"><span>${i+1}</span>${esc(step)}</div>`).join('')||'<p>Inhalt noch nicht hinterlegt.</p>'}</div>`,{sheet:true});else if(x.x)open(x.title,`<div class="cf547-sheet">${renderModuleText(x.x.body||x.x.why||'')}</div>`,{sheet:true})};render();
+ // Keep just one schema expanded. Built-in <details> gives keyboard and touch support.
+ box.addEventListener('toggle',e=>{
+  const d=e.target;
+  if(d.matches?.('.cf553-mnemonic')&&d.open){$$('.cf553-mnemonic[open]',box).forEach(other=>{if(other!==d)other.open=false})}
+ },true);
+ main.onclick=e=>{
+  const b=e.target.closest('[data-mat-tab]');
+  if(b){active=b.dataset.matTab;history.replaceState(null,'','materialien.html?typ='+active);render();return}
+  const r=e.target.closest('[data-mat-id]');if(!r)return;
+  const x=visible[Number(r.dataset.matId)];if(!x)return;
+  if(x.url&&safeLink(x.url)){open(x.title,`<section class="cf547-sheet"><a class="btn primary" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">Quelle / Dokument öffnen ↗</a></section>`,{sheet:true});return}
+  if(x.x)open(x.title,`<div class="cf547-sheet">${renderModuleText(x.x.body||x.x.why||'')}</div>`,{sheet:true});
+ };
+ render();
 }
 async function guidelinesPage(){
  const a=await get('algorithms');const refs=a.filter(x=>x.sourceUrl&&/^https:\/\//i.test(x.sourceUrl));
