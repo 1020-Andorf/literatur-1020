@@ -4479,3 +4479,19 @@ body.app-shell.page-editor :is(.cf551-editor-pickers select,.cf551-module-picker
   body.app-shell.page-editor .cf555-editor-main-tile strong{font-size:.81rem!important}
   body.app-shell.page-editor .editor-grouped-menu .editor-subgroup-tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
 }
+
+body.app-shell .cf547-materials
+nav.cf547-tabs.cf550-material-tabs > button.selected {
+  background: #bd2734 !important;
+  border-color: #bd2734 !important;
+  color: #ffffff !important;
+}
+
+body.app-shell .cf547-materials
+nav.cf547-tabs.cf550-material-tabs > button.selected svg,
+body.app-shell .cf547-materials
+nav.cf547-tabs.cf550-material-tabs > button.selected svg * {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
