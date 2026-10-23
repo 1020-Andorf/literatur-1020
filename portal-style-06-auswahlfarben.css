@@ -1,0 +1,77 @@
+/* OST 1020 · Aktuelle Auswahlfarben und aufgeklappte Inhalte · 560
+   Nur hier die Farben fuer Wissen, Training und Materialien anpassen.
+   Rot: aktive NAVIGATIONS-Kacheln. Weiss: die darunterliegenden Inhalte.
+   Die Redaktion hat ihre bestehenden Einstellungen in 05-redaktion.css.
+*/
+:root {
+  --ost-auswahl-rot: #bd2734;
+  --ost-auswahl-text: #ffffff;
+  --ost-inhalt-weiss: #ffffff;
+  --ost-inhalt-text: #243f50;
+  --ost-inhalt-rand: #dce5eb;
+}
+
+/* Wissen: Organgruppe und Inhalte; Training und Materialien: Auswahlleiste */
+body.app-shell :is(
+  .cf551-organ-nav .cf551-tab.selected,
+  .cf551-category-nav .cf551-tab.selected,
+  .cf547-training .cf547-tabs > button.selected,
+  .cf547-materials .cf547-tabs > button.selected
+) {
+  background: var(--ost-auswahl-rot) !important;
+  border-color: var(--ost-auswahl-rot) !important;
+  color: var(--ost-auswahl-text) !important;
+}
+body.app-shell :is(
+  .cf551-organ-nav .cf551-tab.selected,
+  .cf551-category-nav .cf551-tab.selected,
+  .cf547-training .cf547-tabs > button.selected,
+  .cf547-materials .cf547-tabs > button.selected
+) :is(span, strong, small, b, svg) {
+  color: var(--ost-auswahl-text) !important;
+  stroke: currentColor !important;
+}
+
+/* Krankheitsbilder, Anatomie, Skills und Merkhilfen sind INHALT, nicht Navigation. */
+body.app-shell :is(
+  .cf552-record, .cf553-mnemonic, .cf547-training-group,
+  .cf549-disease-group, .cf552-anatomy-subpoint, .ost-skill-group
+) {
+  background: var(--ost-inhalt-weiss) !important;
+  border-color: var(--ost-inhalt-rand) !important;
+}
+body.app-shell :is(
+  .cf552-record, .cf553-mnemonic, .cf547-training-group,
+  .cf549-disease-group, .cf552-anatomy-subpoint, .ost-skill-group
+)[open] > summary {
+  background: var(--ost-inhalt-weiss) !important;
+  border-color: var(--ost-inhalt-rand) !important;
+  color: var(--ost-inhalt-text) !important;
+  box-shadow: none !important;
+}
+body.app-shell :is(
+  .cf552-record, .cf553-mnemonic, .cf547-training-group,
+  .cf549-disease-group, .cf552-anatomy-subpoint, .ost-skill-group
+)[open] > summary :is(span, strong, small, b, i, svg) {
+  color: var(--ost-inhalt-text) !important;
+  stroke: currentColor !important;
+}
+body.app-shell :is(
+  .cf552-record, .cf553-mnemonic, .cf547-training-group,
+  .cf549-disease-group, .ost-skill-group
+)[open] > summary :is(
+  .cf552-record-icon, .cf547-row-icon, .cf549-expand, .ost-skill-acc-icon
+) {
+  background: #eef4f8 !important;
+  color: var(--ost-inhalt-text) !important;
+}
+body.app-shell :is(
+  .cf552-record, .cf553-mnemonic, .cf552-anatomy-subpoint
+)[open] > summary .cf552-chevron {
+  border-color: #6c8495 !important;
+}
+body.app-shell .cf547-training-group[open] > summary .cf549-expand,
+body.app-shell .ost-skill-group[open] > summary .ost-skill-chevron {
+  color: var(--ost-inhalt-text) !important;
+  border-color: #6c8495 !important;
+}
