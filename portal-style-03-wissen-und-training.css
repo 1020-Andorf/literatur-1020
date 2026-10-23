@@ -306,3 +306,24 @@ body.app-shell .cf553-schema-resources{display:flex;gap:10px;flex-wrap:wrap}
  body.app-shell .cf553-schema-step{padding:9px 10px;gap:9px;font-size:.85rem}
 }
 
+
+/* 561: Freitext-Erklärung unter Merkhilfen & Schemata */
+body.app-shell .cf561-schema-explanation {
+  border-top: 1px solid #e7edf1;
+  margin-top: 16px;
+  padding-top: 14px;
+}
+body.app-shell .cf561-schema-explanation > h3 {
+  color: #243f50;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+body.app-shell .cf561-schema-description {
+  color: #243f50;
+  font-size: .94rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+body.app-shell .cf561-schema-description > :first-child { margin-top: 0; }
+body.app-shell .cf561-schema-description > :last-child { margin-bottom: 0; }

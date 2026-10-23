@@ -789,7 +789,7 @@
         }
     }
     let activeModuleSetter = null;
-    async function moduleEditor(box, initialModule = 'pharm') {
+    async function moduleEditor(box, initialModule = 'pharm', editorSection = '') {
         const records = await get('knowledgeModules');
         let items = Array.isArray(records) ? clone(records) : [];
         let active = initialModule;
@@ -797,7 +797,9 @@
         let organFilter = 'herz';
         activeModuleSetter = (slug) => { active = slug; selectedId = ''; render(); };
         const anatomyEditorFields = x => `<section class="cf552-subsection-editor"><div class="cf552-subsection-header"><h3>Aufklappbare Unterpunkte</h3><button type="button" class="btn" data-sub-add>+ Unterpunkt</button></div>${(Array.isArray(x.subsections) ? x.subsections : []).map((v, i) => `<div class="cf552-subsection-row" data-sub-index="${i}"><label>Überschrift<input data-sub-title value="${esc(v.title || '')}"></label><label>Inhalt<textarea data-sub-body rows="4">${esc(v.body || '')}</textarea></label><div class="cf552-subsection-actions"><button type="button" data-sub-move="up" ${!i ? 'disabled' : ''}>↑</button><button type="button" data-sub-move="down" ${i === (x.subsections.length - 1) ? 'disabled' : ''}>↓</button><button type="button" data-sub-remove>Entfernen</button></div></div>`).join('')}</section>`;
-        const render = () => { box.innerHTML = `<div class="editor-toolbar"><div><h2>Wissensbereiche</h2><p>Fachartikel, Begriffe, MPG-Geräte und Checklisten pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>Eintrag auswählen<select data-mod-select><option value="">– Bitte auswählen –</option>${items.filter(x => { if (x.module !== active)
+        const render = () => { const heading = active === 'checklists' ? (editorSection === 'materialien' ? 'Checklisten' : 'Übungschecklisten') : 'Wissensbereiche';
+            const description = active === 'checklists' ? 'Checklisten auswählen, bearbeiten oder als PDF ergänzen.' : 'Fachartikel, Begriffe und Geräte pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.';
+            box.innerHTML = `<div class="editor-toolbar"><div><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>Eintrag auswählen<select data-mod-select><option value="">– Bitte auswählen –</option>${items.filter(x => { if (x.module !== active)
             return false; if (!['anatomy', 'befund'].includes(active))
             return true; const t = CF_TOPICS.find(t => t.id === organFilter); return t ? (x.organGroup ? x.organGroup === t.id : active === 'anatomy' ? t.anatomy.test(x.title) : cfTopicContains([x.title, x.summary, x.body].join(' '), t)) : !CF_TOPICS.some(t => x.organGroup === t.id || (!x.organGroup && (active === 'anatomy' ? t.anatomy.test(x.title) : cfTopicContains([x.title, x.summary, x.body].join(' '), t)))); }).sort((a, b) => String(a.title).localeCompare(String(b.title), "de")).map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div><p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
         const persist = async () => { const ok = await save('knowledgeModules', items); const el = box.querySelector('[data-mod-note]'); if (el)
@@ -1172,7 +1174,7 @@
                         extra.push(`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title || 'Material')} ↗</a>`);
                 }
             const source = safeLink(a.sourceUrl);
-            return `<div class="cf553-mnemonic-body">${steps.length ? `<ol class="cf553-schema-steps">${steps.map(schemaItem).join('')}</ol>` : '<p class="cf547-empty">Für dieses Merkschema sind noch keine Schritte hinterlegt.</p>'}${a.source ? `<p class="cf553-schema-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${source ? `<a class="cf553-schema-source-link" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Originalquelle öffnen ↗</a>` : ''}${extra.length ? `<div class="cf553-schema-resources">${extra.join('')}</div>` : ''}</div>`;
+            return `<div class="cf553-mnemonic-body">${steps.length ? `<ol class="cf553-schema-steps">${steps.map(schemaItem).join('')}</ol>` : '<p class="cf547-empty">Für dieses Merkschema sind noch keine Schritte hinterlegt.</p>'}${String(a.explanation || '').trim() ? `<section class="cf561-schema-explanation"><h3>Erklärung zum Schema</h3><div class="cf561-schema-description">${renderModuleText(a.explanation)}</div></section>` : ''}${a.source ? `<p class="cf553-schema-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${source ? `<a class="cf553-schema-source-link" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Originalquelle öffnen ↗</a>` : ''}${extra.length ? `<div class="cf553-schema-resources">${extra.join('')}</div>` : ''}</div>`;
         };
         function render() {
             $$('[data-mat-tab]', main).forEach(b => { const selected = b.dataset.matTab === active; b.classList.toggle('selected', selected); b.setAttribute('aria-pressed', String(selected)); });
@@ -1987,6 +1989,7 @@
         const field = (label, value, key, type = 'text') => `<label class="ux-field"><span>${label}</span>${type === 'textarea' ? `<textarea data-k="${key}">${esc(Array.isArray(value) ? value.join('\n') : value || '')}</textarea>` : `<input data-k="${key}" type="${type}" value="${esc(value ?? '')}">`}</label>`;
         const listEditor = (items, key, placeholder) => `<div class="repeat-list" data-list-key="${key}">${arr(items).map((v, i) => `<div class="repeat-row"><input value="${esc(v)}" data-list-item="${i}" placeholder="${placeholder}"><div class="repeat-move-actions"><button type="button" data-move-list="up" aria-label="Punkt nach oben verschieben" title="Nach oben">↑</button><button type="button" data-move-list="down" aria-label="Punkt nach unten verschieben" title="Nach unten">↓</button></div><button type="button" data-remove-row aria-label="Punkt entfernen">✕</button></div>`).join('')}<button type="button" class="small-add" data-add-row="${key}">+ Punkt</button></div>`;
         const editorDrafts = new Map();
+        let materialAlgorithmsView = 'guidelines'; // Separate editorial views, same algorithms Worker collection.
         let currentEditorState = null;
         async function draw(name) {
             const sourceName = name === 'attendance' ? 'events' : name;
@@ -1995,7 +1998,7 @@
             editorDrafts.set(sourceName, d);
             currentEditorState = { name: sourceName, view: name, d, box };
             if (name === 'modules') {
-                await moduleEditor(box, moduleRequested);
+                await moduleEditor(box, moduleRequested, requestedEditorGroup);
                 return;
             }
             if (name === 'differential') {
@@ -2031,20 +2034,24 @@
                 } };
                 return;
             }
-            box.innerHTML = `<div class="editor-toolbar"><div><h2>${tabs.find(t => t[0] === name)?.[1] || name}</h2><p>Inhalt auswählen und einfach bearbeiten.</p></div><div class="editor-toolbar-actions"><button class="btn primary" data-add>+ Neu</button><button class="btn" data-save>Speichern</button></div></div><div class="editor-items" data-items></div>`;
+            const materialAlgorithmTab = name === 'algorithms' && requestedEditorGroup === 'materialien';
+            const isSchemaAlgorithm = x => String(x.category || '').startsWith('Schema');
+            const matchesMaterialView = x => !materialAlgorithmTab || (materialAlgorithmsView === 'mnemonics' ? isSchemaAlgorithm(x) : !isSchemaAlgorithm(x));
+            const sectionName = materialAlgorithmTab ? (materialAlgorithmsView === 'mnemonics' ? 'Merkhilfen & Schemata' : 'Leitlinien') : (tabs.find(t => t[0] === name)?.[1] || name);
+            box.innerHTML = `<div class="editor-toolbar"><div><h2>${sectionName}</h2><p>Inhalt auswählen und einfach bearbeiten.</p></div><div class="editor-toolbar-actions"><button class="btn primary" data-add>+ Neu</button><button class="btn" data-save>Speichern</button></div></div><div class="editor-items" data-items></div>`;
             const itemsBox = $('[data-items]', box);
             let selectedIndex = -1;
             let filterTerm = '';
             const render = () => {
                 // A single focused editor for every area, including Aktuelles.
                 const isSortable = ['algorithms', 'skills', 'guide', 'changes', 'differential', 'meetings'].includes(name);
-                const options = d.map((x, i) => ({ i, label: String(x.title || x.name || x.key || 'Eintrag ' + (i + 1)), search: normalizedSearch([x.title, x.authors, x.journal, Array.isArray(x.topics) ? x.topics.join(' ') : x.topics].join(' ')) }));
+                const options = d.map((x, i) => ({ i, label: String(x.title || x.name || x.key || 'Eintrag ' + (i + 1)), search: normalizedSearch([x.title, x.authors, x.journal, Array.isArray(x.topics) ? x.topics.join(' ') : x.topics].join(' ')) })).filter(({ i }) => matchesMaterialView(d[i]));
                 if (!isSortable)
                     options.sort((a, b) => a.label.localeCompare(b.label, 'de'));
                 const visible = filterTerm ? options.filter(x => x.search.includes(normalizedSearch(filterTerm)) || normalizedSearch(x.label).includes(normalizedSearch(filterTerm))) : options;
                 const orderKey = x => name === 'algorithms' ? (String(x.category || '').startsWith('Schema') ? 'Merkhilfen' : 'Algorithmen') : 'Einträge';
-                const orderGroups = isSortable ? [...new Set(d.map(orderKey))] : [];
-                const orderTools = isSortable ? `<section class="ost-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Liste</strong><small>Mit ↑ und ↓ sortieren, anschließend oben „Speichern“ wählen.</small></div><p class="ost-order-unsaved" data-order-unsaved aria-live="polite"></p>${orderGroups.map(group => `<div class="ost-order-group">${orderGroups.length > 1 ? `<h3>${esc(group)}</h3>` : ''}${d.map((x, i) => ({ x, i })).filter(({ x }) => orderKey(x) === group).map(({ x, i }, pos, all) => `<div class="ost-order-entry"><span>${esc(String(x.title || x.name || x.key || 'Eintrag ' + (i + 1)))}</span><div class="ost-order-buttons"><button type="button" data-order-dir="up" data-order-index="${i}" aria-label="${esc(String(x.title || x.name || 'Eintrag'))} nach oben" ${pos === 0 ? 'disabled' : ''}>↑</button><button type="button" data-order-dir="down" data-order-index="${i}" aria-label="${esc(String(x.title || x.name || 'Eintrag'))} nach unten" ${pos === all.length - 1 ? 'disabled' : ''}>↓</button></div></div>`).join('')}</div>`).join('')}</section>` : '';
+                const orderGroups = isSortable ? [...new Set(d.filter(matchesMaterialView).map(orderKey))] : [];
+                const orderTools = isSortable ? `<section class="ost-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Liste</strong><small>Mit ↑ und ↓ sortieren, anschließend oben „Speichern“ wählen.</small></div><p class="ost-order-unsaved" data-order-unsaved aria-live="polite"></p>${orderGroups.map(group => `<div class="ost-order-group">${orderGroups.length > 1 ? `<h3>${esc(group)}</h3>` : ''}${d.map((x, i) => ({ x, i })).filter(({ x }) => matchesMaterialView(x) && orderKey(x) === group).map(({ x, i }, pos, all) => `<div class="ost-order-entry"><span>${esc(String(x.title || x.name || x.key || 'Eintrag ' + (i + 1)))}</span><div class="ost-order-buttons"><button type="button" data-order-dir="up" data-order-index="${i}" aria-label="${esc(String(x.title || x.name || 'Eintrag'))} nach oben" ${pos === 0 ? 'disabled' : ''}>↑</button><button type="button" data-order-dir="down" data-order-index="${i}" aria-label="${esc(String(x.title || x.name || 'Eintrag'))} nach unten" ${pos === all.length - 1 ? 'disabled' : ''}>↓</button></div></div>`).join('')}</div>`).join('')}</section>` : '';
                 const pickerTop = name === 'articles' ? `<div class="literature-admin-stats"><div><strong>${d.length}</strong><span>Artikel gesamt</span></div><div><strong>${new Set(d.flatMap(x => Array.isArray(x.topics) ? x.topics : [x.topics]).filter(Boolean)).size}</strong><span>Themen</span></div></div><div class="editor-grid two literature-editor-tools"><label class="ux-field"><span>Literatur suchen</span><input data-article-filter placeholder="Titel, Autor:in, Journal …" value="${esc(filterTerm)}"></label><label class="ux-field"><span>Eintrag auswählen</span><select data-editor-pick><option value="-1">– Bitte auswählen –</option>${visible.map(x => `<option value="${x.i}" ${selectedIndex === x.i ? 'selected' : ''}>${esc(x.label)}</option>`).join('')}</select></label></div>` : `<div class="ost-entry-picker"><label>Eintrag auswählen<select data-editor-pick><option value="-1">– Bitte auswählen –</option>${options.map(x => `<option value="${x.i}" ${selectedIndex === x.i ? 'selected' : ''}>${esc(x.label)}</option>`).join('')}</select></label></div>`;
                 itemsBox.innerHTML = pickerTop + (selectedIndex >= 0 && d[selectedIndex] ? renderCard(name, d[selectedIndex], selectedIndex) : '<p class="ost-editor-empty">Wähle einen Eintrag aus der Liste oder erstelle einen neuen Inhalt.</p>') + orderTools;
                 itemsBox.querySelector('[data-editor-pick]')?.addEventListener('change', e => { sync(); selectedIndex = Number(e.target.value); render(); openCard(selectedIndex); });
@@ -2058,7 +2065,7 @@
             render();
             const sync = () => { readAll(name, d, box); editorDrafts.set(name, d); };
             const rerenderOpen = i => { selectedIndex = i; render(); openCard(i); };
-            $('[data-add]', box).onclick = () => { sync(); d.unshift(blank(name)); selectedIndex = 0; render(); openCard(0); };
+            $('[data-add]', box).onclick = () => { sync(); const item = blank(name); if (materialAlgorithmTab) { item.category = materialAlgorithmsView === 'mnemonics' ? 'Schema · Allgemein' : 'Leitlinie'; item.title = materialAlgorithmsView === 'mnemonics' ? 'Neues Merkschema' : 'Neue Leitlinie'; } d.unshift(item); selectedIndex = 0; render(); openCard(0); };
             $('[data-save]', box).onclick = async () => { sync(); const ok = await save(name, d); alert(ok ? 'Gespeichert und synchronisiert.' : 'Lokal gespeichert. Worker-Sync nicht verfügbar.'); };
             box.onclick = async (e) => {
                 const rich = e.target.closest('[data-editor-rich]');
@@ -2328,7 +2335,7 @@
             }
             else if (name === 'algorithms') {
                 const mat = x.materials || { background: [], checklists: [] };
-                body = `<div class="editor-grid two">${field('Titel', x.title, 'title')}${field('Symbol', x.icon, 'icon')}${field('Kategorie', x.category, 'category')}${field('Stand', x.stand, 'stand')}</div><section class="editor-subsection"><h3>Ablauf / Schritte / Schemaelemente</h3>${listEditor(x.steps, 'steps', 'Algorithmusschritt')}</section><section class="editor-subsection"><h3>Leitlinie / Quelle</h3>${field('Quelleninfo', x.source, 'source', 'textarea')}${field('Web-Link zur Leitlinie', x.sourceUrl, 'sourceUrl')}</section><section class="editor-subsection"><h3>Fachliche Prüfung</h3><div class="editor-grid two">${field('Zuletzt fachlich geprüft', x.lastReviewed, 'lastReviewed', 'date')}${field('Nächste Prüfung fällig', x.reviewDue, 'reviewDue', 'date')}${field('Verantwortliche Person', x.reviewOwner, 'reviewOwner')}</div></section><section class="editor-subsection"><h3>Grafik / Schema-Bild</h3>${field('Bild-URL (optional)', x.imageUrl, 'imageUrl')}${field('Bildunterschrift', x.imageCaption, 'imageCaption')}<label class="ux-field"><span>Grafik hochladen (PNG, JPG, SVG, WebP)</span><input type="file" accept="image/*" data-media-upload data-target="imageUrl"></label></section><section class="editor-subsection"><h3>Materialien</h3>${renderMaterialGroup('Hintergrundinfos', 'background', mat.background || [], i)}${renderMaterialGroup('Checklisten', 'checklists', mat.checklists || [], i)}</section>`;
+                body = `<div class="editor-grid two">${field('Titel', x.title, 'title')}${field('Symbol', x.icon, 'icon')}${field('Kategorie', x.category, 'category')}${field('Stand', x.stand, 'stand')}</div>${String(x.category || '').startsWith('Schema') ? `<section class="editor-subsection"><h3>Schema erklären</h3><p>Beschreibe hier das Schema wie einen Anatomie-Fachtext. Der Text erscheint auf der Materialien-Seite direkt unter dem Schema.</p>${ostRichEditor('explanation', x.explanation)}</section>` : ''}<section class="editor-subsection"><h3>Ablauf / Schritte / Schemaelemente</h3>${listEditor(x.steps, 'steps', 'Algorithmusschritt')}</section><section class="editor-subsection"><h3>Leitlinie / Quelle</h3>${field('Quelleninfo', x.source, 'source', 'textarea')}${field('Web-Link zur Leitlinie', x.sourceUrl, 'sourceUrl')}</section><section class="editor-subsection"><h3>Fachliche Prüfung</h3><div class="editor-grid two">${field('Zuletzt fachlich geprüft', x.lastReviewed, 'lastReviewed', 'date')}${field('Nächste Prüfung fällig', x.reviewDue, 'reviewDue', 'date')}${field('Verantwortliche Person', x.reviewOwner, 'reviewOwner')}</div></section><section class="editor-subsection"><h3>Grafik / Schema-Bild</h3>${field('Bild-URL (optional)', x.imageUrl, 'imageUrl')}${field('Bildunterschrift', x.imageCaption, 'imageCaption')}<label class="ux-field"><span>Grafik hochladen (PNG, JPG, SVG, WebP)</span><input type="file" accept="image/*" data-media-upload data-target="imageUrl"></label></section><section class="editor-subsection"><h3>Materialien</h3>${renderMaterialGroup('Hintergrundinfos', 'background', mat.background || [], i)}${renderMaterialGroup('Checklisten', 'checklists', mat.checklists || [], i)}</section>`;
             }
             else if (name === 'skills') {
                 body = `${field('Kategorie', x.name, 'name')}<div class="skill-editor-list">${(x.skills || []).map((sk, si) => `<section class="skill-editor-card" data-skill-index="${si}">${field('Skillname', sk.name, 'skillName')}<div class="section-editor-list">${(sk.sections || []).map((sec, sci) => `<div class="section-editor-card" data-section-index="${sci}"><div class="section-editor-head"><strong>Unterüberschrift ${sci + 1}</strong><button type="button" class="section-remove-btn" data-remove-section="${sci}" aria-label="Unterüberschrift entfernen">✕ Entfernen</button></div>${field('Unterüberschrift', sec.title, 'sectionTitle')}${listEditor(sec.items, 'sectionItems', 'Inhalt')}</div>`).join('')}</div><button class="small-add" type="button" data-add-section data-skill-index="${si}">+ Unterüberschrift</button></section>`).join('')}</div><button class="btn" type="button" data-add-skill>+ Skill hinzufügen</button>`;
@@ -2400,14 +2407,14 @@
         const editorGroups = [
             { id: 'wissen', title: 'Wissen', icon: ostIcon('anatomy'), items: ['modules:anatomy', 'differential', 'modules:befund', 'jump:materialien'] },
             { id: 'training', title: 'Training', icon: ostIcon('training'), items: ['skills', 'modules:mpg', 'modules:checklists'] },
-            { id: 'materialien', title: 'Materialien', icon: ostIcon('book'), items: ['algorithms', 'modules:checklists', 'articles'] },
+            { id: 'materialien', title: 'Materialien', icon: ostIcon('book'), items: ['algorithms:guidelines', 'modules:checklists', 'algorithms:mnemonics', 'articles'] },
             { id: 'termine', title: 'Termine', icon: ostIcon('calendar'), items: ['events', 'attendance'] },
             { id: 'dienstbesprechungen', title: 'Besprechungen & Vorträge', icon: ostIcon('users'), items: ['meetings'] },
             { id: 'lehrmeinung', title: 'Lehrmeinungsänderungen', icon: ostIcon('changes'), items: ['changes'] },
             { id: 'aktuelles', title: 'Aktuelles', icon: ostIcon('news'), items: ['news'] },
             { id: 'literatur', title: 'Literatur & Lesetipps', icon: ostIcon('book'), items: ['articles'] }
         ];
-        const extraLabels = { 'modules:anatomy': ['Anatomie & Physiologie', ostIcon('anatomy')], 'modules:befund': ['Fachbegriffe', ostIcon('dictionary')], 'modules:mpg': ['Geräte', ostIcon('device')], 'modules:checklists': ['Übungschecklisten', ostIcon('checklist')], 'jump:materialien': ['Materialien', ostIcon('book')], algorithms: ['Leitlinien & Merkhilfen', ostIcon('notes')], differential: ['Krankheitsbilder', ostIcon('heart')], skills: ['Skills', ostIcon('training')], articles: ['Literatur-Archiv', ostIcon('book')] };
+        const extraLabels = { 'modules:anatomy': ['Anatomie & Physiologie', ostIcon('anatomy')], 'modules:befund': ['Fachbegriffe', ostIcon('dictionary')], 'modules:mpg': ['Geräte', ostIcon('device')], 'modules:checklists': ['Übungschecklisten', ostIcon('checklist')], 'jump:materialien': ['Materialien', ostIcon('book')], 'algorithms:guidelines': ['Leitlinien', ostIcon('guideline')], 'algorithms:mnemonics': ['Merkhilfen & Schemata', ostIcon('notes')], algorithms: ['Leitlinien & Merkhilfen', ostIcon('notes')], differential: ['Krankheitsbilder', ostIcon('heart')], skills: ['Skills', ostIcon('training')], articles: ['Literatur-Archiv', ostIcon('book')] };
         let moduleRequested = 'anatomy', requestedEditorGroup = 'wissen';
         const groupedEditorMenu = document.createElement('div');
         groupedEditorMenu.className = 'editor-grouped-menu ost-editor-workflow cf551-editor-workflow';
@@ -2417,7 +2424,8 @@
         $('.editor-dashboard').insertBefore(groupedEditorMenu, $('.editor-content'));
         $('.editor-dashboard').after($('.admin-tools'));
         const syncGroupedEditorMenu = tab => {
-            const group = editorGroups.find(g => g.id === requestedEditorGroup && (g.items.includes(tab) || g.items.includes('modules:' + moduleRequested))) || editorGroups.find(g => g.items.includes(tab) || tab === 'modules' && g.items.includes('modules:' + moduleRequested)) || editorGroups[0];
+            const belongs = g => g.items.includes(tab) || (tab === 'modules' && g.items.includes('modules:' + moduleRequested)) || (tab === 'algorithms' && g.items.some(id => id.startsWith('algorithms:')));
+            const group = editorGroups.find(g => g.id === requestedEditorGroup && belongs(g)) || editorGroups.find(belongs) || editorGroups[0];
             requestedEditorGroup = group.id;
             const groupPicker = groupedEditorMenu.querySelector('[data-editor-group-picker]');
             if (groupPicker)
@@ -2433,15 +2441,21 @@
                 const item = tabs.find(t => t[0] === id) || (extraLabels[id] ? [id, extraLabels[id][0]] : null);
                 if (!item)
                     return '';
-                const active = id === 'modules:' + moduleRequested && tab === 'modules' || id === 'differential' && tab === 'differential' || id === tab && tab !== 'differential';
-                return `<button type="button" class="editor-subgroup-tile ${active ? 'active' : ''}" data-editor-subtab="${id}" aria-pressed="${String(active)}"><span>${extraLabels[id]?.[1] || tabIcons[id] || ostIcon('book')}</span><strong>${esc(extraLabels[id]?.[0] || item[1])}</strong></button>`;
+                const active = id === 'modules:' + moduleRequested && tab === 'modules' || id === 'algorithms:' + materialAlgorithmsView && tab === 'algorithms' || id === 'differential' && tab === 'differential' || id === tab && tab !== 'differential';
+                const label = group.id === 'materialien' && id === 'modules:checklists' ? 'Checklisten' : extraLabels[id]?.[0] || item[1];
+                return `<button type="button" class="editor-subgroup-tile ${active ? 'active' : ''}" data-editor-subtab="${id}" aria-pressed="${String(active)}"><span>${extraLabels[id]?.[1] || tabIcons[id] || ostIcon('book')}</span><strong>${esc(label)}</strong></button>`;
             }).join('');
         };
         const navigateEditorTab = id => {
             if (id === 'jump:materialien') {
                 requestedEditorGroup = 'materialien';
                 groupedEditorMenu.querySelector('[data-editor-group-picker]').value = 'materialien';
-                id = 'algorithms';
+                id = 'algorithms:guidelines';
+            }
+            if (id.startsWith('algorithms:')) {
+                materialAlgorithmsView = id.split(':')[1] === 'mnemonics' ? 'mnemonics' : 'guidelines';
+                $('.editor-nav [data-tab="algorithms"]')?.click();
+                return;
             }
             if (id === 'differential') {
                 $('.editor-nav [data-tab="differential"]')?.click();
