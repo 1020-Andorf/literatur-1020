@@ -224,7 +224,8 @@
     "image": "assets/anatomie/herz.svg",
     "imageCaption": "Vereinfachtes Funktionsschema mit beschrifteten Stationen; nicht maßstabsgetreu.",
     "icon": "❤️",
-    "organGroup": "herz"
+    "organGroup": "herz",
+    "order": 2
   },
   {
     "id": "system-03",
@@ -272,7 +273,8 @@
     "status": "published",
     "related": [],
     "image": "assets/anatomie/blut.svg",
-    "imageCaption": "Vereinfachtes Funktionsschema mit beschrifteten Stationen; nicht maßstabsgetreu."
+    "imageCaption": "Vereinfachtes Funktionsschema mit beschrifteten Stationen; nicht maßstabsgetreu.",
+    "order": 1
   },
   {
     "id": "system-06",
