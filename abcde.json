@@ -1,0 +1,107 @@
+[
+  {
+    "id": "a",
+    "key": "A",
+    "title": "Airway",
+    "checks": [
+      "Spricht der Patient frei?",
+      "Atemweg frei oder verlegt?",
+      "Stridor, Schnarchen, Gurgeln oder Fremdkörper?",
+      "Bei Trauma HWS-Schutz berücksichtigen"
+    ],
+    "actions": [
+      "Atemweg freimachen und absaugen",
+      "Kopfposition / Esmarch-Handgriff nach Situation",
+      "Guedel/Wendl nach Indikation",
+      "Erweiterte Atemwegshilfe vorbereiten"
+    ],
+    "pitfalls": [
+      "Atemweg nicht früh genug priorisiert",
+      "Absaugung oder Hilfsmittel nicht vorbereitet"
+    ]
+  },
+  {
+    "id": "b",
+    "key": "B",
+    "title": "Breathing",
+    "checks": [
+      "Atemfrequenz und Atemmuster",
+      "Thoraxexkursion und Atemarbeit",
+      "SpO₂ und Hautkolorit",
+      "Auskultation / Atemgeräusche"
+    ],
+    "actions": [
+      "Sauerstoffgabe nach Indikation",
+      "Beutel-Maskenbeatmung vorbereiten",
+      "Lagerung optimieren",
+      "Ventilation und Oxygenierung reevaluieren"
+    ],
+    "pitfalls": [
+      "Sauerstoffgabe nicht angepasst",
+      "Erschöpfung oder stille Lunge übersehen"
+    ]
+  },
+  {
+    "id": "c",
+    "key": "C",
+    "title": "Circulation",
+    "checks": [
+      "Puls, Blutdruck und Rekap-Zeit",
+      "Starke Blutung?",
+      "Hauttemperatur und Perfusion",
+      "Schockzeichen / Rhythmus"
+    ],
+    "actions": [
+      "Blutstillung",
+      "Wärmeerhalt und Lagerung",
+      "i.v./i.o.-Zugang nach Standard",
+      "Monitoring und Reevaluation"
+    ],
+    "pitfalls": [
+      "Blutung übersehen",
+      "Schockzeichen nicht erkannt"
+    ]
+  },
+  {
+    "id": "d",
+    "key": "D",
+    "title": "Disability",
+    "checks": [
+      "AVPU / GCS",
+      "Pupillen",
+      "Blutzucker",
+      "FAST / neurologische Defizite / Krampfaktivität"
+    ],
+    "actions": [
+      "Blutzucker korrigieren nach Standard",
+      "Stroke-Screening",
+      "Krampfmanagement",
+      "Neurologischen Verlauf reevaluieren"
+    ],
+    "pitfalls": [
+      "Hypoglykämie nicht ausgeschlossen",
+      "Neurologische Verschlechterung zu spät erkannt"
+    ]
+  },
+  {
+    "id": "e",
+    "key": "E",
+    "title": "Exposure",
+    "checks": [
+      "Ganzkörperinspektion",
+      "SAMPLE(R) / OPQRST",
+      "Temperatur und Umfeld",
+      "Verletzungen, Haut und Schmerz"
+    ],
+    "actions": [
+      "Ganzkörperuntersuchung",
+      "Wärmeerhalt",
+      "Gezielte Anamnese",
+      "Befunde dokumentieren und reevaluieren"
+    ],
+    "pitfalls": [
+      "Wärmeerhalt vergessen",
+      "Verdeckte Verletzungen übersehen"
+    ]
+  }
+]
