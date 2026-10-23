@@ -1181,13 +1181,20 @@ async function editor(){
  let moduleRequested='anatomy',requestedEditorGroup='wissen';
  const groupedEditorMenu=document.createElement('div');
  groupedEditorMenu.className='editor-grouped-menu ost-editor-workflow cf551-editor-workflow';
- groupedEditorMenu.innerHTML=`<div class="cf550-editor-choice"><label for="cf550-editor-group-picker">Bereich auswählen</label><select id="cf550-editor-group-picker" data-editor-group-picker>${editorGroups.map(g=>`<option value="${g.id}">${g.title}</option>`).join('')}</select></div><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
+ const editorTopLevel=['wissen','training','materialien','termine','dienstbesprechungen','lehrmeinung'];
+ const editorGroupTile=g=>`<button type="button" class="cf555-editor-main-tile" data-editor-main="${g.id}" aria-label="${esc(g.title)}" aria-pressed="false"><span class="cf555-editor-icon">${g.icon}</span><strong>${esc(g.id==='lehrmeinung'?'Lehrmeinung':g.title)}</strong></button>`;
+ groupedEditorMenu.innerHTML=`<nav class="cf555-editor-main-menu" aria-label="Redaktion: Hauptbereiche">${editorTopLevel.map(id=>editorGroupTile(editorGroups.find(g=>g.id===id))).join('')}</nav><nav class="cf555-editor-extras" aria-label="Weitere Redaktionsinhalte">${['aktuelles','literatur'].map(id=>editorGroupTile(editorGroups.find(g=>g.id===id))).join('')}</nav><div class="cf550-editor-choice" hidden><label for="cf550-editor-group-picker">Bereich auswählen</label><select id="cf550-editor-group-picker" data-editor-group-picker>${editorGroups.map(g=>`<option value="${g.id}">${g.title}</option>`).join('')}</select></div><nav class="editor-subgroup-tiles" aria-label="Unterbereiche"></nav>`;
  $('.editor-dashboard').insertBefore(groupedEditorMenu,$('.editor-content'));
  $('.editor-dashboard').after($('.admin-tools'));
  const syncGroupedEditorMenu=tab=>{
   const group=editorGroups.find(g=>g.id===requestedEditorGroup&&(g.items.includes(tab)||g.items.includes('modules:'+moduleRequested)))||editorGroups.find(g=>g.items.includes(tab)||tab==='modules'&&g.items.includes('modules:'+moduleRequested))||editorGroups[0];
   requestedEditorGroup=group.id;
   const groupPicker=groupedEditorMenu.querySelector('[data-editor-group-picker]');if(groupPicker)groupPicker.value=group.id;
+  groupedEditorMenu.querySelectorAll('[data-editor-main]').forEach(tile=>{
+   const active=tile.dataset.editorMain===group.id;
+   tile.classList.toggle('active',active);
+   tile.setAttribute('aria-pressed',String(active));
+  });
   const nav=$('.editor-subgroup-tiles',groupedEditorMenu);
   nav.hidden=group.items.length<=1;
   nav.innerHTML=group.items.length<=1?'':group.items.map(id=>{
@@ -1205,11 +1212,17 @@ async function editor(){
    moduleRequested=id.split(':')[1];$('.editor-nav [data-tab="modules"]')?.click();if(activeModuleSetter)activeModuleSetter(moduleRequested)
   }else $('.editor-nav [data-tab="'+id+'"]')?.click();
  };
- groupedEditorMenu.querySelector('[data-editor-group-picker]').addEventListener('change',e=>{
-  requestedEditorGroup=e.target.value;
-  const group=editorGroups.find(g=>g.id===requestedEditorGroup);if(group)navigateEditorTab(group.items[0]);
+ const selectEditorGroup=id=>{
+  const group=editorGroups.find(g=>g.id===id);if(!group)return;
+  requestedEditorGroup=group.id;
+  navigateEditorTab(group.items[0]);
+ };
+ groupedEditorMenu.querySelector('[data-editor-group-picker]').addEventListener('change',e=>selectEditorGroup(e.target.value));
+ groupedEditorMenu.addEventListener('click',e=>{
+  const main=e.target.closest('[data-editor-main]');
+  if(main){selectEditorGroup(main.dataset.editorMain);return}
+  const sub=e.target.closest('[data-editor-subtab]');if(sub)navigateEditorTab(sub.dataset.editorSubtab);
  });
- groupedEditorMenu.addEventListener('click',e=>{const btn=e.target.closest('[data-editor-subtab]');if(btn)navigateEditorTab(btn.dataset.editorSubtab)});
  const mobilePick=document.createElement('div');mobilePick.className='editor-mobile-picker';mobilePick.innerHTML=`<label for="editor-mobile-select">Redaktionsbereich</label><select id="editor-mobile-select">${tabs.map(t=>`<option value="${t[0]}">${t[1]}</option>`).join('')}</select>`;$('.editor-dashboard').insertBefore(mobilePick,$('.editor-content'));mobilePick.hidden=true;
  mobilePick.querySelector('select').onchange=e=>$('.editor-nav [data-tab="'+e.target.value+'"]')?.click();
  $('.editor-nav').onclick=e=>{const b=e.target.closest('[data-tab]');if(!b)return;if(currentEditorState&&currentEditorState.view!=='attendance'){readAll(currentEditorState.name,currentEditorState.d,currentEditorState.box);editorDrafts.set(currentEditorState.name,currentEditorState.d)}$$('.editor-nav-btn').forEach(x=>x.classList.toggle('active',x===b));if(mobilePick)mobilePick.querySelector('select').value=b.dataset.tab;syncGroupedEditorMenu(b.dataset.tab);draw(b.dataset.tab)};
