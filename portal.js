@@ -1902,17 +1902,61 @@
             return; const parent = d[item.si]; if (!parent)
             return; const old = typeof parent.causes[item.ci] === 'string' ? { name: parent.causes[item.ci] } : parent.causes[item.ci]; root.querySelectorAll('[data-disease-field]').forEach(el => old[el.dataset.diseaseField] = el.value); parent.causes[item.ci] = old; const symptom = root.querySelector('[data-symptom-title]'); if (symptom)
             parent.title = symptom.value; }
+        // Import von fachlich geprüften RS/NFS-Krankheitsbildern. Keine automatische Veröffentlichung.
+        let importRows = [];
+        const importNorm = value => normalizedSearch(String(value || '')).replace(/[^a-z0-9]/g, '');
+        const importPreview = () => {
+            const preview = box.querySelector('[data-bulk-preview]');
+            if (!preview) return;
+            if (!importRows.length) { preview.innerHTML = '<p>Noch keine gültigen Einträge geladen.</p>'; return; }
+            const existing = new Set(d.flatMap(sym => arr(sym.causes).map(c => importNorm(typeof c === 'string' ? c : c.name))));
+            preview.innerHTML = `<p>${importRows.length} Einträge erkannt. Vor dem Import fachlich prüfen; bestehende Titel werden übersprungen.</p><div class="ost565-import-rows">${importRows.map((row, i) => {
+                const topic = CF_TOPICS.find(t => importNorm(t.label) === importNorm(row.organgruppe));
+                const duplicate = existing.has(importNorm(row.titel)) || importRows.findIndex(r => importNorm(r.titel) === importNorm(row.titel)) !== i;
+                const blocked = !topic || duplicate;
+                const reason = !topic ? 'Organgruppe unbekannt' : duplicate ? 'Titel bereits vorhanden / doppelt' : 'Noch nicht fachlich freigegeben';
+                return `<label class="ost565-import-row"><input type="checkbox" data-bulk-row="${i}" ${blocked ? 'disabled' : ''}><span><strong>${esc(row.titel)}</strong><small>${esc(row.organgruppe)} · ${esc(reason)}</small></span></label>`;
+            }).join('')}</div><label class="ost565-import-confirm"><input type="checkbox" data-bulk-confirm> Ich bestätige, dass die ausgewählten Fachtexte anhand der gültigen Lehrmeinung und lokalen SOPs geprüft und zur Veröffentlichung freigegeben wurden.</label><button type="button" class="btn primary" data-bulk-apply>Ausgewählte Krankheitsbilder veröffentlichen</button><p data-bulk-note role="status"></p>`;
+        };
+        const buildImportedCause = row => ({
+            name: String(row.titel).trim(),
+            symptoms: String(row.warnzeichen || ''),
+            info: [row.grundlagen, row.hinweis, row.rs_schwerpunkt && '## RS – Schwerpunkt\n' + row.rs_schwerpunkt, row.nfs_vertiefung && '## NFS – Vertiefung\n' + row.nfs_vertiefung].filter(Boolean).join('\n\n'),
+            physiology: '', findings: '', medications: '', cave: String(row.warnzeichen || ''),
+            sourceUrl: String(row.quellen || '').match(/https:\/\/[^\s|]+/)?.[0] || '',
+            sourceLabel: 'Fachquellen (Prüfung durch Redaktion)',
+            importSource: String(row.quellen || ''),
+            importReviewedAt: new Date().toISOString().slice(0, 10)
+        });
         function render() {
             const all = options();
             if (!all.some(x => x.key === selected))
                 selected = all[0]?.key || '';
             const item = current();
-            box.innerHTML = `<section class="cf551-disease-workspace"><div class="cf551-editor-heading"><h2>Krankheitsbilder</h2><div class="cf551-editor-actions"><button type="button" class="btn" data-disease-new>+ Krankheitsbild</button><button type="button" class="btn primary" data-disease-save>Speichern</button></div></div><div class="cf551-editor-pickers"><label>3. Krankheitsbild auswählen<select data-disease-pick><option value="">– Bitte auswählen –</option>${all.map(x => `<option value="${x.key}" ${x.key === selected ? 'selected' : ''}>${esc(x.c.name || 'Unbenannt')}</option>`).join('')}</select></label></div><div data-disease-note role="status"></div>${item ? `<div class="cf551-disease-form"><div class="cf551-disease-meta">${field('Krankheitsbild', 'name', item.c.name)}<label class="cf551-editor-field"><span>Leitsymptom (Zuordnung)</span><input data-symptom-title value="${esc(item.sym.title || '')}"></label></div>${field('Typische Symptome', 'symptoms', item.c.symptoms, true)}${field('Erkrankung & Einordnung', 'info', item.c.info, true)}${field('Anatomie / Physiologie', 'physiology', item.c.physiology, true)}${field('Befunde', 'findings', item.c.findings, true)}${field('Relevante Medikamente', 'medications', item.c.medications, true)}${field('Warnzeichen / CAVE', 'cave', item.c.cave, true)}<div class="cf551-disease-meta">${field('Fachquelle URL', 'sourceUrl', item.c.sourceUrl)}${field('Quellenbezeichnung', 'sourceLabel', item.c.sourceLabel)}</div><button class="btn danger" type="button" data-disease-delete>Krankheitsbild löschen</button></div>` : '<div class="cf551-empty-editor">Für diesen Bereich sind noch keine Krankheitsbilder vorhanden. Mit „+ Krankheitsbild“ legst du eines an.</div>'}${all.length > 1 ? `<section class="ost-order-editor cf562-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Krankheitsbilder</strong><small>Mit ↑ und ↓ verschieben. Speichert direkt und wird öffentlich übernommen.</small></div><div class="ost-order-group">${all.map((x,i) => `<div class="ost-order-entry"><span>${esc(x.c.name || 'Ohne Titel')}</span><div class="ost-order-buttons"><button type="button" data-disease-order="up" data-disease-key="${esc(x.key)}" ${!i ? 'disabled' : ''} aria-label="${esc(x.c.name)} nach oben">↑</button><button type="button" data-disease-order="down" data-disease-key="${esc(x.key)}" ${i===all.length-1 ? 'disabled' : ''} aria-label="${esc(x.c.name)} nach unten">↓</button></div></div>`).join('')}</div></section>` : ''}</section>`;
+            box.innerHTML = `<section class="cf551-disease-workspace"><div class="cf551-editor-heading"><h2>Krankheitsbilder</h2><div class="cf551-editor-actions"><button type="button" class="btn" data-disease-new>+ Krankheitsbild</button><button type="button" class="btn primary" data-disease-save>Speichern</button></div></div><div class="cf551-editor-pickers"><label>3. Krankheitsbild auswählen<select data-disease-pick><option value="">– Bitte auswählen –</option>${all.map(x => `<option value="${x.key}" ${x.key === selected ? 'selected' : ''}>${esc(x.c.name || 'Unbenannt')}</option>`).join('')}</select></label></div><div data-disease-note role="status"></div><details class="ost565-import"><summary>Fachinformationen aus JSON importieren</summary><p>Nur für Krankheitsbilder. Erst Vorschau, dann bewusste Freigabe. Vorhandene Einträge werden niemals ersetzt.</p><label>JSON-Datei auswählen<input type="file" accept=".json,application/json" data-bulk-file></label><div data-bulk-preview><p>Bitte JSON-Datei auswählen.</p></div></details>${item ? `<div class="cf551-disease-form"><div class="cf551-disease-meta">${field('Krankheitsbild', 'name', item.c.name)}<label class="cf551-editor-field"><span>Leitsymptom (Zuordnung)</span><input data-symptom-title value="${esc(item.sym.title || '')}"></label></div>${field('Typische Symptome', 'symptoms', item.c.symptoms, true)}${field('Erkrankung & Einordnung', 'info', item.c.info, true)}${field('Anatomie / Physiologie', 'physiology', item.c.physiology, true)}${field('Befunde', 'findings', item.c.findings, true)}${field('Relevante Medikamente', 'medications', item.c.medications, true)}${field('Warnzeichen / CAVE', 'cave', item.c.cave, true)}<div class="cf551-disease-meta">${field('Fachquelle URL', 'sourceUrl', item.c.sourceUrl)}${field('Quellenbezeichnung', 'sourceLabel', item.c.sourceLabel)}</div><button class="btn danger" type="button" data-disease-delete>Krankheitsbild löschen</button></div>` : '<div class="cf551-empty-editor">Für diesen Bereich sind noch keine Krankheitsbilder vorhanden. Mit „+ Krankheitsbild“ legst du eines an.</div>'}${all.length > 1 ? `<section class="ost-order-editor cf562-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Krankheitsbilder</strong><small>Mit ↑ und ↓ verschieben. Speichert direkt und wird öffentlich übernommen.</small></div><div class="ost-order-group">${all.map((x,i) => `<div class="ost-order-entry"><span>${esc(x.c.name || 'Ohne Titel')}</span><div class="ost-order-buttons"><button type="button" data-disease-order="up" data-disease-key="${esc(x.key)}" ${!i ? 'disabled' : ''} aria-label="${esc(x.c.name)} nach oben">↑</button><button type="button" data-disease-order="down" data-disease-key="${esc(x.key)}" ${i===all.length-1 ? 'disabled' : ''} aria-label="${esc(x.c.name)} nach unten">↓</button></div></div>`).join('')}</div></section>` : ''}</section>`;
         }
         render();
         box.oninput = e => { if (e.target.matches('[data-disease-field], [data-symptom-title]'))
             store(); };
-        box.onchange = e => { if (e.target.matches('[data-disease-organ]')) {
+        box.onchange = async e => {
+            if (e.target.matches('[data-bulk-file]')) {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                try {
+                    if (file.size > 2_000_000) throw new Error('Datei zu groß (maximal 2 MB).');
+                    const parsed = JSON.parse(await file.text());
+                    if (!Array.isArray(parsed)) throw new Error('Erwartet wird eine JSON-Liste.');
+                    if (parsed.length > 150) throw new Error('Maximal 150 Einträge pro Import.');
+                    if (parsed.some(row => !row || typeof row !== 'object' || typeof row.titel !== 'string' || !row.titel.trim() || typeof row.organgruppe !== 'string')) throw new Error('Ungültige Einträge: titel und organgruppe sind Pflichtfelder.');
+                    importRows = parsed;
+                    importPreview();
+                } catch (err) {
+                    importRows = [];
+                    box.querySelector('[data-bulk-preview]').textContent = 'Import nicht möglich: ' + err.message;
+                }
+                return;
+            }
+            if (e.target.matches('[data-disease-organ]')) {
             store();
             organ = e.target.value;
             selected = '';
@@ -1924,6 +1968,37 @@
             render();
         } };
         box.onclick = async (e) => {
+            if (e.target.closest('[data-bulk-apply]')) {
+                const note = box.querySelector('[data-bulk-note]');
+                const picked = [...box.querySelectorAll('[data-bulk-row]:checked')].map(input => importRows[Number(input.dataset.bulkRow)]);
+                if (!picked.length) { note.textContent = 'Bitte zunächst Einträge auswählen.'; return; }
+                if (!box.querySelector('[data-bulk-confirm]')?.checked) { note.textContent = 'Fachfreigabe muss ausdrücklich bestätigt werden.'; return; }
+                const existing = new Set(d.flatMap(sym => arr(sym.causes).map(c => importNorm(typeof c === 'string' ? c : c.name))));
+                const allowed = picked.filter(row => CF_TOPICS.some(t => importNorm(t.label) === importNorm(row.organgruppe)) && !existing.has(importNorm(row.titel)));
+                if (!allowed.length) { note.textContent = 'Keine neuen Einträge vorhanden.'; return; }
+                if (!confirm(`${allowed.length} fachlich freigegebene Krankheitsbilder jetzt veröffentlichen? Dieser Vorgang schreibt in den bestehenden Datenbestand.`)) return;
+                // Ausschließlich ergänzen; niemals bestehende Krankheiten oder Symptome überschreiben.
+                const updated = JSON.parse(JSON.stringify(d));
+                for (const row of allowed) {
+                    const topic = CF_TOPICS.find(t => importNorm(t.label) === importNorm(row.organgruppe));
+                    let symptom = updated.find(x => x.group === topic.groups[0] && x.title === 'Importierte Krankheitsbilder (fachlich freigegeben)');
+                    if (!symptom) {
+                        symptom = { id: 'import-symptom-' + topic.id + '-' + Date.now(), group: topic.groups[0], title: 'Importierte Krankheitsbilder (fachlich freigegeben)', questions: [], redflags: [], causes: [] };
+                        updated.push(symptom);
+                    }
+                    if (!Array.isArray(symptom.causes)) symptom.causes = [];
+                    symptom.causes.push(buildImportedCause(row));
+                }
+                const ok = await save('differential', updated);
+                if (!ok) { note.textContent = 'Cloudflare-Speicherung nicht bestätigt. Bitte Verbindung prüfen und keine weiteren Importe durchführen.'; return; }
+                d.splice(0, d.length, ...updated);
+                importRows = [];
+                selected = '';
+                render();
+                const msg = box.querySelector('[data-disease-note]');
+                if (msg) msg.textContent = `${allowed.length} Krankheitsbilder übernommen und gespeichert.`;
+                return;
+            }
             if (e.target.closest('[data-disease-order]')) {
                 store();
                 const btn = e.target.closest('[data-disease-order]');
