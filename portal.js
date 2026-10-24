@@ -806,6 +806,7 @@
         const records = await get('knowledgeModules');
         let items = Array.isArray(records) ? clone(records) : [];
         let active = initialModule;
+        let anatomyImportRows = [];
         let selectedId = '';
         let organFilter = editorSection === 'wissen' ? editorKnowledgeOrgan : 'herz';
         if (editorSection === 'wissen') editorKnowledgeOrganSetter = id => {
@@ -835,6 +836,18 @@
             return `<section class="ost-order-editor cf562-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Einträge</strong><small>Mit ↑ und ↓ verschieben. Die Reihenfolge wird direkt gespeichert und auf der Website übernommen.</small></div><div class="ost-order-group">${rows.map((x,i) => `<div class="ost-order-entry"><span>${esc(x.title || 'Ohne Titel')}</span><div class="ost-order-buttons"><button type="button" data-mod-order="up" data-mod-order-id="${esc(x.id)}" ${!i ? 'disabled' : ''} aria-label="${esc(x.title)} nach oben">↑</button><button type="button" data-mod-order="down" data-mod-order-id="${esc(x.id)}" ${i === rows.length - 1 ? 'disabled' : ''} aria-label="${esc(x.title)} nach unten">↓</button></div></div>`).join('')}</div></section>`;
         };
         const anatomyEditorFields = x => `<section class="cf552-subsection-editor"><div class="cf552-subsection-header"><h3>Aufklappbare Unterpunkte</h3><button type="button" class="btn" data-sub-add>+ Unterpunkt</button></div>${(Array.isArray(x.subsections) ? x.subsections : []).map((v, i) => `<div class="cf552-subsection-row" data-sub-index="${i}"><label>Überschrift<input data-sub-title value="${esc(v.title || '')}"></label><label>Inhalt<textarea data-sub-body rows="4">${esc(v.body || '')}</textarea></label><div class="cf552-subsection-actions"><button type="button" data-sub-move="up" ${!i ? 'disabled' : ''}>↑</button><button type="button" data-sub-move="down" ${i === (x.subsections.length - 1) ? 'disabled' : ''}>↓</button><button type="button" data-sub-remove>Entfernen</button></div></div>`).join('')}</section>`;
+        const anatomyImportPanel = () => active !== 'anatomy' ? '' : `<details class="ost565-import"><summary>Anatomie-Fachinformationen aus JSON importieren</summary><p>Nur neue Einträge. Erst Vorschau und manuelle Auswahl, dann als Entwurf übernehmen. Vorhandene Einträge bleiben unverändert.</p><label>JSON-Datei auswählen<input type="file" accept=".json,application/json" data-anatomy-import-file></label><div data-anatomy-import-preview><p>Bitte JSON-Datei auswählen.</p></div></details>`;
+        const anatomyNorm = s => String(s || '').normalize('NFKC').trim().toLocaleLowerCase('de').replace(/\s+/g, ' ');
+        const anatomyOrgan = label => CF_TOPICS.find(t => anatomyNorm(t.label) === anatomyNorm(label) || anatomyNorm(t.id) === anatomyNorm(label));
+        const anatomyPreview = () => {
+            const area = box.querySelector('[data-anatomy-import-preview]');
+            if (!area) return;
+            const existing = new Set(items.filter(x => x.module === 'anatomy').map(x => anatomyNorm(x.title)));
+            area.innerHTML = `<p>${anatomyImportRows.length} Einträge geladen. Duplikate und unbekannte Organgruppen sind gesperrt.</p><div class="ost565-import-rows">${anatomyImportRows.map((r,i) => {
+                const invalid = !anatomyOrgan(r.organgruppe), duplicate = existing.has(anatomyNorm(r.titel)) || anatomyImportRows.findIndex(x => anatomyNorm(x.titel) === anatomyNorm(r.titel)) !== i;
+                return `<label class="ost565-import-row"><input type="checkbox" data-anatomy-import-row="${i}" ${invalid || duplicate ? 'disabled' : ''}><span><strong>${esc(r.titel)}</strong><small>${esc(r.organgruppe)} · ${invalid ? 'Unbekannte Organgruppe' : duplicate ? 'Duplikat – übersprungen' : 'Neu – für Import auswählbar'}</small></span></label>`;
+            }).join('')}</div><button type="button" class="btn primary" data-anatomy-import-apply>Ausgewählte Einträge als Entwürfe übernehmen</button><p data-anatomy-import-note role="status"></p>`;
+        };
         const checklistMoveField = x => !['checklists', 'material-checklists'].includes(active) ? '' : `<label class="ost-module-field"><span>Bereich / Zuordnung</span><select data-checklist-target><option value="checklists" ${x.module === 'checklists' ? 'selected' : ''}>Training – Übungschecklisten</option><option value="material-checklists" ${x.module === 'material-checklists' ? 'selected' : ''}>Materialien – Checklisten</option></select><small>Ein Wechsel wird erst mit „Speichern“ übernommen. Der Eintrag erscheint danach ausschließlich im gewählten Bereich.</small></label>`;
         const legacyChecklistPicker = () => {
             if (active !== 'material-checklists') return '';
@@ -844,7 +857,7 @@
         };
         const render = () => { const heading = active === 'checklists' ? 'Übungschecklisten' : active === 'material-checklists' ? 'Checklisten' : 'Wissensbereiche';
             const description = ['checklists', 'material-checklists'].includes(active) ? 'Checklisten auswählen, bearbeiten und als PDF ergänzen. Einträge lassen sich ohne Inhaltsverlust zwischen Training und Materialien verschieben.' : 'Fachartikel, Begriffe und Geräte pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.';
-            box.innerHTML = `<div class="editor-toolbar"><div><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) && editorSection !== 'wissen' ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>${editorSection === 'wissen' ? '3. Eintrag auswählen' : 'Eintrag auswählen'}<select data-mod-select><option value="">– Bitte auswählen –</option>${orderedModuleItems().map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${checklistMoveField(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div>${legacyChecklistPicker()}${moduleOrderPanel()}<p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
+            box.innerHTML = `<div class="editor-toolbar"><div><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) && editorSection !== 'wissen' ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>${editorSection === 'wissen' ? '3. Eintrag auswählen' : 'Eintrag auswählen'}<select data-mod-select><option value="">– Bitte auswählen –</option>${orderedModuleItems().map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${checklistMoveField(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div>${anatomyImportPanel()}${legacyChecklistPicker()}${moduleOrderPanel()}<p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
         const persist = async () => { const ok = await save('knowledgeModules', items); const el = box.querySelector('[data-mod-note]'); if (el)
             el.textContent = ok ? 'Mit dem Worker synchronisiert.' : 'Lokal gespeichert – Worker-Synchronisierung nicht bestätigt.'; return ok; };
         box.addEventListener('input', e => {
@@ -862,7 +875,23 @@
                     x.subsections[i][sub.matches('[data-sub-title]') ? 'title' : 'body'] = sub.value;
             }
         });
-        box.addEventListener('change', async (e) => { if (e.target.matches('[data-mod-region]')) {
+        box.addEventListener('change', async (e) => {
+            if (e.target.matches('[data-anatomy-import-file]')) {
+                const file = e.target.files?.[0]; if (!file) return;
+                try {
+                    if (file.size > 2_000_000) throw Error('Maximal 2 MB pro JSON-Datei.');
+                    const parsed = JSON.parse(await file.text());
+                    if (!Array.isArray(parsed) || parsed.length > 150) throw Error('Erwartet wird eine Liste mit maximal 150 Einträgen.');
+                    if (parsed.some(r => !r || Array.isArray(r) || typeof r !== 'object' || typeof r.titel !== 'string' || !r.titel.trim() || typeof r.organgruppe !== 'string' || !r.organgruppe.trim())) throw Error('titel und organgruppe sind Pflichtfelder.');
+                    anatomyImportRows = parsed;
+                    anatomyPreview();
+                } catch (err) {
+                    anatomyImportRows = [];
+                    box.querySelector('[data-anatomy-import-preview]').textContent = 'Importfehler: ' + err.message;
+                }
+                return;
+            }
+            if (e.target.matches('[data-mod-region]')) {
             organFilter = e.target.value;
             selectedId = '';
             render();
@@ -953,6 +982,32 @@
         } const tab = e.target.closest('[data-mod-tab]'); if (tab) {
             active = tab.dataset.modTab;
             render();
+            return;
+        } if (e.target.closest('[data-anatomy-import-apply]')) {
+            const note = box.querySelector('[data-anatomy-import-note]');
+            const indexes = [...box.querySelectorAll('[data-anatomy-import-row]:checked')].map(x => Number(x.dataset.anatomyImportRow));
+            const existing = new Set(items.filter(x => x.module === 'anatomy').map(x => anatomyNorm(x.title)));
+            const picked = indexes.map(i => anatomyImportRows[i]).filter(r => r && anatomyOrgan(r.organgruppe) && !existing.has(anatomyNorm(r.titel)));
+            if (!picked.length) { if (note) note.textContent = 'Bitte neue Einträge auswählen.'; return; }
+            if (!confirm(picked.length + ' Anatomie-Einträge als Entwürfe übernehmen? Vorhandene Einträge werden nicht verändert.')) return;
+            const additions = picked.map((r,i) => ({
+                id: 'anatomy-import-' + Date.now().toString(36) + '-' + i,
+                module: 'anatomy', organGroup: anatomyOrgan(r.organgruppe).id, title: r.titel.trim(),
+                category: String(r.organgruppe || ''), summary: String(r.zusammenfassung || ''),
+                body: [r.grundlagen, r.physiologie && '## Physiologie\n' + r.physiologie, r.rs_schwerpunkt && '## RS – Schwerpunkt\n' + r.rs_schwerpunkt, r.nfs_vertiefung && '## NFS – Vertiefung\n' + r.nfs_vertiefung, r.warnzeichen && '## Warnzeichen / CAVE\n' + r.warnzeichen].filter(Boolean).join('\n\n'),
+                icon: '', image: '', imageCaption: '', sources: String(r.quellen || ''),
+                synonyms: String(r.synonyme || ''), reviewOwner: '', reviewDue: '', status: 'draft',
+                subsections: Array.isArray(r.unterpunkte) ? r.unterpunkte.filter(x => x && typeof x.titel === 'string').map(x => ({title: String(x.titel), body: String(x.inhalt || '')})) : [], related: []
+            }));
+            const updated = [...additions, ...items];
+            const ok = await save('knowledgeModules', updated);
+            if (!ok) { if (note) note.textContent = 'Cloudflare-Speicherung nicht bestätigt. Daten nicht übernommen. Bitte Verbindung prüfen.'; return; }
+            items = updated;
+            anatomyImportRows = [];
+            selectedId = additions[0]?.id || '';
+            render();
+            const msg = box.querySelector('[data-mod-note]');
+            if (msg) msg.textContent = additions.length + ' Anatomie-Einträge als Entwürfe übernommen und synchronisiert. Bitte einzeln fachlich prüfen und veröffentlichen.';
             return;
         } if (e.target.closest('[data-mod-seed]')) {
             const seeds = window.OST1020_MODULE_SEED || [];
