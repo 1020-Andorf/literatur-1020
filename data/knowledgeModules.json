@@ -1,5 +1,965 @@
 [
   {
+    "id": "anatomy-import-mvms9oy8-0",
+    "module": "anatomy",
+    "organGroup": "herz",
+    "title": "Herzanatomie und Blutfluss",
+    "category": "Herz & Kreislauf",
+    "summary": "Vier Hohlräume: rechter/linker Vorhof und rechte/linke Kammer.",
+    "body": "Vier Hohlräume: rechter/linker Vorhof und rechte/linke Kammer. Trikuspidal- und Mitralklappe sind AV-Klappen; Pulmonal- und Aortenklappe Taschenklappen. Septum trennt beide Kreisläufe. Koronararterien entspringen aus der Aortenwurzel.\n\n## Physiologie\nVenöses Blut erreicht über Hohlvenen den rechten Vorhof, fließt zur rechten Kammer und über Lungenarterien zur Lunge. Oxygeniertes Blut kehrt über Lungenvenen zum linken Vorhof und über die linke Kammer in die Aorta zurück. Systole ist Auswurf-, Diastole Füllungsphase.\n\n## RS – Schwerpunkt\nKreislaufbeurteilung: Pulsqualität, Haut, Rekapillarisierung, Blutdruck, Vigilanz und Atemnot zusammen betrachten; Thoraxschmerz nicht allein auf einen Herzinfarkt reduzieren.\n\n## NFS – Vertiefung\nPreload, Afterload, Kontraktilität und Herzfrequenz bestimmen gemeinsam das Herzzeitvolumen. Reduzierte Koronarperfusion kann Pumpfunktion und elektrische Stabilität beeinträchtigen.\n\n## Warnzeichen / CAVE\nAkuter Thoraxschmerz mit Schockzeichen, Bewusstseinsstörung oder schwerer Dyspnoe ist zeitkritisch.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Vier Hohlräume: rechter/linker Vorhof und rechte/linke Kammer. Trikuspidal- und Mitralklappe sind AV-Klappen; Pulmonal- und Aortenklappe Taschenklappen. Septum trennt beide Kreisläufe. Koronararterien entspringen aus der Aortenwurzel."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Venöses Blut erreicht über Hohlvenen den rechten Vorhof, fließt zur rechten Kammer und über Lungenarterien zur Lunge. Oxygeniertes Blut kehrt über Lungenvenen zum linken Vorhof und über die linke Kammer in die Aorta zurück. Systole ist Auswurf-, Diastole Füllungsphase."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Kreislaufbeurteilung: Pulsqualität, Haut, Rekapillarisierung, Blutdruck, Vigilanz und Atemnot zusammen betrachten; Thoraxschmerz nicht allein auf einen Herzinfarkt reduzieren."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Preload, Afterload, Kontraktilität und Herzfrequenz bestimmen gemeinsam das Herzzeitvolumen. Reduzierte Koronarperfusion kann Pumpfunktion und elektrische Stabilität beeinträchtigen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Akuter Thoraxschmerz mit Schockzeichen, Bewusstseinsstörung oder schwerer Dyspnoe ist zeitkritisch."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy8-1",
+    "module": "anatomy",
+    "organGroup": "herz",
+    "title": "Erregungsbildung und Reizleitung",
+    "category": "Herz & Kreislauf",
+    "summary": "Sinusknoten im rechten Vorhof; AV-Knoten, His-Bündel, Tawara-Schenkel und Purkinje-Fasern koordinieren Kammererregung.",
+    "body": "Sinusknoten im rechten Vorhof; AV-Knoten, His-Bündel, Tawara-Schenkel und Purkinje-Fasern koordinieren Kammererregung.\n\n## Physiologie\nDepolarisation führt zur elektrischen Aktivierung, danach zur mechanischen Kontraktion. AV-Verzögerung ermöglicht Ventrikelfüllung. Sinusrhythmus entsteht üblicherweise im Sinusknoten.\n\n## RS – Schwerpunkt\nPuls und Monitorrhythmus sind nicht identisch: Immer prüfen, ob die elektrische Aktivität eine wirksame Perfusion erzeugt.\n\n## NFS – Vertiefung\nEKG-Zuordnung: P-Welle Vorhoferregung, QRS ventrikuläre Depolarisation, T-Welle ventrikuläre Repolarisation. Leitungsstörungen und Ischämie können Rhythmus und Hämodynamik beeinflussen.\n\n## Warnzeichen / CAVE\nBei Kreislaufstillstand hat die klinische Pulskontrolle bzw. der Reanimationsalgorithmus Priorität, nicht eine isolierte EKG-Interpretation.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Sinusknoten im rechten Vorhof; AV-Knoten, His-Bündel, Tawara-Schenkel und Purkinje-Fasern koordinieren Kammererregung."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Depolarisation führt zur elektrischen Aktivierung, danach zur mechanischen Kontraktion. AV-Verzögerung ermöglicht Ventrikelfüllung. Sinusrhythmus entsteht üblicherweise im Sinusknoten."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Puls und Monitorrhythmus sind nicht identisch: Immer prüfen, ob die elektrische Aktivität eine wirksame Perfusion erzeugt."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "EKG-Zuordnung: P-Welle Vorhoferregung, QRS ventrikuläre Depolarisation, T-Welle ventrikuläre Repolarisation. Leitungsstörungen und Ischämie können Rhythmus und Hämodynamik beeinflussen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Bei Kreislaufstillstand hat die klinische Pulskontrolle bzw. der Reanimationsalgorithmus Priorität, nicht eine isolierte EKG-Interpretation."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-2",
+    "module": "anatomy",
+    "organGroup": "herz",
+    "title": "Blutgefäße und Mikrozirkulation",
+    "category": "Herz & Kreislauf",
+    "summary": "Arterien führen Blut vom Herzen weg, Venen zum Herzen hin (Ausnahme der Oxygenierung: Lungenkreislauf).",
+    "body": "Arterien führen Blut vom Herzen weg, Venen zum Herzen hin (Ausnahme der Oxygenierung: Lungenkreislauf). Kapillaren besitzen dünne Wände für Stoffaustausch.\n\n## Physiologie\nArteriolen regulieren Widerstand und Gewebeperfusion. Der Kapillaraustausch hängt u. a. von hydrostatischem und kolloidosmotischem Druck ab. Venensystem dient als Kapazitätsreservoir.\n\n## RS – Schwerpunkt\nSchockzeichen können schon bei noch normalem Blutdruck vorhanden sein. Rekapillarisierung nur zusammen mit weiteren Parametern beurteilen.\n\n## NFS – Vertiefung\nMittlerer arterieller Druck, Widerstand, venöser Rückstrom und Mikrozirkulationsstörungen erklären die Diskrepanz zwischen Makrohämodynamik und Gewebeversorgung.\n\n## Warnzeichen / CAVE\nWarme Haut schließt einen Schock nicht aus, etwa bei distributiven Formen.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Arterien führen Blut vom Herzen weg, Venen zum Herzen hin (Ausnahme der Oxygenierung: Lungenkreislauf). Kapillaren besitzen dünne Wände für Stoffaustausch."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Arteriolen regulieren Widerstand und Gewebeperfusion. Der Kapillaraustausch hängt u. a. von hydrostatischem und kolloidosmotischem Druck ab. Venensystem dient als Kapazitätsreservoir."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Schockzeichen können schon bei noch normalem Blutdruck vorhanden sein. Rekapillarisierung nur zusammen mit weiteren Parametern beurteilen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Mittlerer arterieller Druck, Widerstand, venöser Rückstrom und Mikrozirkulationsstörungen erklären die Diskrepanz zwischen Makrohämodynamik und Gewebeversorgung."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Warme Haut schließt einen Schock nicht aus, etwa bei distributiven Formen."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-3",
+    "module": "anatomy",
+    "organGroup": "herz",
+    "title": "Blut und Hämostase",
+    "category": "Herz & Kreislauf",
+    "summary": "Blut besteht aus Plasma, Erythrozyten, Leukozyten und Thrombozyten.",
+    "body": "Blut besteht aus Plasma, Erythrozyten, Leukozyten und Thrombozyten. Hämoglobin transportiert überwiegend Sauerstoff; Thrombozyten und Gerinnungsfaktoren vermitteln Blutstillung.\n\n## Physiologie\nPrimäre Hämostase bildet einen Thrombozytenpfropf; sekundäre Hämostase stabilisiert diesen über Fibrin. Sauerstoffangebot hängt u. a. von Hämoglobin, Sättigung und Herzzeitvolumen ab.\n\n## RS – Schwerpunkt\nMassive Blutung früh erkennen; äußerlich sichtbare Blutung ist nicht zwingend das gesamte Blutverlustvolumen.\n\n## NFS – Vertiefung\nUnterscheide Gerinnungsstörungen, Verdünnungskoagulopathie, Hypothermie und Azidose als Faktoren der traumatischen Koagulopathie.\n\n## Warnzeichen / CAVE\nNormale SpO₂ bedeutet nicht normale Sauerstofftransportkapazität bei schwerer Anämie oder CO-Vergiftung.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Blut besteht aus Plasma, Erythrozyten, Leukozyten und Thrombozyten. Hämoglobin transportiert überwiegend Sauerstoff; Thrombozyten und Gerinnungsfaktoren vermitteln Blutstillung."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Primäre Hämostase bildet einen Thrombozytenpfropf; sekundäre Hämostase stabilisiert diesen über Fibrin. Sauerstoffangebot hängt u. a. von Hämoglobin, Sättigung und Herzzeitvolumen ab."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Massive Blutung früh erkennen; äußerlich sichtbare Blutung ist nicht zwingend das gesamte Blutverlustvolumen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Unterscheide Gerinnungsstörungen, Verdünnungskoagulopathie, Hypothermie und Azidose als Faktoren der traumatischen Koagulopathie."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Normale SpO₂ bedeutet nicht normale Sauerstofftransportkapazität bei schwerer Anämie oder CO-Vergiftung."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-4",
+    "module": "anatomy",
+    "organGroup": "atmung",
+    "title": "Obere Atemwege",
+    "category": "Atmung & Atemwege",
+    "summary": "Nase, Mundhöhle, Rachen und Kehlkopf bilden den oberen Atemweg.",
+    "body": "Nase, Mundhöhle, Rachen und Kehlkopf bilden den oberen Atemweg. Epiglottis und Stimmbandebene sind wichtige Schutz- und Engstellen.\n\n## Physiologie\nErwärmung, Befeuchtung und Filterung der Atemluft. Schlucken, Husten und Larynxreflexe schützen vor Aspiration. Muskeltonus hält den Pharynx offen.\n\n## RS – Schwerpunkt\nAuf Schnarchen, Stridor, Gurgeln, Fremdkörper und verminderten Schutzreflex achten. Atemwegsöffnung nach Ausbildung und lokalen Vorgaben.\n\n## NFS – Vertiefung\nDifferenziere anatomische von funktionellen Obstruktionen; verminderter Pharynxmuskeltonus bei Bewusstseinsstörung und Schleimhautschwellung können rasch kritisch werden.\n\n## Warnzeichen / CAVE\nStridor, stille Atembewegungen ohne Luftstrom oder zunehmende Erschöpfung sind Alarmsignale.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Nase, Mundhöhle, Rachen und Kehlkopf bilden den oberen Atemweg. Epiglottis und Stimmbandebene sind wichtige Schutz- und Engstellen."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Erwärmung, Befeuchtung und Filterung der Atemluft. Schlucken, Husten und Larynxreflexe schützen vor Aspiration. Muskeltonus hält den Pharynx offen."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Auf Schnarchen, Stridor, Gurgeln, Fremdkörper und verminderten Schutzreflex achten. Atemwegsöffnung nach Ausbildung und lokalen Vorgaben."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Differenziere anatomische von funktionellen Obstruktionen; verminderter Pharynxmuskeltonus bei Bewusstseinsstörung und Schleimhautschwellung können rasch kritisch werden."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Stridor, stille Atembewegungen ohne Luftstrom oder zunehmende Erschöpfung sind Alarmsignale."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-5",
+    "module": "anatomy",
+    "organGroup": "atmung",
+    "title": "Trachea, Bronchien und Lunge",
+    "category": "Atmung & Atemwege",
+    "summary": "Trachea verzweigt sich in die Hauptbronchien; rechts ist der Hauptbronchus meist steiler.",
+    "body": "Trachea verzweigt sich in die Hauptbronchien; rechts ist der Hauptbronchus meist steiler. Bronchiolen führen zu Alveolen. Lungenlappen: rechts drei, links zwei. Pleura visceralis und parietalis begrenzen den Pleuraspalt.\n\n## Physiologie\nLuft gelangt durch Druckunterschiede in die Lunge. Alveolen bieten Oberfläche für Diffusion; Surfactant reduziert Oberflächenspannung und stabilisiert Alveolen.\n\n## RS – Schwerpunkt\nAtemfrequenz, -tiefe, Geräusche, Thoraxbewegung und Anstrengung sind gemeinsam zu beurteilen.\n\n## NFS – Vertiefung\nVentilation ist Luftbewegung, Perfusion Blutfluss und Diffusion Stoffaustausch. V/Q-Mismatch, Shunt und Totraumventilation verursachen unterschiedliche Gaswechselstörungen.\n\n## Warnzeichen / CAVE\nEinseitig vermindertes Atemgeräusch mit Kreislaufbeeinträchtigung verlangt dringliche Differentialdiagnostik.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Trachea verzweigt sich in die Hauptbronchien; rechts ist der Hauptbronchus meist steiler. Bronchiolen führen zu Alveolen. Lungenlappen: rechts drei, links zwei. Pleura visceralis und parietalis begrenzen den Pleuraspalt."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Luft gelangt durch Druckunterschiede in die Lunge. Alveolen bieten Oberfläche für Diffusion; Surfactant reduziert Oberflächenspannung und stabilisiert Alveolen."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Atemfrequenz, -tiefe, Geräusche, Thoraxbewegung und Anstrengung sind gemeinsam zu beurteilen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Ventilation ist Luftbewegung, Perfusion Blutfluss und Diffusion Stoffaustausch. V/Q-Mismatch, Shunt und Totraumventilation verursachen unterschiedliche Gaswechselstörungen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Einseitig vermindertes Atemgeräusch mit Kreislaufbeeinträchtigung verlangt dringliche Differentialdiagnostik."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-6",
+    "module": "anatomy",
+    "organGroup": "atmung",
+    "title": "Atemmechanik und Atemmuskulatur",
+    "category": "Atmung & Atemwege",
+    "summary": "Zwerchfell ist der wichtigste Inspirationsmuskel; äußere Interkostalmuskeln unterstützen.",
+    "body": "Zwerchfell ist der wichtigste Inspirationsmuskel; äußere Interkostalmuskeln unterstützen. Exspiration ist in Ruhe überwiegend passiv; forcierte Atmung nutzt Hilfsmuskulatur.\n\n## Physiologie\nZwerchfellkontraktion vergrößert das Thoraxvolumen und senkt den intrapulmonalen Druck. Compliance beschreibt Dehnbarkeit, Resistance Strömungswiderstand.\n\n## RS – Schwerpunkt\nEinziehungen, Nasenflügeln, Sprechdyspnoe und paradoxe Atmung zeigen erhöhte Atemarbeit.\n\n## NFS – Vertiefung\nDynamische Überblähung bei Obstruktion, Verlust negativer Pleuradrücke bei Pneumothorax sowie Ermüdung der Atempumpe erklären Atemversagen.\n\n## Warnzeichen / CAVE\nAbnehmende Atemfrequenz bei zuvor schwerer Atemnot kann Erschöpfung statt Besserung bedeuten.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Zwerchfell ist der wichtigste Inspirationsmuskel; äußere Interkostalmuskeln unterstützen. Exspiration ist in Ruhe überwiegend passiv; forcierte Atmung nutzt Hilfsmuskulatur."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Zwerchfellkontraktion vergrößert das Thoraxvolumen und senkt den intrapulmonalen Druck. Compliance beschreibt Dehnbarkeit, Resistance Strömungswiderstand."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Einziehungen, Nasenflügeln, Sprechdyspnoe und paradoxe Atmung zeigen erhöhte Atemarbeit."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Dynamische Überblähung bei Obstruktion, Verlust negativer Pleuradrücke bei Pneumothorax sowie Ermüdung der Atempumpe erklären Atemversagen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Abnehmende Atemfrequenz bei zuvor schwerer Atemnot kann Erschöpfung statt Besserung bedeuten."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-7",
+    "module": "anatomy",
+    "organGroup": "atmung",
+    "title": "Oxygenierung, CO₂-Transport und Regulation",
+    "category": "Atmung & Atemwege",
+    "summary": "O₂ wird überwiegend an Hämoglobin gebunden transportiert, CO₂ vor allem als Bicarbonat.",
+    "body": "O₂ wird überwiegend an Hämoglobin gebunden transportiert, CO₂ vor allem als Bicarbonat. Chemorezeptoren und Atemzentren regulieren Ventilation.\n\n## Physiologie\nOxygenierung ist nicht identisch mit Ventilation. Der arterielle CO₂-Partialdruck spiegelt bei gegebener Produktion wesentlich die alveoläre Ventilation.\n\n## RS – Schwerpunkt\nNormale SpO₂ schließt Hypoventilation nicht aus. Bewusstsein und Atemmuster zusätzlich erfassen.\n\n## NFS – Vertiefung\nDie Oxyhämoglobin-Dissoziationskurve verschiebt sich mit pH, Temperatur und CO₂. EtCO₂ ist ein indirekter Marker und abhängig von Ventilation, Perfusion und Messbedingungen.\n\n## Warnzeichen / CAVE\nPulsoxymetrie kann bei schlechter Perfusion, Bewegungen oder Dyshemoglobinen unzuverlässig sein.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "O₂ wird überwiegend an Hämoglobin gebunden transportiert, CO₂ vor allem als Bicarbonat. Chemorezeptoren und Atemzentren regulieren Ventilation."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Oxygenierung ist nicht identisch mit Ventilation. Der arterielle CO₂-Partialdruck spiegelt bei gegebener Produktion wesentlich die alveoläre Ventilation."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Normale SpO₂ schließt Hypoventilation nicht aus. Bewusstsein und Atemmuster zusätzlich erfassen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Die Oxyhämoglobin-Dissoziationskurve verschiebt sich mit pH, Temperatur und CO₂. EtCO₂ ist ein indirekter Marker und abhängig von Ventilation, Perfusion und Messbedingungen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Pulsoxymetrie kann bei schlechter Perfusion, Bewegungen oder Dyshemoglobinen unzuverlässig sein."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-8",
+    "module": "anatomy",
+    "organGroup": "neurologie",
+    "title": "Gehirn und Hirnhäute",
+    "category": "Neurologie",
+    "summary": "Großhirn, Zwischenhirn, Kleinhirn und Hirnstamm übernehmen unterschiedliche Aufgaben.",
+    "body": "Großhirn, Zwischenhirn, Kleinhirn und Hirnstamm übernehmen unterschiedliche Aufgaben. Dura, Arachnoidea und Pia umgeben das ZNS; Liquor polstert und zirkuliert in Ventrikeln und Subarachnoidalraum.\n\n## Physiologie\nHirnstamm steuert lebenswichtige Funktionen; Großhirnrinde verarbeitet Sprache, Wahrnehmung und Bewegung; Kleinhirn koordiniert Bewegungen.\n\n## RS – Schwerpunkt\nNeurologischen Status strukturiert erheben: Bewusstsein, Pupillen, Sprache, Motorik, Seitenunterschiede und zeitlichen Beginn.\n\n## NFS – Vertiefung\nHirnperfusion hängt von systemischem Druck und intrakraniellem Druck ab. Autoregulation ist begrenzt und kann bei Läsionen ausfallen.\n\n## Warnzeichen / CAVE\nPlötzliche Fokalneurologie, Krampfanfall mit anhaltender Bewusstseinsstörung und Zeichen der Einklemmung sind zeitkritisch.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Großhirn, Zwischenhirn, Kleinhirn und Hirnstamm übernehmen unterschiedliche Aufgaben. Dura, Arachnoidea und Pia umgeben das ZNS; Liquor polstert und zirkuliert in Ventrikeln und Subarachnoidalraum."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Hirnstamm steuert lebenswichtige Funktionen; Großhirnrinde verarbeitet Sprache, Wahrnehmung und Bewegung; Kleinhirn koordiniert Bewegungen."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Neurologischen Status strukturiert erheben: Bewusstsein, Pupillen, Sprache, Motorik, Seitenunterschiede und zeitlichen Beginn."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Hirnperfusion hängt von systemischem Druck und intrakraniellem Druck ab. Autoregulation ist begrenzt und kann bei Läsionen ausfallen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Plötzliche Fokalneurologie, Krampfanfall mit anhaltender Bewusstseinsstörung und Zeichen der Einklemmung sind zeitkritisch."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-9",
+    "module": "anatomy",
+    "organGroup": "neurologie",
+    "title": "Neuron, Synapse und vegetatives Nervensystem",
+    "category": "Neurologie",
+    "summary": "Neuron besitzt Dendriten, Soma und Axon; Myelin verbessert Leitungsgeschwindigkeit.",
+    "body": "Neuron besitzt Dendriten, Soma und Axon; Myelin verbessert Leitungsgeschwindigkeit. Synapsen übertragen Signale chemisch oder elektrisch. Sympathikus und Parasympathikus regulieren Organfunktionen.\n\n## Physiologie\nAktionspotenziale entstehen durch spannungsabhängige Ionenkanäle. Neurotransmitter aktivieren oder hemmen Zielzellen. Sympathische Aktivierung steigert typischerweise Herzfrequenz und Bronchodilatation.\n\n## RS – Schwerpunkt\nSchwitzen, Hautdurchblutung, Pupillenreaktion und Puls als Teil des Gesamtbilds interpretieren.\n\n## NFS – Vertiefung\nUnterscheide cholinerge, adrenerge und weitere Rezeptorwirkungen, Reflexbögen sowie autonome Kompensation bei Hypovolämie.\n\n## Warnzeichen / CAVE\nFehlende Tachykardie schließt Schock nicht aus, etwa bei Medikamenteneffekten oder neurogenem Schock.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Neuron besitzt Dendriten, Soma und Axon; Myelin verbessert Leitungsgeschwindigkeit. Synapsen übertragen Signale chemisch oder elektrisch. Sympathikus und Parasympathikus regulieren Organfunktionen."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Aktionspotenziale entstehen durch spannungsabhängige Ionenkanäle. Neurotransmitter aktivieren oder hemmen Zielzellen. Sympathische Aktivierung steigert typischerweise Herzfrequenz und Bronchodilatation."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Schwitzen, Hautdurchblutung, Pupillenreaktion und Puls als Teil des Gesamtbilds interpretieren."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Unterscheide cholinerge, adrenerge und weitere Rezeptorwirkungen, Reflexbögen sowie autonome Kompensation bei Hypovolämie."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Fehlende Tachykardie schließt Schock nicht aus, etwa bei Medikamenteneffekten oder neurogenem Schock."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-10",
+    "module": "anatomy",
+    "organGroup": "neurologie",
+    "title": "Rückenmark und periphere Nerven",
+    "category": "Neurologie",
+    "summary": "Rückenmark verläuft im Wirbelkanal und endet beim Erwachsenen meist etwa L1/L2.",
+    "body": "Rückenmark verläuft im Wirbelkanal und endet beim Erwachsenen meist etwa L1/L2. Spinale Nerven verbinden sensible und motorische Bahnen mit der Peripherie.\n\n## Physiologie\nAufsteigende Bahnen vermitteln Sensibilität; absteigende Bahnen steuern Motorik. Reflexe können segmental verschaltet sein.\n\n## RS – Schwerpunkt\nNach Trauma auf neu aufgetretene Lähmungen, Taubheit, Kribbeln und Atembeeinträchtigung achten; achsengerechte Versorgung nach Vorgabe.\n\n## NFS – Vertiefung\nHohe zervikale Läsionen bedrohen die Atmung, autonome Störungen können Bradykardie und Vasodilatation auslösen.\n\n## Warnzeichen / CAVE\nProgrediente neurologische Ausfälle oder Atemschwäche nach Wirbelsäulentrauma sind Notfälle.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Rückenmark verläuft im Wirbelkanal und endet beim Erwachsenen meist etwa L1/L2. Spinale Nerven verbinden sensible und motorische Bahnen mit der Peripherie."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Aufsteigende Bahnen vermitteln Sensibilität; absteigende Bahnen steuern Motorik. Reflexe können segmental verschaltet sein."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Nach Trauma auf neu aufgetretene Lähmungen, Taubheit, Kribbeln und Atembeeinträchtigung achten; achsengerechte Versorgung nach Vorgabe."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Hohe zervikale Läsionen bedrohen die Atmung, autonome Störungen können Bradykardie und Vasodilatation auslösen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Progrediente neurologische Ausfälle oder Atemschwäche nach Wirbelsäulentrauma sind Notfälle."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-11",
+    "module": "anatomy",
+    "organGroup": "neurologie",
+    "title": "Bewusstsein und zerebrale Durchblutung",
+    "category": "Neurologie",
+    "summary": "Wachheit erfordert kortikale Netzwerke und aufsteigende aktivierende Systeme.",
+    "body": "Wachheit erfordert kortikale Netzwerke und aufsteigende aktivierende Systeme. Gehirn benötigt kontinuierliche Sauerstoff- und Glukoseversorgung.\n\n## Physiologie\nBewusstseinsstörung kann durch strukturelle Läsionen oder systemische Ursachen wie Hypoxie, Hypoglykämie, Intoxikation oder Schock entstehen.\n\n## RS – Schwerpunkt\nABCDE, Blutzucker nach Kompetenz, Verlauf von GCS/AVPU und Fremdanamnese priorisieren.\n\n## NFS – Vertiefung\nZerebraler Perfusionsdruck ergibt sich näherungsweise aus mittlerem arteriellen Druck minus intrakraniellem Druck.\n\n## Warnzeichen / CAVE\nNeue Bewusstseinsstörung nie als isoliert neurologisch voraussetzen; reversible Ursachen aktiv suchen.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Wachheit erfordert kortikale Netzwerke und aufsteigende aktivierende Systeme. Gehirn benötigt kontinuierliche Sauerstoff- und Glukoseversorgung."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Bewusstseinsstörung kann durch strukturelle Läsionen oder systemische Ursachen wie Hypoxie, Hypoglykämie, Intoxikation oder Schock entstehen."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "ABCDE, Blutzucker nach Kompetenz, Verlauf von GCS/AVPU und Fremdanamnese priorisieren."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Zerebraler Perfusionsdruck ergibt sich näherungsweise aus mittlerem arteriellen Druck minus intrakraniellem Druck."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Neue Bewusstseinsstörung nie als isoliert neurologisch voraussetzen; reversible Ursachen aktiv suchen."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-12",
+    "module": "anatomy",
+    "organGroup": "abdomen",
+    "title": "Speiseröhre, Magen und Dünndarm",
+    "category": "Abdomen & Stoffwechsel",
+    "summary": "Ösophagus führt Nahrung in den Magen; Magen speichert und durchmischt.",
+    "body": "Ösophagus führt Nahrung in den Magen; Magen speichert und durchmischt. Duodenum, Jejunum und Ileum bilden den Dünndarm.\n\n## Physiologie\nVerdauung beginnt mechanisch und enzymatisch; Resorption von Nährstoffen und großem Teil der Flüssigkeit erfolgt im Dünndarm.\n\n## RS – Schwerpunkt\nBauchschmerzen mit Kreislaufstatus, Erbrechen, Blutungszeichen und Anamnese gemeinsam einschätzen.\n\n## NFS – Vertiefung\nPeristaltik, Schleimhautbarriere, Splanchnikusperfusion und Ischämiefolgen erklären klinische Verschlechterungen.\n\n## Warnzeichen / CAVE\nHämatemesis, Teerstuhl oder akutes Abdomen mit Schockzeichen sind kritisch.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Ösophagus führt Nahrung in den Magen; Magen speichert und durchmischt. Duodenum, Jejunum und Ileum bilden den Dünndarm."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Verdauung beginnt mechanisch und enzymatisch; Resorption von Nährstoffen und großem Teil der Flüssigkeit erfolgt im Dünndarm."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Bauchschmerzen mit Kreislaufstatus, Erbrechen, Blutungszeichen und Anamnese gemeinsam einschätzen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Peristaltik, Schleimhautbarriere, Splanchnikusperfusion und Ischämiefolgen erklären klinische Verschlechterungen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Hämatemesis, Teerstuhl oder akutes Abdomen mit Schockzeichen sind kritisch."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-13",
+    "module": "anatomy",
+    "organGroup": "abdomen",
+    "title": "Leber, Galle und Pankreas",
+    "category": "Abdomen & Stoffwechsel",
+    "summary": "Leber liegt rechts oben im Abdomen, Gallenblase speichert Galle.",
+    "body": "Leber liegt rechts oben im Abdomen, Gallenblase speichert Galle. Pankreas liegt überwiegend retroperitoneal und hat exokrine sowie endokrine Funktion.\n\n## Physiologie\nLeber steuert Stoffwechsel, Proteinsynthese, Entgiftung und Galleproduktion. Exokrines Pankreas liefert Verdauungsenzyme; Inselzellen u. a. Insulin und Glukagon.\n\n## RS – Schwerpunkt\nRechtsseitiger Oberbauchschmerz, Ikterus, starke epigastrische Schmerzen und Hypoglykämiesymptome einordnen.\n\n## NFS – Vertiefung\nGestörte Leberfunktion kann Gerinnung und Glukoseregulation beeinträchtigen; Pankreasentzündung kann systemische Entzündung und Volumenverschiebungen auslösen.\n\n## Warnzeichen / CAVE\nStarke Oberbauchschmerzen mit Kreislaufinstabilität nicht bagatellisieren.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Leber liegt rechts oben im Abdomen, Gallenblase speichert Galle. Pankreas liegt überwiegend retroperitoneal und hat exokrine sowie endokrine Funktion."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Leber steuert Stoffwechsel, Proteinsynthese, Entgiftung und Galleproduktion. Exokrines Pankreas liefert Verdauungsenzyme; Inselzellen u. a. Insulin und Glukagon."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Rechtsseitiger Oberbauchschmerz, Ikterus, starke epigastrische Schmerzen und Hypoglykämiesymptome einordnen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Gestörte Leberfunktion kann Gerinnung und Glukoseregulation beeinträchtigen; Pankreasentzündung kann systemische Entzündung und Volumenverschiebungen auslösen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Starke Oberbauchschmerzen mit Kreislaufinstabilität nicht bagatellisieren."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-14",
+    "module": "anatomy",
+    "organGroup": "abdomen",
+    "title": "Glukosestoffwechsel und Hormonsystem",
+    "category": "Abdomen & Stoffwechsel",
+    "summary": "Endokrine Organe sind u.",
+    "body": "Endokrine Organe sind u. a. Pankreas, Schilddrüse, Nebennieren und Hypophyse. Hormone wirken über Blut auf Zielgewebe.\n\n## Physiologie\nInsulin fördert Glukoseaufnahme und Speicherung, Glukagon mobilisiert Reserven; Katecholamine und Cortisol wirken in der Stressantwort.\n\n## RS – Schwerpunkt\nBei veränderter Vigilanz Blutzucker gemäß Kompetenzen erfassen, Beschwerden und Vorerkrankungen erfragen.\n\n## NFS – Vertiefung\nInsulinmangel, Insulinresistenz, Ketogenese und osmotische Diurese erklären diabetische Entgleisungen.\n\n## Warnzeichen / CAVE\nHypoglykämie kann Schlaganfall imitieren; metabolische Entgleisungen sind nicht allein am Einzelwert zu beurteilen.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Endokrine Organe sind u. a. Pankreas, Schilddrüse, Nebennieren und Hypophyse. Hormone wirken über Blut auf Zielgewebe."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Insulin fördert Glukoseaufnahme und Speicherung, Glukagon mobilisiert Reserven; Katecholamine und Cortisol wirken in der Stressantwort."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Bei veränderter Vigilanz Blutzucker gemäß Kompetenzen erfassen, Beschwerden und Vorerkrankungen erfragen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Insulinmangel, Insulinresistenz, Ketogenese und osmotische Diurese erklären diabetische Entgleisungen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Hypoglykämie kann Schlaganfall imitieren; metabolische Entgleisungen sind nicht allein am Einzelwert zu beurteilen."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-15",
+    "module": "anatomy",
+    "organGroup": "niere",
+    "title": "Niere, Nephron und Harnwege",
+    "category": "Niere & Harnsystem",
+    "summary": "Nieren liegen retroperitoneal.",
+    "body": "Nieren liegen retroperitoneal. Das Nephron umfasst Glomerulus und Tubulussystem. Harnleiter führen zur Harnblase, Harnröhre nach außen.\n\n## Physiologie\nGlomeruläre Filtration und tubuläre Rückresorption/Sekretion steuern Wasser-, Elektrolyt- und Säure-Basen-Haushalt. Niere produziert u. a. Renin und Erythropoetin.\n\n## RS – Schwerpunkt\nWichtige Informationen: Ausscheidung, Flüssigkeitsverluste, Dialyse, Medikamente, Flankenschmerz und Ödeme.\n\n## NFS – Vertiefung\nPrärenale, renale und postrenale Mechanismen des Nierenversagens unterscheiden; Kaliumverschiebungen beeinflussen Erregbarkeit des Myokards.\n\n## Warnzeichen / CAVE\nAnurie, schwere Vigilanzstörung oder Rhythmusstörungen bei möglicher Elektrolytstörung sind ernst.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Nieren liegen retroperitoneal. Das Nephron umfasst Glomerulus und Tubulussystem. Harnleiter führen zur Harnblase, Harnröhre nach außen."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Glomeruläre Filtration und tubuläre Rückresorption/Sekretion steuern Wasser-, Elektrolyt- und Säure-Basen-Haushalt. Niere produziert u. a. Renin und Erythropoetin."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Wichtige Informationen: Ausscheidung, Flüssigkeitsverluste, Dialyse, Medikamente, Flankenschmerz und Ödeme."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Prärenale, renale und postrenale Mechanismen des Nierenversagens unterscheiden; Kaliumverschiebungen beeinflussen Erregbarkeit des Myokards."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Anurie, schwere Vigilanzstörung oder Rhythmusstörungen bei möglicher Elektrolytstörung sind ernst."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-16",
+    "module": "anatomy",
+    "organGroup": "niere",
+    "title": "Wasserhaushalt und Elektrolyte",
+    "category": "Niere & Harnsystem",
+    "summary": "Wasser verteilt sich intra- und extrazellulär; Natrium prägt extrazelluläre Osmolalität, Kalium überwiegend intrazelluläre elektrische Eigenschaften.",
+    "body": "Wasser verteilt sich intra- und extrazellulär; Natrium prägt extrazelluläre Osmolalität, Kalium überwiegend intrazelluläre elektrische Eigenschaften.\n\n## Physiologie\nADH reguliert freie Wasserrückresorption; Renin-Angiotensin-Aldosteron-System unterstützt Volumen- und Druckregulation.\n\n## RS – Schwerpunkt\nDehydratation, Ödeme, Diarrhö, Erbrechen und Dialysekontext strukturiert erfassen.\n\n## NFS – Vertiefung\nDysnatriämien verändern Zellwasserverteilung; Kaliumstörungen können Muskelschwäche und gefährliche Arrhythmien verursachen.\n\n## Warnzeichen / CAVE\nElektrolytverschiebungen lassen sich ohne passende Diagnostik nicht sicher aus Symptomen allein bestimmen.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Wasser verteilt sich intra- und extrazellulär; Natrium prägt extrazelluläre Osmolalität, Kalium überwiegend intrazelluläre elektrische Eigenschaften."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "ADH reguliert freie Wasserrückresorption; Renin-Angiotensin-Aldosteron-System unterstützt Volumen- und Druckregulation."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Dehydratation, Ödeme, Diarrhö, Erbrechen und Dialysekontext strukturiert erfassen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Dysnatriämien verändern Zellwasserverteilung; Kaliumstörungen können Muskelschwäche und gefährliche Arrhythmien verursachen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Elektrolytverschiebungen lassen sich ohne passende Diagnostik nicht sicher aus Symptomen allein bestimmen."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-17",
+    "module": "anatomy",
+    "organGroup": "niere",
+    "title": "Harnblase und Ausscheidung",
+    "category": "Niere & Harnsystem",
+    "summary": "Die Harnblase ist ein dehnbares Hohlorgan hinter der Symphyse.",
+    "body": "Die Harnblase ist ein dehnbares Hohlorgan hinter der Symphyse. Detrusor und Sphinkter kontrollieren Speicherung und Miktion.\n\n## Physiologie\nFüllung wird über Dehnungsrezeptoren signalisiert; zentrale und vegetative Bahnen koordinieren Entleerung.\n\n## RS – Schwerpunkt\nHarnverhalt, suprapubischer Schmerz, Makrohämaturie und Auffälligkeiten der Ausscheidung dokumentieren.\n\n## NFS – Vertiefung\nNeurogene Blasenfunktionsstörungen können bei Rückenmarksläsionen auftreten; Obstruktion kann postrenale Schäden verursachen.\n\n## Warnzeichen / CAVE\nSchmerzhafter Harnverhalt mit neurologischen Ausfällen oder Kreislaufproblemen ist abklärungsbedürftig.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Die Harnblase ist ein dehnbares Hohlorgan hinter der Symphyse. Detrusor und Sphinkter kontrollieren Speicherung und Miktion."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Füllung wird über Dehnungsrezeptoren signalisiert; zentrale und vegetative Bahnen koordinieren Entleerung."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Harnverhalt, suprapubischer Schmerz, Makrohämaturie und Auffälligkeiten der Ausscheidung dokumentieren."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Neurogene Blasenfunktionsstörungen können bei Rückenmarksläsionen auftreten; Obstruktion kann postrenale Schäden verursachen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Schmerzhafter Harnverhalt mit neurologischen Ausfällen oder Kreislaufproblemen ist abklärungsbedürftig."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-18",
+    "module": "anatomy",
+    "organGroup": "trauma",
+    "title": "Skelett, Gelenke und Wirbelsäule",
+    "category": "Trauma & Bewegung",
+    "summary": "Axiales Skelett umfasst Schädel, Wirbelsäule und Thorax; appendikuläres Skelett die Extremitäten.",
+    "body": "Axiales Skelett umfasst Schädel, Wirbelsäule und Thorax; appendikuläres Skelett die Extremitäten. Synovialgelenke besitzen Gelenkknorpel, Kapsel und Bänder.\n\n## Physiologie\nKnochen tragen Lasten, schützen Organe und dienen als Mineralspeicher. Wirbelsäule schützt Rückenmark und ermöglicht Beweglichkeit.\n\n## RS – Schwerpunkt\nTraumauntersuchung: Fehlstellung, Schmerz, Beweglichkeit nur im sicheren Rahmen, distale Durchblutung, Motorik und Sensibilität prüfen.\n\n## NFS – Vertiefung\nFrakturformen, Kompartimentdruck, Stabilität des Beckenrings und Blutungsräume sind relevant für die Traumaphysiologie.\n\n## Warnzeichen / CAVE\nOffene Fraktur, kritische Ischämiezeichen und instabiles Becken können lebens- oder gliedmaßenbedrohend sein.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Axiales Skelett umfasst Schädel, Wirbelsäule und Thorax; appendikuläres Skelett die Extremitäten. Synovialgelenke besitzen Gelenkknorpel, Kapsel und Bänder."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Knochen tragen Lasten, schützen Organe und dienen als Mineralspeicher. Wirbelsäule schützt Rückenmark und ermöglicht Beweglichkeit."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Traumauntersuchung: Fehlstellung, Schmerz, Beweglichkeit nur im sicheren Rahmen, distale Durchblutung, Motorik und Sensibilität prüfen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Frakturformen, Kompartimentdruck, Stabilität des Beckenrings und Blutungsräume sind relevant für die Traumaphysiologie."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Offene Fraktur, kritische Ischämiezeichen und instabiles Becken können lebens- oder gliedmaßenbedrohend sein."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-19",
+    "module": "anatomy",
+    "organGroup": "trauma",
+    "title": "Muskulatur und neuromuskuläre Endplatte",
+    "category": "Trauma & Bewegung",
+    "summary": "Skelett-, Herz- und glatte Muskulatur unterscheiden sich in Steuerung und Struktur.",
+    "body": "Skelett-, Herz- und glatte Muskulatur unterscheiden sich in Steuerung und Struktur. Die motorische Endplatte verbindet Motoneuron mit Muskelfaser.\n\n## Physiologie\nAktin-Myosin-Gleitfilamentmechanismus benötigt Calcium und ATP. Acetylcholin ermöglicht die Erregungsübertragung an der motorischen Endplatte.\n\n## RS – Schwerpunkt\nMuskelkraft, Seitengleichheit, Schmerz, Schwellung und Funktionsausfall beobachten.\n\n## NFS – Vertiefung\nRhabdomyolyse kann nach Quetschung zu Elektrolytstörungen und Nierenschädigung führen.\n\n## Warnzeichen / CAVE\nSchmerz außer Verhältnis, gespannte Muskelkompartimente oder neue Gefühlsstörungen können auf Kompartmentsyndrom hinweisen.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Skelett-, Herz- und glatte Muskulatur unterscheiden sich in Steuerung und Struktur. Die motorische Endplatte verbindet Motoneuron mit Muskelfaser."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Aktin-Myosin-Gleitfilamentmechanismus benötigt Calcium und ATP. Acetylcholin ermöglicht die Erregungsübertragung an der motorischen Endplatte."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Muskelkraft, Seitengleichheit, Schmerz, Schwellung und Funktionsausfall beobachten."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Rhabdomyolyse kann nach Quetschung zu Elektrolytstörungen und Nierenschädigung führen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Schmerz außer Verhältnis, gespannte Muskelkompartimente oder neue Gefühlsstörungen können auf Kompartmentsyndrom hinweisen."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-20",
+    "module": "anatomy",
+    "organGroup": "trauma",
+    "title": "Haut, Temperaturregulation und Wundheilung",
+    "category": "Trauma & Bewegung",
+    "summary": "Haut besteht aus Epidermis, Dermis und Subkutis.",
+    "body": "Haut besteht aus Epidermis, Dermis und Subkutis. Sie schützt vor Flüssigkeitsverlust, Infektion und mechanischen Schäden.\n\n## Physiologie\nGefäßweite, Schweißproduktion und Muskelzittern beeinflussen Wärmehaushalt. Wundheilung verläuft über Blutstillung, Entzündung, Proliferation und Umbau.\n\n## RS – Schwerpunkt\nHautfarbe, Temperatur, Feuchte, Wundtyp und Wärmeverlust bei Verletzten beachten.\n\n## NFS – Vertiefung\nHypothermie beeinträchtigt Gerinnung und Stoffwechsel; Verbrennungen können Barriereverlust und Flüssigkeitsverschiebung verursachen.\n\n## Warnzeichen / CAVE\nAusgedehnte Verbrennungen, Inhalationstrauma und Unterkühlung sind zeitkritisch.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Haut besteht aus Epidermis, Dermis und Subkutis. Sie schützt vor Flüssigkeitsverlust, Infektion und mechanischen Schäden."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Gefäßweite, Schweißproduktion und Muskelzittern beeinflussen Wärmehaushalt. Wundheilung verläuft über Blutstillung, Entzündung, Proliferation und Umbau."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Hautfarbe, Temperatur, Feuchte, Wundtyp und Wärmeverlust bei Verletzten beachten."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Hypothermie beeinträchtigt Gerinnung und Stoffwechsel; Verbrennungen können Barriereverlust und Flüssigkeitsverschiebung verursachen."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Ausgedehnte Verbrennungen, Inhalationstrauma und Unterkühlung sind zeitkritisch."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-21",
+    "module": "anatomy",
+    "organGroup": "trauma",
+    "title": "Thoraxwand und Zwerchfell bei Trauma",
+    "category": "Trauma & Bewegung",
+    "summary": "Rippen, Sternum, Brustwirbelsäule und Atemmuskeln bilden den Thorax.",
+    "body": "Rippen, Sternum, Brustwirbelsäule und Atemmuskeln bilden den Thorax. Pleura und Lungen liegen innerhalb des Brustkorbs.\n\n## Physiologie\nDer Thorax muss Druckänderungen und ungehinderte Bewegung erlauben; schmerzhafte Verletzungen reduzieren Atemtiefe.\n\n## RS – Schwerpunkt\nAtembewegung, Schmerzen, paradoxe Bewegungen, Geräusche und Sauerstoffversorgung fortlaufend überwachen.\n\n## NFS – Vertiefung\nRippenserienfraktur, Lungenkontusion und Pneumothorax können die respiratorische Reserve einschränken.\n\n## Warnzeichen / CAVE\nZunehmende Atemnot, Zyanose, Bewusstseinsminderung oder Schock nach Thoraxtrauma sind Alarmsignale.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Rippen, Sternum, Brustwirbelsäule und Atemmuskeln bilden den Thorax. Pleura und Lungen liegen innerhalb des Brustkorbs."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Der Thorax muss Druckänderungen und ungehinderte Bewegung erlauben; schmerzhafte Verletzungen reduzieren Atemtiefe."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Atembewegung, Schmerzen, paradoxe Bewegungen, Geräusche und Sauerstoffversorgung fortlaufend überwachen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Rippenserienfraktur, Lungenkontusion und Pneumothorax können die respiratorische Reserve einschränken."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Zunehmende Atemnot, Zyanose, Bewusstseinsminderung oder Schock nach Thoraxtrauma sind Alarmsignale."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-22",
+    "module": "anatomy",
+    "organGroup": "niere",
+    "title": "Reproduktionsorgane, Schwangerschaft und Uterus",
+    "category": "Niere & Harnsystem",
+    "summary": "Uterus, Tuben und Ovarien gehören zum weiblichen Genitalsystem.",
+    "body": "Uterus, Tuben und Ovarien gehören zum weiblichen Genitalsystem. Während der Schwangerschaft versorgt die Plazenta den Fetus über den uteroplazentaren Kreislauf.\n\n## Physiologie\nMaternaler Kreislauf und fetaler Kreislauf sind über die Plazenta stoffaustauschend, aber blutseitig normalerweise getrennt. Schwangerschaft verändert Blutvolumen, Herzzeitvolumen und Atemphysiologie.\n\n## RS – Schwerpunkt\nSchwangerschaftswoche, Schmerzen, Blutungen, Kindsbewegungen und Kreislaufzustand erfragen; Privatsphäre sicherstellen.\n\n## NFS – Vertiefung\nVena-cava-Kompression in fortgeschrittener Schwangerschaft kann venösen Rückstrom reduzieren. Blutungen können trotz zunächst kompensierter Vitalparameter gefährlich sein.\n\n## Warnzeichen / CAVE\nSchwangerschaft mit starker Blutung, Krampfanfall, Synkope oder Schockzeichen ist zeitkritisch.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Uterus, Tuben und Ovarien gehören zum weiblichen Genitalsystem. Während der Schwangerschaft versorgt die Plazenta den Fetus über den uteroplazentaren Kreislauf."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Maternaler Kreislauf und fetaler Kreislauf sind über die Plazenta stoffaustauschend, aber blutseitig normalerweise getrennt. Schwangerschaft verändert Blutvolumen, Herzzeitvolumen und Atemphysiologie."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Schwangerschaftswoche, Schmerzen, Blutungen, Kindsbewegungen und Kreislaufzustand erfragen; Privatsphäre sicherstellen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Vena-cava-Kompression in fortgeschrittener Schwangerschaft kann venösen Rückstrom reduzieren. Blutungen können trotz zunächst kompensierter Vitalparameter gefährlich sein."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Schwangerschaft mit starker Blutung, Krampfanfall, Synkope oder Schockzeichen ist zeitkritisch."
+      }
+    ],
+    "related": []
+  },
+  {
+    "id": "anatomy-import-mvms9oy9-23",
+    "module": "anatomy",
+    "organGroup": "abdomen",
+    "title": "Lymphsystem und Immunabwehr",
+    "category": "Abdomen & Stoffwechsel",
+    "summary": "Lymphgefäße führen Gewebsflüssigkeit zurück; Lymphknoten filtern Lymphe.",
+    "body": "Lymphgefäße führen Gewebsflüssigkeit zurück; Lymphknoten filtern Lymphe. Milz, Thymus und Knochenmark sind wichtige lymphatische bzw. hämatopoetische Organe.\n\n## Physiologie\nAngeborene Abwehr reagiert schnell und unspezifisch; adaptive Immunität nutzt T- und B-Zellen. Entzündungsreaktionen beeinflussen Gefäßpermeabilität und Kreislauf.\n\n## RS – Schwerpunkt\nInfektionszeichen, Verlauf und Risikofaktoren erfassen; klinische Gefährdung nicht von Fieber allein abhängig machen.\n\n## NFS – Vertiefung\nSystemische Entzündung kann Vasodilatation, Kapillarleck und Organfunktionsstörung bewirken.\n\n## Warnzeichen / CAVE\nEine schwere Infektion oder Sepsis kann auch ohne hohes Fieber auftreten.",
+    "icon": "",
+    "image": "",
+    "imageCaption": "",
+    "sources": "OpenStax Anatomy & Physiology 2e (openstax.org/details/books/anatomy-and-physiology-2e); MSD Manual Professional (msdmanuals.com/professional); ERC Guidelines (erc.edu). Redaktionelle Quellenprüfung und Anpassung an österreichische SOPs erforderlich.",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "draft",
+    "subsections": [
+      {
+        "title": "Aufbau und Lage",
+        "body": "Lymphgefäße führen Gewebsflüssigkeit zurück; Lymphknoten filtern Lymphe. Milz, Thymus und Knochenmark sind wichtige lymphatische bzw. hämatopoetische Organe."
+      },
+      {
+        "title": "Physiologische Funktion",
+        "body": "Angeborene Abwehr reagiert schnell und unspezifisch; adaptive Immunität nutzt T- und B-Zellen. Entzündungsreaktionen beeinflussen Gefäßpermeabilität und Kreislauf."
+      },
+      {
+        "title": "RS – praktische Einordnung",
+        "body": "Infektionszeichen, Verlauf und Risikofaktoren erfassen; klinische Gefährdung nicht von Fieber allein abhängig machen."
+      },
+      {
+        "title": "NFS – vertiefende Zusammenhänge",
+        "body": "Systemische Entzündung kann Vasodilatation, Kapillarleck und Organfunktionsstörung bewirken."
+      },
+      {
+        "title": "CAVE und klinische Bedeutung",
+        "body": "Eine schwere Infektion oder Sepsis kann auch ohne hohes Fieber auftreten."
+      }
+    ],
+    "related": []
+  },
+  {
     "id": "wissen-mvmh8mp2",
     "module": "checklists",
     "organGroup": "",
