@@ -1,5 +1,23 @@
 [
   {
+    "id": "wissen-mvmh0212",
+    "module": "mpg",
+    "organGroup": "",
+    "title": "AccuVac Pro",
+    "category": "Geräte",
+    "summary": "AccuVac Pro - Funktionsbeschreibung",
+    "body": "Die Weinmann AccuVac Pro ist eine Absaugeinheit für die Absaugung von Sekret aus den oberen Atemwegen. Im Roten Kreuz wird die Absaugeinheit auch zum evakuuieren der Vakuummatratze verwendet.\n\n## Funktionskontrolle\n\n",
+    "icon": "🧰",
+    "image": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1792850761199-sr14264-accuvac-pro-mit-einwegbehaeltersystem-dhlouy-roither.png",
+    "imageCaption": "AccuVac Pro",
+    "sources": "https://static.medi-king.de/downloads/Gebrauchsanweisung_ACCUVAC_Pro_Lite.pdf",
+    "synonyms": "AccuVac, Absaugung, Absaugeinheit",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "published",
+    "related": []
+  },
+  {
     "id": "medgrp-01",
     "module": "pharm",
     "title": "Analgetika / Schmerztherapie",
