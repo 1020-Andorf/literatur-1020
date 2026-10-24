@@ -1,5 +1,24 @@
 [
   {
+    "id": "wissen-mvmh8mp2",
+    "module": "checklists",
+    "organGroup": "",
+    "title": "Rezertifizierung - CPR Erwachsener",
+    "category": "Übungscheckliste",
+    "summary": "Rezertifizierungscheckliste für die Erwachsenen CPR",
+    "body": "",
+    "icon": "❤️",
+    "image": "",
+    "imageCaption": "",
+    "sources": "",
+    "synonyms": "",
+    "reviewOwner": "",
+    "reviewDue": "",
+    "status": "published",
+    "related": [],
+    "documentUrl": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1792851154924-RS-Pr-fungscheckliste-Erfolgskontrolle-HLW-DEFI-Erw-V8.pdf"
+  },
+  {
     "id": "wissen-mvmh0212",
     "module": "mpg",
     "organGroup": "",
