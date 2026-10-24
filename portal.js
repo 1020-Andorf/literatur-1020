@@ -1157,7 +1157,12 @@
             else {
                 const type = selected === 'devices' ? 'mpg' : 'checklists';
                 const items = km.filter(x => x.module === type).sort(ostEditorialOrder);
-                out.innerHTML = `<h2>${selected === 'devices' ? 'Geräte' : 'Übungschecklisten'}</h2><div class="cf547-rows">${items.map(x => `<button class="cf547-row" data-training-module="${esc(x.id)}"><span class="cf547-row-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><span><strong>${esc(x.title)}</strong></span><b>›</b></button>`).join('') || '<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
+                const safeDocument = value => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
+                out.innerHTML = `<h2>${selected === 'devices' ? 'Geräte' : 'Übungschecklisten'}</h2><div class="cf563-inline-list">${items.map(x => {
+                    const url = safeDocument(x.documentUrl);
+                    const detail = [x.summary ? `<p class="cf563-summary">${esc(x.summary)}</p>` : '', x.body ? `<div class="cf563-rich">${renderModuleText(x.body)}</div>` : '', url ? `<a class="cf563-resource" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Dokument / PDF öffnen ↗</a>` : ''].filter(Boolean).join('');
+                    return `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
+                }).join('') || '<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
             }
         }
         main.addEventListener('click', e => {
@@ -1176,14 +1181,6 @@
                     return;
                 open(x.name, `<div class="cf547-sheet">${arr(x.sections).map(sec => `<section class="cf547-source"><h3>${esc(sec.title)}</h3><ul>${arr(sec.items).map(it => `<li>${esc(it)}</li>`).join('')}</ul></section>`).join('')}</div>`, { sheet: true });
             }
-            const item = e.target.closest('[data-training-module]');
-            if (item) {
-                const x = km.find(v => String(v.id) === item.dataset.trainingModule);
-                if (!x)
-                    return;
-                const url = x.documentUrl || '';
-                open(x.title, `<div class="cf547-sheet"><p>${esc(x.summary || '')}</p>${renderModuleText(x.body)}${/^https?:\/\//i.test(url) ? `<a class="btn primary" href="${esc(url)}" target="_blank" rel="noopener noreferrer">PDF öffnen ↗</a>` : ''}</div>`, { sheet: true });
-            }
         });
         render();
     }
@@ -1193,19 +1190,22 @@
     async function materialHub() {
         const [modules, algorithms, docs] = await Promise.all([get('knowledgeModules'), get('algorithms'), articles()]);
         const km = Array.isArray(modules) ? modules : [];
+        const allAlgorithms = Array.isArray(algorithms) ? algorithms : [];
+        // Redaktion speichert Leitlinien auch ohne Quellenlink. Ein Link ist optional.
+        // Die öffentliche Auswahl muss dieselben Datensätze wie der Redaktionsbereich zeigen.
+        const guidelines = allAlgorithms.filter(x => !String(x.category || '').startsWith('Schema')).sort(ostEditorialOrder);
         const checklists = km.filter(x => x.module === 'checklists' && x.status !== 'draft').sort(ostEditorialOrder);
-        const mnemonics = (Array.isArray(algorithms) ? algorithms : []).filter(x => String(x.category || '').startsWith('Schema'));
-        const refs = [...new Map((Array.isArray(algorithms) ? algorithms : []).filter(x => x.sourceUrl && /^https:\/\//i.test(x.sourceUrl)).map(x => [x.sourceUrl, { title: x.source || 'Leitlinie / Fachquelle', sourceUrl: x.sourceUrl }])).values()];
+        const mnemonics = allAlgorithms.filter(x => String(x.category || '').startsWith('Schema')).sort(ostEditorialOrder);
+        const literature = Array.isArray(docs) ? docs : [];
         const categories = [['guidelines', 'Leitlinien', 'guideline'], ['checklists', 'Checklisten', 'checklist'], ['mnemonics', 'Merkhilfen & Schemata', 'notes'], ['literature', 'Literatur-Archiv', 'book']];
         const param = new URLSearchParams(location.search).get('typ');
         let active = categories.some(c => c[0] === param) ? param : 'guidelines';
         const main = $('[data-main]');
         main.innerHTML = `<section class="cf547 cf547-materials cf553-materials"><h1>Materialien</h1><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id, label, ico]) => `<button type="button" data-mat-tab="${id}" class="${active === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
         const box = $('[data-material-list]');
-        let visible = [];
-        const safeLink = url => /^https?:\/\//i.test(String(url || '')) ? String(url) : '';
-        const linkrow = (title, sub, key, ico) => `<button type="button" class="cf547-row" data-mat-id="${esc(key)}"><span class="cf547-row-icon">${ostIcon(ico)}</span><span><strong>${esc(title)}</strong>${sub ? `<small>${esc(sub)}</small>` : ''}</span><b>›</b></button>`;
-        // The same disclosure/list design and interaction as Wissen, not an overlay.
+        const safeLink = value => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
+        const link = (url, label) => safeLink(url) ? `<a class="cf563-resource" href="${esc(safeLink(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>` : '';
+        const card = (title, iconName, content) => `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(iconName)}</span><strong>${esc(title || 'Ohne Titel')}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${content || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
         const schemaItem = (text, i) => {
             const raw = String(text ?? '');
             const match = raw.match(/^\s*([A-ZÄÖÜ]{1,3})\s*[–—-]\s*(.*)$/s);
@@ -1215,64 +1215,52 @@
             const copy = split ? `<div class="cf553-schema-copy"><strong>${esc(split[1])}</strong><span>${esc(split[2])}</span></div>` : `<div class="cf553-schema-copy"><span>${esc(value)}</span></div>`;
             return `<li class="cf553-schema-step cf553-tone-${i % 6 + 1}"><span class="cf553-schema-marker" aria-hidden="true">${esc(acronym || '•')}</span>${copy}</li>`;
         };
-        const schemaPanel = x => {
-            const a = x.x || {}, steps = arr(a.steps);
-            const extra = [];
+        const attachments = a => {
             const materials = a.materials && typeof a.materials === 'object' ? a.materials : {};
-            for (const key of ['background', 'checklists'])
-                for (const m of arr(materials[key])) {
-                    const url = safeLink(m?.url);
-                    if (url)
-                        extra.push(`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(m.title || 'Material')} ↗</a>`);
-                }
-            const source = safeLink(a.sourceUrl);
-            return `<div class="cf553-mnemonic-body">${steps.length ? `<ol class="cf553-schema-steps">${steps.map(schemaItem).join('')}</ol>` : '<p class="cf547-empty">Für dieses Merkschema sind noch keine Schritte hinterlegt.</p>'}${String(a.explanation || '').trim() ? `<section class="cf561-schema-explanation"><h3>Erklärung zum Schema</h3><div class="cf561-schema-description">${renderModuleText(a.explanation)}</div></section>` : ''}${a.source ? `<p class="cf553-schema-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${source ? `<a class="cf553-schema-source-link" href="${esc(source)}" target="_blank" rel="noopener noreferrer">Originalquelle öffnen ↗</a>` : ''}${extra.length ? `<div class="cf553-schema-resources">${extra.join('')}</div>` : ''}</div>`;
+            const items = [];
+            for (const key of ['background', 'checklists']) for (const m of arr(materials[key])) {
+                if (m && typeof m === 'object' && safeLink(m.url)) items.push(link(m.url, m.title || 'Material'));
+            }
+            return items.length ? `<div class="cf563-resources">${items.join('')}</div>` : '';
+        };
+        const schemaPanel = a => {
+            const steps = arr(a.steps);
+            return `${steps.length ? `<ol class="cf553-schema-steps">${steps.map(schemaItem).join('')}</ol>` : ''}${String(a.explanation || '').trim() ? `<section class="cf561-schema-explanation"><h3>Erklärung zum Schema</h3><div class="cf561-schema-description">${renderModuleText(a.explanation)}</div></section>` : ''}${a.source ? `<p class="cf553-schema-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${link(a.sourceUrl, 'Originalquelle öffnen')}${attachments(a)}`;
+        };
+        const guidelinePanel = a => {
+            const steps = arr(a.steps);
+            const image = String(a.imageUrl || '');
+            const imageHtml = /^(https?:\/\/|assets\/)/i.test(image) ? `<figure class="cf563-figure"><img loading="lazy" src="${esc(image)}" alt="${esc(a.imageCaption || a.title || 'Leitliniengrafik')}">${a.imageCaption ? `<figcaption>${esc(a.imageCaption)}</figcaption>` : ''}</figure>` : '';
+            return `${a.stand ? `<p class="cf563-summary"><strong>Stand:</strong> ${esc(a.stand)}</p>` : ''}${a.explanation ? `<div class="cf563-rich">${renderModuleText(a.explanation)}</div>` : ''}${steps.length ? `<section class="cf563-section"><h3>Ablauf / Schritte</h3><ol class="cf563-steps">${steps.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : ''}${imageHtml}${a.source ? `<p class="cf563-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${link(a.sourceUrl, 'Leitlinie / Quelle öffnen')}${attachments(a)}`;
         };
         function render() {
-            $$('[data-mat-tab]', main).forEach(b => { const selected = b.dataset.matTab === active; b.classList.toggle('selected', selected); b.setAttribute('aria-pressed', String(selected)); });
-            if (active === 'guidelines')
-                visible = refs.map(x => ({ title: x.title, sub: 'Externe Leitlinie / Quelle', url: x.sourceUrl }));
-            else if (active === 'checklists')
-                visible = checklists.map(x => ({ title: x.title, sub: x.summary || 'Übungscheckliste', url: x.documentUrl || '', x }));
-            else if (active === 'mnemonics')
-                visible = mnemonics.map(x => ({ title: x.title, sub: 'Merkschema', x }));
-            else
-                visible = (Array.isArray(docs) ? docs : []).map(x => ({ title: x.title, sub: arr(x.topics).join(' · '), url: x.freeUrl || x.publisherUrl, x }));
-            if (active === 'mnemonics') {
-                box.innerHTML = `<div class="cf553-mnemonic-list cf552-accordion">${visible.map((x, i) => `<details class="cf552-record cf553-mnemonic"><summary><span class="cf552-record-icon">${ostIcon('notes')}</span><strong>${esc(x.title)}</strong><span class="cf552-chevron" aria-hidden="true"></span></summary>${schemaPanel(x)}</details>`).join('') || '<p class="cf547-empty">Hier sind noch keine Merkhilfen oder Schemata hinterlegt.</p>'}</div>`;
-                return;
-            }
-            box.innerHTML = `<div class="cf547-content-title"><h2>${esc(categories.find(x => x[0] === active)[1])}</h2><span>${visible.length} Einträge</span></div><div class="cf547-rows">${visible.map((x, i) => linkrow(x.title, x.sub, String(i), categories.find(x => x[0] === active)[2])).join('') || '<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
+            $$('[data-mat-tab]', main).forEach(button => {
+                const selected = button.dataset.matTab === active;
+                button.classList.toggle('selected', selected);
+                button.setAttribute('aria-pressed', String(selected));
+            });
+            const list = active === 'guidelines' ? guidelines : active === 'checklists' ? checklists : active === 'mnemonics' ? mnemonics : literature;
+            const iconName = categories.find(c => c[0] === active)[2];
+            const items = list.map(a => {
+                if (active === 'guidelines') return card(a.title, iconName, guidelinePanel(a));
+                if (active === 'mnemonics') return card(a.title, iconName, schemaPanel(a));
+                if (active === 'checklists') {
+                    const content = `${a.summary ? `<p class="cf563-summary">${esc(a.summary)}</p>` : ''}${a.body ? `<div class="cf563-rich">${renderModuleText(a.body)}</div>` : ''}${link(a.documentUrl, 'Dokument / PDF öffnen')}`;
+                    return card(a.title, iconName, content);
+                }
+                const details = [a.authors, a.journal, a.year].filter(Boolean).map(x => esc(x)).join(' · ');
+                const content = `${details ? `<p class="cf563-summary">${details}</p>` : ''}${a.why ? `<div class="cf563-rich">${renderModuleText(a.why)}</div>` : ''}${a.read ? `<p>${esc(a.read)}</p>` : ''}${link(a.freeUrl || a.publisherUrl, 'Artikel öffnen')}`;
+                return card(a.title, iconName, content);
+            });
+            box.innerHTML = `<div class="cf547-content-title"><h2>${esc(categories.find(c => c[0] === active)[1])}</h2><span>${list.length} Einträge</span></div><div class="cf563-inline-list">${items.join('') || '<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
         }
-        // Keep just one schema expanded. Built-in <details> gives keyboard and touch support.
-        box.addEventListener('toggle', e => {
-            const d = e.target;
-            if (d.matches?.('.cf553-mnemonic') && d.open) {
-                $$('.cf553-mnemonic[open]', box).forEach(other => { if (other !== d)
-                    other.open = false; });
-            }
-        }, true);
-        main.onclick = e => {
-            const b = e.target.closest('[data-mat-tab]');
-            if (b) {
-                active = b.dataset.matTab;
-                history.replaceState(null, '', 'materialien.html?typ=' + active);
-                render();
-                return;
-            }
-            const r = e.target.closest('[data-mat-id]');
-            if (!r)
-                return;
-            const x = visible[Number(r.dataset.matId)];
-            if (!x)
-                return;
-            if (x.url && safeLink(x.url)) {
-                open(x.title, `<section class="cf547-sheet"><a class="btn primary" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">Quelle / Dokument öffnen ↗</a></section>`, { sheet: true });
-                return;
-            }
-            if (x.x)
-                open(x.title, `<div class="cf547-sheet">${renderModuleText(x.x.body || x.x.why || '')}</div>`, { sheet: true });
-        };
+        main.addEventListener('click', event => {
+            const tab = event.target.closest('[data-mat-tab]');
+            if (!tab) return;
+            active = tab.dataset.matTab;
+            history.replaceState(null, '', 'materialien.html?typ=' + active);
+            render();
+        });
         render();
     }
     async function guidelinesPage() {
