@@ -15,3 +15,70 @@
 
 /* 565: Fachimport ohne Overlay */
 .ost565-import{margin:1rem 0;padding:1rem;border:1px solid #d9e0e7;border-radius:12px;background:#fff}.ost565-import summary{cursor:pointer;font-weight:700}.ost565-import-rows{display:grid;gap:.45rem;max-height:320px;overflow:auto;margin:1rem 0}.ost565-import-row{display:flex;align-items:center;gap:.7rem;padding:.65rem;border:1px solid #e1e6eb;border-radius:8px}.ost565-import-row span{display:grid;gap:.2rem}.ost565-import-row small{color:#607181}.ost565-import-confirm{display:flex;gap:.7rem;align-items:flex-start;margin:.9rem 0}.ost565-import input[type=file]{display:block;max-width:100%;margin:.5rem 0}
+
+/* 567 – redaktionelles Wissenslayout / responsive Fachartikel */
+body[data-page="editor"] .ost567-eyebrow{display:block;font-size:.73rem;letter-spacing:.12em;font-weight:800;color:#637e91;margin-bottom:.45rem}
+body[data-page="editor"] .ost567-heading,body[data-page="editor"] .ost567-disease-workspace .cf551-editor-heading{background:linear-gradient(135deg,#f4f8fa,#fff);padding:1.15rem;border:1px solid #dde8ed;border-radius:18px;margin-bottom:1rem;display:flex;gap:1rem;flex-wrap:wrap;align-items:center;justify-content:space-between}
+body[data-page="editor"] .ost567-heading h2,body[data-page="editor"] .ost567-disease-workspace h2{margin:.1rem 0;font-size:clamp(1.3rem,3vw,1.8rem);line-height:1.2}
+body[data-page="editor"] .ost567-heading p,body[data-page="editor"] .ost567-disease-workspace .cf551-editor-heading p{font-size:.88rem;line-height:1.5;max-width:58ch;color:#536e7e;margin:.3rem 0 0}
+body[data-page="editor"] .ost567-import{margin:1rem 0 1.2rem;border:1px solid #d5e1e8;box-shadow:0 3px 15px #15364a08;border-radius:16px;padding:0;background:#fff;overflow:hidden}
+body[data-page="editor"] .ost567-import>summary{list-style:none;display:flex;align-items:center;gap:.7rem;padding:1rem 1.15rem;background:#f2f7fa;color:#183c50;font-weight:800;font-size:1rem}
+body[data-page="editor"] .ost567-import>summary::-webkit-details-marker{display:none}
+body[data-page="editor"] .ost567-import>summary:before{content:'↧';display:grid;place-items:center;width:30px;height:30px;background:#fff;border:1px solid #c9dce6;border-radius:9px;font-size:1.15rem;flex:none}
+body[data-page="editor"] .ost567-import[open]>summary:before{content:'↥'}
+body[data-page="editor"] .ost567-import>p,body[data-page="editor"] .ost567-import>label,body[data-page="editor"] .ost567-import>[data-bulk-preview],body[data-page="editor"] .ost567-import>[data-anatomy-import-preview]{margin:1rem 1.15rem;display:block}
+body[data-page="editor"] .ost565-import-rows{max-height:390px}
+body[data-page="editor"] .ost565-import-row{background:#fbfdfe;min-height:58px}
+body[data-page="editor"] .ost565-import-row:has(input:checked){border-color:#92bdce;background:#f1f8fb}
+body[data-page="editor"] .ost565-import-row input{width:19px;height:19px;flex:none}
+body[data-page="editor"] .ost567-edit-shell{border:1px solid #d9e4e9;border-radius:18px;padding:1.15rem;background:#fff;box-shadow:0 4px 22px #1432470a;margin:1rem 0}
+body[data-page="editor"] .ost567-edit-shell .cf551-module-pickers,body[data-page="editor"] .ost567-edit-shell .cf551-editor-pickers{background:#f6f9fa;border-radius:12px;padding:1rem;margin-bottom:1rem}
+body[data-page="editor"] .ost567-edit-shell label{min-width:0}
+body[data-page="editor"] .ost567-edit-shell input,body[data-page="editor"] .ost567-edit-shell select,body[data-page="editor"] .ost567-edit-shell textarea{max-width:100%;box-sizing:border-box}
+body[data-page="editor"] .ost567-edit-shell textarea{line-height:1.55;min-height:110px;resize:vertical}
+body[data-page="editor"] .ost567-edit-shell .ost-module-admin-list>details{border:0;box-shadow:none}
+body[data-page="editor"] .ost567-edit-shell .ost-module-admin-list>details>summary{border-radius:10px;background:#f0f6f9;padding:.9rem 1rem}
+body[data-page="editor"] .ost567-disease-workspace .cf551-disease-form{display:grid;gap:1rem}
+body[data-page="editor"] .ost567-disease-workspace .cf551-editor-field{min-width:0}
+body[data-page="editor"] .ost567-disease-workspace .cf551-editor-field>span{font-weight:700;color:#254a60}
+body[data-page="editor"] .ost567-disease-workspace .cf551-disease-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:.9rem}
+.ost567-article .cf551-article-section{scroll-margin-top:85px;border-bottom:1px solid #e6edf0;padding-block:.9rem}
+.ost567-article .cf551-article-section h3{color:#173e55;font-size:1.15rem}
+.ost567-jump{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;background:#f2f7fa;border:1px solid #dce8ed;border-radius:14px;padding:1rem;margin-bottom:1.2rem}
+.ost567-jump strong{width:100%;font-size:.85rem;color:#48687b;margin-bottom:.25rem}
+.ost567-jump a{font-size:.82rem;border-radius:100px;padding:.45rem .7rem;text-decoration:none;background:#fff;border:1px solid #d2e1e8;color:#1d536c;font-weight:650}
+@media(max-width:650px){body[data-page="editor"] .ost567-heading,body[data-page="editor"] .ost567-disease-workspace .cf551-editor-heading{padding:.95rem}body[data-page="editor"] .ost567-edit-shell{padding:.7rem}body[data-page="editor"] .ost567-heading .ost-editor-module-actions,body[data-page="editor"] .ost567-disease-workspace .cf551-editor-actions{display:flex;width:100%;gap:.5rem;flex-wrap:wrap}body[data-page="editor"] .ost567-heading .btn,body[data-page="editor"] .ost567-disease-workspace .cf551-editor-actions .btn{flex:1;min-width:130px}body[data-page="editor"] .ost567-import>summary{font-size:.95rem}body[data-page="editor"] .ost567-edit-shell .cf551-disease-meta{grid-template-columns:1fr}}
+
+/* Update 568: Symptomorientiertes Wissensportal, eigenständige visuelle Gestaltung */
+.cf552-wissen{--ost568-ink:#19384b;--ost568-line:#dce7eb;max-width:1150px;margin-inline:auto}
+.cf552-wissen .cf552-filter-group>h2{font-size:clamp(1rem,2.5vw,1.2rem);margin:1.3rem 0 .7rem;color:var(--ost568-ink)}
+.cf552-wissen .cf551-organ-nav,.cf552-wissen .cf551-category-nav{gap:.65rem}
+.cf552-wissen .cf551-tab{transition:background .15s,border-color .15s,transform .15s}
+.cf552-wissen .cf551-tab:focus-visible,.ost568-cause>summary:focus-visible{outline:3px solid #4b98b5;outline-offset:3px}
+.ost568-article{font-size:1rem;line-height:1.65;color:#254558}
+.ost568-article h3{font-size:1.13rem;line-height:1.35;margin:1.2rem 0 .65rem;color:#173b50}
+.ost568-panel{padding:1rem 1.15rem;border:1px solid;border-radius:14px;margin:1rem 0;background:#f5f9fc;border-color:#cadde9}
+.ost568-panel h3{margin:.05rem 0 .65rem;color:inherit}
+.ost568-panel p:last-child,.ost568-panel ul:last-child{margin-bottom:0}
+.ost568-panel li+li{margin-top:.35rem}
+.ost568-danger{background:#fff0f0;border-color:#efb6b7;color:#84252a}
+.ost568-danger h3,.ost568-danger h4{color:#8c2529}
+.ost568-amber{background:#fff7e7;border-color:#f1d28c;color:#614912}
+.ost568-blue,.ost568-info{background:#eef7fc;border-color:#c0dce9;color:#234a63}
+.ost568-cause-list{display:grid;gap:.65rem;margin-top:1rem}
+.ost568-cause{border:1px solid #d3e2e8;background:white;border-radius:12px;overflow:hidden}
+.ost568-cause>summary{cursor:pointer;padding:1rem 1.1rem;font-weight:750;color:#1c4358;list-style-position:inside}
+.ost568-cause[open]>summary{background:#edf5f9;border-bottom:1px solid #d3e2e8}
+.ost568-cause-section{padding:.75rem 1.1rem;border-bottom:1px solid #edf1f3;white-space:pre-line}
+.ost568-cause-section h4{margin:.1rem 0 .3rem;color:inherit}
+.ost568-cause-section p{margin:0;line-height:1.6}
+@media(max-width:650px){.ost568-panel{padding:.85rem}.ost568-article{font-size:.96rem}.cf552-wissen .cf551-category-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* 569: einheitliches symptomorientiertes Wissensportal */
+.ost569-hint{margin:.2rem 0 .7rem;color:#526c7a;font-size:.93rem;line-height:1.5}
+.ost569-extra{margin:1.4rem 0;padding:1rem;border:1px solid #dbe6ea;background:#fbfdfe;border-radius:16px}
+.ost569-extra>h3{margin:0 0 .6rem;color:#17415b}
+.ost569-context{font-size:.87rem;line-height:1.5;color:#587383;margin:.2rem 0 .8rem}
+.ost569-extra .ost568-cause{margin:.55rem 0}
+.ost569-extra a{color:#126b9a;text-decoration:underline}
+.ost569-extra .ost-module-body{padding:.85rem}
