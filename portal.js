@@ -1106,6 +1106,24 @@
     // ------------------------------------------------------------------------
     // Wissen: Organgruppen, Inhalte und aufklappbare Eintraege
     // ------------------------------------------------------------------------
+    function ost570CleanHtml(markup) {
+        const input = document.createElement('template'); input.innerHTML = String(markup || '');
+        const allowed = new Set(['P','DIV','H2','H3','H4','STRONG','B','EM','I','U','UL','OL','LI','BLOCKQUOTE','BR','A','IMG']);
+        function clean(node) {
+            if (node.nodeType === 3) return document.createTextNode(node.textContent);
+            if (node.nodeType !== 1) return document.createDocumentFragment();
+            const tag = allowed.has(node.tagName) ? node.tagName.toLowerCase() : 'span';
+            const el = document.createElement(tag);
+            if (tag === 'a') { try {const u = new URL(node.getAttribute('href') || '', location.href); if (['https:','http:'].includes(u.protocol)) {el.href=u.href;el.rel='noopener noreferrer';el.target='_blank';}} catch(e){} }
+            if (tag === 'img') { try {const u = new URL(node.getAttribute('src') || '', location.href);if(['https:','http:'].includes(u.protocol)){el.src=u.href;el.alt=node.getAttribute('alt') || 'Illustration';el.loading='lazy';}} catch(e){} }
+            if (node.dataset?.callout && ['danger','info','note','success'].includes(node.dataset.callout)) el.dataset.callout=node.dataset.callout;
+            for (const child of [...node.childNodes]) el.appendChild(clean(child));
+            return el;
+        }
+        const wrap = document.createElement('div');
+        for(const node of [...input.content.childNodes]) wrap.appendChild(clean(node));
+        return wrap.innerHTML;
+    }
     async function topicHub() {
         const params = new URLSearchParams(location.search);
         const [modules, differentials, literature, mnemonicStore] = await Promise.all([get('knowledgeModules'), get('differential'), articles(), get('algorithms')]);
@@ -1115,7 +1133,8 @@
         const views = [['symptoms', 'Leitsymptome', 'heart']];
         let tab = 'symptoms';
         let chosen = params.get('eintrag') || '';
-        area.innerHTML = `<section class="cf551-wissen cf552-wissen"><div class="cf547-search">${ostIcon('search')}<input data-cf-search type="search" placeholder="Leitsymptome suchen …" aria-label="Wissen durchsuchen"></div><section class="cf552-filter-group cf552-organ-group"><h2>1. Organsystem auswählen</h2><nav class="cf551-organ-nav" data-cf-organs aria-label="Organgruppe auswählen"></nav></section><section class="cf552-filter-group cf552-category-group"><h2>2. Leitsymptom auswählen</h2><p class="ost569-hint">Wähle ein Leitsymptom. Im Fachartikel findest du Warnzeichen, Anatomie, Krankheitsbilder, Pharmakologie und weiterführendes Wissen.</p><nav class="cf551-category-nav" data-cf-categories aria-label="Leitsymptome"></nav></section><div class="cf551-content" data-cf-content></div></section>`;
+        const stage = params.get('eintrag') ? 'article' : params.get('thema') ? 'symptoms' : 'organs';
+        area.innerHTML = `<section class="cf551-wissen cf552-wissen ost570-hub"><div class="ost570-breadcrumb" data-cf-crumb></div><div class="cf547-search" data-cf-search-wrap>${ostIcon('search')}<input data-cf-search type="search" placeholder="Leitsymptom suchen …" aria-label="Leitsymptom suchen"></div><section class="cf552-filter-group cf552-organ-group" data-cf-organ-section><h2>Organsystem auswählen</h2><nav class="cf551-organ-nav" data-cf-organs aria-label="Organgruppe auswählen"></nav></section><section class="cf552-filter-group cf552-category-group" data-cf-category-section><h2>Leitsymptome</h2><nav class="cf551-category-nav" data-cf-categories aria-label="Leitsymptome"></nav></section><div class="cf551-content" data-cf-content></div></section>`;
         const input = $('[data-cf-search]', area), organBar = $('[data-cf-organs]', area), categoryBar = $('[data-cf-categories]', area), out = $('[data-cf-content]', area);
         const plain = (value) => esc(Array.isArray(value) ? value.join(', ') : String(value || ''));
         const section = (title, value) => value ? `<section class="cf551-article-section ${/warnzeichen|cave/i.test(title) ? 'ost568-panel ost568-danger' : /medikamente/i.test(title) ? 'ost568-panel ost568-amber' : ''}" id="abschnitt-${normalizedSearch(title).replace(/[^a-z0-9]+/g, '-')}"><h3>${esc(title)}</h3><p>${plain(value)}</p></section>` : '';
@@ -1164,6 +1183,7 @@
                 if (pharma.length) body += `<section class="ost569-extra" id="pharmakologie"><h3>Pharmakologie im Krankheitsbild-Kontext</h3><p class="ost569-context">Fachinformationen, keine automatische Therapieempfehlung. Maßnahmen nur gemäß Qualifikation und lokalen SOPs.</p>${pharma.map(c => `<details class="ost568-cause"><summary>${esc(c.name || 'Erkrankung')}</summary><div class="ost-module-body">${renderModuleText(c.medications || c.medication)}</div></details>`).join('')}</section>`;
                 const related = organData.terms.slice(0, 10);
                 if (related.length) body += `<section class="ost569-extra" id="begriffe"><h3>Fachbegriffe zum Organsystem</h3><p class="ost569-context">Optionales Hintergrundwissen.</p>${related.map(x => `<details class="ost568-cause"><summary>${esc(x.title)}</summary><div class="ost-module-body">${renderModuleText(x.body || x.summary)}</div></details>`).join('')}</section>`;
+                if (v.richContent) body += `<section class="ost570-rich" id="artikel-ergaenzungen"><h3>Weitere Fachinformationen & Merksätze</h3>${ost570CleanHtml(v.richContent)}</section>`;
                 const sourceLinks = causes.filter(c => href(c.sourceUrl));
                 if (sourceLinks.length) body += `<section class="ost569-extra" id="quellen"><h3>Quellen und weiterführende Informationen</h3><ul>${sourceLinks.map(c => `<li><a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.sourceLabel || c.name || 'Fachquelle')}</a></li>`).join('')}</ul></section>`;
             }
@@ -1183,57 +1203,58 @@
                 body = section('Einordnung', v.why) + (href(v.freeUrl || v.publisherUrl) ? `<a class="cf551-source-link" href="${esc(v.freeUrl || v.publisherUrl)}" target="_blank" rel="noopener noreferrer">Artikel öffnen ↗</a>` : '');
             const headings = [...body.matchAll(/<h3>([^<]+)<\/h3>/g)].map(m => m[1]); const jump = (item.type === 'disease' || item.type === 'symptom') && headings.length ? `<nav class="ost567-jump" aria-label="Auf dieser Seite"><strong>Auf dieser Seite</strong>${headings.map(h => `<a href="#abschnitt-${normalizedSearch(h).replace(/[^a-z0-9]+/g, '-')}">${h}</a>`).join('')}</nav>` : ''; return `<article class="cf551-article cf552-inline-article ost567-article ost568-article">${jump}${body || '<p class="cf551-article-blank">Dieser Inhalt kann in der Redaktion ergänzt werden.</p>'}</article>`;
         }
-        function syncUrl() { const query = new URLSearchParams(); query.set('thema', organ.id); query.set('ansicht', tab); if (chosen)
-            query.set('eintrag', chosen); history.replaceState(null, '', 'themen-uebersicht.html?' + query.toString()); }
+        const crumb = $('[data-cf-crumb]',area), searchWrap=$('[data-cf-search-wrap]',area), organSection=$('[data-cf-organ-section]',area), catSection=$('[data-cf-category-section]',area);
+        function articleLink(item) { const u=new URLSearchParams({thema:organ.id,eintrag:item.id});return 'themen-uebersicht.html?'+u.toString(); }
+        function organsLink(){return 'themen-uebersicht.html';}
+        function symptomLink(){return 'themen-uebersicht.html?thema='+encodeURIComponent(organ.id);}
         function draw() {
             const currentTitle = $('.topbar .brand strong');
-            if (currentTitle)
-                currentTitle.textContent = organ.label;
-            organBar.innerHTML = CF_TOPICS.map(t => `<button class="cf551-tab ${organ.id === t.id ? 'selected' : ''}" type="button" data-cf-organ="${esc(t.id)}" aria-pressed="${organ.id === t.id}">${ostIcon(t.icon)}<span>${esc(t.label)}</span></button>`).join('');
-            categoryBar.innerHTML = ''; 
-            const all = entries(), needle = normalizedSearch(input.value.trim());
-            const found = needle ? all.filter(x => normalizedSearch([x.title, x.value?.body, x.value?.info, x.value?.symptoms].join(' ')).includes(needle)) : all;
-            if (chosen && !found.some(x => x.id === chosen))
-                chosen = '';
-            const current = found.find(x => x.id === chosen);
-            out.innerHTML = found.length ? `<div class="cf552-accordion">${found.map(x => `<details class="cf552-record" data-cf-entry="${esc(x.id)}" ${x.id === chosen ? 'open' : ''}><summary><span class="cf552-record-icon">${ostIcon(x.icon)}</span><strong>${esc(x.title)}</strong><span class="cf552-chevron" aria-hidden="true"></span></summary>${article(x)}</details>`).join('')}</div>` : '<div class="cf551-empty">Keine passenden Inhalte gefunden.</div>';
-            const records = $$('details[data-cf-entry]', out);
-            records.forEach(record => record.addEventListener('toggle', () => {
-                if (record.open) {
-                    records.filter(other => other !== record && other.open).forEach(other => other.open = false);
-                    chosen = record.dataset.cfEntry;
-                }
-                else if (chosen === record.dataset.cfEntry && !records.some(other => other.open))
-                    chosen = '';
-                syncUrl();
-            }));
+            if(currentTitle) currentTitle.textContent=chosen ? 'Fachartikel' : params.has('thema') ? organ.label : 'Leitsymptome';
+            const current=entries().find(x=>x.id===chosen);
+            const isArticle=!!current;
+            const hasOrgan=!!params.get('thema');
+            organSection.hidden=hasOrgan;catSection.hidden=!hasOrgan || isArticle;
+            searchWrap.hidden=!hasOrgan || isArticle;
+            crumb.innerHTML=`<a href="${organsLink()}">Organsysteme</a>${hasOrgan ? ` <span>›</span> <a href="${symptomLink()}">${esc(organ.label)}</a>` : ''}${isArticle ? ` <span>›</span> <strong>${esc(current.title)}</strong>` : ''}`;
+            organBar.innerHTML=CF_TOPICS.map(t=>`<a class="ost570-tile" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}">${ostIcon(t.icon)}<strong>${esc(t.label)}</strong><span>Leitsymptome öffnen →</span></a>`).join('');
+            if(!hasOrgan){out.innerHTML='<p class="ost569-hint">Wähle ein Organsystem. Auf der nächsten Seite findest du die zugehörigen Leitsymptome.</p>';return;}
+            const all=entries(), needle=normalizedSearch(input.value.trim());
+            const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
+            categoryBar.innerHTML=found.map(x=>`<a class="ost570-symptom-tile" href="${articleLink(x)}">${ostIcon('heart')}<strong>${esc(x.title)}</strong><span>Fachartikel öffnen →</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
+            if(!isArticle){out.innerHTML='';return;}
+            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1>${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Artikel mit PIN bearbeiten" title="Bearbeiten">✎ <span>Bearbeiten</span></button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
+            $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current));
         }
-        area.addEventListener('click', e => {
-            const ob = e.target.closest('[data-cf-organ]');
-            if (ob) {
-                organ = CF_TOPICS.find(t => t.id === ob.dataset.cfOrgan) || CF_TOPICS[0];
-                chosen = '';
-                input.value = '';
-                syncUrl();
-                draw();
-                return;
+        async function editArticle(item){
+            const host=$('[data-ost570-editor]',out), button=$('[data-ost570-edit]',out);
+            let pin=sessionStorage.getItem('ost1020-editor-pin') || '';
+            if(!pin || !await verifyEditorPin(pin)){
+                pin=prompt('Redaktions-PIN eingeben:') || '';
+                if(!pin || !await verifyEditorPin(pin)){alert('PIN nicht korrekt oder Eingabe abgebrochen.');return;}
+                sessionStorage.setItem('ost1020-editor-pin',pin);
             }
-            const tb = e.target.closest('[data-cf-tab]');
-            if (tb) {
-                tab = tb.dataset.cfTab;
-                chosen = '';
-                input.value = '';
-                syncUrl();
-                draw();
-                return;
-            }
-        });
-        area.addEventListener('change', e => { if (e.target.matches('[data-cf-item]')) {
-            chosen = e.target.value;
-            syncUrl();
-            draw();
-        } });
-        input.addEventListener('input', () => { chosen = ''; draw(); });
+            const current=item.value;
+            host.hidden=false;
+            host.innerHTML=`<h2>✎ Fachartikel bearbeiten</h2><p>Text ergänzen und formatieren. Die strukturierten Krankheitsbilder und Red Flags bleiben erhalten.</p><label>Überblick / Physiologie<textarea data-ost570-theory rows="7">${esc(current.theory || '')}</textarea></label><label>Zusätzliche Fachinformationen (formatierbar)</label><div class="ost570-toolbar"><button type="button" data-command="bold"><b>Fett</b></button><button type="button" data-command="italic"><i>Kursiv</i></button><button type="button" data-command="insertUnorderedList">• Liste</button><button type="button" data-style="H3">Überschrift</button><button type="button" data-image>Bild-URL</button><button type="button" data-box="danger">Rot</button><button type="button" data-box="info">Blau</button><button type="button" data-box="note">Gelb</button><button type="button" data-box="success">Grün</button></div><div class="ost570-editable" contenteditable="true" role="textbox" aria-label="Formatierbare Fachinformationen" data-ost570-rich></div><p class="ost569-context">Bilder nur über öffentlich erreichbare HTTPS-URLs; keine lokalen Bilddateien. Fachliche Freigabe vor Veröffentlichung sicherstellen.</p><div class="ost570-actions"><button type="button" class="btn primary" data-ost570-save>Änderungen speichern</button><button type="button" class="btn" data-ost570-cancel>Abbrechen</button><span role="status" data-ost570-status></span></div>`;
+            const rich=$('[data-ost570-rich]',host);rich.innerHTML=ost570CleanHtml(current.richContent || '');
+            const focusRich=()=>rich.focus();
+            $$('[data-command]',host).forEach(b=>b.onclick=()=>{focusRich();document.execCommand(b.dataset.command,false,null);});
+            $$('[data-style]',host).forEach(b=>b.onclick=()=>{focusRich();document.execCommand('formatBlock',false,b.dataset.style);});
+            $('[data-image]',host).onclick=()=>{const v=prompt('Öffentliche HTTPS-Bildadresse:');if(!v)return;try{const u=new URL(v);if(u.protocol!=='https:')throw Error();focusRich();document.execCommand('insertImage',false,u.href);}catch(e){alert('Bitte eine gültige HTTPS-Bildadresse eingeben.');}};
+            $$('[data-box]',host).forEach(b=>b.onclick=()=>{const selected=window.getSelection();if(!selected || !selected.rangeCount || !rich.contains(selected.anchorNode)){focusRich();return;}const range=selected.getRangeAt(0);const div=document.createElement('div');div.dataset.callout=b.dataset.box;div.textContent=range.toString() || 'Hinweistext eingeben';range.deleteContents();range.insertNode(div);});
+            $('[data-ost570-cancel]',host).onclick=()=>host.hidden=true;
+            $('[data-ost570-save]',host).onclick=async()=>{
+                const status=$('[data-ost570-status]',host);status.textContent='Speichere …';
+                const latest=await get('differential');const index=latest.findIndex(x=>String(x.id)===String(current.id));
+                if(index<0){status.textContent='Leitsymptom nicht gefunden.';return;}
+                latest[index]={...latest[index],theory:$('[data-ost570-theory]',host).value,richContent:ost570CleanHtml(rich.innerHTML)};
+                const ok=await save('differential',latest);
+                if(ok){Object.assign(current,latest[index]);status.textContent='Gespeichert.';host.hidden=true;draw();}
+                else status.textContent='Speichern fehlgeschlagen. Änderungen nicht übernommen.';
+            };
+            host.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+        input.addEventListener('input',draw);
         draw();
     }
     async function wissenPage() {

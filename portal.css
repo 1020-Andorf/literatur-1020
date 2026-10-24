@@ -82,3 +82,21 @@ body[data-page="editor"] .ost567-disease-workspace .cf551-disease-meta{display:g
 .ost569-extra .ost568-cause{margin:.55rem 0}
 .ost569-extra a{color:#126b9a;text-decoration:underline}
 .ost569-extra .ost-module-body{padding:.85rem}
+
+/* 570: drei eigenständige Navigationsansichten und geschützter Inline-Editor */
+.ost570-breadcrumb{margin:.5rem 0 1.25rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;color:#637989;font-size:.9rem}.ost570-breadcrumb a{color:#176786;text-decoration:none}
+.ost570-hub [hidden],.ost570-inline-editor[hidden]{display:none!important}
+.ost570-hub .cf551-organ-nav,.ost570-hub .cf551-category-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.ost570-tile,.ost570-symptom-tile{display:flex;align-items:center;gap:10px;min-height:92px;padding:18px;border:1px solid #dae5e9;border-radius:18px;background:white;color:#173a50;text-decoration:none;box-shadow:0 3px 12px #102d4110}
+.ost570-tile strong,.ost570-symptom-tile strong{flex:1}.ost570-tile span,.ost570-symptom-tile span{font-size:.8rem;color:#607c8b}
+.ost570-article-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:18px 0}.ost570-article-head h1{font-size:clamp(1.65rem,4vw,2.4rem);margin:.35rem 0}.ost570-article-head p{color:#607687}
+.ost570-edit-btn{border:1px solid #bcd0db;border-radius:12px;background:white;padding:10px 15px;color:#174866;font-weight:700;cursor:pointer}
+.ost570-inline-editor{border:1px solid #b9d2df;background:#f7fafc;padding:20px;border-radius:18px;margin-top:22px}.ost570-inline-editor label{display:block;font-weight:650;margin:12px 0 7px}.ost570-inline-editor textarea{width:100%;min-height:145px;padding:12px;border:1px solid #c2d3dd;border-radius:10px;background:white}
+.ost570-toolbar{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}.ost570-toolbar button{padding:9px;border:1px solid #bfd3dc;border-radius:8px;background:white;cursor:pointer}
+.ost570-editable{background:white;min-height:180px;border:1px solid #a8c3d0;border-radius:12px;padding:15px;outline-offset:3px;line-height:1.65}.ost570-editable img,.ost570-rich img{max-width:100%;height:auto;border-radius:10px}
+.ost570-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:12px}
+.ost570-rich [data-callout],.ost570-editable [data-callout]{padding:14px;border-radius:10px;margin:12px 0;border-left:5px solid #42779a;background:#eaf4fa}
+.ost570-rich [data-callout= danger],.ost570-editable [data-callout=danger]{border-color:#bc2431;background:#fff0f0}
+.ost570-rich [data-callout=note],.ost570-editable [data-callout=note]{border-color:#bc8526;background:#fff7dd}
+.ost570-rich [data-callout=success],.ost570-editable [data-callout=success]{border-color:#26805a;background:#e8f7ed}
+@media(max-width:560px){.ost570-hub .cf551-organ-nav,.ost570-hub .cf551-category-nav{grid-template-columns:1fr}.ost570-tile,.ost570-symptom-tile{min-height:75px}.ost570-edit-btn span{display:none}}
