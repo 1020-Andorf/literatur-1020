@@ -1,4 +1,4 @@
-/* OST 1020 · Hauptstylesheet · 563
+/* OST 1020 · Hauptstylesheet · 564
    Reihenfolge bitte beibehalten! Die Bestandsregeln bauen aufeinander auf.
    Menuefarben ausschliesslich in portal-style-06-auswahlfarben.css aendern.
    Aktualisierung: CSS-Version in allen HTML-Seiten und hier hochzaehlen.
@@ -11,4 +11,4 @@
 @import url("portal-style-06-auswahlfarben.css?v=562");
 
 /* Version 563 – aufklappbare Inhalte über volle Breite */
-@import url("portal-style-07-inline-inhalte.css?v=563");
+@import url("portal-style-07-inline-inhalte.css?v=564");

@@ -68,3 +68,15 @@ body.app-shell .cf563-resources {display:flex;align-items:center;flex-wrap:wrap;
   body.app-shell :is(.cf547-training,.cf547-materials) .cf563-entry>summary {min-height:58px!important;padding:11px 12px!important}
   body.app-shell .cf563-entry-body {padding:12px 14px 16px!important}
 }
+
+/* Version 564: Bestehende Checklisten kontrolliert den beiden Bereichen zuordnen. */
+body.app-shell .ost-checklist-transfer {
+  display:grid;gap:10px;margin:16px 0 20px;padding:16px;
+  border:1px solid #dce5eb;border-radius:14px;background:#f7fafc;
+  color:#243f50;
+}
+body.app-shell .ost-checklist-transfer h3 {margin:0;font-size:1rem;color:#173d58}
+body.app-shell .ost-checklist-transfer p {margin:0;font-size:.87rem;line-height:1.45;color:#4c697f}
+body.app-shell .ost-checklist-transfer label {display:grid;gap:6px;font-weight:650;font-size:.86rem}
+body.app-shell .ost-checklist-transfer select {box-sizing:border-box;width:100%;max-width:100%;min-height:42px;border-radius:9px;border:1px solid #cad8e2;background:#fff;padding:8px 11px;color:#243f50}
+body.app-shell .ost-checklist-transfer button {justify-self:start}

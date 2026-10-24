@@ -76,8 +76,8 @@
                         location.href = 'themen.html?' + params.toString();
                         return;
                     }
-                    if (['mpg', 'checklists'].includes(params.get('bereich'))) {
-                        location.href = 'training.html';
+                    if (['mpg', 'checklists', 'material-checklists'].includes(params.get('bereich'))) {
+                        location.href = params.get('bereich') === 'material-checklists' ? 'materialien.html?typ=checklists' : 'training.html?typ=' + (params.get('bereich') === 'checklists' ? 'checklists' : 'devices');
                         return;
                     }
                 }
@@ -355,8 +355,11 @@
     }
     // Querverlinkungen und Suchindex: ausschließlich bestehende freigegebene Inhalte.
     const LINK_TYPES = { knowledgeModules: ['Weitere Themen', 'themen.html'], algorithms: ['Algorithmen & Schemata', 'algorithmen.html'], differential: ['Diagnostik', 'differential.html'], articles: ['Literatur-Archiv', 'literatur.html'], skills: ['Skilltraining', 'skilltraining.html'], changes: ['Lehrmeinung', 'lehrmeinung.html'] };
-    function contentLink(type, id, module) { if (type === 'knowledgeModules')
-        return 'themen.html?bereich=' + encodeURIComponent(module || 'pharm') + '&id=' + encodeURIComponent(id); const base = LINK_TYPES[type]?.[1]; return base ? (type === 'algorithms' || type === 'changes' ? base + '?id=' + encodeURIComponent(id) : type === 'differential' ? base + '?id=' + encodeURIComponent(id) : base) : ''; }
+    function contentLink(type, id, module) { if (type === 'knowledgeModules') {
+        if (module === 'checklists') return 'training.html?typ=checklists';
+        if (module === 'material-checklists') return 'materialien.html?typ=checklists';
+        return 'themen.html?bereich=' + encodeURIComponent(module || 'pharm') + '&id=' + encodeURIComponent(id);
+    } const base = LINK_TYPES[type]?.[1]; return base ? (type === 'algorithms' || type === 'changes' ? base + '?id=' + encodeURIComponent(id) : type === 'differential' ? base + '?id=' + encodeURIComponent(id) : base) : ''; }
     function relRefs(x) { return Array.isArray(x?.related) ? x.related.filter(r => r && typeof r.type === 'string' && typeof r.id === 'string') : []; }
     async function contentCatalog() { const [d, c, sk, li, km] = await Promise.all([get('differential'), get('changes'), get('skills'), articles(), get('knowledgeModules')]); const result = []; function add(type, x, extra = '') { if (!x || !x.id)
         return; result.push({ type, id: String(x.id), title: String(x.title || x.name || ''), text: [x.title, x.name, x.category, x.group, x.source, x.why, x.info, x.description, x.physiology, x.findings, x.redflags, extra, arr(x.synonyms).join(' ')].filter(Boolean).join(' '), href: contentLink(type, String(x.id), x.module) }); } d.forEach(x => add('differential', x, [...arr(x.causes).map(c => typeof c === 'object' ? [c.name, c.info, c.physiology, c.findings].join(' ') : c), ...arr(x.questions)].join(' '))); c.forEach(x => add('changes', x, [x.old, x.new, x.validity].join(' '))); sk.forEach(g => g.skills?.forEach(x => add('skills', { ...x, id: x.id || 'skill:' + g.name + ':' + x.name }, g.name))); li.forEach(x => add('articles', x, arr(x.topics).join(' '))); (Array.isArray(km) ? km : []).filter(x => MODULE_TYPES[x.module] && x.status !== 'draft').forEach(x => add('knowledgeModules', x, [x.body, x.summary, x.sources].join(' '))); return result; }
@@ -507,7 +510,7 @@
             return; const n = active[+b.dataset.news]; if (n)
             open(n.title, `<section class="overlay-section news-detail"><div class="ost-news-rich">${renderModuleText(n.text || '')}</div></section>`, { news: true }); });
     }
-    const MODULE_TYPES = { "pharm": { "title": "Pharmakologie", "icon": "⚕️", "area": "wissen" }, "anatomy": { "title": "Anatomie & Physiologie", "icon": "🫀", "area": "wissen" }, "befund": { "title": "Befundwörterbuch", "icon": "📖", "area": "wissen" }, "mpg": { "title": "MPG-Informationen", "icon": "🩺", "area": "training" }, "checklists": { "title": "Checklisten", "icon": "📄", "area": "training" } };
+    const MODULE_TYPES = { "pharm": { "title": "Pharmakologie", "icon": "⚕️", "area": "wissen" }, "anatomy": { "title": "Anatomie & Physiologie", "icon": "🫀", "area": "wissen" }, "befund": { "title": "Befundwörterbuch", "icon": "📖", "area": "wissen" }, "mpg": { "title": "MPG-Informationen", "icon": "🩺", "area": "training" }, "checklists": { "title": "Übungschecklisten", "icon": "📄", "area": "training" }, "material-checklists": { "title": "Checklisten", "icon": "📄", "area": "materialien" } };
     const MODULE_ICON_OPTIONS = ['', '⚕️', '💉', '🫀', '🫁', '🧠', '🩺', '📖', '📄', '🧪', '🔬', '🧬', '⚡', '🖥️', '🧰', '🦠', '💧', '❤️', '🦴', '👶'];
     function moduleItemIcon(item, slug) {
         const saved = String(item?.icon || '').trim();
@@ -555,7 +558,7 @@
                 return '💧';
             return '🩺';
         }
-        if (slug === 'checklists')
+        if (slug === 'checklists' || slug === 'material-checklists')
             return '📄';
         if (slug === 'befund')
             return '📖';
@@ -626,7 +629,7 @@
             out.push('</ul>');
         return out.join('') || '<p>Noch kein Fachinhalt hinterlegt.</p>';
     }
-    function moduleFields(x) { if (x.module === 'checklists')
+    function moduleFields(x) { if (x.module === 'checklists' || x.module === 'material-checklists')
         return moduleIconSelect(x.icon) + `<label class="ost-module-field"><span>Titel</span><input data-mf="title" value="${esc(x.title || '')}"></label><label class="ost-module-field"><span>Kategorie / Übung</span><input data-mf="category" value="${esc(x.category || '')}"></label><label class="ost-module-field"><span>Kurzbeschreibung</span><textarea data-mf="summary" rows="3">${esc(x.summary || '')}</textarea></label><label class="ost-module-field"><span>Weitere Hinweise (optional)</span><textarea data-mf="body" rows="4">${esc(x.body || '')}</textarea></label><label class="ost-module-field"><span>PDF-Adresse</span><input type="url" data-mf="documentUrl" value="${esc(x.documentUrl || '')}" placeholder="Wird beim Upload automatisch eingetragen"></label><label class="ost-image-upload">📄 PDF hochladen<input type="file" data-module-upload="pdf" accept="application/pdf,.pdf"></label>`; return moduleIconSelect(x.icon) + ['title', 'category', 'summary', 'body', 'image', 'imageCaption', 'sources', 'synonyms', 'reviewOwner', 'reviewDue'].map(k => { const label = { title: 'Titel', category: 'Kategorie', summary: 'Kurzbeschreibung', body: 'Fachinhalt / Lernnotizen', image: 'Titelbild (URL oder Bildpfad)', imageCaption: 'Bildunterschrift / Alternativtext', sources: 'Quellen / Hersteller- und Handbuchlinks (URLs)', synonyms: 'Suchbegriffe / Synonyme (mit Komma getrennt)', reviewOwner: 'Fachliche Prüfung durch', reviewDue: 'Nächste Prüfung (JJJJ-MM-TT)' }[k]; if (k === 'body')
         return `<label class="ost-module-field"><span>${label}</span><div class="ost-rich-toolbar"><button type="button" data-rich="heading">Überschrift</button><button type="button" data-rich="bold"><b>Fett</b></button><button type="button" data-rich="italic"><i>Kursiv</i></button><button type="button" data-rich="list">Aufzählung</button><button type="button" data-rich="image">📷 Bild hochladen & einfügen</button></div><textarea class="ost-rich-input" data-mf="body" rows="15" placeholder="Ausführliche Fachtexte …">${esc(x.body || '')}</textarea><small>Absätze, ## Überschrift, **fett**, *kursiv*, - Listen. Bilder können direkt im Text eingefügt werden.</small><label class="ost-image-upload ost-hidden-upload">Bild in den Text hochladen<input type="file" data-module-upload="inline" accept="image/png,image/jpeg,image/webp"></label></label>`; return `<label class="ost-module-field"><span>${label}</span>${['sources', 'summary'].includes(k) ? `<textarea data-mf="${k}" rows="3">${esc(x[k] || '')}</textarea>` : `<input data-mf="${k}" value="${esc(x[k] || '')}">`}${k === 'image' ? '<label class="ost-image-upload">Titelbild hochladen<input type="file" data-module-upload="cover" accept="image/png,image/jpeg,image/webp"></label>' : ''}</label>`; }).join(''); }
     // ------------------------------------------------------------------------
@@ -648,8 +651,8 @@
             draw();
             return;
         }
-        if (slug === 'checklists') {
-            const base = `<section class="page-banner"><h1>Checklisten</h1></section>`;
+        if (slug === 'checklists' || slug === 'material-checklists') {
+            const base = `<section class="page-banner"><h1>${esc(meta.title)}</h1></section>`;
             $('[data-main]').innerHTML = base + `<div class="ost-module-toolbar"><input type="search" data-checklist-search placeholder="Checkliste suchen …" aria-label="Checklisten durchsuchen"></div><div class="ost-checklist-list" data-checklist-list></div>`;
             const draw = () => { const term = normalizedSearch($('[data-checklist-search]').value); const hits = items.filter(x => normalizedSearch([x.title, x.category, x.summary, x.body].join(' ')).includes(term)).sort((a, b) => ostEditorialOrder(a, b) || String(a.title).localeCompare(String(b.title), 'de')); $('[data-checklist-list]').innerHTML = hits.map(x => `<article class="ost-checklist-card"><span class="ost-checklist-icon" aria-hidden="true">${ostIcon('checklist')}</span><div class="ost-checklist-info"><h2>${esc(x.title)}</h2>${x.category ? `<div class="ost-checklist-category">${esc(x.category)}</div>` : ''}${x.summary ? `<p>${esc(x.summary)}</p>` : ''}${x.body ? `<div class="ost-checklist-body">${renderModuleText(x.body)}</div>` : ''}</div>${x.documentUrl && /^https:\/\/[^\s"<>]+$/i.test(x.documentUrl) ? `<a class="ost-checklist-download" href="${esc(x.documentUrl)}" target="_blank" rel="noopener noreferrer" download>PDF öffnen <span aria-hidden="true">↗</span></a>` : '<span class="ost-checklist-missing">Noch kein PDF</span>'}</article>`).join('') || '<p class="empty">Noch keine Checklisten vorhanden.</p>'; };
             $('[data-checklist-search]').oninput = draw;
@@ -832,9 +835,16 @@
             return `<section class="ost-order-editor cf562-order-editor"><div class="ost-order-title"><strong>Reihenfolge der Einträge</strong><small>Mit ↑ und ↓ verschieben. Die Reihenfolge wird direkt gespeichert und auf der Website übernommen.</small></div><div class="ost-order-group">${rows.map((x,i) => `<div class="ost-order-entry"><span>${esc(x.title || 'Ohne Titel')}</span><div class="ost-order-buttons"><button type="button" data-mod-order="up" data-mod-order-id="${esc(x.id)}" ${!i ? 'disabled' : ''} aria-label="${esc(x.title)} nach oben">↑</button><button type="button" data-mod-order="down" data-mod-order-id="${esc(x.id)}" ${i === rows.length - 1 ? 'disabled' : ''} aria-label="${esc(x.title)} nach unten">↓</button></div></div>`).join('')}</div></section>`;
         };
         const anatomyEditorFields = x => `<section class="cf552-subsection-editor"><div class="cf552-subsection-header"><h3>Aufklappbare Unterpunkte</h3><button type="button" class="btn" data-sub-add>+ Unterpunkt</button></div>${(Array.isArray(x.subsections) ? x.subsections : []).map((v, i) => `<div class="cf552-subsection-row" data-sub-index="${i}"><label>Überschrift<input data-sub-title value="${esc(v.title || '')}"></label><label>Inhalt<textarea data-sub-body rows="4">${esc(v.body || '')}</textarea></label><div class="cf552-subsection-actions"><button type="button" data-sub-move="up" ${!i ? 'disabled' : ''}>↑</button><button type="button" data-sub-move="down" ${i === (x.subsections.length - 1) ? 'disabled' : ''}>↓</button><button type="button" data-sub-remove>Entfernen</button></div></div>`).join('')}</section>`;
-        const render = () => { const heading = active === 'checklists' ? (editorSection === 'materialien' ? 'Checklisten' : 'Übungschecklisten') : 'Wissensbereiche';
-            const description = active === 'checklists' ? 'Checklisten auswählen, bearbeiten oder als PDF ergänzen.' : 'Fachartikel, Begriffe und Geräte pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.';
-            box.innerHTML = `<div class="editor-toolbar"><div><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) && editorSection !== 'wissen' ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>${editorSection === 'wissen' ? '3. Eintrag auswählen' : 'Eintrag auswählen'}<select data-mod-select><option value="">– Bitte auswählen –</option>${orderedModuleItems().map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div>${moduleOrderPanel()}<p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
+        const checklistMoveField = x => !['checklists', 'material-checklists'].includes(active) ? '' : `<label class="ost-module-field"><span>Bereich / Zuordnung</span><select data-checklist-target><option value="checklists" ${x.module === 'checklists' ? 'selected' : ''}>Training – Übungschecklisten</option><option value="material-checklists" ${x.module === 'material-checklists' ? 'selected' : ''}>Materialien – Checklisten</option></select><small>Ein Wechsel wird erst mit „Speichern“ übernommen. Der Eintrag erscheint danach ausschließlich im gewählten Bereich.</small></label>`;
+        const legacyChecklistPicker = () => {
+            if (active !== 'material-checklists') return '';
+            const legacy = items.filter(x => x.module === 'checklists').sort(ostEditorialOrder);
+            if (!legacy.length) return '';
+            return `<section class="ost-checklist-transfer" aria-label="Bestehende Checklisten zuordnen"><h3>Bestehende Übungschecklisten zuordnen</h3><p>Die früher gemeinsam verwendeten Checklisten liegen zunächst unter Training. Einzelne Einträge kannst du ohne Kopieren nach Materialien verschieben.</p><label>Eintrag auswählen<select data-checklist-transfer-id><option value="">– Eintrag wählen –</option>${legacy.map(x => `<option value="${esc(x.id)}">${esc(x.title || 'Ohne Titel')}${x.status === 'draft' ? ' (Entwurf)' : ''}</option>`).join('')}</select></label><button type="button" class="btn" data-checklist-transfer>Nach Materialien verschieben</button></section>`;
+        };
+        const render = () => { const heading = active === 'checklists' ? 'Übungschecklisten' : active === 'material-checklists' ? 'Checklisten' : 'Wissensbereiche';
+            const description = ['checklists', 'material-checklists'].includes(active) ? 'Checklisten auswählen, bearbeiten und als PDF ergänzen. Einträge lassen sich ohne Inhaltsverlust zwischen Training und Materialien verschieben.' : 'Fachartikel, Begriffe und Geräte pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.';
+            box.innerHTML = `<div class="editor-toolbar"><div><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) && editorSection !== 'wissen' ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>${editorSection === 'wissen' ? '3. Eintrag auswählen' : 'Eintrag auswählen'}<select data-mod-select><option value="">– Bitte auswählen –</option>${orderedModuleItems().map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${checklistMoveField(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div>${legacyChecklistPicker()}${moduleOrderPanel()}<p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
         const persist = async () => { const ok = await save('knowledgeModules', items); const el = box.querySelector('[data-mod-note]'); if (el)
             el.textContent = ok ? 'Mit dem Worker synchronisiert.' : 'Lokal gespeichert – Worker-Synchronisierung nicht bestätigt.'; return ok; };
         box.addEventListener('input', e => {
@@ -928,6 +938,18 @@
             }
             render();
             return;
+        } if (e.target.closest('[data-checklist-transfer]')) {
+            const chosen = box.querySelector('[data-checklist-transfer-id]')?.value;
+            const x = items.find(x => x.id === chosen && x.module === 'checklists');
+            if (!x) { alert('Bitte zuerst eine Übungscheckliste auswählen.'); return; }
+            if (!confirm('„' + x.title + '“ von Training nach Materialien verschieben? Der Inhalt bleibt vollständig erhalten.')) return;
+            x.module = 'material-checklists';
+            selectedId = x.id;
+            const ok = await persist();
+            render();
+            const note = box.querySelector('[data-mod-note]');
+            if (note) note.textContent = ok ? 'Checkliste nach Materialien verschoben und gespeichert.' : 'Verschiebung nur lokal gespeichert – Worker prüfen.';
+            return;
         } const tab = e.target.closest('[data-mod-tab]'); if (tab) {
             active = tab.dataset.modTab;
             render();
@@ -985,8 +1007,18 @@
                 alert('Titel fehlt.');
                 return;
             }
-            await persist();
+            const destination = card.querySelector('[data-checklist-target]')?.value;
+            const moved = ['checklists', 'material-checklists'].includes(x.module) &&
+                ['checklists', 'material-checklists'].includes(destination) && destination !== x.module;
+            if (moved && !confirm('„' + x.title + '“ in den anderen Checklisten-Bereich verschieben?')) return;
+            if (moved) x.module = destination;
+            const ok = await persist();
+            if (moved) selectedId = '';
             render();
+            if (moved) {
+                const note = box.querySelector('[data-mod-note]');
+                if (note) note.textContent = ok ? 'Checkliste verschoben und gespeichert. Sie ist jetzt im anderen Bereich sichtbar.' : 'Verschiebung nur lokal gespeichert – Worker prüfen.';
+            }
         } };
         render();
     }
@@ -1041,7 +1073,7 @@
                 return; names.add(key); diseases.push({ value, source: d, index }); }));
             const anatomy = km.filter(x => x.module === 'anatomy' && (x.organGroup === t.id || (!x.organGroup && t.anatomy.test(x.title))));
             const terms = km.filter(x => x.module === 'befund' && (x.organGroup === t.id || (!x.organGroup && cfTopicContains([x.title, x.summary, x.body].join(' '), t))));
-            const materials = [...literature.filter(x => cfTopicContains([x.title, arr(x.topics).join(' '), x.why].join(' '), t)).map(x => ({ kind: 'article', value: x })), ...km.filter(x => x.module === 'checklists' && cfTopicContains([x.title, x.summary].join(' '), t)).map(x => ({ kind: 'checklist', value: x })), ...(Array.isArray(mnemonicStore) ? mnemonicStore : []).filter(x => String(x.category || '').startsWith('Schema') && cfTopicContains(x.title, t)).map(x => ({ kind: 'mnemonic', value: x }))];
+            const materials = [...literature.filter(x => cfTopicContains([x.title, arr(x.topics).join(' '), x.why].join(' '), t)).map(x => ({ kind: 'article', value: x })), ...km.filter(x => x.module === 'material-checklists' && cfTopicContains([x.title, x.summary].join(' '), t)).map(x => ({ kind: 'checklist', value: x })), ...(Array.isArray(mnemonicStore) ? mnemonicStore : []).filter(x => String(x.category || '').startsWith('Schema') && cfTopicContains(x.title, t)).map(x => ({ kind: 'mnemonic', value: x }))];
             diseases.sort((a, b) => ostEditorialOrder(a.value, b.value));
             anatomy.sort(ostEditorialOrder);
             terms.sort(ostEditorialOrder);
@@ -1194,7 +1226,7 @@
         // Redaktion speichert Leitlinien auch ohne Quellenlink. Ein Link ist optional.
         // Die öffentliche Auswahl muss dieselben Datensätze wie der Redaktionsbereich zeigen.
         const guidelines = allAlgorithms.filter(x => !String(x.category || '').startsWith('Schema')).sort(ostEditorialOrder);
-        const checklists = km.filter(x => x.module === 'checklists' && x.status !== 'draft').sort(ostEditorialOrder);
+        const checklists = km.filter(x => x.module === 'material-checklists' && x.status !== 'draft').sort(ostEditorialOrder);
         const mnemonics = allAlgorithms.filter(x => String(x.category || '').startsWith('Schema')).sort(ostEditorialOrder);
         const literature = Array.isArray(docs) ? docs : [];
         const categories = [['guidelines', 'Leitlinien', 'guideline'], ['checklists', 'Checklisten', 'checklist'], ['mnemonics', 'Merkhilfen & Schemata', 'notes'], ['literature', 'Literatur-Archiv', 'book']];
@@ -1531,7 +1563,7 @@
         let list = records.map(tile).join('');
         if (selected === 'checklisten') {
             const modules = await get('knowledgeModules');
-            list = (Array.isArray(modules) ? modules : []).filter(x => x.module === 'checklists' && x.status !== 'draft').map(x => `<a class="clinical-list-entry" href="themen.html?bereich=checklists"><span class="clinical-entry-icon">${ostIcon('checklist')}</span><span>${esc(x.title)}</span><b>↗</b></a>`).join('');
+            list = (Array.isArray(modules) ? modules : []).filter(x => x.module === 'material-checklists' && x.status !== 'draft').map(x => `<a class="clinical-list-entry" href="materialien.html?typ=checklists"><span class="clinical-entry-icon">${ostIcon('checklist')}</span><span>${esc(x.title)}</span><b>↗</b></a>`).join('');
         }
         $('[data-main]').innerHTML = `<section class="clinical-combined-intro"><h1>Algorithmen & Materialien</h1></section><nav class="clinical-content-tabs" aria-label="Inhaltstyp">${tabs.map(([id, label]) => `<a href="algorithmen.html?typ=${id}" class="${id === selected ? 'is-active' : ''}" ${id === selected ? 'aria-current="page"' : ''}>${label}</a>`).join('')}</nav><div class="clinical-content-list">${list || '<p class="empty">Noch keine Inhalte hinterlegt.</p>'}</div>`;
     }
@@ -2467,14 +2499,14 @@
         const editorGroups = [
             { id: 'wissen', title: 'Wissen', icon: ostIcon('anatomy'), items: ['modules:anatomy', 'differential', 'modules:befund', 'jump:materialien'] },
             { id: 'training', title: 'Training', icon: ostIcon('training'), items: ['skills', 'modules:mpg', 'modules:checklists'] },
-            { id: 'materialien', title: 'Materialien', icon: ostIcon('book'), items: ['algorithms:guidelines', 'modules:checklists', 'algorithms:mnemonics', 'articles'] },
+            { id: 'materialien', title: 'Materialien', icon: ostIcon('book'), items: ['algorithms:guidelines', 'modules:material-checklists', 'algorithms:mnemonics', 'articles'] },
             { id: 'termine', title: 'Termine', icon: ostIcon('calendar'), items: ['events', 'attendance'] },
             { id: 'dienstbesprechungen', title: 'Besprechungen & Vorträge', icon: ostIcon('users'), items: ['meetings'] },
             { id: 'lehrmeinung', title: 'Lehrmeinungsänderungen', icon: ostIcon('changes'), items: ['changes'] },
             { id: 'aktuelles', title: 'Aktuelles', icon: ostIcon('news'), items: ['news'] },
             { id: 'literatur', title: 'Literatur & Lesetipps', icon: ostIcon('book'), items: ['articles'] }
         ];
-        const extraLabels = { 'modules:anatomy': ['Anatomie & Physiologie', ostIcon('anatomy')], 'modules:befund': ['Fachbegriffe', ostIcon('dictionary')], 'modules:mpg': ['Geräte', ostIcon('device')], 'modules:checklists': ['Übungschecklisten', ostIcon('checklist')], 'jump:materialien': ['Materialien', ostIcon('book')], 'algorithms:guidelines': ['Leitlinien', ostIcon('guideline')], 'algorithms:mnemonics': ['Merkhilfen & Schemata', ostIcon('notes')], algorithms: ['Leitlinien & Merkhilfen', ostIcon('notes')], differential: ['Krankheitsbilder', ostIcon('heart')], skills: ['Skills', ostIcon('training')], articles: ['Literatur-Archiv', ostIcon('book')] };
+        const extraLabels = { 'modules:anatomy': ['Anatomie & Physiologie', ostIcon('anatomy')], 'modules:befund': ['Fachbegriffe', ostIcon('dictionary')], 'modules:mpg': ['Geräte', ostIcon('device')], 'modules:checklists': ['Übungschecklisten', ostIcon('checklist')], 'modules:material-checklists': ['Checklisten', ostIcon('checklist')], 'jump:materialien': ['Materialien', ostIcon('book')], 'algorithms:guidelines': ['Leitlinien', ostIcon('guideline')], 'algorithms:mnemonics': ['Merkhilfen & Schemata', ostIcon('notes')], algorithms: ['Leitlinien & Merkhilfen', ostIcon('notes')], differential: ['Krankheitsbilder', ostIcon('heart')], skills: ['Skills', ostIcon('training')], articles: ['Literatur-Archiv', ostIcon('book')] };
         let moduleRequested = 'anatomy', requestedEditorGroup = 'wissen';
         const groupedEditorMenu = document.createElement('div');
         groupedEditorMenu.className = 'editor-grouped-menu ost-editor-workflow cf551-editor-workflow';
@@ -2510,7 +2542,7 @@
                 if (!item)
                     return '';
                 const active = id === 'modules:' + moduleRequested && tab === 'modules' || id === 'algorithms:' + materialAlgorithmsView && tab === 'algorithms' || id === 'differential' && tab === 'differential' || id === tab && tab !== 'differential';
-                const label = group.id === 'materialien' && id === 'modules:checklists' ? 'Checklisten' : extraLabels[id]?.[0] || item[1];
+                const label = extraLabels[id]?.[0] || item[1];
                 return `<button type="button" class="editor-subgroup-tile ${active ? 'active' : ''}" data-editor-subtab="${id}" aria-pressed="${String(active)}"><span>${extraLabels[id]?.[1] || tabIcons[id] || ostIcon('book')}</span><strong>${esc(label)}</strong></button>`;
             }).join('');
         };
