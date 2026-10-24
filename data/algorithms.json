@@ -1,123 +1,5 @@
 [
   {
-    "id": "reanimation",
-    "icon": "❤️",
-    "title": "Reanimation Erwachsener",
-    "category": "Reanimation",
-    "stand": "OÖRK Lehrmeinung",
-    "steps": [
-      "Szene sicher?",
-      "lautes Ansprechen + Atemwege kontrollieren",
-      "Atemkontrolle durchführen und Gerätemanagement beachten",
-      "Diagnose: Atem-Kreislaufstillstand --> Lagemeldung zeitnah machen",
-      "CPR beginnen (qualitativ hochwertige Herzdruckmassage)",
-      "Defi Elektroden korrekt kleben und Analyse des Rhythmus (+ Schock / kein Schock)",
-      "LTS-D setzen und Probebeatmung durchführen",
-      "nach erfolgreicher Probebeatmung --> 30:2",
-      "Fixierung des LTS-D + Einführen des Abaugkatheters",
-      "Absaugbereitschaft herstellen",
-      "Alle 2 Minuten wechseln der Positionen",
-      "Achten auf Defi-Anweisungen und geringe Hands-off Zeiten"
-    ],
-    "source": "ERC Guidelines / lokale SOP beachten",
-    "sourceUrl": "",
-    "embedUrl": "",
-    "materials": {
-      "background": [
-        {
-          "title": "ERC Guidelines",
-          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
-          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
-        }
-      ],
-      "checklists": [
-        {
-          "title": "Checkliste OÖRK - CPR Erwachsener",
-          "note": "aktuelle Checkliste",
-          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832421246-RS-Pr-fungscheckliste-Erfolgskontrolle-HLW-DEFI-Erw-V8.pdf"
-        }
-      ]
-    }
-  },
-  {
-    "id": "anaphylaxie",
-    "icon": "❤️",
-    "title": "Reanimation Kind",
-    "category": "Reanimation",
-    "stand": "OÖRK Lehrmeinung",
-    "steps": [
-      "Szene sicher?",
-      "lautes Ansprechen + Atemwege kontrollieren",
-      "Atemkontrolle durchführen und Gerätemanagement beachten (Sauerstoff mit Ambu Beutel vorbereiten)",
-      "keine Lebenszeichen --> 5 Initialbeatmungen",
-      "keine Lebenszeichen --> sofort CPR mit 15:2 Rythmus",
-      "qualitativ hochwertige Herzdruckmassage und zeitgerechtes Verwenden des Defis",
-      "Defipad Position beachten (Mindestabstand bei antero-lateraler Verwendung)",
-      "Sicherheitshinweise des Defis beachten",
-      "Wechsel in der Analysephase",
-      "Absaugbereitschaft herstellen",
-      "Generell auf qualitativ hochwertige CPR und wenig Hands-off Zeiten achten"
-    ],
-    "source": "Lokale SOP / Leitlinie",
-    "sourceUrl": "",
-    "embedUrl": "",
-    "materials": {
-      "background": [
-        {
-          "title": "ERC Guidelines",
-          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
-          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
-        }
-      ],
-      "checklists": [
-        {
-          "title": "Checkliste OÖRK - CPR Kind",
-          "note": "aktuelle Checkliste",
-          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832578875-RS-Trainingscheckliste-HLW-DEFI-Kind-V8.pdf"
-        }
-      ]
-    }
-  },
-  {
-    "id": "stroke",
-    "icon": "❤️",
-    "title": "Reanimation Säugling",
-    "category": "Reanimation",
-    "stand": "OÖRK Lehrmeinung",
-    "steps": [
-      "Szene sicher?",
-      "lautes Ansprechen + Atemwege kontrollieren",
-      "Atemkontrolle durchführen und Gerätemanagement beachten (Sauerstoff mit Ambu Beutel vorbereiten)",
-      "keine Lebenszeichen --> 5 Initialbeatmungen",
-      "keine Lebenszeichen --> sofort CPR mit 15:2 Rythmus",
-      "qualitativ hochwertige Herzdruckmassage und zeitgerechtes Verwenden des Defis",
-      "Defipad Position beachten (bei Säugling immer anterior-posterior Position)",
-      "Sicherheitshinweise des Defis beachten",
-      "Wechsel in der Analysephase",
-      "Absaugbereitschaft herstellen",
-      "Generell auf qualitativ hochwertige CPR und wenig Hands-off Zeiten achten"
-    ],
-    "source": "Lokale SOP / aktuelle Schlaganfall-Leitlinie",
-    "sourceUrl": "",
-    "embedUrl": "",
-    "materials": {
-      "background": [
-        {
-          "title": "ERC Guidelines",
-          "note": "Viele Lehrmeinungspunkte basieren auf den ERC Guidelines.",
-          "url": "https://www.erc.edu/science-research/guidelines/guidelines-2025/guidelines-2025-english/"
-        }
-      ],
-      "checklists": [
-        {
-          "title": "Checkliste OÖRK - CPR Säugling",
-          "note": "aktuelle Checkliste",
-          "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1791832611900-RS-Trainingscheckliste-HLW-DEFI-Sgl-V8.pdf"
-        }
-      ]
-    }
-  },
-  {
     "id": "schema-xabcde",
     "icon": "🩺",
     "title": "XABCDE – strukturierte Erstbeurteilung",
@@ -135,7 +17,15 @@
     "materials": {
       "background": [],
       "checklists": []
-    }
+    },
+    "explanation": "",
+    "sourceUrl": "",
+    "lastReviewed": "",
+    "reviewDue": "",
+    "reviewOwner": "",
+    "imageUrl": "",
+    "imageCaption": "",
+    "related": []
   },
   {
     "id": "schema-opqrst",
