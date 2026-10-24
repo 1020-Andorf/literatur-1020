@@ -862,21 +862,5 @@
     "status": "published",
     "related": [],
     "image": ""
-  },
-  {
-    "id": "mpg-vorlage",
-    "module": "mpg",
-    "title": "Gerät – Muster für neuen Eintrag",
-    "category": "Hersteller / Gerätetyp",
-    "summary": "Gerätestammdaten, Sicherheitshinweise und Links zu Gebrauchsanweisungen ergänzen.",
-    "body": "## Geräteübersicht\n- Hersteller und Modell:\n- Verwendungszweck:\n- Technische Eigenschaften:\n- Zubehör und Verbrauchsmaterial:\n\n## Inbetriebnahme und Funktionsprüfung\n- Vor Benutzung die gültige Herstelleranleitung und lokalen Vorgaben beachten.\n\n## Warnhinweise und Pflege\n- Hinweise aus der aktuellen Herstellerdokumentation ergänzen.\n\n## Dokumente\n- Gebrauchsanweisung / Download-Link unter Quellen eintragen.",
-    "sources": "",
-    "image": "",
-    "imageCaption": "",
-    "synonyms": "",
-    "reviewOwner": "",
-    "reviewDue": "",
-    "status": "draft",
-    "related": []
   }
 ]
