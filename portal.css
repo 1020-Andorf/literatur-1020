@@ -490,3 +490,16 @@ body:not(.ost576-edit-enabled) .cf-home-updates .ost583-home-news-row>[data-news
 .ost587-attendance-dialog>header h2{margin:0;font-size:1.3rem}
 .ost587-attendance-dialog .attendance-event{margin:.5rem 0}.ost587-attendance-dialog .attendance-tools{display:flex;flex-wrap:wrap;gap:.5rem}
 @media(max-width:600px){.ost587-attendance-dialog{padding:12px}.ost587-attendance-overlay{padding:8px}}
+/* 588: Home news has the same close spacing in both display modes. */
+body.app-shell .cf548-home .cf-home-updates .cf-simple-list,
+.cf548-home .cf-home-updates .cf-simple-list{display:flex!important;flex-direction:column!important;gap:7px!important;row-gap:7px!important;margin:0!important;padding:0!important}
+.cf548-home .cf-home-updates .cf-simple-list>.ost583-home-news-row{margin:0!important;padding:0!important;min-height:0!important;height:auto!important}
+.cf548-home .cf-home-updates .ost583-home-news-row>[data-news]{margin:0!important;min-height:44px!important}
+.ost577-switch-host{gap:10px!important;flex-wrap:wrap}
+.ost588-admin-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;white-space:nowrap}
+.ost588-admin{width:min(100%,1000px);margin:20px auto;padding:0 12px;box-sizing:border-box}
+.ost588-admin>header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ost588-admin-actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.ost588-admin-output{border:1px solid #d0e0e9;border-radius:14px;padding:16px;background:#fff;min-height:100px;white-space:pre-wrap;overflow-wrap:anywhere}
+.ost588-admin-output select{font:inherit;padding:10px;border:1px solid #bfd1dc;border-radius:8px;max-width:100%}
+.ost588-admin-output .admin-version-row,.ost588-admin-output .admin-report{padding:12px 0;border-bottom:1px solid #d6e1e8}

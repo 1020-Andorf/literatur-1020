@@ -150,19 +150,19 @@
             const desktopTop = document.createElement('nav');
             desktopTop.className = 'clinical-desktop-header';
             desktopTop.setAttribute('aria-label', 'Bereiche');
-            desktopTop.innerHTML = `<a class="clinical-logo" href="index.html">OST <strong>1020</strong></a><div class="clinical-desktop-links"><a href="index.html">Start</a><a href="themen-uebersicht.html">Leitsymptome</a><a href="training.html">Training</a><a href="materialien.html">Materialien</a><a href="termine.html">Termine</a><a href="dienstbesprechungen.html">Besprechungen</a></div><a class="clinical-desktop-editor" href="editor.html" aria-label="Redaktion">${ostIcon('edit')}</a>`;
+            desktopTop.innerHTML = `<a class="clinical-logo" href="index.html">OST <strong>1020</strong></a><div class="clinical-desktop-links"><a href="index.html">Start</a><a href="themen-uebersicht.html">Leitsymptome</a><a href="training.html">Training</a><a href="materialien.html">Materialien</a><a href="termine.html">Termine</a><a href="dienstbesprechungen.html">Besprechungen</a></div>`;
             // Unified navigation: one unobtrusive topbar on phone and desktop.
             // desktopTop is deliberately not inserted.
             const sidebar = document.createElement('aside');
             sidebar.className = 'desktop-sidebar';
             sidebar.setAttribute('aria-label', 'Hauptnavigation');
-            sidebar.innerHTML = `<div class="desktop-sidebar-head"><div class="desktop-brand-kicker">OST 1020</div><strong>Wissenssammlung</strong></div><nav class="desktop-sidebar-nav"><div class="desktop-nav-group">${menu.map(x => renderLink(x, true)).join('')}</div></nav><div class="sidebar-actions"><a class="editor-entry-button ${page === 'editor' ? 'active' : ''}" href="editor.html">✎ <span>Redaktion</span></a><button type="button" class="desktop-feedback-btn" data-feedback-open-desktop>💬 <span>Fehler melden</span></button></div>`;
+            sidebar.innerHTML = `<div class="desktop-sidebar-head"><div class="desktop-brand-kicker">OST 1020</div><strong>Wissenssammlung</strong></div><nav class="desktop-sidebar-nav"><div class="desktop-nav-group">${menu.map(x => renderLink(x, true)).join('')}</div></nav><div class="sidebar-actions"><button type="button" class="desktop-feedback-btn" data-feedback-open-desktop>💬 <span>Fehler melden</span></button></div>`;
             // No sidebar: consistent reading width and scrolling on all screens.
             $('[data-feedback-open-desktop]', sidebar)?.addEventListener('click', showFeedback);
             const mobile = document.createElement('nav');
             mobile.className = 'compact-top-navigation';
             mobile.setAttribute('aria-label', 'Hauptnavigation');
-            mobile.innerHTML = `<div class="compact-menu-links">${menu.map(x => renderLink(x)).join('')}</div><a href="editor.html" class="compact-editor-entry" aria-label="Redaktion öffnen">✎ <span>Redaktion</span></a>`;
+            mobile.innerHTML = `<div class="compact-menu-links">${menu.map(x => renderLink(x)).join('')}</div>`;
             const topbar = $('.topbar');
             // Navigation on phones uses home tiles, not a sliding sticky menu.
             mobile.remove();
@@ -1265,6 +1265,8 @@
         host.appendChild(button);
         button.onclick=async()=>{await ost576ToggleEdit();ost576InstallSwitch();};
       }
+      let adminLink=host.querySelector('[data-ost588-admin]');
+      if(!adminLink){adminLink=document.createElement('a');adminLink.href='administration.html';adminLink.dataset.ost588Admin='';adminLink.className='ost576-edit-switch ost588-admin-link';adminLink.textContent='⚙ Verwaltung';host.appendChild(adminLink);}
       button.textContent=ost576IsEditing()?'🔒 Bearbeitung beenden':'✎ Bearbeitung freigeben';
       button.setAttribute('aria-pressed',String(ost576IsEditing()));
       ost576SyncEdit();
@@ -2464,7 +2466,13 @@
         const clientId = localStorage.getItem('ost1020-client-id') || (() => { const id = 'c-' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('ost1020-client-id', id); return id; })();
         $('[data-main]').innerHTML = `<section class="page-banner ost585-event-head"><h1>Termine</h1><button type="button" class="btn ost585-attendance" data-attendance-open>Teilnehmerlisten / PDF-Export</button></section><section class="calendar" data-cal></section><section class="section"><div class="section-head ost586-participants-head"><h2 data-list-title>Kommende Termine</h2><button type="button" class="btn ost586-participants" data-attendance-open>👥 Teilnehmerlisten & Export</button></div><div class="event-list" data-events></div></section>`;
         // Teilnehmerverwaltung unabhängig von der alten Redaktion. PDF-Erzeugung bleibt unverändert.
-        function openAttendanceWindow(){
+        async function openAttendanceWindow(){
+            const pin=sessionStorage.getItem('ost1020-editor-pin')||'';
+            if(!ost576IsEditing() || !await verifyEditorPin(pin)){
+                alert('Teilnehmerlisten sind PIN-geschützt. Bitte zuerst auf der Startseite die Bearbeitung freigeben.');
+                return;
+            }
+
             document.querySelector('[data-ost587-attendance]')?.remove();
             const overlay=document.createElement('div');overlay.className='ost587-attendance-overlay';overlay.dataset.ost587Attendance='';
             overlay.innerHTML=`<section class="ost587-attendance-dialog" role="dialog" aria-modal="true" aria-label="Teilnehmerlisten und PDF-Export"><header><h2>Teilnehmerlisten & Export</h2><button type="button" class="btn" data-attendance-close aria-label="Schließen">✕</button></header><div data-attendance-content></div></section>`;
@@ -3457,6 +3465,50 @@
         syncGroupedEditorMenu(initialTab);
         draw(initialTab);
     }
+    async function administrationPage(){
+      const root=$('[data-main]');
+      const pin=sessionStorage.getItem('ost1020-editor-pin')||'';
+      if(!ost576IsEditing() || !await verifyEditorPin(pin)){
+        root.innerHTML='<section class="ost588-admin"><h1>Verwaltung</h1><p>Bitte die Bearbeitung auf der Startseite mit dem PIN freigeben.</p><a class="btn" href="index.html">Zur Startseite</a></section>';return;
+      }
+      root.innerHTML=`<section class="ost588-admin"><header><h1>Verwaltung</h1><a class="btn" href="index.html">Zur Startseite</a></header><p>Versionsverlauf, Datensicherungen, Fehlermeldungen und fachliche Prüffristen.</p>
+        <nav class="ost588-admin-actions"><button class="btn" data-a="history">Versionsverlauf</button><button class="btn" data-a="backup">Backup erstellen</button><button class="btn" data-a="status">Backups ansehen</button><button class="btn" data-a="feedback">Fehlermeldungen</button><button class="btn" data-a="review">Prüffristen</button></nav><div class="ost588-admin-output" data-result role="status">Wähle eine Funktion.</div></section>`;
+      const result=$('[data-result]',root);
+      const request=async(path,options={})=>{
+        const pin=sessionStorage.getItem('ost1020-editor-pin')||'';
+        if(!ost576IsEditing()||!await verifyEditorPin(pin))throw Error('PIN-Freigabe abgelaufen.');
+        if(!API)throw Error('Cloudflare-Worker nicht konfiguriert');
+        const response=await fetch(API+path,{...options,headers:{'X-Admin-Pin':pin,'Content-Type':'application/json',...(options.headers||{})}});
+        const data=await response.json();if(!response.ok)throw Error(data.error||'HTTP '+response.status);return data;
+      };
+      const failure=e=>result.textContent='Fehler: '+e.message;
+      root.querySelectorAll('[data-a]').forEach(button=>button.onclick=async()=>{
+        result.textContent='Lade …';
+        try{
+          const action=button.dataset.a;
+          if(action==='backup'){
+            if(!confirm('Jetzt eine Datensicherung erstellen?')){result.textContent='Abgebrochen.';return;}
+            const d=await request('/admin/backup',{method:'POST'});result.textContent='Backup erstellt: '+d.key;
+          }else if(action==='status'){
+            const d=await request('/admin/backup-status');result.textContent=d.configured?(d.items||[]).map(x=>x.key+' ('+x.size+' Bytes)').join('\n')||'Keine Backups vorhanden.':'R2-Backup nicht konfiguriert.';
+          }else if(action==='history'){
+            result.innerHTML=`<h2>Versionsverlauf</h2><label>Sammlung <select data-collection>${['algorithms','events','changes','differential','knowledgeModules','skills','articles','news','meetings','site'].map(x=>`<option value="${x}">${x}</option>`).join('')}</select></label><button class="btn" data-load>Versionsverlauf laden</button><div data-versions></div>`;
+            $('[data-load]',result).onclick=async()=>{
+              try{const name=$('[data-collection]',result).value,d=await request('/admin/history?name='+encodeURIComponent(name));
+                $('[data-versions]',result).innerHTML=(d.items||[]).map(v=>`<div class="admin-version-row"><span><strong>${esc(v.date)}</strong><small>${esc(v.message)}</small></span><button data-restore="${esc(v.sha)}">Wiederherstellen</button></div>`).join('')||'<p>Keine Versionen.</p>';
+                result.querySelectorAll('[data-restore]').forEach(b=>b.onclick=async()=>{if(!confirm('Frühere Version wiederherstellen?'))return;try{await request('/admin/restore',{method:'POST',body:JSON.stringify({sha:b.dataset.restore,name})});result.textContent='Version wiederhergestellt.'}catch(e){failure(e)}});
+              }catch(e){failure(e)}
+            };
+          }else if(action==='feedback'){
+            const d=await request('/admin/feedback');result.innerHTML='<h2>Fehlermeldungen</h2>'+(d.items||[]).map(x=>`<div class="admin-report"><strong>${esc(x.title)}</strong><small>${esc(x.createdAt)} · ${esc(x.status)}</small><p>${esc(x.message)}</p><button class="btn" data-complete="${esc(x.id)}">Erledigt</button></div>`).join('');
+            result.querySelectorAll('[data-complete]').forEach(b=>b.onclick=async()=>{try{await request('/admin/feedback/'+encodeURIComponent(b.dataset.complete),{method:'PATCH',body:JSON.stringify({status:'erledigt'})});b.disabled=true;b.textContent='Abgeschlossen'}catch(e){failure(e)}});
+          }else if(action==='review'){
+            const d=await request('/admin/review'),today=new Date().toISOString().slice(0,10);
+            result.innerHTML='<h2>Fachliche Prüffristen</h2>'+(d.items||[]).filter(x=>!x.reviewDue||x.reviewDue<=today).map(x=>`<div class="admin-report"><strong>${esc(x.title)}</strong><small>${esc(x.type)} · Fällig: ${esc(x.reviewDue||'Nicht festgelegt')} · ${esc(x.reviewOwner||'Keine Zuständigkeit')}</small></div>`).join('')||'<p>Keine fälligen Prüffristen.</p>';
+          }
+        }catch(e){failure(e)}
+      });
+    }
     // ------------------------------------------------------------------------
     // Anwendungsstart und Routing
     // ------------------------------------------------------------------------
@@ -3514,8 +3566,10 @@
             await materialHub();
         else if (page === 'meetings')
             await meetingsPage();
+        else if (page === 'admin')
+            await administrationPage();
         else if (page === 'editor')
-            await editor();
+            location.replace('administration.html');
         cleanupDuplicatePageHeading();
     }
     window.addEventListener('DOMContentLoaded', init);
