@@ -2348,7 +2348,7 @@
             $('.change-detail')?.insertAdjacentHTML('beforeend', relatedHtml(x, catalog));
             return;
         }
-        $('[data-main]').innerHTML = `<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list ost-tonal-list">${d.map(x => `<a class="row-card" data-ost574-id="${esc(x.id)}" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">${ostIcon('changes')}</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`;
+        $('[data-main]').innerHTML = `<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list ost-tonal-list">${d.map(x => `<a class="row-card ost590-change-card" data-ost574-id="${esc(x.id)}" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon ost590-change-icon">${ostIcon('changes')}</span><span class="ost590-change-label"><strong>${esc(x.title)}</strong></span><span class="arrow ost590-change-arrow">›</span></a>`).join('')}</div>`;
     }
     async function guidePage() {
         const d = await get('guide');

@@ -539,3 +539,41 @@ body .cf548-home .ost577-switch-host .ost576-edit-switch{
   color:#16465f!important;background:#fff!important;border:1px solid #b9cedc!important;
   border-radius:9px!important;opacity:1!important;visibility:visible!important;
 }
+
+/* Update 590: Lehrmeinung – Titel neben dem Symbol, nicht in schmaler Spalte */
+body.app-shell .ost-tonal-list,
+body .ost-tonal-list {width:100%; min-width:0;}
+body.app-shell .ost-tonal-list a.row-card.ost590-change-card,
+body .ost-tonal-list a.row-card.ost590-change-card{
+  display:flex!important; flex-direction:row!important; flex-wrap:nowrap!important;
+  align-items:center!important; justify-content:flex-start!important;
+  gap:14px!important; width:100%!important; min-width:0!important;
+  box-sizing:border-box!important; height:auto!important; min-height:72px!important;
+  padding:14px 18px!important; text-align:left!important;
+}
+body.app-shell .ost-tonal-list a.ost590-change-card > .ost590-change-icon,
+body .ost-tonal-list a.ost590-change-card > .ost590-change-icon {
+  position:static!important; order:0!important; display:flex!important;
+  flex:0 0 42px!important; width:42px!important; min-width:42px!important;
+  height:42px!important; align-items:center!important; justify-content:center!important;
+  margin:0!important; float:none!important;
+}
+body.app-shell .ost-tonal-list a.ost590-change-card > .ost590-change-label,
+body .ost-tonal-list a.ost590-change-card > .ost590-change-label{
+  position:static!important; order:1!important; display:block!important;
+  flex:1 1 0%!important; min-width:0!important; max-width:none!important;
+  width:auto!important; margin:0!important; padding:0!important;
+  white-space:normal!important; overflow-wrap:break-word!important; word-break:normal!important;
+}
+body.app-shell .ost-tonal-list a.ost590-change-card > .ost590-change-label strong,
+body .ost-tonal-list a.ost590-change-card > .ost590-change-label strong {
+  display:block!important; width:auto!important; max-width:100%!important;
+  white-space:normal!important; overflow-wrap:break-word!important;
+  word-break:normal!important; hyphens:none!important; line-height:1.45!important;
+  font-size:1rem!important; margin:0!important;
+}
+body.app-shell .ost-tonal-list a.ost590-change-card > .ost590-change-arrow,
+body .ost-tonal-list a.ost590-change-card > .ost590-change-arrow{
+  position:static!important; order:2!important; flex:0 0 18px!important;
+  width:18px!important; margin:0 0 0 auto!important; text-align:right!important;
+}
