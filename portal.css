@@ -452,3 +452,16 @@ body:not(.ost576-edit-enabled) .ost584-schema-pencil{display:none!important}
 @media(max-width:600px){.ost584-schema-row{grid-template-columns:65px minmax(0,1fr)}.ost584-schema-row button{grid-column:2}}
 
 .cf-section-title{display:flex;align-items:center;gap:10px}.cf-section-title>a{margin-left:auto}.cf-section-title .ost583-home-add{margin-left:0}
+
+/* OST585 layout follow-up */
+.ost575-link-editor .ost575-edit-actions{display:flex!important;flex-direction:row!important;flex-wrap:wrap;align-items:center;gap:8px}
+.ost575-link-editor .ost575-edit-actions .btn{margin:0!important}
+.ost585-more{display:block;margin:18px auto;max-width:100%}
+body:not(.ost576-edit-enabled) button.ost583-home-pencil, body:not(.ost576-edit-enabled) button.ost583-home-add{display:none!important;visibility:hidden!important}
+.ost585-event-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ost585-attendance{text-decoration:none;font-size:.87rem}
+.ost585-schema-editing>.cf553-schema-panel,.ost585-schema-editing>.cf553-schema-steps,.ost585-schema-editing>.cf553-schema-list{display:none!important}
+.ost584-schema-edit{width:100%;max-width:100%;box-sizing:border-box}
+.ost584-schema-edit .ost584-schema-row{display:grid;grid-template-columns:minmax(80px,120px) minmax(0,1fr) auto;gap:12px;align-items:end}
+.ost584-schema-edit input,.ost584-schema-edit textarea{min-width:0}
+@media(max-width:620px){.ost584-schema-edit .ost584-schema-row{grid-template-columns:minmax(0,1fr)}.ost585-attendance{width:100%;text-align:center}}
