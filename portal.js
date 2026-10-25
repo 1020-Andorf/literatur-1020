@@ -94,6 +94,8 @@
                     return;
                 }
                 if (page === 'topics') {
+                    if(params.has('eintrag')){params.delete('eintrag');location.href='themen-uebersicht.html?'+params.toString();return;}
+                    if(params.has('thema')){location.href='themen-uebersicht.html';return;}
                     location.href = 'index.html';
                     return;
                 }
@@ -476,7 +478,7 @@
         const [news, events, lit] = await Promise.all([get('news'), get('events'), articles()]);
         const today = new Date().toISOString().slice(0, 10), active = visibleNews(news).slice(0, 3);
         const upcoming = (events || []).filter(x => x.date >= today).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).slice(0, 2);
-        const picks = (Array.isArray(lit) ? lit : []).filter(x => x.featured === true || x.featured === 'true').sort((a, b) => Number(a.featureRank || 99) - Number(b.featureRank || 99) || String(b.added || '').localeCompare(String(a.added || ''))).slice(0, 2);
+        const picks = (Array.isArray(lit) ? lit : []).filter(x => (x.featured === true || x.featured === 'true') && (!Date.parse(x.activeSince || x.added || '') || Date.now()-Date.parse(x.activeSince || x.added) < 30*86400000)).sort((a, b) => Number(a.featureRank || 99) - Number(b.featureRank || 99) || String(b.added || '').localeCompare(String(a.added || ''))).slice(0, 2);
         const destinations = [
             ['topics', 'Leitsymptome', 'themen-uebersicht.html', 'anatomy'],
             ['training', 'Training', 'training.html', 'training'],
@@ -488,7 +490,7 @@
         const external = a => { const u = String(a.freeUrl || a.publisherUrl || ''); return /^https?:\/\//i.test(u) ? u : ''; };
         $('[data-main]').innerHTML = `<div class="cf-home cf548-home"><header class="cf548-welcome"><h1>Wissenssammlung <span>OST 1020</span></h1></header>
  <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
- <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
+ <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button></div>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
  <section class="cf-section cf548-menu"><div class="cf-section-title"><h2>Menü</h2></div><nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass, title, href, ico]) => `<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong></a>`).join('')}</nav></section>
  <section class="cf-section cf548-reading" data-reading-section><div class="cf-section-title"><h2>Lesetipps</h2><a href="literatur.html">Literatur-Archiv →</a></div><div class="cf548-reading-list">${picks.length ? picks.map(a => { const link = external(a); return `<a class="cf548-reading-item" href="${link ? esc(link) : 'literatur.html'}" ${link ? 'target="_blank" rel="noopener noreferrer"' : ''}><span class="cf548-reading-icon">${ostIcon('book')}</span><span><strong>${esc(a.title)}</strong>${a.why ? `<small>${esc(String(a.why).replace(/[*#\[\]]/g, '').slice(0, 110))}</small>` : ''}</span><b>↗</b></a>`; }).join('') : '<p class="cf-muted">Lesetipps lassen sich in der Redaktion unter Literatur & Lesetipps auswählen.</p>'}</div></section>
  <section class="cf-section cf548-dates" data-events-section><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div><div class="cf-simple-list">${upcoming.map(e => `<a href="termine.html"><span>${esc(e.title)}</span><small>${esc(e.date || '')}</small></a>`).join('') || '<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
@@ -1158,18 +1160,44 @@
       algorithms:{title:'Neue Leitlinie',category:'Leitlinie',steps:[],materials:{background:[],checklists:[]},sourceUrl:'',source:''},
       skills:{name:'Neue Skillgruppe',skills:[]}
     };
+    // Update 576: zentrale Bearbeitungsfreigabe und eigene Neuanlage-Maske.
+    const ost576IsEditing=()=>sessionStorage.getItem('ost1020-edit-unlocked')==='1';
+    function ost576SyncEdit(){document.body.classList.toggle('ost576-edit-enabled',ost576IsEditing());}
+    async function ost576ToggleEdit(){
+      if(ost576IsEditing()){
+        sessionStorage.removeItem('ost1020-edit-unlocked');sessionStorage.removeItem('ost1020-editor-pin');ost576SyncEdit();return;
+      }
+      if(await ost574Pin()){sessionStorage.setItem('ost1020-edit-unlocked','1');ost576SyncEdit();}
+    }
+    function ost576InstallSwitch(){
+      if(document.querySelector('[data-ost576-edit-switch]'))return;
+      const target=document.querySelector('.topbar-inner')||document.querySelector('.topbar')||document.body;
+      const button=document.createElement('button');button.type='button';button.dataset.ost576EditSwitch='';button.className='ost576-edit-switch';
+      const paint=()=>{button.textContent=ost576IsEditing()?'🔒 Bearbeitung sperren':'✎ Bearbeitung freigeben';button.setAttribute('aria-pressed',String(ost576IsEditing()));};
+      button.onclick=async()=>{await ost576ToggleEdit();paint();};target.appendChild(button);paint();ost576SyncEdit();
+    }
+    setTimeout(ost576InstallSwitch,0);
+    function ost576Modal(title,fields,onSave){
+      document.querySelector('.ost576-modal-backdrop')?.remove();
+      const backdrop=document.createElement('div');backdrop.className='ost576-modal-backdrop';
+      backdrop.innerHTML=`<section class="ost576-modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><header><h2>${esc(title)}</h2><button class="ost576-close" type="button" aria-label="Schließen">×</button></header><form class="ost576-form">${fields.map(f=>`<label>${esc(f.label||f.key)}${f.type==='textarea'?`<textarea name="${esc(f.key)}" rows="4">${esc(f.value||'')}</textarea>`:`<input name="${esc(f.key)}" type="${f.type||'text'}" value="${esc(f.value??'')}" ${f.required?'required':''}>`}</label>`).join('')}<div class="ost576-form-actions"><button class="btn primary" type="submit">Speichern</button><button class="btn" type="button" data-cancel>Abbrechen</button><span role="status" data-status></span></div></form></section>`;
+      document.body.appendChild(backdrop);const close=()=>backdrop.remove();
+      backdrop.querySelector('.ost576-close').onclick=close;backdrop.querySelector('[data-cancel]').onclick=close;
+      backdrop.addEventListener('click',e=>{if(e.target===backdrop)close();});
+      backdrop.querySelector('form').onsubmit=async e=>{e.preventDefault();const status=backdrop.querySelector('[data-status]');status.textContent='Speichere …';const vals=Object.fromEntries(new FormData(e.currentTarget).entries());try{if(await onSave(vals))close();else status.textContent='Speichern fehlgeschlagen.';}catch(err){status.textContent=err.message||'Speichern fehlgeschlagen.';}};
+      backdrop.querySelector('input,textarea')?.focus();return backdrop;
+    }
     async function ost575Create(store,overrides={}){
       if(!await ost574Pin())return;
-      const latest=await get(store);if(!Array.isArray(latest)){alert('Speicher nicht verfügbar.');return;}
       const item={...ost575Defaults[store],...overrides,id:'inline-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6)};
-      const name=prompt('Titel des neuen Eintrags:',item.title||item.name||'Neuer Eintrag');if(name===null)return;item[item.title!==undefined?'title':'name']=name.trim()||item.title||item.name;
-      if(await save(store,[...latest,item]))location.reload();else alert('Speichern fehlgeschlagen.');
+      const map={news:['title','date','category','text'],events:['title','date','time','location','category','capacity','description'],changes:['title','date','category','old','new','source'],meetings:['title','date','category','speaker','summary'],articles:['title','authors','journal','year','why','freeUrl'],differential:['title','group','theory'],knowledgeModules:['title','summary','documentUrl'],algorithms:['title','sourceUrl','source'],skills:['name']};
+      const keys=map[store]||['title'];const fields=keys.map(k=>({key:k,label:({title:'Titel',name:'Skillgruppe',date:'Datum',time:'Uhrzeit',location:'Ort',category:'Kategorie',capacity:'Teilnehmerlimit',description:'Beschreibung',summary:'Untertitel',documentUrl:'PDF-/Web-Link',sourceUrl:'PDF-/Web-Link',old:'Bisherige Lehrmeinung',new:'Neue Lehrmeinung',text:'Meldung',why:'Beschreibung',theory:'Überblick'})[k]||k,value:item[k]??'',type:k==='date'?'date':k==='capacity'?'number':['description','summary','text','old','new','why','theory'].includes(k)?'textarea':'text',required:k==='title'||k==='name'}));
+      ost576Modal('Neuen Eintrag erstellen',fields,async values=>{const data=await get(store);if(!Array.isArray(data))return false;Object.assign(item,values);if('capacity' in item)item.capacity=Number(item.capacity)||10;const ok=await save(store,[...data,item]);if(ok)location.reload();return ok;});
     }
     function ost575AddButton(root,store,overrides={}){
       if(!root || root.querySelector('[data-ost575-add]'))return;
-      const head=root.querySelector('h1,h2')||root;
-      const b=document.createElement('button');b.type='button';b.className='ost575-add';b.dataset.ost575Add='';b.textContent='＋ Neuer Eintrag';b.title='PIN-geschützt hinzufügen';
-      head.insertAdjacentElement('afterend',b);b.onclick=()=>ost575Create(store,overrides);
+      const b=document.createElement('button');b.type='button';b.className='ost575-add';b.dataset.ost575Add='';b.textContent='＋ Neuer Eintrag';b.title='Neuen Eintrag anlegen';
+      root.appendChild(b);b.onclick=()=>ost575Create(store,overrides);
     }
     let ost574Decorating=false;
     function ost574MatchesTitle(rec, title){return String(rec?.title || rec?.name || '').trim() === title.trim();}
@@ -1314,7 +1342,7 @@
                 const warning = arr(v.redflags);
                 const questions = arr(v.questions);
                 const causes = arr(v.causes).map(c => typeof c === 'string' ? { name: c } : c);
-                const pencil = (part, index = '') => `<button type="button" class="ost571-pencil" data-ost571-part="${part}" data-ost571-index="${index}" aria-label="Abschnitt bearbeiten (PIN erforderlich)" title="Abschnitt bearbeiten">✎ <span>Bearbeiten</span></button>`;
+                const pencil = (part, index = '') => `<button type="button" class="ost571-pencil" data-ost571-part="${part}" data-ost571-index="${index}" aria-label="Abschnitt bearbeiten (PIN erforderlich)" title="Abschnitt bearbeiten">✎</button>`;
                 const sectionTones = v.sectionTones || {};
                 const panelTone = (key, fallback) => `ost568-panel ost568-${sectionTones[key] || fallback}`;
                 const redFlagsHtml = v.redflagsHtml ? ost570CleanHtml(v.redflagsHtml) : (warning.length ? `<ul>${warning.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Keine Warnzeichen hinterlegt.</p>');
@@ -1362,7 +1390,7 @@
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
             categoryBar.innerHTML=found.map((x,i)=>`<a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
-            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1 class="ost570-title-text">${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎ <span>Bearbeiten</span></button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
+            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1 class="ost570-title-text">${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
             $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
             $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index || 0))));
         }
@@ -1386,7 +1414,7 @@
                 const original=h1.textContent;
                 const wrap=document.createElement('span');
                 wrap.className='ost573-title-inline';
-                wrap.innerHTML=`<input type="text" maxlength="180" value="${esc(current.title || '')}" data-ost573-title-inline><button type="button" class="btn primary small" data-ost573-title-save>Speichern</button><button type="button" class="btn small" data-ost573-title-cancel>Abbrechen</button><span class="ost573-inline-status" data-ost573-title-status></span>`;
+                wrap.innerHTML=`<input type="text" maxlength="180" value="${esc(current.title || '')}" data-ost573-title-inline><span class="ost576-title-actions"><button type="button" class="btn primary small" data-ost573-title-save>Speichern</button><button type="button" class="btn small" data-ost573-title-cancel>Abbrechen</button><span class="ost573-inline-status" data-ost573-title-status></span></span>`;
                 h1.replaceChildren(wrap);
                 const inputEl=$('[data-ost573-title-inline]',h1); inputEl.focus(); inputEl.select();
                 $('[data-ost573-title-cancel]',h1).onclick=()=>{h1.textContent=original;};
@@ -1462,7 +1490,7 @@
                 return;
             }
         }
-        ost575AddButton(area,'differential',{title:'Neues Leitsymptom',group:organ.groups[0]||'Weitere',questions:[],redflags:[],causes:[]});
+        if(params.has('thema') && !params.has('eintrag'))ost575AddButton(area,'differential',{title:'Neues Leitsymptom',group:organ.groups[0]||'Weitere',questions:[],redflags:[],causes:[]});
         input.addEventListener('input',draw);
         draw();
     }
@@ -1510,9 +1538,10 @@
       let links=store==='algorithms'?[...(item.materials?.background||[]),...(item.materials?.checklists||[])].map(x=>({...x})):(item.links||[]).map(x=>({...x}));
       if(!links.length && (item.documentUrl||item.sourceUrl))links=[{title:item.title||'PDF / Link',url:item.documentUrl||item.sourceUrl,note:item.summary||item.source||''}];
       const render=()=>{
-        panel.innerHTML=`<h3>✎ Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(item.title||'')}"></label><div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div>`).join('')}</div><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><div class="ost575-edit-actions"><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><span data-link-status role="status"></span></div>`;
+        panel.innerHTML=`<h3>✎ Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(item.title||'')}"></label><div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><div class="ost575-edit-actions"><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><span data-link-status role="status"></span></div>`;
         const collect=()=>{panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>links[i][key]=row.querySelector(`[data-link-field="${key}"]`).value.trim());});};
         panel.querySelectorAll('[data-link-remove]').forEach(b=>b.onclick=()=>{collect();links.splice(Number(b.dataset.linkRemove),1);render();});
+        panel.querySelectorAll('[data-link-up],[data-link-down]').forEach(b=>b.onclick=()=>{collect();const i=Number(b.dataset.linkUp??b.dataset.linkDown);const j=i+(b.hasAttribute('data-link-up')?-1:1);if(j<0||j>=links.length)return;[links[i],links[j]]=[links[j],links[i]];render();});
         panel.querySelector('[data-link-add]').onclick=()=>{collect();links.push({title:'Neues Dokument',url:'',note:''});render();};
         panel.querySelector('[data-link-cancel]').onclick=()=>{panel.remove();card.classList.remove('ost575-edit-links');};
         panel.querySelector('[data-link-save]').onclick=async()=>{
@@ -1541,7 +1570,7 @@
         function render() {
             $$('[data-training-tab]', main).forEach(b => b.classList.toggle('selected', b.dataset.trainingTab === selected));
             if (selected === 'skills') {
-                out.innerHTML = `<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g, i) => `<details class="cf547-training-group"><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div><button type="button" class="ost571-pencil ost575-skill-pencil" data-ost575-skillgroup="${i}">✎ Skillgruppe bearbeiten</button>${arr(g.skills).map((sk, j) => `<button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button>`).join('')}</div></details>`).join('')}</div>`;
+                out.innerHTML = `<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g, i) => `<details class="cf547-training-group"><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div><button type="button" class="ost571-pencil ost575-skill-pencil" data-ost575-skillgroup="${i}">✎</button>${arr(g.skills).map((sk, j) => `<div class="ost576-skill-row"><button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button><button type="button" class="ost576-skill-pencil" data-ost576-skill data-g="${i}" data-s="${j}" aria-label="Skill bearbeiten">✎</button></div>`).join('')}</div></details>`).join('')}</div>`;
             }
             else {
                 const type = selected === 'devices' ? 'mpg' : 'checklists';
@@ -1550,11 +1579,11 @@
                 out.innerHTML = `<h2>${selected === 'devices' ? 'Geräte' : 'Übungschecklisten'}</h2><div class="cf563-inline-list">${items.map(x => {
                     const url = safeDocument(x.documentUrl);
                     const detail = [x.summary ? `<p class="cf563-summary">${esc(x.summary)}</p>` : '', x.body ? `<div class="cf563-rich">${renderModuleText(x.body)}</div>` : '', url ? `<a class="cf563-resource" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Dokument / PDF öffnen ↗</a>` : ''].filter(Boolean).join('');
-                    return `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body"><button type="button" class="ost571-pencil ost573-card-pencil" data-ost573-training="${esc(x.id)}" aria-label="Eintrag direkt bearbeiten">✎ Bearbeiten</button>${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
+                    return `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body"><button type="button" class="ost571-pencil ost573-card-pencil" data-ost573-training="${esc(x.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
                 }).join('') || '<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
             }
         }
-        main.addEventListener('click', e => {
+        main.addEventListener('click', async e => {
             const tab = e.target.closest('[data-training-tab]');
             if (tab) {
                 selected = tab.dataset.trainingTab;
@@ -1565,6 +1594,12 @@
             }
             const pencil=e.target.closest('[data-ost573-training]');
             if(pencil){e.preventDefault();e.stopPropagation();if(selected==='checklists')ost575LinksEditor(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training);else ost573EditCard(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training,'body',render);return;}
+            const single=e.target.closest('[data-ost576-skill]');
+            if(single){e.preventDefault();e.stopPropagation();const gi=Number(single.dataset.g),si=Number(single.dataset.s),sk=skillsList[gi]?.skills?.[si];if(!sk)return;
+              if(!await ost574Pin())return;
+              const fields=[{key:'name',label:'Skillname',value:sk.name,required:true},...arr(sk.sections).flatMap((sec,j)=>[{key:'title'+j,label:'Abschnitt '+(j+1),value:sec.title},{key:'items'+j,label:'Aufzählungspunkte (eine pro Zeile)',type:'textarea',value:arr(sec.items).join('\n')}])];
+              ost576Modal('Skill bearbeiten',fields,async values=>{const latest=await get('skills');if(!latest[gi]?.skills?.[si])return false;latest[gi].skills[si].name=values.name.trim();arr(latest[gi].skills[si].sections).forEach((sec,j)=>{sec.title=values['title'+j];sec.items=values['items'+j].split('\n').map(x=>x.trim()).filter(Boolean);});const ok=await save('skills',latest);if(ok)location.reload();return ok;});return;
+            }
             const groupEdit=e.target.closest('[data-ost575-skillgroup]');
             if(groupEdit){e.preventDefault();e.stopPropagation();ost574EditSkillGroup(groupEdit.closest('details'),skillsList[Number(groupEdit.dataset.ost575Skillgroup)]);return;}
             const skill = e.target.closest('[data-training-skill]');
@@ -1637,7 +1672,7 @@
             const list = active === 'guidelines' ? guidelines : active === 'checklists' ? checklists : active === 'mnemonics' ? mnemonics : literature;
             const iconName = categories.find(c => c[0] === active)[2];
             const items = list.map(a => {
-                const editing=active==='literature'?'':`<button class="ost571-pencil ost573-card-pencil" type="button" data-ost573-material="${esc(a.id)}" aria-label="Eintrag direkt bearbeiten">✎ Bearbeiten</button>`;
+                const editing=active==='literature'?'':`<button class="ost571-pencil ost573-card-pencil" type="button" data-ost573-material="${esc(a.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>`;
                 if (active === 'guidelines') return card(a.title, iconName, editing+guidelinePanel(a));
                 if (active === 'mnemonics') return card(a.title, iconName, editing+schemaPanel(a));
                 if (active === 'checklists') {
