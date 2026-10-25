@@ -1204,7 +1204,7 @@
       button.setAttribute('aria-pressed',String(ost576IsEditing()));
       ost576SyncEdit();
     }
-    setTimeout(ost576InstallSwitch,200);
+
     function ost576Modal(title,fields,onSave){
       document.querySelector('.ost576-modal-backdrop')?.remove();
       const backdrop=document.createElement('div');backdrop.className='ost576-modal-backdrop';
@@ -1212,7 +1212,7 @@
       document.body.appendChild(backdrop);const close=()=>backdrop.remove();
       backdrop.querySelector('.ost576-close').onclick=close;backdrop.querySelector('[data-cancel]').onclick=close;
       backdrop.addEventListener('click',e=>{if(e.target===backdrop)close();});
-      backdrop.querySelector('form').onsubmit=async e=>{e.preventDefault();const status=backdrop.querySelector('[data-status]');status.textContent='Speichere …';const vals=Object.fromEntries(new FormData(e.currentTarget).entries());try{if(await onSave(vals))close();else status.textContent='Speichern fehlgeschlagen.';}catch(err){status.textContent=err.message||'Speichern fehlgeschlagen.';}};
+      backdrop.querySelector('form').onsubmit=async e=>{e.preventDefault();const form=e.currentTarget,submit=form.querySelector('[type=submit]'),status=backdrop.querySelector('[data-status]');submit.disabled=true;status.textContent='Speichere …';const vals=Object.fromEntries(new FormData(form).entries());try{if(await onSave(vals))close();else status.textContent='Speichern fehlgeschlagen. Bitte Verbindung und PIN prüfen.';}catch(err){status.textContent=err.message||'Speichern fehlgeschlagen.';}finally{if(submit.isConnected)submit.disabled=false;}};
       backdrop.querySelector('input,textarea')?.focus();return backdrop;
     }
     async function ost575Create(store,overrides={}){
@@ -1263,6 +1263,9 @@
       // Redundante alte Beschreibung während der Bearbeitung ausblenden, Titel bleibt sichtbar.
       originalSnapshot.forEach(([el])=>{if(el!==mainTitle && !el.contains(mainTitle) && !el.classList.contains('ost574-tools'))el.hidden=true;});
       const reset=()=>{mainTitle.contentEditable='false';mainTitle.classList.remove('ost574-title-live');mainTitle.innerHTML=originalTitle;originalSnapshot.forEach(([el,hidden])=>{el.hidden=hidden;});widget.remove();delete entry.dataset.ost574Editing;};
+      const removeButton=document.createElement('button');removeButton.type='button';removeButton.className='btn ost582-delete';removeButton.textContent='Eintrag löschen';removeButton.setAttribute('aria-label','Diesen Eintrag endgültig löschen');
+      widget.querySelector('.ost570-actions').prepend(removeButton);
+      removeButton.onclick=async()=>{if(!confirm('Eintrag „'+(record.title||record.name||'')+'“ endgültig löschen?'))return;const status=widget.querySelector('[data-ost574-status]');status.textContent='Lösche …';const latest=await get(store);const filtered=latest.filter(x=>String(x.id)!==String(record.id));if(filtered.length===latest.length){status.textContent='Eintrag nicht gefunden.';return;}removeButton.disabled=true;if(await save(store,filtered))location.reload();else{removeButton.disabled=false;status.textContent='Löschen fehlgeschlagen.';}};
       widget.querySelector('[data-ost574-cancel]').onclick=reset;
       widget.querySelector('[data-ost574-save]').onclick=async()=>{
         const status=widget.querySelector('[data-ost574-status]');status.textContent='Speichere …';
@@ -1378,7 +1381,7 @@
                 body = `<section class="${panelTone('theory','info')}" id="ueberblick"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).theory || 'Überblick')}</h3>${pencil('theory')}</div><div class="ost571-edit-region ost-module-body">${ost570CleanHtml(v.theory || '<p>Noch kein Überblick hinterlegt.</p>')}</div></section>`
                   + `<section class="${panelTone('redflags','danger')}" id="red-flags"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).redflags || '⚠ Red Flags · Warnzeichen')}</h3>${pencil('redflags')}</div><div class="ost571-edit-region">${redFlagsHtml}</div></section>`
                   + `<section class="${panelTone('questions','blue')}" id="anamnese"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).questions || 'Wichtige Fragen / Anamnese')}</h3>${pencil('questions')}</div><div class="ost571-edit-region">${questionHtml}</div></section>`
-                  + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${[['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</div></details>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
+                  + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${c.articleHtml ? `<div class="ost581-disease-unified">${ost570CleanHtml(c.articleHtml)}</div>` : [['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</div></details>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
                 body += `<section class="ost570-rich ${panelTone('richContent','amber')}" id="artikel-ergaenzungen"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).richContent || 'Merksätze & weitere Fachinformationen')}</h3>${pencil('richContent')}</div><div class="ost571-edit-region">${ost570CleanHtml(v.richContent || '<p>Noch keine Merksätze hinterlegt.</p>')}</div></section>`;
                 const sourceLinks = causes.filter(c => href(c.sourceUrl));
                 { const legacy = sourceLinks.length ? `<ul>${sourceLinks.map(c => `<li><a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.sourceLabel || c.name || 'Fachquelle')}</a></li>`).join('')}</ul>` : '<p>Noch keine Quellen hinterlegt.</p>'; body += `<section class="ost568-panel ost568-plain" id="quellen"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).sources || 'Quellen und weiterführende Informationen')}</h3>${pencil('sources')}</div><div class="ost571-edit-region">${v.sourcesHtml ? ost570CleanHtml(v.sourcesHtml) : legacy}</div></section>`; }
@@ -1501,8 +1504,9 @@
                 const source=typeof (current.causes||[])[causeIndex]==='string' ? {name:current.causes[causeIndex]} : {...((current.causes||[])[causeIndex]||{})};
                 header.contentEditable='true';header.classList.add('ost575-heading-edit');
                 const fields=[['symptoms','Symptome'],['info','Einordnung'],['physiology','Pathophysiologie'],['findings','Befunde'],['medications','Pharmakologie'],['cave','CAVE / Warnzeichen']];
-                body.innerHTML=`<div class="ost575-disease-form">${fields.map(([key,label])=>`<div class="ost575-disease-editfield"><label>${label}</label>${ost573Toolbar()}<div contenteditable="true" class="ost575-disease-rich ost573-editable" data-cause-key="${key}"></div></div>`).join('')}<div class="ost575-edit-actions"><button class="btn primary" type="button" data-cause-save>Speichern</button><button class="btn" type="button" data-cause-cancel>Abbrechen</button><span data-cause-status role="status"></span></div></div>`;
-                fields.forEach(([key])=>{const rich=body.querySelector(`[data-cause-key="${key}"]`);rich.innerHTML=ost570CleanHtml(source[key]||'');ost573BindRich(rich.parentElement,rich);});
+                const initialHtml=source.articleHtml || fields.filter(([k])=>source[k]).map(([key,label])=>`<h3>${esc((source.sectionTitles||{})[key]||label)}</h3><div>${ost570CleanHtml(source[key])}</div>`).join('');
+                body.innerHTML=`<div class="ost575-disease-form"><p class="ost581-hint">Alle Unterüberschriften und Inhalte in einem Textfeld bearbeiten.</p>${ost573Toolbar()}<div class="ost573-editable ost581-disease-rich" contenteditable="true" data-cause-article></div><div class="ost575-edit-actions"><button class="btn primary" type="button" data-cause-save>Speichern</button><button class="btn" type="button" data-cause-cancel>Abbrechen</button><span data-cause-status role="status"></span></div></div>`;
+                const rich=body.querySelector('[data-cause-article]');rich.innerHTML=ost570CleanHtml(initialHtml);ost573BindRich(body,rich);
                 const reset=()=>{header.textContent=originalName;header.contentEditable='false';header.classList.remove('ost575-heading-edit');body.innerHTML=originalBody;};
                 body.querySelector('[data-cause-cancel]').onclick=reset;
                 body.querySelector('[data-cause-save]').onclick=async()=>{
@@ -1511,7 +1515,7 @@
                     if(i<0){status.textContent='Eintrag nicht gefunden.';return;}
                     const updated={...latest[i],causes:[...arr(latest[i].causes)]};
                     const cause={...source,name:header.textContent.trim()||originalName};
-                    fields.forEach(([key])=>cause[key]=ost570CleanHtml(body.querySelector(`[data-cause-key="${key}"]`).innerHTML));
+                    cause.articleHtml=ost570CleanHtml(rich.innerHTML);
                     updated.causes[causeIndex]=cause;
                     if(await save('differential',latest.map((item,n)=>n===i?updated:item))){Object.assign(current,updated);draw();}
                     else status.textContent='Speichern fehlgeschlagen.';
@@ -1543,7 +1547,7 @@
         card.classList.add('ost573-editing-card');
         let host=card.querySelector('.ost573-card-editor');
         if(!host){host=document.createElement('section');host.className='ost573-card-editor';card.querySelector('.cf563-entry-body')?.prepend(host);}
-        host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt / Beschreibung</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><label>PDF- oder Weblink<input type="url" data-ost575-document-url value="${esc(data[idx].documentUrl||data[idx].sourceUrl||'')}" placeholder="https://…"></label><label>Untertitel<input data-ost575-subtitle value="${esc(data[idx].summary||data[idx].source||'')}"></label><div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
+        host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt / Beschreibung</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><label>PDF- oder Weblink<input type="url" data-ost575-document-url value="${esc(data[idx].documentUrl||data[idx].sourceUrl||'')}" placeholder="https://…"></label>${data[idx].module==='mpg'?'':`<label>Untertitel<input data-ost575-subtitle value="${esc(data[idx].summary||data[idx].source||'')}"></label>`}<div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
         const rich=host.querySelector('[data-ost573-card-rich]');rich.innerHTML=ost570CleanHtml(data[idx][textField]||'');ost573BindRich(host,rich);
         host.querySelector('[data-ost573-card-cancel]').onclick=()=>{card.classList.remove('ost573-editing-card'); host.remove();};
         host.querySelector('[data-ost573-card-save]').onclick=async()=>{
@@ -1552,7 +1556,7 @@
             if(index<0){state.textContent='Datensatz nicht gefunden.';return;}
             latest[index]={...latest[index],title:host.querySelector('[data-ost573-card-title]').value.trim()||latest[index].title,[textField]:ost570CleanHtml(rich.innerHTML)};
             const url=host.querySelector('[data-ost575-document-url]').value.trim();if(url && !/^https?:\/\//i.test(url)){state.textContent='Nur HTTP(S)-Links erlaubt.';return;}
-            latest[index][store==='algorithms'?'sourceUrl':'documentUrl']=url;latest[index][store==='algorithms'?'source':'summary']=host.querySelector('[data-ost575-subtitle]').value.trim();
+            latest[index][store==='algorithms'?'sourceUrl':'documentUrl']=url;const subtitle=host.querySelector('[data-ost575-subtitle]');if(subtitle)latest[index][store==='algorithms'?'source':'summary']=subtitle.value.trim();
             if(await save(store,latest)){Object.assign(data[idx],latest[index]);location.reload();}else state.textContent='Speichern fehlgeschlagen.';
         };
     }
@@ -1567,8 +1571,17 @@
       let links=store==='algorithms'?[...(item.materials?.background||[]),...(item.materials?.checklists||[])].map(x=>({...x})):(item.links||[]).map(x=>({...x}));
       if(!links.length && (item.documentUrl||item.sourceUrl))links=[{title:item.title||'PDF / Link',url:item.documentUrl||item.sourceUrl,note:item.summary||item.source||''}];
       const render=()=>{
-        panel.innerHTML=`<h3>✎ Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(item.title||'')}"></label><div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><div class="ost575-edit-actions"><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><span data-link-status role="status"></span></div>`;
+        panel.innerHTML=`<h3>✎ Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(item.title||'')}"></label><div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><label class="ost581-upload-label">PDF hochladen<input type="file" data-link-upload="${i}" accept="application/pdf,.pdf"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><div class="ost575-edit-actions"><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><span data-link-status role="status"></span></div>`;
         const collect=()=>{panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>links[i][key]=row.querySelector(`[data-link-field="${key}"]`).value.trim());});};
+        panel.querySelectorAll('[data-link-upload]').forEach(input=>input.onchange=async()=>{
+          const file=input.files?.[0];if(!file)return;
+          const status=panel.querySelector('[data-link-status]');
+          if(file.type!=='application/pdf' && !file.name.toLowerCase().endsWith('.pdf')){status.textContent='Nur PDF-Dateien erlaubt.';return;}
+          if(file.size>19*1024*1024){status.textContent='PDF zu groß (maximal 19 MB).';return;}
+          collect();status.textContent='Lade PDF hoch …';input.disabled=true;
+          try{const url=await uploadMedia(file);if(!url)throw Error('Upload hat keine Adresse zurückgegeben');links[Number(input.dataset.linkUpload)].url=url;render();}
+          catch(err){status.textContent='Upload fehlgeschlagen: '+(err.message||'Verbindung prüfen');input.disabled=false;}
+        });
         panel.querySelectorAll('[data-link-remove]').forEach(b=>b.onclick=()=>{collect();links.splice(Number(b.dataset.linkRemove),1);render();});
         panel.querySelectorAll('[data-link-up],[data-link-down]').forEach(b=>b.onclick=()=>{collect();const i=Number(b.dataset.linkUp??b.dataset.linkDown);const j=i+(b.hasAttribute('data-link-up')?-1:1);if(j<0||j>=links.length)return;[links[i],links[j]]=[links[j],links[i]];render();});
         panel.querySelector('[data-link-add]').onclick=()=>{collect();links.push({title:'Neues Dokument',url:'',note:''});render();};
@@ -1598,7 +1611,7 @@
         const main = $('[data-main]');
         main.innerHTML = `<section class="cf547 cf547-training"><h1>Training</h1><nav class="cf547-tabs" aria-label="Trainingstyp">${nav.map(([id, label, ico]) => `<button data-training-tab="${id}" class="${selected === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-training-content></section></section>`;
         const out = $('[data-training-content]');
-        ost575AddButton(main,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
+        ost575AddButton(out,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
         function render() {
             $$('[data-training-tab]', main).forEach(b => b.classList.toggle('selected', b.dataset.trainingTab === selected));
             if (selected === 'skills') {
@@ -1619,7 +1632,7 @@
             const tab = e.target.closest('[data-training-tab]');
             if (tab) {
                 selected = tab.dataset.trainingTab;
-                main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(main,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
+                main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(out,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
                 history.replaceState(null, '', 'training.html?typ=' + selected);
                 render();
                 return;
@@ -1644,6 +1657,7 @@
             }
         });
         render();
+        ost575AddButton(out,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
     }
     // ------------------------------------------------------------------------
     // Materialien
