@@ -1447,7 +1447,7 @@
         const organMeta=id=>(Array.isArray(siteData)?siteData:[]).find(x=>x.id===id)||{};
         const originalOrder=new Map(CF_TOPICS.map((t,i)=>[t.id,i]));
         CF_TOPICS.sort((a,b)=>(organMeta(a.id).order===undefined?originalOrder.get(a.id)+100:Number(organMeta(a.id).order))-(organMeta(b.id).order===undefined?originalOrder.get(b.id)+100:Number(organMeta(b.id).order)));
-        
+
         const km = (Array.isArray(modules) ? modules : []).filter(x => x.status !== 'draft');
         const area = $('[data-main]');
         let organ = CF_TOPICS.find(t => t.id === params.get('thema')) || CF_TOPICS[0];
