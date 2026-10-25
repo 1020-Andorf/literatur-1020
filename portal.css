@@ -321,3 +321,21 @@ body.app-shell .cf548-home .ost577-switch-host{display:flex!important;justify-co
 @media(max-width:700px){body.app-shell .cf548-home .cf-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
 @media(max-width:410px){body.app-shell .cf548-home .cf-home-grid{grid-template-columns:minmax(0,1fr)!important}}
 #quellen .ost573-editable{min-height:100px}
+
+/* 579 — stable homepage and always expanded document collections */
+body.app-shell .cf548-home .cf548-dates {display:block; width:100%; min-width:0; clear:both}
+body.app-shell .cf548-home .cf-home-grid {grid-template-columns:repeat(3,minmax(0,1fr))!important}
+body.app-shell .cf548-home .ost577-switch-host {display:flex!important; justify-content:center!important; width:100%!important}
+@media(max-width:700px){body.app-shell .cf548-home .cf-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:410px){body.app-shell .cf548-home .cf-home-grid{grid-template-columns:1fr!important}}
+.cf563-entry.ost579-document-card {position:relative; overflow:visible}
+.cf563-entry.ost579-document-card summary {cursor:default; padding-right:52px; pointer-events:none}
+.cf563-entry.ost579-document-card summary .cf563-chevron {display:none!important}
+.cf563-entry.ost579-document-card .cf563-entry-body {display:block!important; position:relative; padding-right:50px}
+.cf563-entry.ost579-document-card .ost573-card-pencil {position:absolute;right:10px;top:8px;z-index:4;padding:7px 10px}
+.ost579-doc-link {display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;border:1px solid #d8e4eb;border-radius:9px;padding:10px 12px;margin:8px 0;text-decoration:none;background:#fff;color:#183e58}
+.ost579-doc-link strong {grid-column:1;font-size:.92rem}
+.ost579-doc-link small {grid-column:1;color:#547184;font-size:.82rem;line-height:1.45}
+.ost579-doc-link span {grid-column:2;grid-row:1/3;align-self:center}
+.ost579-subtitle,.ost579-document-card .cf563-summary {display:block!important;line-height:1.5;margin:4px 0 8px;color:#4e6a7d}
+#quellen .ost571-edit-region {min-width:0}

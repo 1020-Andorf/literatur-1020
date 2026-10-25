@@ -476,7 +476,7 @@
     // ------------------------------------------------------------------------
     async function home() {
         const [news, events, lit] = await Promise.all([get('news'), get('events'), articles()]);
-        const today = new Date().toISOString().slice(0, 10), active = visibleNews(news).slice(0, 3);
+        const today = (()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');})(), active = visibleNews(news).slice(0, 3);
         const upcoming = (events || []).filter(x => x.date >= today).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).slice(0, 2);
         const picks = (Array.isArray(lit) ? lit : []).filter(x => (x.featured === true || x.featured === 'true') && (!Date.parse(x.activeSince || x.added || '') || Date.now()-Date.parse(x.activeSince || x.added) < 30*86400000)).sort((a, b) => Number(a.featureRank || 99) - Number(b.featureRank || 99) || String(b.added || '').localeCompare(String(a.added || ''))).slice(0, 2);
         const destinations = [
@@ -490,15 +490,14 @@
         const external = a => { const u = String(a.freeUrl || a.publisherUrl || ''); return /^https?:\/\//i.test(u) ? u : ''; };
         $('[data-main]').innerHTML = `<div class="cf-home cf548-home"><header class="cf548-welcome"><h1>Wissenssammlung <span>OST 1020</span></h1></header>
  <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
- <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('')} || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
+ <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}}</div></section>
  <section class="cf-section cf548-menu"><div class="cf-section-title"><h2>Menü</h2></div><nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass, title, href, ico]) => `<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong></a>`).join('')}</nav></section>
  <section class="cf-section cf548-reading" data-reading-section><div class="cf-section-title"><h2>Lesetipps</h2><a href="literatur.html">Literatur-Archiv →</a></div><div class="cf548-reading-list">${picks.length ? picks.map(a => { const link = external(a); return `<a class="cf548-reading-item" href="${link ? esc(link) : 'literatur.html'}" ${link ? 'target="_blank" rel="noopener noreferrer"' : ''}><span class="cf548-reading-icon">${ostIcon('book')}</span><span><strong>${esc(a.title)}</strong>${a.why ? `<small>${esc(String(a.why).replace(/[*#\[\]]/g, '').slice(0, 110))}</small>` : ''}</span><b>↗</b></a>`; }).join('') : '<p class="cf-muted">Lesetipps lassen sich in der Redaktion unter Literatur & Lesetipps auswählen.</p>'}</div></section>
  <section class="cf-section cf548-dates" data-events-section><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div><div class="cf-simple-list">${upcoming.map(e => `<a href="termine.html"><span>${esc(e.title)}</span><small>${esc(e.date || '')}</small></a>`).join('') || '<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
- <a class="cf-admin-entry cf550-admin-entry" href="editor.html" aria-label="Redaktion öffnen"><span class="cf550-admin-icon">${ostIcon('edit')}</span><span>Redaktion</span><span class="cf550-admin-arrow" aria-hidden="true">›</span></a></div>`;
+ <div class="ost577-switch-host" data-ost577-switch-host></div></div>`;
+        ost576InstallSwitch();
         if (!picks.length)
             $('[data-reading-section]')?.remove();
-        if (!upcoming.length)
-            $('[data-events-section]')?.remove();
         const q = $('[data-global-search]'), results = $('[data-search-results]');
         let cat = [];
         contentCatalog().then(data => { cat = data; if (q.value)
@@ -1572,6 +1571,9 @@
         };
       };render();
     }
+    function ost579Documents(links){
+      return (Array.isArray(links)?links:[]).filter(x=>x && /^https?:\/\//i.test(String(x.url||''))).map(x=>`<a class="ost579-doc-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer"><strong>${esc(x.title||'Dokument öffnen')}</strong>${x.note?`<small>${esc(x.note)}</small>`:''}<span aria-hidden="true">↗</span></a>`).join('');
+    }
     async function trainingPage() {
         const [groups, modules] = await Promise.all([get('skills'), get('knowledgeModules')]);
         const km = (Array.isArray(modules) ? modules : []).filter(x => x.status !== 'draft');
@@ -1595,8 +1597,8 @@
                 const safeDocument = value => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
                 out.innerHTML = `<h2>${selected === 'devices' ? 'Geräte' : 'Übungschecklisten'}</h2><div class="cf563-inline-list">${items.map(x => {
                     const url = safeDocument(x.documentUrl);
-                    const detail = [x.summary ? `<p class="cf563-summary">${esc(x.summary)}</p>` : '', x.body ? `<div class="cf563-rich">${renderModuleText(x.body)}</div>` : '', url ? `<a class="cf563-resource" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Dokument / PDF öffnen ↗</a>` : ''].filter(Boolean).join('');
-                    return `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body"><button type="button" class="ost571-pencil ost573-card-pencil" data-ost573-training="${esc(x.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
+                    const detail = [x.summary ? `<p class="cf563-summary ost579-subtitle">${esc(x.summary)}</p>` : '', x.body ? `<div class="cf563-rich">${renderModuleText(x.body)}</div>` : '', ost579Documents(x.links?.length ? x.links : (url ? [{url,title:'PDF / Dokument',note:x.summary||''}] : []))].filter(Boolean).join('');
+                    return `<details class="cf563-entry ${selected === 'checklists' ? 'ost579-document-card' : ''}" ${selected === 'checklists' ? 'open' : ''}><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body"><button type="button" class="ost571-pencil ost573-card-pencil" data-ost573-training="${esc(x.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
                 }).join('') || '<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
             }
         }
@@ -1652,7 +1654,7 @@
         ost575AddButton(main,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
         const safeLink = value => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
         const link = (url, label) => safeLink(url) ? `<a class="cf563-resource" href="${esc(safeLink(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>` : '';
-        const card = (title, iconName, content) => `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(iconName)}</span><strong>${esc(title || 'Ohne Titel')}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${content || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
+        const card = (title, iconName, content) => `<details class="cf563-entry ost579-document-card" open><summary><span class="cf563-entry-icon">${ostIcon(iconName)}</span><strong>${esc(title || 'Ohne Titel')}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${content || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
         const schemaItem = (text, i) => {
             const raw = String(text ?? '');
             const match = raw.match(/^\s*([A-ZÄÖÜ]{1,3})\s*[–—-]\s*(.*)$/s);
@@ -1678,7 +1680,7 @@
             const steps = arr(a.steps);
             const image = String(a.imageUrl || '');
             const imageHtml = /^(https?:\/\/|assets\/)/i.test(image) ? `<figure class="cf563-figure"><img loading="lazy" src="${esc(image)}" alt="${esc(a.imageCaption || a.title || 'Leitliniengrafik')}">${a.imageCaption ? `<figcaption>${esc(a.imageCaption)}</figcaption>` : ''}</figure>` : '';
-            return `${a.stand ? `<p class="cf563-summary"><strong>Stand:</strong> ${esc(a.stand)}</p>` : ''}${a.explanation ? `<div class="cf563-rich">${renderModuleText(a.explanation)}</div>` : ''}${steps.length ? `<section class="cf563-section"><h3>Ablauf / Schritte</h3><ol class="cf563-steps">${steps.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : ''}${imageHtml}${a.source ? `<p class="cf563-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${link(a.sourceUrl, 'Leitlinie / Quelle öffnen')}${attachments(a)}`;
+            return `${a.stand ? `<p class="cf563-summary"><strong>Stand:</strong> ${esc(a.stand)}</p>` : ''}${a.explanation ? `<div class="cf563-rich">${renderModuleText(a.explanation)}</div>` : ''}${steps.length ? `<section class="cf563-section"><h3>Ablauf / Schritte</h3><ol class="cf563-steps">${steps.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : ''}${imageHtml}${a.source ? `<p class="cf563-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${link(a.sourceUrl, 'Leitlinie / Quelle öffnen')}${attachments(a)}${ost579Documents(a.materials?.background||[])}`;
         };
         function render() {
             $$('[data-mat-tab]', main).forEach(button => {
@@ -1693,7 +1695,7 @@
                 if (active === 'guidelines') return card(a.title, iconName, editing+guidelinePanel(a));
                 if (active === 'mnemonics') return card(a.title, iconName, editing+schemaPanel(a));
                 if (active === 'checklists') {
-                    const content = `${a.summary ? `<p class="cf563-summary">${esc(a.summary)}</p>` : ''}${a.body ? `<div class="cf563-rich">${renderModuleText(a.body)}</div>` : ''}${link(a.documentUrl, 'Dokument / PDF öffnen')}`;
+                    const content = `${a.summary ? `<p class="cf563-summary">${esc(a.summary)}</p>` : ''}${a.body ? `<div class="cf563-rich">${renderModuleText(a.body)}</div>` : ''}${ost579Documents(a.links?.length ? a.links : (a.documentUrl ? [{url:a.documentUrl,title:'PDF / Dokument',note:a.summary||''}] : []))}`;
                     return card(a.title, iconName, editing+content);
                 }
                 const details = [a.authors, a.journal, a.year].filter(Boolean).map(x => esc(x)).join(' · ');
