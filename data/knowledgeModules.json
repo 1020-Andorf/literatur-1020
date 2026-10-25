@@ -1866,9 +1866,10 @@
     "module": "material-checklists",
     "status": "published",
     "body": "",
-    "summary": "Test\n",
+    "summary": "Test 1",
     "documentUrl": "",
-    "id": "inline-mvo5fzxy-3870"
+    "id": "inline-mvo5fzxy-3870",
+    "links": []
   },
   {
     "title": "Neue Checkliste",
