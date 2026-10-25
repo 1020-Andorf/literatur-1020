@@ -2,7 +2,7 @@
   {
     "id": "schema-xabcde",
     "icon": "🩺",
-    "title": "XABCDE – strukturierte Erstbeurteilung",
+    "title": "ABCDE – strukturierte Erstbeurteilung",
     "category": "Schema · Erstbeurteilung",
     "stand": "Lokale SOPs beachten",
     "source": "Prioritätenorientiertes Untersuchungsschema; X steht für unmittelbar lebensbedrohliche äußere Blutung.",
@@ -25,7 +25,8 @@
     "reviewOwner": "",
     "imageUrl": "",
     "imageCaption": "",
-    "related": []
+    "related": [],
+    "links": []
   },
   {
     "id": "schema-opqrst",
