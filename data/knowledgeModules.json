@@ -1859,5 +1859,14 @@
     "status": "published",
     "related": [],
     "image": ""
+  },
+  {
+    "title": "Neue Checkliste",
+    "module": "material-checklists",
+    "status": "published",
+    "body": "",
+    "summary": "Test\n",
+    "documentUrl": "",
+    "id": "inline-mvo5fzxy-3870"
   }
 ]
