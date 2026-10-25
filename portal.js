@@ -478,6 +478,15 @@
         const [news, events, lit] = await Promise.all([get('news'), get('events'), articles()]);
         const today = (()=>{const d=new Date();return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');})(), active = visibleNews(news).slice(0, 3);
         const upcoming = (events || []).filter(x => x.date >= today).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).slice(0, 2);
+        const weekToday = new Date(); weekToday.setHours(12,0,0,0);
+        const monday = new Date(weekToday); monday.setDate(monday.getDate() - (monday.getDay()+6)%7);
+        const weekKey = d => [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+        const weekDays = Array.from({length:7},(_,i)=>{const d=new Date(monday);d.setDate(d.getDate()+i);return {key:weekKey(d),date:d};});
+        const weekCalendar = `<div class="ost580-week" aria-label="Aktuelle Kalenderwoche">${weekDays.map(({key,date})=>{
+          const daily=(events||[]).filter(x=>x.date===key);
+          const mark=key===today?' ost580-today':'';
+          return `<a href="termine.html?datum=${encodeURIComponent(key)}" class="ost580-day${mark}" ${key===today?'aria-current="date"':''}><span>${['So','Mo','Di','Mi','Do','Fr','Sa'][date.getDay()]}</span><strong>${date.getDate()}</strong>${daily.length?`<small>${daily.length} Termin${daily.length>1?'e':''}</small>`:'<small> </small>'}</a>`;
+        }).join('')}</div>`;
         const picks = (Array.isArray(lit) ? lit : []).filter(x => (x.featured === true || x.featured === 'true') && (!Date.parse(x.activeSince || x.added || '') || Date.now()-Date.parse(x.activeSince || x.added) < 30*86400000)).sort((a, b) => Number(a.featureRank || 99) - Number(b.featureRank || 99) || String(b.added || '').localeCompare(String(a.added || ''))).slice(0, 2);
         const destinations = [
             ['topics', 'Leitsymptome', 'themen-uebersicht.html', 'anatomy'],
@@ -490,11 +499,13 @@
         const external = a => { const u = String(a.freeUrl || a.publisherUrl || ''); return /^https?:\/\//i.test(u) ? u : ''; };
         $('[data-main]').innerHTML = `<div class="cf-home cf548-home"><header class="cf548-welcome"><h1>Wissenssammlung <span>OST 1020</span></h1></header>
  <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
- <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}}</div></section>
+ <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
  <section class="cf-section cf548-menu"><div class="cf-section-title"><h2>Menü</h2></div><nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass, title, href, ico]) => `<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong></a>`).join('')}</nav></section>
  <section class="cf-section cf548-reading" data-reading-section><div class="cf-section-title"><h2>Lesetipps</h2><a href="literatur.html">Literatur-Archiv →</a></div><div class="cf548-reading-list">${picks.length ? picks.map(a => { const link = external(a); return `<a class="cf548-reading-item" href="${link ? esc(link) : 'literatur.html'}" ${link ? 'target="_blank" rel="noopener noreferrer"' : ''}><span class="cf548-reading-icon">${ostIcon('book')}</span><span><strong>${esc(a.title)}</strong>${a.why ? `<small>${esc(String(a.why).replace(/[*#\[\]]/g, '').slice(0, 110))}</small>` : ''}</span><b>↗</b></a>`; }).join('') : '<p class="cf-muted">Lesetipps lassen sich in der Redaktion unter Literatur & Lesetipps auswählen.</p>'}</div></section>
- <section class="cf-section cf548-dates" data-events-section><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div><div class="cf-simple-list">${upcoming.map(e => `<a href="termine.html"><span>${esc(e.title)}</span><small>${esc(e.date || '')}</small></a>`).join('') || '<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
- <div class="ost577-switch-host" data-ost577-switch-host></div></div>`;
+ <section class="cf-section cf548-dates" data-events-section><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div>${weekCalendar}<div class="cf-simple-list">${upcoming.map(e => `<a href="termine.html"><span>${esc(e.title)}</span><small>${esc(e.date || '')}</small></a>`).join('') || '<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
+ </div>`;
+        const switchHost=document.createElement('div');switchHost.className='ost577-switch-host';switchHost.dataset.ost577SwitchHost='';
+        $('[data-events-section]')?.insertAdjacentElement('afterend',switchHost);
         ost576InstallSwitch();
         if (!picks.length)
             $('[data-reading-section]')?.remove();
@@ -1182,7 +1193,9 @@
         const menu=area.querySelector('.cf548-menu,.cf548-tiles,.cf-menu-grid,.cf548-home-menu,[data-home-menu]');
         const host=area.querySelector('[data-ost577-switch-host]')||document.createElement('div');
         host.dataset.ost577SwitchHost='';host.className='ost577-switch-host';
-        if(menu?.parentElement)menu.insertAdjacentElement('afterend',host);
+        const eventsSection=area.querySelector('[data-events-section]');
+        if(eventsSection) eventsSection.insertAdjacentElement('afterend',host);
+        else if(menu?.parentElement)menu.insertAdjacentElement('afterend',host);
         else area.appendChild(host);
         host.appendChild(button);
         button.onclick=async()=>{await ost576ToggleEdit();ost576InstallSwitch();};

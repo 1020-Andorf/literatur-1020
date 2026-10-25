@@ -339,3 +339,11 @@ body.app-shell .cf548-home .ost577-switch-host {display:flex!important; justify-
 .ost579-doc-link span {grid-column:2;grid-row:1/3;align-self:center}
 .ost579-subtitle,.ost579-document-card .cf563-summary {display:block!important;line-height:1.5;margin:4px 0 8px;color:#4e6a7d}
 #quellen .ost571-edit-region {min-width:0}
+
+/* 580: compact seven-day home calendar; PIN switch follows calendar */
+.cf548-home .ost580-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:12px 0 14px;min-width:0}
+.cf548-home .ost580-day{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;gap:4px;padding:12px 2px;border:1px solid #d8e4ec;border-radius:11px;background:#fff;text-decoration:none;color:#21465f;font-size:.84rem}
+.cf548-home .ost580-day strong{font-size:1.1rem}.cf548-home .ost580-day small{font-size:.7rem;color:#648096;text-align:center}
+.cf548-home .ost580-day.ost580-today{background:#fff1f2;border:2px solid #bd2337;color:#a81e32}
+.cf548-home .ost577-switch-host{margin:16px 0 25px!important;justify-content:center!important}
+@media(max-width:480px){.cf548-home .ost580-week{gap:3px}.cf548-home .ost580-day{padding:10px 0;font-size:.72rem}.cf548-home .ost580-day small{font-size:.6rem}}
