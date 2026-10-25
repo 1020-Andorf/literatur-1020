@@ -382,7 +382,7 @@
     "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten.",
     "redflagsHtml": "<ul><li>Ohne Vorwarnung</li><li>Bei Belastung</li><li>Thoraxschmerz</li><li>Pathologisches EKG</li></ul>",
     "sectionTones": {
-      "redflags": "success"
+      "redflags": "plain"
     }
   },
   {
