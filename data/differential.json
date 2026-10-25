@@ -185,7 +185,7 @@
       "Schwere Dyspnoe"
     ],
     "group": "Kreislauf",
-    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftr",
+    "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten.",
     "related": []
   },
   {
@@ -323,13 +323,15 @@
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       },
       {
-        "name": "Akuter Blutverlust",
+        "name": "Akuter Blutverlust test",
         "physiology": "Akuter Blutverlust: Entscheidend ist die Auswirkung auf Herzzeitvolumen, Blutdruck und Organperfusion.",
         "findings": "Tachykardie, Blässe, Schweiß. Vitalparameter, Hautperfusion, EKG und Begleitsymptome zusammen bewerten.",
         "cave": "okkulte Blutung. Hypotonie, Synkope oder akute Instabilität bedeuten präklinisch hohe Dringlichkeit.",
         "info": "Hypovolämie senkt zerebrale Perfusion Tachykardie, Blässe, Schweiß CAVE: okkulte Blutung.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akuter%20Blutverlust%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen"
+        "sourceLabel": "Fachliteratur auf PubMed suchen",
+        "symptoms": "",
+        "medications": ""
       },
       {
         "name": "Hypovolämischer Schock",
@@ -348,17 +350,6 @@
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Metabolisch%20review%20diagnosis",
         "sourceLabel": "Fachliteratur auf PubMed suchen",
         "info": "Präklinisch sind Anamnese, Verlauf, Vitalparameter, BZ bzw. EKG nach Symptomatik und die wiederholte Re-Evaluation besonders relevant."
-      },
-      {
-        "name": "Akuter Blutverlust test",
-        "physiology": "Akuter Blutverlust: Entscheidend ist die Auswirkung auf Herzzeitvolumen, Blutdruck und Organperfusion.",
-        "findings": "Tachykardie, Blässe, Schweiß. Vitalparameter, Hautperfusion, EKG und Begleitsymptome zusammen bewerten.",
-        "cave": "okkulte Blutung. Hypotonie, Synkope oder akute Instabilität bedeuten präklinisch hohe Dringlichkeit.",
-        "info": "Hypovolämie senkt zerebrale Perfusion Tachykardie, Blässe, Schweiß CAVE: okkulte Blutung.",
-        "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akuter%20Blutverlust%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen",
-        "symptoms": "",
-        "medications": ""
       }
     ],
     "questions": [

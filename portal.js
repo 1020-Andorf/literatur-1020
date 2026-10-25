@@ -1134,6 +1134,108 @@
             $('[data-rt-link]',host).onclick=()=>{const u=prompt('HTTPS-Link:');if(!u)return;try{const x=new URL(u);if(x.protocol!=='https:')throw Error();editor.focus();document.execCommand('createLink',false,x.href);}catch{alert('Bitte eine gültige HTTPS-Adresse eingeben.');}};
             $('[data-rt-img]',host).onclick=()=>{const u=prompt('Öffentliche HTTPS-Bildadresse:');if(!u)return;try{const x=new URL(u);if(x.protocol!=='https:')throw Error();editor.focus();document.execCommand('insertImage',false,x.href);}catch{alert('Bitte eine gültige HTTPS-Bildadresse eingeben.');}};
         }
+    // Update 574: gemeinsame PIN-geschützte Bearbeitung direkt an bestehenden Einträgen.
+    // Spezialfelder bleiben separat; Anmeldelisten und Anhänge werden nie überschrieben.
+    const ost574Config = {
+      'aktuelles.html': {store:'news', cards:'.news-list [data-news]', title:'h2,h3,strong', rich:['text'], fields:['category','date','link']},
+      'literatur.html': {store:'articles', cards:'.cf548-archive-card', title:'h2', rich:['why'], fields:['authors','journal','year','doi','freeUrl','publisherUrl']},
+      'lehrmeinung.html': {store:'changes', cards:'.change-detail,.ost-tonal-list .row-card', title:'h1,strong', rich:['old','new','source','validity'], fields:['date','category','imageUrl']},
+      'dienstbesprechungen.html': {store:'meetings', cards:'.meeting-detail,.meeting-tile', title:'h1,h2', rich:['summary'], fields:['date','category','speaker']},
+      'termine.html': {store:'events', cards:'.event-card', title:'h3', rich:['description'], fields:['date','time','location','category','capacity']},
+      'materialien.html': {store:'algorithms', cards:'.cf563-entry', title:'summary strong', rich:['explanation'], fields:['category','stand','source','sourceUrl']},
+      'training.html': {store:'knowledgeModules', cards:'.cf563-entry', title:'summary strong', rich:['body','summary'], fields:['category','documentUrl']},
+      'skilltraining.html': {store:'skills', cards:'.ost-skill-group', title:'.ost-skill-acc-title', rich:[], fields:[]}
+    };
+    let ost574Decorating=false;
+    function ost574MatchesTitle(rec, title){return String(rec?.title || rec?.name || '').trim() === title.trim();}
+    async function ost574Pin(){
+      let pin=sessionStorage.getItem('ost1020-editor-pin')||'';
+      if(pin && await verifyEditorPin(pin)) return true;
+      pin=prompt('Redaktions-PIN eingeben:')||'';
+      if(!pin || !await verifyEditorPin(pin)){alert('PIN nicht korrekt oder Eingabe abgebrochen.');return false;}
+      sessionStorage.setItem('ost1020-editor-pin',pin);return true;
+    }
+    function ost574Fields(record,config){
+      return [...config.fields.map(k=>({key:k,label:k,rich:false})),...config.rich.map(k=>({key:k,label:k,rich:true}))];
+    }
+    async function ost574Edit(entry,record,config){
+      if(entry.dataset.ost574Editing==='yes') return;
+      if(!await ost574Pin()) return;
+      const store=config.store, existing=await get(store);
+      const idx=existing.findIndex(x=>String(x.id)===String(record.id));
+      if(idx<0){alert('Datensatz wurde nicht gefunden.');return;}
+      const mainTitle=entry.querySelector(config.title);
+      if(!mainTitle){alert('Titel nicht gefunden.');return;}
+      entry.dataset.ost574Editing='yes';
+      const originalTitle=mainTitle.innerHTML;
+      const originalSnapshot=[...entry.children].filter(el=>!el.matches('.ost574-tools,.ost574-fields')).map(el=>[el,el.hidden]);
+      // Titel wird direkt an seiner bisherigen Stelle bearbeitet.
+      mainTitle.contentEditable='true';mainTitle.classList.add('ost574-title-live');
+      mainTitle.textContent=record.title||record.name||'';
+      mainTitle.focus();
+      const widget=document.createElement('div');widget.className='ost574-fields';
+      const fields=ost574Fields(record,config);
+      widget.innerHTML=fields.map(({key,label,rich})=>`<div class="ost574-field"><label>${esc(label)}</label>${rich ? `${ost573Toolbar()}<div class="ost573-editable ost574-rich-live" contenteditable="true" data-ost574-field="${key}"></div>` : `<input data-ost574-field="${key}" value="${esc(record[key]??'')}">`}</div>`).join('') + `<div class="ost570-actions"><button class="btn primary" type="button" data-ost574-save>Speichern</button><button class="btn" type="button" data-ost574-cancel>Abbrechen</button><span role="status" data-ost574-status></span></div>`;
+      entry.appendChild(widget);
+      fields.filter(x=>x.rich).forEach(({key})=>{const ed=widget.querySelector(`[data-ost574-field="${key}"]`);ed.innerHTML=ost570CleanHtml(record[key]||'');ost573BindRich(ed.closest('.ost574-field'),ed);});
+      // Redundante alte Beschreibung während der Bearbeitung ausblenden, Titel bleibt sichtbar.
+      originalSnapshot.forEach(([el])=>{if(el!==mainTitle && !el.contains(mainTitle) && !el.classList.contains('ost574-tools'))el.hidden=true;});
+      const reset=()=>{mainTitle.contentEditable='false';mainTitle.classList.remove('ost574-title-live');mainTitle.innerHTML=originalTitle;originalSnapshot.forEach(([el,hidden])=>{el.hidden=hidden;});widget.remove();delete entry.dataset.ost574Editing;};
+      widget.querySelector('[data-ost574-cancel]').onclick=reset;
+      widget.querySelector('[data-ost574-save]').onclick=async()=>{
+        const status=widget.querySelector('[data-ost574-status]');status.textContent='Speichere …';
+        const current=await get(store);const index=current.findIndex(x=>String(x.id)===String(record.id));
+        if(index<0){status.textContent='Eintrag nicht gefunden.';return;}
+        const next={...current[index]}; next[record.title!==undefined?'title':'name']=mainTitle.textContent.trim()||record.title||record.name;
+        fields.forEach(({key,rich})=>{const node=widget.querySelector(`[data-ost574-field="${key}"]`);next[key]=rich?ost570CleanHtml(node.innerHTML):(key==='capacity'?Number(node.value)||0:Array.isArray(current[index][key])?node.value.split(',').map(v=>v.trim()).filter(Boolean):node.value);});
+        if(await save(store,current.map((x,i)=>i===index?next:x))){location.reload();}
+        else status.textContent='Speichern fehlgeschlagen. Änderungen nicht übernommen.';
+      };
+    }
+    async function ost574EditSkillGroup(entry,group){
+      if(entry.dataset.ost574Editing==='yes' || !await ost574Pin())return;
+      const data=await get('skills');const idx=data.findIndex(x=>String(x.id)===String(group.id));
+      if(idx<0)return;
+      entry.dataset.ost574Editing='yes';entry.open=true;
+      const title=entry.querySelector('.ost-skill-acc-title');const initial=title.textContent;
+      title.contentEditable='true';title.classList.add('ost574-title-live');
+      const list=entry.querySelector('.ost-skill-acc-items');const prev=list.hidden;list.hidden=true;
+      const host=document.createElement('div');host.className='ost574-fields';
+      host.innerHTML=arr(group.skills).map((sk,i)=>`<section class="ost574-skill"><label>Skill ${i+1}</label><input data-skill-title="${i}" value="${esc(sk.name)}">${arr(sk.sections).map((sec,j)=>`<div class="ost574-skill-section"><label>Abschnitt</label><input data-skill-section-title="${i}-${j}" value="${esc(sec.title)}"><label>Aufzählungspunkte (je eine Zeile)</label><textarea data-skill-items="${i}-${j}" rows="5">${esc(arr(sec.items).join('\n'))}</textarea></div>`).join('')}</section>`).join('')+`<div class="ost570-actions"><button class="btn primary" data-skill-save>Speichern</button><button class="btn" data-skill-cancel>Abbrechen</button><span data-skill-status role="status"></span></div>`;
+      entry.appendChild(host);
+      const stop=()=>{title.textContent=initial;title.contentEditable='false';title.classList.remove('ost574-title-live');list.hidden=prev;host.remove();delete entry.dataset.ost574Editing;};
+      host.querySelector('[data-skill-cancel]').onclick=stop;
+      host.querySelector('[data-skill-save]').onclick=async()=>{
+        const status=host.querySelector('[data-skill-status]');status.textContent='Speichere …';
+        const latest=await get('skills'),index=latest.findIndex(x=>String(x.id)===String(group.id));if(index<0){status.textContent='Gruppe nicht gefunden.';return;}
+        const updated=structuredClone(latest[index]);updated.name=title.textContent.trim()||updated.name;
+        arr(updated.skills).forEach((skill,i)=>{skill.name=host.querySelector(`[data-skill-title="${i}"]`).value.trim()||skill.name;arr(skill.sections).forEach((sec,j)=>{sec.title=host.querySelector(`[data-skill-section-title="${i}-${j}"]`).value.trim()||sec.title;sec.items=host.querySelector(`[data-skill-items="${i}-${j}"]`).value.split('\n').map(v=>v.trim()).filter(Boolean);});});
+        if(await save('skills',latest.map((v,i)=>i===index?updated:v)))location.reload();else status.textContent='Speichern fehlgeschlagen.';
+      };
+    }
+    async function ost574Decorate(){
+      const path=location.pathname.split('/').pop();const cfg=ost574Config[path];if(!cfg || ost574Decorating)return;
+      ost574Decorating=true;
+      try{
+        const data=await get(cfg.store);if(!Array.isArray(data))return;
+        document.querySelectorAll(cfg.cards).forEach(entry=>{
+          if(entry.dataset.ost574Enhanced)return;
+          const titleNode=entry.querySelector(cfg.title);if(!titleNode)return;
+          const title=titleNode.textContent.trim();const item=data.find(x=>ost574MatchesTitle(x,title));if(!item)return;
+
+          entry.dataset.ost574Enhanced='yes';entry.classList.add('ost574-editable-card');
+          const pencil=document.createElement('button');pencil.type='button';pencil.className='ost574-pencil';pencil.textContent='✎';pencil.title='Direkt bearbeiten (PIN erforderlich)';pencil.setAttribute('aria-label',title+' bearbeiten');
+          pencil.onclick=e=>{e.preventDefault();e.stopPropagation();if(entry.tagName==='DETAILS')entry.open=true;if(cfg.store==='skills')ost574EditSkillGroup(entry,item);else ost574Edit(entry,item,cfg);};
+          // Nicht innerhalb des klickbaren Links verschachteln.
+          entry.insertAdjacentElement('afterbegin',pencil);
+        });
+      }finally{ost574Decorating=false;}
+    }
+    if(ost574Config[location.pathname.split('/').pop()]){
+      const obs=new MutationObserver(()=>{if(!ost574Decorating)ost574Decorate();});
+      obs.observe(document.querySelector('[data-main]')||document.body,{childList:true,subtree:true});
+      setTimeout(ost574Decorate,100);
+    }
     async function topicHub() {
         const params = new URLSearchParams(location.search);
         const [modules, differentials, literature, mnemonicStore] = await Promise.all([get('knowledgeModules'), get('differential'), articles(), get('algorithms')]);
@@ -1186,11 +1288,15 @@
                 const questions = arr(v.questions);
                 const causes = arr(v.causes).map(c => typeof c === 'string' ? { name: c } : c);
                 const pencil = (part, index = '') => `<button type="button" class="ost571-pencil" data-ost571-part="${part}" data-ost571-index="${index}" aria-label="Abschnitt bearbeiten (PIN erforderlich)" title="Abschnitt bearbeiten">✎ <span>Bearbeiten</span></button>`;
-                body = `<section class="ost568-panel ost568-info" id="ueberblick"><div class="ost571-section-head"><h3>Überblick</h3>${pencil('theory')}</div><div class="ost-module-body">${ost570CleanHtml(v.theory || '<p>Noch kein Überblick hinterlegt.</p>')}</div></section>`
-                  + `<section class="ost568-panel ost568-danger" id="red-flags"><div class="ost571-section-head"><h3>⚠ Red Flags · Warnzeichen</h3>${pencil('redflags')}</div>${warning.length ? `<ul>${warning.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Keine Warnzeichen hinterlegt.</p>'}</section>`
-                  + `<section class="ost568-panel ost568-blue" id="anamnese"><div class="ost571-section-head"><h3>Wichtige Fragen / Anamnese</h3>${pencil('questions')}</div>${questions.length ? `<ul>${questions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Noch keine Fragen hinterlegt.</p>'}</section>`
-                  + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${[['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</section>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
-                body += `<section class="ost570-rich ost568-panel ost568-amber" id="artikel-ergaenzungen"><div class="ost571-section-head"><h3>Merksätze & weitere Fachinformationen</h3>${pencil('richContent')}</div>${ost570CleanHtml(v.richContent || '<p>Noch keine Merksätze hinterlegt.</p>')}</section>`;
+                const sectionTones = v.sectionTones || {};
+                const panelTone = (key, fallback) => `ost568-panel ost568-${sectionTones[key] || fallback}`;
+                const redFlagsHtml = v.redflagsHtml ? ost570CleanHtml(v.redflagsHtml) : (warning.length ? `<ul>${warning.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Keine Warnzeichen hinterlegt.</p>');
+                const questionHtml = v.questionsHtml ? ost570CleanHtml(v.questionsHtml) : (questions.length ? `<ul>${questions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Noch keine Fragen hinterlegt.</p>');
+                body = `<section class="${panelTone('theory','info')}" id="ueberblick"><div class="ost571-section-head"><h3>Überblick</h3>${pencil('theory')}</div><div class="ost571-edit-region ost-module-body">${ost570CleanHtml(v.theory || '<p>Noch kein Überblick hinterlegt.</p>')}</div></section>`
+                  + `<section class="${panelTone('redflags','danger')}" id="red-flags"><div class="ost571-section-head"><h3>⚠ Red Flags · Warnzeichen</h3>${pencil('redflags')}</div><div class="ost571-edit-region">${redFlagsHtml}</div></section>`
+                  + `<section class="${panelTone('questions','blue')}" id="anamnese"><div class="ost571-section-head"><h3>Wichtige Fragen / Anamnese</h3>${pencil('questions')}</div><div class="ost571-edit-region">${questionHtml}</div></section>`
+                  + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${[['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</div></details>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
+                body += `<section class="ost570-rich ${panelTone('richContent','amber')}" id="artikel-ergaenzungen"><div class="ost571-section-head"><h3>Merksätze & weitere Fachinformationen</h3>${pencil('richContent')}</div><div class="ost571-edit-region">${ost570CleanHtml(v.richContent || '<p>Noch keine Merksätze hinterlegt.</p>')}</div></section>`;
                 const sourceLinks = causes.filter(c => href(c.sourceUrl));
                 if (sourceLinks.length) body += `<section class="ost569-extra" id="quellen"><h3>Quellen und weiterführende Informationen</h3><ul>${sourceLinks.map(c => `<li><a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.sourceLabel || c.name || 'Fachquelle')}</a></li>`).join('')}</ul></section>`;
             }
@@ -1229,12 +1335,12 @@
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
             categoryBar.innerHTML=found.map((x,i)=>`<a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><span class="ost572-count">${String(i+1).padStart(2,'0')}</span><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
-            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1>${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎ <span>Bearbeiten</span></button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
+            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1 class="ost570-title-text">${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎ <span>Bearbeiten</span></button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
             $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
             $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index || 0))));
         }
         async function editArticle(item, part = "all", causeIndex = 0){
-            let host=$('[data-ost570-editor]',out); const button=$('[data-ost570-edit]',out);
+            let host=$('[data-ost570-editor]',out);
             let pin=sessionStorage.getItem('ost1020-editor-pin') || '';
             if(!pin || !await verifyEditorPin(pin)){
                 pin=prompt('Redaktions-PIN eingeben:') || '';
@@ -1242,55 +1348,79 @@
                 sessionStorage.setItem('ost1020-editor-pin',pin);
             }
             const current=item.value;
-            if(part !== 'all') {
-                const target = part === 'title' ? $('.ost570-article-head',out) : part === 'cause' ? $$('.ost571-disease-card',out)[causeIndex] : ({theory:'#ueberblick',redflags:'#red-flags',questions:'#anamnese',richContent:'#artikel-ergaenzungen'})[part] ? $(({theory:'#ueberblick',redflags:'#red-flags',questions:'#anamnese',richContent:'#artikel-ergaenzungen'})[part],out) : null;
-                if(target) {target.appendChild(host); host.classList.add('ost572-embedded');if(target.tagName==='DETAILS')target.open=true;}
+            const toneLabels={info:'Blau',danger:'Rot',amber:'Gelb',blue:'Hellblau',success:'Grün',plain:'Weiß'};
+            const toneOptions=(selected='info')=>`<label class="ost573-tone-picker">Fensterfarbe<select data-ost573-tone>${Object.entries(toneLabels).map(([val,label])=>`<option value="${val}" ${selected===val?'selected':''}>${label}</option>`).join('')}</select></label>`;
+            const listHtml=(values, empty)=>arr(values).length ? `<ul>${arr(values).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : `<p>${esc(empty)}</p>`;
+            const extractList=(html)=>{const wrap=document.createElement('div');wrap.innerHTML=html;const lis=[...wrap.querySelectorAll('li')].map(li=>li.textContent.trim()).filter(Boolean);if(lis.length)return lis;return wrap.textContent.split(/\n+/).map(x=>x.trim()).filter(Boolean);};
+            const cleanupCancel=(target,originalHtml,editingClass='ost573-is-inline-editing')=>{target.innerHTML=originalHtml;target.closest('section,details,.cf563-entry-body')?.classList.remove(editingClass);};
+            if(part==='title'){
+                const h1=$('.ost570-title-text',out);
+                if(!h1) return;
+                const original=h1.textContent;
+                const wrap=document.createElement('span');
+                wrap.className='ost573-title-inline';
+                wrap.innerHTML=`<input type="text" maxlength="180" value="${esc(current.title || '')}" data-ost573-title-inline><button type="button" class="btn primary small" data-ost573-title-save>Speichern</button><button type="button" class="btn small" data-ost573-title-cancel>Abbrechen</button><span class="ost573-inline-status" data-ost573-title-status></span>`;
+                h1.replaceChildren(wrap);
+                const inputEl=$('[data-ost573-title-inline]',h1); inputEl.focus(); inputEl.select();
+                $('[data-ost573-title-cancel]',h1).onclick=()=>{h1.textContent=original;};
+                $('[data-ost573-title-save]',h1).onclick=async()=>{
+                    const status=$('[data-ost573-title-status]',h1); status.textContent='Speichere …';
+                    const latest=await get('differential'); const index=latest.findIndex(x=>String(x.id)===String(current.id));
+                    if(index<0){status.textContent='Leitsymptom nicht gefunden.';return;}
+                    latest[index]={...latest[index], title:inputEl.value.trim().slice(0,180) || latest[index].title};
+                    const ok=await save('differential',latest);
+                    if(ok){Object.assign(current,latest[index]); draw();} else status.textContent='Speichern fehlgeschlagen.';
+                };
+                return;
             }
-            if(part !== 'all') {
+            if(['theory','redflags','questions','richContent'].includes(part)){
+                const selector={theory:'#ueberblick .ost571-edit-region',redflags:'#red-flags .ost571-edit-region',questions:'#anamnese .ost571-edit-region',richContent:'#artikel-ergaenzungen .ost571-edit-region'}[part];
+                const region=$(selector,out);
+                if(!region) return;
+                const section=region.closest('section');
+                const originalHtml=region.innerHTML;
+                section?.classList.add('ost573-is-inline-editing');
+                const currentTone=((current.sectionTones||{})[part]) || ({theory:'info',redflags:'danger',questions:'blue',richContent:'amber'}[part]);
+                const valueHtml = part==='theory' ? ost570CleanHtml(current.theory || '<p>Noch kein Überblick hinterlegt.</p>') : part==='richContent' ? ost570CleanHtml(current.richContent || '<p>Noch keine Merksätze hinterlegt.</p>') : part==='redflags' ? (current.redflagsHtml ? ost570CleanHtml(current.redflagsHtml) : listHtml(current.redflags,'Keine Warnzeichen hinterlegt.')) : (current.questionsHtml ? ost570CleanHtml(current.questionsHtml) : listHtml(current.questions,'Noch keine Fragen hinterlegt.'));
+                region.innerHTML=`<div class="ost573-inline-editor-shell">${ost573Toolbar()}<div class="ost573-inline-toolbar-row">${toneOptions(currentTone)}</div><div class="ost573-editable" contenteditable="true" data-ost573-inline-rich></div><div class="ost570-actions"><button class="btn primary" type="button" data-ost573-inline-save>Speichern</button><button class="btn" type="button" data-ost573-inline-cancel>Abbrechen</button><span role="status" data-ost573-inline-status></span></div></div>`;
+                const editor=$('[data-ost573-inline-rich]',region); editor.innerHTML=valueHtml; ost573BindRich(region,editor);
+                $('[data-ost573-inline-cancel]',region).onclick=()=>cleanupCancel(region,originalHtml);
+                $('[data-ost573-inline-save]',region).onclick=async()=>{
+                    const status=$('[data-ost573-inline-status]',region); status.textContent='Speichere …';
+                    const latest=await get('differential'); const index=latest.findIndex(x=>String(x.id)===String(current.id));
+                    if(index<0){status.textContent='Leitsymptom nicht gefunden.';return;}
+                    const updated={...latest[index]};
+                    const clean=ost570CleanHtml(editor.innerHTML);
+                    if(part==='theory') updated.theory=clean;
+                    else if(part==='richContent') updated.richContent=clean;
+                    else if(part==='redflags'){ updated.redflagsHtml=clean; updated.redflags=extractList(clean); }
+                    else if(part==='questions'){ updated.questionsHtml=clean; updated.questions=extractList(clean); }
+                    updated.sectionTones={...(updated.sectionTones||{}), [part]: $('[data-ost573-tone]',region).value};
+                    const ok=await save('differential', latest.map((x,i)=>i===index?updated:x));
+                    if(ok){ Object.assign(current,updated); draw(); } else status.textContent='Speichern fehlgeschlagen.';
+                };
+                editor.focus();
+                return;
+            }
+            if(part==='cause'){
+                const target=$$('.ost571-disease-card',out)[causeIndex];
+                if(target){target.open=true; target.appendChild(host); host.classList.add('ost572-embedded');}
                 const fields=['name','symptoms','info','physiology','findings','medications','cave'];
                 const cause=typeof (current.causes || [])[causeIndex] === 'string' ? {name:current.causes[causeIndex]} : {...((current.causes || [])[causeIndex] || {})};
-                const values=part==='title' ? `<label>Leitsymptom-Titel<input data-ost573-title maxlength=180 value="${esc(current.title || '')}"></label>` : part==='cause' ? fields.map(key=>`<label>${esc(({name:'Krankheitsbild',symptoms:'Symptome',info:'Einordnung',physiology:'Pathophysiologie',findings:'Befunde',medications:'Pharmakologie',cave:'CAVE / Warnzeichen'})[key])}<textarea data-ost571-field="${key}">${esc(cause[key] || '')}</textarea></label>`).join('') : part==='richContent' ? `<label>Merksätze & Fachinformationen (HTML-Formatierung)</label><div class="ost570-toolbar"><button type="button" data-command="bold">Fett</button><button type="button" data-command="italic">Kursiv</button><button type="button" data-command="insertUnorderedList">Liste</button><button type="button" data-image>Bild-URL</button></div><div class="ost570-editable" contenteditable="true" data-ost571-rich></div>` : `<label>${part==='theory' ? 'Überblick' : part==='redflags' ? 'Red Flags – eine pro Zeile' : 'Anamnesefragen – eine pro Zeile'}${part==='theory' ? `${ost573Toolbar()}<div class="ost573-editable" contenteditable="true" data-ost573-theory></div>` : `<textarea data-ost571-value>${esc(arr(current[part]).join('\n'))}</textarea>`}</label>`;
                 host.hidden=false;
-                host.innerHTML=`<h2>✎ Abschnitt bearbeiten</h2><p>PIN-geprüfte Bearbeitung. Änderungen erscheinen erst nach erfolgreicher Speicherung.</p>${values}<div class="ost570-actions"><button class="btn primary" type="button" data-ost571-save>Speichern</button><button class="btn" type="button" data-ost571-cancel>Abbrechen</button><span role="status" data-ost571-status></span></div>`;
-                const rich=$('[data-ost571-rich]',host);
-                if(part==='theory'){const ed=$('[data-ost573-theory]',host);ed.innerHTML=ost570CleanHtml(current.theory || '');ost573BindRich(host,ed);}
-                if(rich){ rich.innerHTML=ost570CleanHtml(current.richContent || ''); $$('[data-command]',host).forEach(b=>b.onclick=()=>{rich.focus();document.execCommand(b.dataset.command,false,null);}); $('[data-image]',host).onclick=()=>{const url=prompt('Öffentliche HTTPS-Bildadresse:');if(!url)return;try{const parsed=new URL(url);if(parsed.protocol!=='https:')throw Error();rich.focus();document.execCommand('insertImage',false,parsed.href);}catch{alert('Nur gültige HTTPS-Bildadressen.');}}; }
+                host.innerHTML=`<h2>✎ Krankheitsbild bearbeiten</h2><p>PIN-geprüfte Bearbeitung direkt im Krankheitsbild.</p>${fields.map(key=>`<label>${esc(({name:'Krankheitsbild',symptoms:'Symptome',info:'Einordnung',physiology:'Pathophysiologie',findings:'Befunde',medications:'Pharmakologie',cave:'CAVE / Warnzeichen'})[key])}<textarea data-ost571-field="${key}">${esc(cause[key] || '')}</textarea></label>`).join('')}<div class="ost570-actions"><button class="btn primary" type="button" data-ost571-save>Speichern</button><button class="btn" type="button" data-ost571-cancel>Abbrechen</button><span role="status" data-ost571-status></span></div>`;
                 $('[data-ost571-cancel]',host).onclick=()=>host.hidden=true;
                 $('[data-ost571-save]',host).onclick=async()=>{
                     const status=$('[data-ost571-status]',host);status.textContent='Speichere …';
                     const latest=await get('differential');const index=latest.findIndex(x=>String(x.id)===String(current.id));
                     if(index<0){status.textContent='Leitsymptom nicht gefunden.';return;}
-                    const updated={...latest[index]};
-                    if(part==='cause'){updated.causes=[...arr(updated.causes)];updated.causes[causeIndex]={...cause};fields.forEach(key=>updated.causes[causeIndex][key]=$(`[data-ost571-field="${key}"]`,host).value);}
-                    else if(part==='richContent')updated.richContent=ost570CleanHtml(rich.innerHTML);
-                    else if(part==='title')updated.title=$('[data-ost573-title]',host).value.trim().slice(0,180) || updated.title;
-                    else if(part==='theory')updated.theory=ost570CleanHtml($('[data-ost573-theory]',host).innerHTML);
-                    else updated[part]=$('[data-ost571-value]',host).value.split('\n').map(x=>x.trim()).filter(Boolean);
+                    const updated={...latest[index], causes:[...arr(latest[index].causes)]};
+                    updated.causes[causeIndex]={...cause}; fields.forEach(key=>updated.causes[causeIndex][key]=$(`[data-ost571-field="${key}"]`,host).value);
                     const ok=await save('differential',latest.map((x,i)=>i===index?updated:x));
-                    if(ok){Object.assign(current,updated);host.hidden=true;draw();}else status.textContent='Speichern fehlgeschlagen. Bitte Worker und Verbindung prüfen.';
+                    if(ok){Object.assign(current,updated);host.hidden=true;draw();}else status.textContent='Speichern fehlgeschlagen.';
                 };
-                host.scrollIntoView({behavior:'smooth',block:'nearest'});
                 return;
             }
-            host.hidden=false;
-            host.innerHTML=`<h2>✎ Fachartikel bearbeiten</h2><p>Text ergänzen und formatieren. Die strukturierten Krankheitsbilder und Red Flags bleiben erhalten.</p><label>Überblick / Physiologie<textarea data-ost570-theory rows="7">${esc(current.theory || '')}</textarea></label><label>Zusätzliche Fachinformationen (formatierbar)</label><div class="ost570-toolbar"><button type="button" data-command="bold"><b>Fett</b></button><button type="button" data-command="italic"><i>Kursiv</i></button><button type="button" data-command="insertUnorderedList">• Liste</button><button type="button" data-style="H3">Überschrift</button><button type="button" data-image>Bild-URL</button><button type="button" data-box="danger">Rot</button><button type="button" data-box="info">Blau</button><button type="button" data-box="note">Gelb</button><button type="button" data-box="success">Grün</button></div><div class="ost570-editable" contenteditable="true" role="textbox" aria-label="Formatierbare Fachinformationen" data-ost570-rich></div><p class="ost569-context">Bilder nur über öffentlich erreichbare HTTPS-URLs; keine lokalen Bilddateien. Fachliche Freigabe vor Veröffentlichung sicherstellen.</p><div class="ost570-actions"><button type="button" class="btn primary" data-ost570-save>Änderungen speichern</button><button type="button" class="btn" data-ost570-cancel>Abbrechen</button><span role="status" data-ost570-status></span></div>`;
-            const rich=$('[data-ost570-rich]',host);rich.innerHTML=ost570CleanHtml(current.richContent || '');
-            const focusRich=()=>rich.focus();
-            $$('[data-command]',host).forEach(b=>b.onclick=()=>{focusRich();document.execCommand(b.dataset.command,false,null);});
-            $$('[data-style]',host).forEach(b=>b.onclick=()=>{focusRich();document.execCommand('formatBlock',false,b.dataset.style);});
-            $('[data-image]',host).onclick=()=>{const v=prompt('Öffentliche HTTPS-Bildadresse:');if(!v)return;try{const u=new URL(v);if(u.protocol!=='https:')throw Error();focusRich();document.execCommand('insertImage',false,u.href);}catch(e){alert('Bitte eine gültige HTTPS-Bildadresse eingeben.');}};
-            $$('[data-box]',host).forEach(b=>b.onclick=()=>{const selected=window.getSelection();if(!selected || !selected.rangeCount || !rich.contains(selected.anchorNode)){focusRich();return;}const range=selected.getRangeAt(0);const div=document.createElement('div');div.dataset.callout=b.dataset.box;div.textContent=range.toString() || 'Hinweistext eingeben';range.deleteContents();range.insertNode(div);});
-            $('[data-ost570-cancel]',host).onclick=()=>host.hidden=true;
-            $('[data-ost570-save]',host).onclick=async()=>{
-                const status=$('[data-ost570-status]',host);status.textContent='Speichere …';
-                const latest=await get('differential');const index=latest.findIndex(x=>String(x.id)===String(current.id));
-                if(index<0){status.textContent='Leitsymptom nicht gefunden.';return;}
-                latest[index]={...latest[index],theory:$('[data-ost570-theory]',host).value,richContent:ost570CleanHtml(rich.innerHTML)};
-                const ok=await save('differential',latest);
-                if(ok){Object.assign(current,latest[index]);status.textContent='Gespeichert.';host.hidden=true;draw();}
-                else status.textContent='Speichern fehlgeschlagen. Änderungen nicht übernommen.';
-            };
-            host.scrollIntoView({behavior:'smooth',block:'nearest'});
         }
         input.addEventListener('input',draw);
         draw();
@@ -1312,11 +1442,12 @@
         const data=await get(store), idx=data.findIndex(x=>String(x.id)===String(id));
         if(idx<0){alert('Datensatz nicht gefunden.');return;}
         card.open=true;
+        card.classList.add('ost573-editing-card');
         let host=card.querySelector('.ost573-card-editor');
         if(!host){host=document.createElement('section');host.className='ost573-card-editor';card.querySelector('.cf563-entry-body')?.prepend(host);}
         host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
         const rich=host.querySelector('[data-ost573-card-rich]');rich.innerHTML=ost570CleanHtml(data[idx][textField]||'');ost573BindRich(host,rich);
-        host.querySelector('[data-ost573-card-cancel]').onclick=()=>host.remove();
+        host.querySelector('[data-ost573-card-cancel]').onclick=()=>{card.classList.remove('ost573-editing-card'); host.remove();};
         host.querySelector('[data-ost573-card-save]').onclick=async()=>{
             const state=host.querySelector('[data-ost573-card-status]');state.textContent='Speichere …';
             const latest=await get(store), index=latest.findIndex(x=>String(x.id)===String(id));
