@@ -124,5 +124,17 @@
       "background": [],
       "checklists": []
     }
+  },
+  {
+    "title": "Neue Leitlinie",
+    "category": "Leitlinie",
+    "steps": [],
+    "materials": {
+      "background": [],
+      "checklists": []
+    },
+    "sourceUrl": "https:test",
+    "source": "Test",
+    "id": "inline-mvo5wd4b-dhl3"
   }
 ]
