@@ -298,3 +298,17 @@ body:not(.ost576-edit-enabled) [data-ost575-skillgroup]{display:none!important}
 .ost575-link-row .ost576-link-actions{display:flex;gap:6px;flex-wrap:wrap}
 .ost576-modal .btn,.ost576-form-actions .btn{min-height:35px;font-size:13px;padding:7px 12px}
 @media(max-width:580px){.ost576-edit-switch{font-size:11px;max-width:125px;white-space:normal}.ost576-modal{padding:14px}.ost570-article-head{min-width:0!important}}
+
+/* Update 577: restore site shell, avoid out-of-flow toolbar/grid breakage */
+.ost577-switch-host{display:flex;justify-content:flex-end;align-items:center;clear:both;width:100%;box-sizing:border-box;margin:12px 0 18px}
+.ost577-switch-host .ost576-edit-switch{max-width:none;font:600 13px/1.3 system-ui,sans-serif;padding:10px 14px}
+body:not(.ost576-edit-enabled) .ost577-switch-host{display:flex!important}
+body.app-shell .cf548-home-menu,body.app-shell .cf548-tiles,body.app-shell .cf-menu-grid{max-width:100%}
+/* Do not draw generic duplicate edit pencils in task cards */
+body.app-shell .cf547-training .ost574-pencil,body.app-shell .cf547-materials .ost574-pencil{display:none!important}
+/* Expand training/material card summary text without unintended wrapping */
+.cf563-entry summary strong,.cf547-training-group summary strong{min-width:0;overflow-wrap:break-word;word-break:normal}
+/* Editorial forms must never become narrow side columns */
+.ost574-editable-card .ost574-fields{min-width:0;max-width:100%;width:100%;display:block;float:none;clear:both}
+.ost574-editable-card .ost574-fields .ost573-toolbar{max-width:100%;min-width:0;flex-wrap:wrap}
+.ost574-editable-card .ost574-fields .ost573-editable{min-width:0;width:100%;box-sizing:border-box}

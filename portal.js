@@ -1170,13 +1170,29 @@
       if(await ost574Pin()){sessionStorage.setItem('ost1020-edit-unlocked','1');ost576SyncEdit();}
     }
     function ost576InstallSwitch(){
-      if(document.querySelector('[data-ost576-edit-switch]'))return;
-      const target=document.querySelector('.topbar-inner')||document.querySelector('.topbar')||document.body;
-      const button=document.createElement('button');button.type='button';button.dataset.ost576EditSwitch='';button.className='ost576-edit-switch';
-      const paint=()=>{button.textContent=ost576IsEditing()?'🔒 Bearbeitung sperren':'✎ Bearbeitung freigeben';button.setAttribute('aria-pressed',String(ost576IsEditing()));};
-      button.onclick=async()=>{await ost576ToggleEdit();paint();};target.appendChild(button);paint();ost576SyncEdit();
+      // Only the start page may contain the unlock/lock control.
+      const home=/^(index\.html)?$/.test(location.pathname.split('/').pop());
+      if(!home){document.querySelector('[data-ost576-edit-switch]')?.remove();ost576SyncEdit();return;}
+      const area=document.querySelector('[data-main]');
+      if(!area)return;
+      // Never append to body/topbar: doing so broke flex/grid layouts.
+      let button=area.querySelector('[data-ost576-edit-switch]');
+      if(!button){
+        button=document.createElement('button');button.type='button';button.dataset.ost576EditSwitch='';
+        button.className='ost576-edit-switch';
+        const menu=area.querySelector('.cf548-menu,.cf548-tiles,.cf-menu-grid,.cf548-home-menu,[data-home-menu]');
+        const host=area.querySelector('[data-ost577-switch-host]')||document.createElement('div');
+        host.dataset.ost577SwitchHost='';host.className='ost577-switch-host';
+        if(menu?.parentElement)menu.insertAdjacentElement('afterend',host);
+        else area.appendChild(host);
+        host.appendChild(button);
+        button.onclick=async()=>{await ost576ToggleEdit();ost576InstallSwitch();};
+      }
+      button.textContent=ost576IsEditing()?'🔒 Bearbeitung beenden':'✎ Bearbeitung freigeben';
+      button.setAttribute('aria-pressed',String(ost576IsEditing()));
+      ost576SyncEdit();
     }
-    setTimeout(ost576InstallSwitch,0);
+    setTimeout(ost576InstallSwitch,200);
     function ost576Modal(title,fields,onSave){
       document.querySelector('.ost576-modal-backdrop')?.remove();
       const backdrop=document.createElement('div');backdrop.className='ost576-modal-backdrop';
@@ -1268,7 +1284,7 @@
       };
     }
     async function ost574Decorate(){
-      const path=location.pathname.split('/').pop();const cfg=ost574Config[path];if(!cfg || ost574Decorating)return;
+      const path=location.pathname.split('/').pop();if(['training.html','materialien.html'].includes(path))return;const cfg=ost574Config[path];if(!cfg || ost574Decorating)return;
       ost574Decorating=true;
       try{
         const data=await get(cfg.store);
@@ -1286,7 +1302,7 @@
         });
       }finally{ost574Decorating=false;}
     }
-    if(ost574Config[location.pathname.split('/').pop()]){
+    if(ost574Config[location.pathname.split('/').pop()] && !['training.html','materialien.html'].includes(location.pathname.split('/').pop())){
       const obs=new MutationObserver(()=>{if(!ost574Decorating)ost574Decorate();});
       obs.observe(document.querySelector('[data-main]')||document.body,{childList:true,subtree:true});
       setTimeout(ost574Decorate,100);
@@ -1570,7 +1586,7 @@
         function render() {
             $$('[data-training-tab]', main).forEach(b => b.classList.toggle('selected', b.dataset.trainingTab === selected));
             if (selected === 'skills') {
-                out.innerHTML = `<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g, i) => `<details class="cf547-training-group"><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div><button type="button" class="ost571-pencil ost575-skill-pencil" data-ost575-skillgroup="${i}">✎</button>${arr(g.skills).map((sk, j) => `<div class="ost576-skill-row"><button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button><button type="button" class="ost576-skill-pencil" data-ost576-skill data-g="${i}" data-s="${j}" aria-label="Skill bearbeiten">✎</button></div>`).join('')}</div></details>`).join('')}</div>`;
+                out.innerHTML = `<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g, i) => `<details class="cf547-training-group"><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div>${arr(g.skills).map((sk, j) => `<div class="ost576-skill-row"><button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button><button type="button" class="ost576-skill-pencil" data-ost576-skill data-g="${i}" data-s="${j}" aria-label="Skill bearbeiten">✎</button></div>`).join('')}</div></details>`).join('')}</div>`;
             }
             else {
                 const type = selected === 'devices' ? 'mpg' : 'checklists';

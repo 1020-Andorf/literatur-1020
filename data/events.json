@@ -15,17 +15,5 @@
       }
     ],
     "description": ""
-  },
-  {
-    "title": "Neuer Termin",
-    "date": "2026-10-25",
-    "time": "18:00",
-    "location": "",
-    "category": "Übungen",
-    "capacity": 10,
-    "description": "",
-    "attendees": [],
-    "waitlist": [],
-    "id": "inline-mvo3wm3w-3vrb"
   }
 ]
