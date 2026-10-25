@@ -125,7 +125,8 @@
         "cave": "Schmerzqualität alleine ist unzuverlässig. Hypotonie, neue Neurologie oder Zeichen der Minderperfusion sind hochgefährlich.",
         "info": "Einriss der Aortenintima oder intramurales Hämatom plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich CAVE: Schock und Organischämie.",
         "sourceUrl": "https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Aortensyndrom%20review%20diagnosis",
-        "sourceLabel": "Fachliteratur auf PubMed suchen"
+        "sourceLabel": "Fachliteratur auf PubMed suchen",
+        "articleHtml": "<h3>Einordnung</h3><div>Einriss der Aortenintima oder intramurales Hämatom plötzlich starker thorakaler/Rückenschmerz, Puls-/RR-Differenzen möglich CAVE: Schock und Organischämie.</div><h3>Pathophysiologie</h3><div>Einriss der Aortenintima oder intramurales Hämatom mit Gefahr der Organmalperfusion und Ruptur. Je nach Ausdehnung können Herz, Gehirn oder Extremitäten mitbetroffen sein.</div><h3>Befunde</h3><div>Typisch sind plötzlich stärkste thorakale oder dorsale Schmerzen, eventuell Puls- oder Blutdruckdifferenzen, Synkope oder neurologische Ausfälle.</div><h3>CAVE / Warnzeichen</h3><div>Schmerzqualität alleine ist unzuverlässig. Hypotonie, neue Neurologie oder Zeichen der Minderperfusion sind hochgefährlich.</div>"
       },
       {
         "name": "Lungenembolie",
