@@ -1248,7 +1248,8 @@
       const mainTitle=entry.querySelector(config.title);
       if(!mainTitle){alert('Titel nicht gefunden.');return;}
       entry.dataset.ost574Editing='yes';
-      entry.addEventListener('click',ev=>{if(entry.dataset.ost574Editing==='yes' && ev.target.closest('.ost574-fields')){ev.preventDefault();ev.stopPropagation();}},true);
+      // Editor-Steuerelemente müssen ihre eigenen Click-Handler erhalten.
+      // Kein Capture-Listener: dieser verhinderte Speichern, Abbrechen und Löschen.
       const originalTitle=mainTitle.innerHTML;
       const originalSnapshot=[...entry.children].filter(el=>!el.matches('.ost574-tools,.ost574-fields')).map(el=>[el,el.hidden]);
       // Titel wird direkt an seiner bisherigen Stelle bearbeitet.
@@ -3143,6 +3144,7 @@
     // Anwendungsstart und Routing
     // ------------------------------------------------------------------------
     async function init() {
+        ost576SyncEdit();
         chrome();
         syncHeaderTitle();
         rememberPage();
