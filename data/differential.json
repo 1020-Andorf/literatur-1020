@@ -191,13 +191,16 @@
     "related": [],
     "sectionTones": {
       "theory": "plain",
-      "redflags": "info"
+      "redflags": "info",
+      "sources": "plain"
     },
     "sectionTitles": {
       "theory": "Überblick",
-      "redflags": "⚠ Red Flags · Warnzeichen"
+      "redflags": "⚠ Red Flags · Warnzeichen",
+      "sources": "Quellen und weiterführende Informationen"
     },
-    "redflagsHtml": "<ul><li>Hypotonie</li><li>Kaltschweißigkeit</li><li>Neurologische Defizite</li><li>Schwere Dyspnoe</li></ul>"
+    "redflagsHtml": "<ul><li>Hypotonie</li><li>Kaltschweißigkeit</li><li>Neurologische Defizite</li><li>Schwere Dyspnoe</li></ul>",
+    "sourcesHtml": "<ul><li><a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis\" rel=\"noopener noreferrer\" target=\"_blank\">Fachliteratur auf PubMed suchen</a></li></ul>"
   },
   {
     "id": "bewusstsein",
