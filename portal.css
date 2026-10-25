@@ -375,3 +375,47 @@ body.app-shell .cf548-home .ost577-switch-host {display:flex!important; justify-
 .ost582-delete{margin-right:auto!important;color:#a62137!important;border-color:#e3acb5!important}
 .ost579-document-card>summary{pointer-events:none!important}.ost579-document-card .cf563-entry-body{display:block!important}
 @media(max-width:640px){.ost576-modal-backdrop{align-items:flex-start!important}.ost576-modal{margin:0!important}.ost574-fields .ost573-toolbar{overflow-x:auto}}
+/* 583: Edit controls follow the same design and do not affect normal navigation. */
+.ost583-tile-wrap{position:relative;width:100%;min-width:0}
+.ost583-tile-wrap>.ost572-tile{box-sizing:border-box;width:100%!important;max-width:none!important;padding-right:58px!important}
+.ost583-tile-pencil{position:absolute;right:14px;top:50%;transform:translateY(-50%);height:34px;width:34px;display:grid;place-items:center;border:1px solid #bfd3dd;background:#fff;color:#17445c;border-radius:8px;z-index:2;cursor:pointer}
+body:not(.ost576-edit-enabled) .ost583-tile-pencil{display:none!important}
+.ost583-tile-wrap .ost572-chevron{margin-right:24px}
+.ost576-modal .ost576-form-actions button,.ost574-fields .ost570-actions button{max-width:100%;white-space:normal}
+/* Update 583 – consistent inline editing and document lists */
+.ost583-modal{color:#183d56}.ost583-modal-field{display:flex;flex-direction:column;gap:7px;min-width:0}.ost583-modal-field>label{font-weight:650;font-size:.9rem}.ost583-modal .ost573-toolbar{position:static;margin:8px 0}
+.ost583-modal-rich,.ost583-doc-description{border:1px solid #d2e1e8;border-radius:12px;background:#fff;padding:10px;min-width:0;box-sizing:border-box}
+.ost583-modal .ost573-editable,.ost583-doc-description .ost573-editable{min-height:100px;overflow-wrap:anywhere;width:100%;max-width:100%;box-sizing:border-box}
+.ost583-skill-editor{flex:1;min-width:0;width:100%;padding:14px;border-radius:12px;background:#f8fbfd;border:1px solid #cbdde7;box-sizing:border-box}
+.ost583-skill-editor input{width:100%;box-sizing:border-box;max-width:100%;min-width:0}
+.ost583-skill-section{padding:12px 0;border-top:1px solid #d6e4eb}.ost583-skill-section-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}.ost583-skill-section-head label{flex:1;min-width:170px}.ost583-skill-section-head>div{display:flex;flex-wrap:wrap;gap:5px}
+.ost583-skill-editor label{display:grid;gap:5px;font-weight:600}.ost583-skill-editor .ost573-editable{min-height:110px;width:100%;box-sizing:border-box}
+body.app-shell .ost-tonal-list .row-card{display:grid!important;grid-template-columns:42px minmax(0,1fr) 18px!important;align-items:center!important;gap:12px!important;width:100%!important;min-height:68px!important;padding:13px 16px!important;text-align:left!important}
+body.app-shell .ost-tonal-list .row-card>.row-icon{grid-column:1!important;grid-row:1!important;position:static!important;display:grid!important;place-items:center!important}
+body.app-shell .ost-tonal-list .row-card>span:nth-child(2){grid-column:2!important;grid-row:1!important;min-width:0!important;display:block!important}
+body.app-shell .ost-tonal-list .row-card strong{display:block!important;white-space:normal!important;overflow-wrap:anywhere!important;line-height:1.4!important;color:#183e58!important}
+body.app-shell .ost-tonal-list .row-card>.arrow{grid-column:3!important;grid-row:1!important}
+.ost583-home-news-row,.ost583-reading-row{display:flex;width:100%;min-width:0;align-items:stretch;gap:7px;position:relative}
+.ost583-home-news-row>[data-news],.ost583-reading-row>.cf548-reading-item{flex:1;min-width:0;width:100%;max-width:none}
+.ost583-home-pencil{flex:none;align-self:center;border:1px solid #bccfdc;color:#184c66;border-radius:8px;background:#fff;width:36px;height:36px;cursor:pointer;font-size:18px}
+.ost583-home-add{border:1px solid #b8cfda;background:#fff;color:#184b63;font-weight:bold;border-radius:8px;width:31px;height:31px;cursor:pointer}
+body:not(.ost576-edit-enabled) .ost583-home-pencil,body:not(.ost576-edit-enabled) .ost583-home-add{display:none!important}
+body:not(.ost576-edit-enabled) .ost583-no-reading{display:none!important}
+.ost583-home-editor{width:100%;min-width:0;padding:14px;border:1px solid #cadbe5;border-radius:12px;background:#f7fafc;box-sizing:border-box}
+.ost583-home-editor label{display:block;margin:8px 0;font-weight:600}.ost583-home-editor input{max-width:100%;width:100%;box-sizing:border-box;padding:10px;border-radius:9px;border:1px solid #c3d5e0}
+.ost583-home-editor .ost573-editable{width:100%;min-height:90px;box-sizing:border-box}
+.ost583-home-editor .ost570-actions{display:flex;gap:7px;flex-wrap:wrap}
+.ost583-check{display:flex!important;flex-direction:row!important;align-items:center!important;gap:9px}.ost583-check input{width:18px!important;min-width:18px!important;height:18px}
+.ost583-doc-description .ost573-editable{min-height:90px}.ost575-link-row{width:100%;min-width:0}
+.ost570-hub .cf551-organ-nav,.ost570-hub .cf551-category-nav{width:100%!important;max-width:100%!important;grid-template-columns:minmax(0,1fr)!important}
+.ost570-hub .ost583-tile-wrap{display:block;width:100%!important}
+@media(max-width:600px){.ost583-home-editor,.ost583-skill-editor{padding:10px}.ost583-skill-section-head label{min-width:100%}.ost583-modal{padding:12px!important}}
+
+/* Rich-Text toolbar and uploads: compact on desktop and phone */
+.ost583-color-label,.ost583-rich-upload{display:inline-flex;align-items:center;gap:5px;font-size:.8rem;color:#23465b;border:1px solid #bfd3df;border-radius:7px;background:#fff;padding:6px 8px;cursor:pointer}
+.ost583-color-label input[type=color]{width:27px;height:24px;padding:0;border:0;background:transparent;cursor:pointer}
+.ost583-rich-upload input[type=file]{display:none}
+.ost573-editable img,.ost583-rich-render img,.cf563-rich img,.ost583-skill-editor img{max-width:100%;height:auto}
+.ost573-toolbar{min-width:0;box-sizing:border-box;width:100%}
+.ost573-toolbar select{width:auto;min-width:105px}
+.ost583-rt-status{font-size:.8rem;color:#4b697c;flex:1}

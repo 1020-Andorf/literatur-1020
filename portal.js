@@ -65,6 +65,10 @@
                     return;
                 }
                 const params = new URLSearchParams(location.search);
+                if(page==='training'&&params.has('typ')){location.href='training.html';return;}
+                if(page==='materials'&&params.has('typ')){location.href='materialien.html';return;}
+                if(page==='events'&&(params.has('datum')||params.has('month'))){location.href='termine.html';return;}
+                if(page==='literature'){location.href='materialien.html?typ=literature';return;}
                 if (page === 'modules' && params.has('id')) {
                     params.delete('id');
                     location.href = 'themen.html?' + params.toString();
@@ -236,8 +240,8 @@
         base.forEach(x => { if (!x.theory && extras[x.id])
             x.theory = extras[x.id]; });
         const ids = new Map(incoming.map(x => [x.id, x]));
-        const lockedTitles = new Set(['allergie', 'stroke', 'trauma']);
-        const lockedGroups = new Set(['allergie']);
+        const lockedTitles = new Set();
+        const lockedGroups = new Set();
         const result = base.map(b => {
             const old = ids.get(b.id);
             if (!old)
@@ -252,7 +256,9 @@
             });
             const canon = n => String(n || '').toLocaleLowerCase('de').replace(/[^a-z0-9äöüß]/g, '').replace(/^acs$/, 'akuteskoronarsyndrom').replace(/^aaa$/, 'rupturierteaortenaneurysma');
             const newNames = new Set(mergedCauses.map(c => canon(c.name)));
-            return { ...b, ...old, title: lockedTitles.has(b.id) ? b.title : (old.title || b.title), group: lockedGroups.has(b.id) ? b.group : (old.group || b.group), causes: [...mergedCauses, ...(b.id === 'allergie' ? [] : oldCauses.filter(c => !newNames.has(canon(c.name))))] };
+            const deleted=new Set(arr(old.deletedCauseNames).map(canon));
+            const causes=[...mergedCauses, ...(b.id === 'allergie' ? [] : oldCauses.filter(c => !newNames.has(canon(c.name))))].filter(c=>!deleted.has(canon(c.name)));
+            return { ...b, ...old, title: lockedTitles.has(b.id) ? b.title : (old.title || b.title), group: lockedGroups.has(b.id) ? b.group : (old.group || b.group), causes };
         });
         for (const x of result) {
             const seen = new Set();
@@ -452,7 +458,7 @@
         if (!keep)
             banner.remove();
     }
-    function newsHtml(n, i = '') { const map = { Lehrmeinung: '🔄', Leitlinie: '📋', Ausbildung: '🎓', Termin: '📅', Simulationstraining: '🖥️', Organisation: '📣', Literatur: '📚' }; const c = n.category || 'Organisation'; return `<button class="news-item news-title-only" data-news="${i}"><h3>${esc(n.title)}</h3><span class="arrow" aria-hidden="true">›</span></button>`; }
+    function newsHtml(n, i = '') { const map = { Lehrmeinung: '🔄', Leitlinie: '📋', Ausbildung: '🎓', Termin: '📅', Simulationstraining: '🖥️', Organisation: '📣', Literatur: '📚' }; const c = n.category || 'Organisation'; return `<button class="news-item news-title-only" data-ost574-id="${esc(n.id)}" data-news="${i}"><h3>${esc(n.title)}</h3><span class="arrow" aria-hidden="true">›</span></button>`; }
     const RECENT_KEY = 'ost1020-recent-pages', FAV_KEY = 'ost1020-favorites';
     function rememberPage() { if (page === 'home' || page === 'editor')
         return; const labels = { home: 'Start', topics: 'Leitsymptome', wissen: 'Leitsymptome', news: 'Aktuelles', literature: 'Literatur-Archiv', abcde: 'ABCDE-Schema', differential: 'Diagnostik', skills: 'Training · Skills', algorithms: 'Algorithmen & Merkhilfen', meetings: 'Dienstbesprechungen', changes: 'Lehrmeinungsänderungen', events: 'Termine', guide: 'Quick Guide Simulation', materials: 'Materialien' }; const href = location.pathname.split('/').pop() || 'index.html'; let r = []; try {
@@ -499,16 +505,15 @@
         const external = a => { const u = String(a.freeUrl || a.publisherUrl || ''); return /^https?:\/\//i.test(u) ? u : ''; };
         $('[data-main]').innerHTML = `<div class="cf-home cf548-home"><header class="cf548-welcome"><h1>Wissenssammlung <span>OST 1020</span></h1></header>
  <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
- <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
+ <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a><button class="ost583-home-add" type="button" data-ost583-home-add="news" aria-label="Meldung hinzufügen">＋</button></div><div class="cf-simple-list">${active.map((n, i) => `<div class="ost583-home-news-row"><button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button><button type="button" class="ost583-home-pencil" data-ost583-home-news="${esc(n.id)}" aria-label="${esc(n.title)} bearbeiten">✎</button></div>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
  <section class="cf-section cf548-menu"><div class="cf-section-title"><h2>Menü</h2></div><nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass, title, href, ico]) => `<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong></a>`).join('')}</nav></section>
- <section class="cf-section cf548-reading" data-reading-section><div class="cf-section-title"><h2>Lesetipps</h2><a href="literatur.html">Literatur-Archiv →</a></div><div class="cf548-reading-list">${picks.length ? picks.map(a => { const link = external(a); return `<a class="cf548-reading-item" href="${link ? esc(link) : 'literatur.html'}" ${link ? 'target="_blank" rel="noopener noreferrer"' : ''}><span class="cf548-reading-icon">${ostIcon('book')}</span><span><strong>${esc(a.title)}</strong>${a.why ? `<small>${esc(String(a.why).replace(/[*#\[\]]/g, '').slice(0, 110))}</small>` : ''}</span><b>↗</b></a>`; }).join('') : '<p class="cf-muted">Lesetipps lassen sich in der Redaktion unter Literatur & Lesetipps auswählen.</p>'}</div></section>
+ <section class="cf-section cf548-reading" data-reading-section><div class="cf-section-title"><h2>Lesetipps</h2><a href="literatur.html">Literatur-Archiv →</a><button class="ost583-home-add" type="button" data-ost583-home-add="articles" aria-label="Lesetipp hinzufügen">＋</button></div><div class="cf548-reading-list">${picks.length ? picks.map(a => { const link = external(a); return `<div class="ost583-reading-row"><a class="cf548-reading-item" href="${link ? esc(link) : 'literatur.html'}" ${link ? 'target="_blank" rel="noopener noreferrer"' : ''}><span class="cf548-reading-icon">${ostIcon('book')}</span><span><strong>${esc(a.title)}</strong>${a.why ? `<small>${esc(String(a.why).replace(/[*#\[\]]/g, '').slice(0, 110))}</small>` : ''}</span><b>↗</b></a><button class="ost583-home-pencil" type="button" data-ost583-home-reading="${esc(a.id)}" aria-label="${esc(a.title)} bearbeiten">✎</button></div>`; }).join('') : '<p class="cf-muted">Lesetipps lassen sich in der Redaktion unter Literatur & Lesetipps auswählen.</p>'}</div></section>
  <section class="cf-section cf548-dates" data-events-section><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div>${weekCalendar}<div class="cf-simple-list">${upcoming.map(e => `<a href="termine.html"><span>${esc(e.title)}</span><small>${esc(e.date || '')}</small></a>`).join('') || '<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
  </div>`;
         const switchHost=document.createElement('div');switchHost.className='ost577-switch-host';switchHost.dataset.ost577SwitchHost='';
         $('[data-events-section]')?.insertAdjacentElement('afterend',switchHost);
         ost576InstallSwitch();
-        if (!picks.length)
-            $('[data-reading-section]')?.remove();
+        if(!picks.length)$('[data-reading-section]')?.classList.add('ost583-no-reading');
         const q = $('[data-global-search]'), results = $('[data-search-results]');
         let cat = [];
         contentCatalog().then(data => { cat = data; if (q.value)
@@ -518,6 +523,39 @@
             return;
         } const hits = catalogSearch(cat, term).filter(x => !/simulation(?:-faq)?\.html/i.test(x.href || '')); results.innerHTML = hits.map(x => `<a href="${esc(x.href)}"><strong>${esc(x.title)}</strong><small>${esc(LINK_TYPES[x.type]?.[0] || 'Thema')}</small></a>`).join('') || '<p>Keine Treffer.</p>'; }
         q.oninput = draw;
+        const homeRoot=$('[data-main]');
+        homeRoot.addEventListener('click',async e=>{
+          const add=e.target.closest('[data-ost583-home-add]');
+          if(add){e.preventDefault();e.stopPropagation();const st=add.dataset.ost583HomeAdd;
+            ost575Create(st,st==='articles'?{featured:true,activeSince:today,added:today}:{});return;
+          }
+          const pencil=e.target.closest('[data-ost583-home-news],[data-ost583-home-reading]');
+          if(!pencil)return;
+          e.preventDefault();e.stopPropagation();if(!await ost574Pin())return;
+          const isNews=pencil.hasAttribute('data-ost583-home-news');const store=isNews?'news':'articles';
+          const id=isNews?pencil.dataset.ost583HomeNews:pencil.dataset.ost583HomeReading;
+          const list=await get(store),item=list.find(x=>String(x.id)===String(id));if(!item)return;
+          const row=pencil.closest(isNews?'.ost583-home-news-row':'.ost583-reading-row');
+          if(!row||row.dataset.editing)return;row.dataset.editing='1';
+          const prior=row.innerHTML;
+          row.innerHTML=`<div class="ost583-home-editor"><label>Titel<input data-home-title value="${esc(item.title||'')}"></label><label>${isNews?'Meldung':'Beschreibung / Lesetipp'}</label>${ost573Toolbar()}<div class="ost573-editable" contenteditable="true" data-home-rich>${ost570CleanHtml(item[isNews?'text':'why']||'')}</div>${isNews?`<label>Datum<input type="date" data-home-date value="${esc(item.date||today)}"></label>`:''}<div class="ost570-actions"><button type="button" class="btn primary" data-home-save>Speichern</button><button type="button" class="btn" data-home-cancel>Abbrechen</button><button type="button" class="btn danger" data-home-delete>Löschen</button><span data-home-status role="status"></span></div></div>`;
+          const panel=row.querySelector('.ost583-home-editor'),editor=panel.querySelector('[data-home-rich]');ost573BindRich(panel,editor);
+          const restore=()=>{row.innerHTML=prior;delete row.dataset.editing;};
+          panel.querySelector('[data-home-cancel]').onclick=restore;
+          panel.querySelector('[data-home-delete]').onclick=async()=>{
+            if(!confirm('Eintrag endgültig löschen?'))return;const latest=await get(store);
+            if(await save(store,latest.filter(x=>String(x.id)!==String(id))))location.reload();
+            else panel.querySelector('[data-home-status]').textContent='Löschen fehlgeschlagen.';
+          };
+          panel.querySelector('[data-home-save]').onclick=async()=>{
+            const latest=await get(store),idx=latest.findIndex(x=>String(x.id)===String(id));if(idx<0)return;
+            const title=panel.querySelector('[data-home-title]').value.trim();if(!title){panel.querySelector('[data-home-status]').textContent='Titel erforderlich.';return;}
+            latest[idx]={...latest[idx],title,[isNews?'text':'why']:ost570CleanHtml(editor.innerHTML)};
+            if(isNews)latest[idx].date=panel.querySelector('[data-home-date]').value;
+            if(await save(store,latest))location.reload();
+            else panel.querySelector('[data-home-status]').textContent='Speichern fehlgeschlagen.';
+          };
+        });
         $('[data-main]').addEventListener('click', e => { const b = e.target.closest('[data-news]'); if (!b)
             return; const n = active[+b.dataset.news]; if (n)
             open(n.title, `<section class="overlay-section news-detail"><div class="ost-news-rich">${renderModuleText(n.text || '')}</div></section>`, { news: true }); });
@@ -591,6 +629,7 @@
         return `<div class="ost-model-stage ${mode === 'diagnosis' ? 'ost-diagnosis-model' : 'ost-anatomy-model'}"><div class="ost-model-art"><img src="${BODY_MODEL_IMAGE}" alt="Anatomisches Körpermodell, Organe direkt antippen" draggable="false" loading="eager" onerror="this.onerror=null;this.src='assets/anatomie-koerpermodell.png'">${elements}</div><small class="ost-model-credit">Anatomische Darstellung: DBCLS / Togopic, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> (angepasste Darstellung)</small></div>`;
     }
     function renderModuleText(raw) {
+        if(/^\s*<(?:p|div|ul|ol|h[2-4]|blockquote|figure|font|span|strong|em|a|img)(?:\s|>)/i.test(String(raw||'')))return ost570CleanHtml(raw);
         const lines = String(raw || '').split(/\r?\n/);
         let list = false;
         const out = [];
@@ -1128,7 +1167,16 @@
             const el = document.createElement(tag);
             if (tag === 'a') { try {const u = new URL(node.getAttribute('href') || '', location.href); if (['https:','http:'].includes(u.protocol)) {el.href=u.href;el.rel='noopener noreferrer';el.target='_blank';}} catch(e){} }
             if (tag === 'img') { try {const u = new URL(node.getAttribute('src') || '', location.href);if(['https:','http:'].includes(u.protocol)){el.src=u.href;el.alt=node.getAttribute('alt') || 'Illustration';el.loading='lazy';}} catch(e){} }
-            if (tag === 'font') { const face=node.getAttribute('face');if(['Arial','Georgia','Verdana','Times New Roman','Courier New'].includes(face))el.setAttribute('face',face);const size=Number(node.getAttribute('size'));if(size>=1&&size<=7)el.setAttribute('size',String(size));}
+            if (tag === 'font') { const face=node.getAttribute('face');if(['Arial','Georgia','Verdana','Times New Roman','Courier New'].includes(face))el.setAttribute('face',face);const size=Number(node.getAttribute('size'));if(size>=1&&size<=7)el.setAttribute('size',String(size));const color=node.getAttribute('color')||'';if(/^#[a-f0-9]{6}$/i.test(color))el.setAttribute('color',color);}
+            // Safe, whitelisted CSS for rich text: no arbitrary style URLs or layout overrides.
+            const colorOk=v=>/^#[a-f0-9]{3,8}$/i.test(v)||/^rgba?\(\s*[\d.,%\s]+\)$/i.test(v);
+            if(['p','div','span','h2','h3','h4','li','blockquote'].includes(tag)){
+              if(colorOk(node.style.color))el.style.color=node.style.color;
+              if(colorOk(node.style.backgroundColor))el.style.backgroundColor=node.style.backgroundColor;
+              if(['left','center','right','justify'].includes(node.style.textAlign))el.style.textAlign=node.style.textAlign;
+              if(/^(?:[8-9]|[1-4]\d|50)px$/.test(node.style.fontSize))el.style.fontSize=node.style.fontSize;
+              const family=node.style.fontFamily.replace(/["']/g,'');if(['Arial','Georgia','Verdana','Times New Roman','Courier New'].includes(family))el.style.fontFamily=family;
+            }
             if (node.dataset?.callout && ['danger','info','note','success'].includes(node.dataset.callout)) el.dataset.callout=node.dataset.callout;
             for (const child of [...node.childNodes]) el.appendChild(clean(child));
             return el;
@@ -1137,14 +1185,31 @@
         for(const node of [...input.content.childNodes]) wrap.appendChild(clean(node));
         return wrap.innerHTML;
     }
-        const ost573Toolbar = () => `<div class="ost573-toolbar" role="toolbar" aria-label="Text formatieren"><button type="button" data-rt="bold"><b>F</b></button><button type="button" data-rt="italic"><i>K</i></button><button type="button" data-rt="underline"><u>U</u></button><button type="button" data-rt="insertUnorderedList">• Liste</button><button type="button" data-rt="insertOrderedList">1. Liste</button><button type="button" data-rt="formatBlock" data-val="H3">Überschrift</button><button type="button" data-rt="formatBlock" data-val="P">Absatz</button><select data-rt-font aria-label="Schriftart"><option value="">Schriftart</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Verdana">Verdana</option><option value="Times New Roman">Times New Roman</option><option value="Courier New">Courier New</option></select><select data-rt-size aria-label="Schriftgröße"><option value="">Größe</option><option value="2">Klein</option><option value="3">Normal</option><option value="4">Groß</option><option value="5">Sehr groß</option></select><button type="button" data-rt-link>Link</button><button type="button" data-rt-img>Bild-URL</button></div>`;
+        const ost573Toolbar = () => `<div class="ost573-toolbar" role="toolbar" aria-label="Text formatieren"><button type="button" data-rt="bold" title="Fett"><b>F</b></button><button type="button" data-rt="italic" title="Kursiv"><i>K</i></button><button type="button" data-rt="underline" title="Unterstrichen"><u>U</u></button><button type="button" data-rt="insertUnorderedList" title="Aufzählung">• Liste</button><button type="button" data-rt="insertOrderedList" title="Nummerierung">1. Liste</button><button type="button" data-rt="formatBlock" data-val="H3" title="Überschrift">H3</button><button type="button" data-rt="formatBlock" data-val="P" title="Normaler Absatz">Absatz</button><select data-rt-font aria-label="Schriftart"><option value="">Schriftart</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Verdana">Verdana</option><option value="Times New Roman">Times New Roman</option><option value="Courier New">Courier New</option></select><select data-rt-size aria-label="Schriftgröße"><option value="">Größe</option><option value="2">Klein</option><option value="3">Normal</option><option value="4">Groß</option><option value="5">Sehr groß</option></select><label class="ost583-color-label" title="Textfarbe">Text <input type="color" value="#193c55" data-rt-color aria-label="Textfarbe"></label><label class="ost583-color-label" title="Hintergrundfarbe">Marker <input type="color" value="#fff4a7" data-rt-highlight aria-label="Text hervorheben"></label><button type="button" data-rt-link>Link</button><button type="button" data-rt-img>Bild-URL</button><label class="ost583-rich-upload">Bild hochladen<input type="file" accept="image/jpeg,image/png,image/webp" data-rt-upload></label><span class="ost583-rt-status" data-rt-status aria-live="polite"></span></div>`;
         function ost573BindRich(host, editor){
-            $$("[data-rt]",host).forEach(b=>b.addEventListener('mousedown',e=>e.preventDefault()));
-            $$("[data-rt]",host).forEach(b=>b.onclick=()=>{editor.focus();document.execCommand(b.dataset.rt,false,b.dataset.val||null);});
-            $('[data-rt-font]',host).onchange=e=>{editor.focus();document.execCommand('fontName',false,e.target.value);};
-            $('[data-rt-size]',host).onchange=e=>{editor.focus();document.execCommand('fontSize',false,e.target.value);};
-            $('[data-rt-link]',host).onclick=()=>{const u=prompt('HTTPS-Link:');if(!u)return;try{const x=new URL(u);if(x.protocol!=='https:')throw Error();editor.focus();document.execCommand('createLink',false,x.href);}catch{alert('Bitte eine gültige HTTPS-Adresse eingeben.');}};
-            $('[data-rt-img]',host).onclick=()=>{const u=prompt('Öffentliche HTTPS-Bildadresse:');if(!u)return;try{const x=new URL(u);if(x.protocol!=='https:')throw Error();editor.focus();document.execCommand('insertImage',false,x.href);}catch{alert('Bitte eine gültige HTTPS-Bildadresse eingeben.');}};
+            if(!host||!editor)return;
+            let savedRange=null;
+            const capture=()=>{const sel=window.getSelection();if(sel?.rangeCount&&editor.contains(sel.anchorNode))savedRange=sel.getRangeAt(0).cloneRange();};
+            const restore=()=>{editor.focus();if(!savedRange)return;try{const sel=window.getSelection();sel.removeAllRanges();sel.addRange(savedRange);}catch(e){}};
+            const apply=(cmd,value=null)=>{restore();document.execCommand(cmd,false,value);capture();};
+            ['keyup','mouseup','input','touchend'].forEach(kind=>editor.addEventListener(kind,capture));
+            $$('[data-rt]',host).forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.onclick=()=>apply(b.dataset.rt,b.dataset.val||null);});
+            const font=$('[data-rt-font]',host),size=$('[data-rt-size]',host),color=$('[data-rt-color]',host),highlight=$('[data-rt-highlight]',host);
+            if(font)font.onchange=e=>{if(e.target.value)apply('fontName',e.target.value);};
+            if(size)size.onchange=e=>{if(e.target.value)apply('fontSize',e.target.value);};
+            if(color)color.oninput=e=>apply('foreColor',e.target.value);
+            if(highlight)highlight.oninput=e=>apply('hiliteColor',e.target.value);
+            const link=$('[data-rt-link]',host);if(link)link.onclick=()=>{const url=prompt('HTTPS-Link:');if(!url)return;try{const u=new URL(url);if(u.protocol!=='https:')throw Error();apply('createLink',u.href);}catch{alert('Bitte eine gültige HTTPS-Adresse eingeben.');}};
+            const img=$('[data-rt-img]',host);if(img)img.onclick=()=>{const url=prompt('Öffentliche HTTPS-Bildadresse:');if(!url)return;try{const u=new URL(url);if(u.protocol!=='https:')throw Error();apply('insertImage',u.href);}catch{alert('Bitte eine gültige HTTPS-Bildadresse eingeben.');}};
+            const upload=$('[data-rt-upload]',host);if(upload)upload.onchange=async()=>{
+              const file=upload.files?.[0],status=$('[data-rt-status]',host);if(!file)return;
+              if(!['image/jpeg','image/png','image/webp'].includes(file.type)){if(status)status.textContent='Nur JPG, PNG oder WebP.';return;}
+              if(file.size>12*1024*1024){if(status)status.textContent='Bild zu groß (max. 12 MB).';return;}
+              if(status)status.textContent='Bild wird hochgeladen …';upload.disabled=true;
+              try{const url=await uploadMedia(file);apply('insertImage',url);if(status)status.textContent='Bild eingefügt.';}
+              catch(e){if(status)status.textContent='Upload fehlgeschlagen: '+(e.message||'Worker prüfen');}
+              finally{upload.disabled=false;upload.value='';}
+            };
         }
     // Update 574: gemeinsame PIN-geschützte Bearbeitung direkt an bestehenden Einträgen.
     // Spezialfelder bleiben separat; Anmeldelisten und Anhänge werden nie überschrieben.
@@ -1208,19 +1273,56 @@
     function ost576Modal(title,fields,onSave){
       document.querySelector('.ost576-modal-backdrop')?.remove();
       const backdrop=document.createElement('div');backdrop.className='ost576-modal-backdrop';
-      backdrop.innerHTML=`<section class="ost576-modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><header><h2>${esc(title)}</h2><button class="ost576-close" type="button" aria-label="Schließen">×</button></header><form class="ost576-form">${fields.map(f=>`<label>${esc(f.label||f.key)}${f.type==='textarea'?`<textarea name="${esc(f.key)}" rows="4">${esc(f.value||'')}</textarea>`:`<input name="${esc(f.key)}" type="${f.type||'text'}" value="${esc(f.value??'')}" ${f.required?'required':''}>`}</label>`).join('')}<div class="ost576-form-actions"><button class="btn primary" type="submit">Speichern</button><button class="btn" type="button" data-cancel>Abbrechen</button><span role="status" data-status></span></div></form></section>`;
-      document.body.appendChild(backdrop);const close=()=>backdrop.remove();
-      backdrop.querySelector('.ost576-close').onclick=close;backdrop.querySelector('[data-cancel]').onclick=close;
+      const showField=f=>{
+        const key=esc(f.key),label=esc(f.label||f.key),value=esc(f.value??'');
+        let control='';
+        if(f.type==='textarea')control=`<textarea name="${key}" rows="5" ${f.required?'required':''}>${value}</textarea>`;
+        else if(f.type==='rich')control=`<div class="ost583-modal-rich">${ost573Toolbar()}<div class="ost573-editable" data-ost583-rich="${key}" contenteditable="true" role="textbox" aria-label="${label}">${ost570CleanHtml(f.value||'')}</div></div>`;
+        else if(f.type==='select')control=`<select name="${key}">${(f.options||[]).map(o=>`<option value="${esc(o.value)}" ${String(o.value)===String(f.value)?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;
+        else control=`<input name="${key}" type="${f.type||'text'}" value="${value}" ${f.required?'required':''}>`;
+        return `<div class="ost583-modal-field"><label for="ost583-${key}">${label}</label>${control}</div>`;
+      };
+      backdrop.innerHTML=`<section class="ost576-modal ost583-modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><header><h2>${esc(title)}</h2><button class="ost576-close" type="button" aria-label="Schließen">×</button></header><form class="ost576-form">${fields.map(showField).join('')}<div class="ost576-form-actions"><button class="btn primary" type="submit">Speichern</button><button class="btn" type="button" data-cancel>Abbrechen</button><span role="status" data-status></span></div></form></section>`;
+      document.body.appendChild(backdrop);
+      backdrop.querySelectorAll('.ost583-modal-rich').forEach(host=>ost573BindRich(host,host.querySelector('[contenteditable]')));
+      const close=()=>{backdrop.remove();document.removeEventListener('keydown',escKey);};
+      const escKey=e=>{if(e.key==='Escape'&&!e.isComposing){e.stopPropagation();close();}};
+      document.addEventListener('keydown',escKey);
+      backdrop.querySelector('.ost576-close').onclick=close;
+      backdrop.querySelector('[data-cancel]').onclick=close;
       backdrop.addEventListener('click',e=>{if(e.target===backdrop)close();});
-      backdrop.querySelector('form').onsubmit=async e=>{e.preventDefault();const form=e.currentTarget,submit=form.querySelector('[type=submit]'),status=backdrop.querySelector('[data-status]');submit.disabled=true;status.textContent='Speichere …';const vals=Object.fromEntries(new FormData(form).entries());try{if(await onSave(vals))close();else status.textContent='Speichern fehlgeschlagen. Bitte Verbindung und PIN prüfen.';}catch(err){status.textContent=err.message||'Speichern fehlgeschlagen.';}finally{if(submit.isConnected)submit.disabled=false;}};
-      backdrop.querySelector('input,textarea')?.focus();return backdrop;
+      backdrop.querySelector('form').onsubmit=async e=>{
+        e.preventDefault();const form=e.currentTarget,submit=form.querySelector('[type=submit]'),status=backdrop.querySelector('[data-status]');
+        if(!form.reportValidity())return;
+        submit.disabled=true;status.textContent='Speichere …';
+        const vals=Object.fromEntries(new FormData(form).entries());
+        backdrop.querySelectorAll('[data-ost583-rich]').forEach(node=>vals[node.dataset.ost583Rich]=ost570CleanHtml(node.innerHTML));
+        try{if(await onSave(vals))close();else status.textContent='Speichern fehlgeschlagen. Bitte Verbindung und PIN prüfen.';}
+        catch(err){status.textContent=err.message||'Speichern fehlgeschlagen.';}
+        finally{if(submit.isConnected)submit.disabled=false;}
+      };
+      backdrop.querySelector('input,textarea,select,[contenteditable]')?.focus();return backdrop;
     }
     async function ost575Create(store,overrides={}){
       if(!await ost574Pin())return;
       const item={...ost575Defaults[store],...overrides,id:'inline-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6)};
-      const map={news:['title','date','category','text'],events:['title','date','time','location','category','capacity','description'],changes:['title','date','category','old','new','source'],meetings:['title','date','category','speaker','summary'],articles:['title','authors','journal','year','why','freeUrl'],differential:['title','group','theory'],knowledgeModules:['title','summary','documentUrl'],algorithms:['title','sourceUrl','source'],skills:['name']};
-      const keys=map[store]||['title'];const fields=keys.map(k=>({key:k,label:({title:'Titel',name:'Skillgruppe',date:'Datum',time:'Uhrzeit',location:'Ort',category:'Kategorie',capacity:'Teilnehmerlimit',description:'Beschreibung',summary:'Untertitel',documentUrl:'PDF-/Web-Link',sourceUrl:'PDF-/Web-Link',old:'Bisherige Lehrmeinung',new:'Neue Lehrmeinung',text:'Meldung',why:'Beschreibung',theory:'Überblick'})[k]||k,value:item[k]??'',type:k==='date'?'date':k==='capacity'?'number':['description','summary','text','old','new','why','theory'].includes(k)?'textarea':'text',required:k==='title'||k==='name'}));
+      const map={news:['title','date','category','text'],events:['title','date','time','location','category','capacity','description'],changes:['title','date','category','old','new','source'],meetings:['title','date','category','speaker','summary'],articles:['title','authors','journal','year','why','freeUrl'],differential:['title','theory'],knowledgeModules:['title','summary','documentUrl'],algorithms:['title','sourceUrl','source'],skills:['name']};
+      const keys=map[store]||['title'];const fields=keys.map(k=>({key:k,label:({title:'Titel',name:'Skillgruppe',date:'Datum',time:'Uhrzeit',location:'Ort',category:'Kategorie',capacity:'Teilnehmerlimit',description:'Beschreibung',summary:'Untertitel',documentUrl:'PDF-/Web-Link',sourceUrl:'PDF-/Web-Link',old:'Bisherige Lehrmeinung',new:'Neue Lehrmeinung',text:'Meldung',why:'Beschreibung',theory:'Überblick'})[k]||k,value:item[k]??'',type:k==='date'?'date':k==='capacity'?'number':['description','text','old','new','why','theory'].includes(k)?'rich':'text',required:k==='title'||k==='name'}));
       ost576Modal('Neuen Eintrag erstellen',fields,async values=>{const data=await get(store);if(!Array.isArray(data))return false;Object.assign(item,values);if('capacity' in item)item.capacity=Number(item.capacity)||10;const ok=await save(store,[...data,item]);if(ok)location.reload();return ok;});
+    }
+    async function ost583CreateSkill(){
+      if(!await ost574Pin())return;
+      const groups=await get('skills');if(!Array.isArray(groups)||!groups.length){alert('Bitte zunächst eine Skillgruppe anlegen.');return;}
+      ost576Modal('Neuen Skill anlegen',[{key:'group',label:'Skillgruppe',type:'select',value:groups[0].id||groups[0].name,options:groups.map(g=>({value:g.id||g.name,label:g.name}))},{key:'name',label:'Name des Skills',required:true},{key:'description',label:'Was muss man können?',type:'textarea'}],async v=>{
+        const fresh=await get('skills'),group=fresh.find(g=>(g.id||g.name)===v.group.trim());if(!group||!v.name.trim())return false;
+        group.skills=[...(group.skills||[]),{name:v.name.trim(),sections:[{title:'Was muss man können?',items:v.description.split('\n').map(x=>x.trim()).filter(Boolean)}]}];
+        if(await save('skills',fresh)){location.reload();return true;}return false;
+      });
+    }
+    function ost583SkillAdd(root){
+      if(!root||root.querySelector('[data-ost583-skill-add]'))return;
+      root.querySelector('[data-ost575-add]')?.remove();
+      const b=document.createElement('button');b.type='button';b.className='ost575-add';b.dataset.ost583SkillAdd='';b.textContent='＋ Skill hinzufügen';b.onclick=ost583CreateSkill;root.appendChild(b);
     }
     function ost575AddButton(root,store,overrides={}){
       if(!root || root.querySelector('[data-ost575-add]'))return;
@@ -1300,7 +1402,7 @@
       };
     }
     async function ost574Decorate(){
-      const path=location.pathname.split('/').pop();if(['training.html','materialien.html'].includes(path))return;const cfg=ost574Config[path];if(!cfg || ost574Decorating)return;
+      const path=location.pathname.split('/').pop();if(['training.html','materialien.html','skilltraining.html'].includes(path))return;const cfg=ost574Config[path];if(!cfg || ost574Decorating)return;
       ost574Decorating=true;
       try{
         const data=await get(cfg.store);
@@ -1308,24 +1410,32 @@
         document.querySelectorAll(cfg.cards).forEach(entry=>{
           if(entry.dataset.ost574Enhanced)return;
           const titleNode=entry.querySelector(cfg.title);if(!titleNode)return;
-          const title=titleNode.textContent.trim();const item=data.find(x=>ost574MatchesTitle(x,title));if(!item)return;
+          const title=titleNode.textContent.trim();const item=entry.dataset.ost574Id?data.find(x=>String(x.id)===entry.dataset.ost574Id):data.find(x=>ost574MatchesTitle(x,title));if(!item)return;
 
           entry.dataset.ost574Enhanced='yes';entry.classList.add('ost574-editable-card');
           const pencil=document.createElement('button');pencil.type='button';pencil.className='ost574-pencil';pencil.textContent='✎';pencil.title='Direkt bearbeiten (PIN erforderlich)';pencil.setAttribute('aria-label',title+' bearbeiten');
-          pencil.onclick=e=>{e.preventDefault();e.stopPropagation();if(entry.tagName==='DETAILS')entry.open=true;if(cfg.store==='skills')ost574EditSkillGroup(entry,item);else ost574Edit(entry,item,cfg);};
+          pencil.onclick=e=>{e.preventDefault();e.stopPropagation();if(entry.tagName==='DETAILS')entry.open=true;if(cfg.store==='skills')ost574EditSkillGroup(entry,item);else if(cfg.store==='articles'||(cfg.store==='meetings'&&entry.classList.contains('meeting-detail')))ost575LinksEditor(entry,cfg.store,item.id);else ost574Edit(entry,item,cfg);};
           // Nicht innerhalb des klickbaren Links verschachteln.
           entry.insertAdjacentElement('afterbegin',pencil);
         });
       }finally{ost574Decorating=false;}
     }
-    if(ost574Config[location.pathname.split('/').pop()] && !['training.html','materialien.html'].includes(location.pathname.split('/').pop())){
+    if(ost574Config[location.pathname.split('/').pop()] && !['training.html','materialien.html','skilltraining.html'].includes(location.pathname.split('/').pop())){
       const obs=new MutationObserver(()=>{if(!ost574Decorating)ost574Decorate();});
       obs.observe(document.querySelector('[data-main]')||document.body,{childList:true,subtree:true});
       setTimeout(ost574Decorate,100);
     }
     async function topicHub() {
         const params = new URLSearchParams(location.search);
-        const [modules, differentials, literature, mnemonicStore] = await Promise.all([get('knowledgeModules'), get('differential'), articles(), get('algorithms')]);
+        const [modules, differentials, literature, mnemonicStore, siteData] = await Promise.all([get('knowledgeModules'), get('differential'), articles(), get('algorithms'), get('organSystems')]);
+        const savedLabels=Object.fromEntries((Array.isArray(siteData)?siteData:[]).map(x=>[x.id,x.label]));
+        CF_TOPICS.forEach(t=>{if(typeof savedLabels[t.id]==='string' && savedLabels[t.id].trim())t.label=savedLabels[t.id].trim();});
+        const externalOrgans=(Array.isArray(siteData)?siteData:[]).filter(x=>x.isCustom);
+        externalOrgans.forEach(x=>{if(x && /^[a-z0-9-]+$/.test(x.id) && !CF_TOPICS.some(t=>t.id===x.id))CF_TOPICS.push({id:x.id,label:x.label,icon:'heart',image:null,groups:[x.group||x.label],anatomy:/^$/,pharma:/^$/,terms:[]});});
+        const organMeta=id=>(Array.isArray(siteData)?siteData:[]).find(x=>x.id===id)||{};
+        const originalOrder=new Map(CF_TOPICS.map((t,i)=>[t.id,i]));
+        CF_TOPICS.sort((a,b)=>(organMeta(a.id).order===undefined?originalOrder.get(a.id)+100:Number(organMeta(a.id).order))-(organMeta(b.id).order===undefined?originalOrder.get(b.id)+100:Number(organMeta(b.id).order)));
+        
         const km = (Array.isArray(modules) ? modules : []).filter(x => x.status !== 'draft');
         const area = $('[data-main]');
         let organ = CF_TOPICS.find(t => t.id === params.get('thema')) || CF_TOPICS[0];
@@ -1338,7 +1448,7 @@
         const plain = (value) => esc(Array.isArray(value) ? value.join(', ') : String(value || ''));
         const section = (title, value) => value ? `<section class="cf551-article-section ${/warnzeichen|cave/i.test(title) ? 'ost568-panel ost568-danger' : /medikamente/i.test(title) ? 'ost568-panel ost568-amber' : ''}" id="abschnitt-${normalizedSearch(title).replace(/[^a-z0-9]+/g, '-')}"><h3>${esc(title)}</h3><p>${plain(value)}</p></section>` : '';
         const info = t => {
-            const symptoms = differentials.filter(d => t.groups.includes(d.group));
+            const symptoms = differentials.filter(d => !d.deleted && t.groups.includes(d.group));
             const diseases = [];
             const names = new Set();
             symptoms.forEach(d => arr(d.causes).forEach((c, index) => { const value = typeof c === 'string' ? { name: c } : c; if (!value.name)
@@ -1382,7 +1492,7 @@
                 body = `<section class="${panelTone('theory','info')}" id="ueberblick"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).theory || 'Überblick')}</h3>${pencil('theory')}</div><div class="ost571-edit-region ost-module-body">${ost570CleanHtml(v.theory || '<p>Noch kein Überblick hinterlegt.</p>')}</div></section>`
                   + `<section class="${panelTone('redflags','danger')}" id="red-flags"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).redflags || '⚠ Red Flags · Warnzeichen')}</h3>${pencil('redflags')}</div><div class="ost571-edit-region">${redFlagsHtml}</div></section>`
                   + `<section class="${panelTone('questions','blue')}" id="anamnese"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).questions || 'Wichtige Fragen / Anamnese')}</h3>${pencil('questions')}</div><div class="ost571-edit-region">${questionHtml}</div></section>`
-                  + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${c.articleHtml ? `<div class="ost581-disease-unified">${ost570CleanHtml(c.articleHtml)}</div>` : [['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</div></details>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
+                  + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${c.articleHtml ? `<div class="ost581-disease-unified">${ost570CleanHtml(c.articleHtml)}</div>` : [['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</div></details>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div><button type="button" class="ost575-add" data-ost583-cause-add>＋ Krankheitsbild hinzufügen</button></section>`;
                 body += `<section class="ost570-rich ${panelTone('richContent','amber')}" id="artikel-ergaenzungen"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).richContent || 'Merksätze & weitere Fachinformationen')}</h3>${pencil('richContent')}</div><div class="ost571-edit-region">${ost570CleanHtml(v.richContent || '<p>Noch keine Merksätze hinterlegt.</p>')}</div></section>`;
                 const sourceLinks = causes.filter(c => href(c.sourceUrl));
                 { const legacy = sourceLinks.length ? `<ul>${sourceLinks.map(c => `<li><a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.sourceLabel || c.name || 'Fachquelle')}</a></li>`).join('')}</ul>` : '<p>Noch keine Quellen hinterlegt.</p>'; body += `<section class="ost568-panel ost568-plain" id="quellen"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).sources || 'Quellen und weiterführende Informationen')}</h3>${pencil('sources')}</div><div class="ost571-edit-region">${v.sourcesHtml ? ost570CleanHtml(v.sourcesHtml) : legacy}</div></section>`; }
@@ -1416,15 +1526,28 @@
             organSection.hidden=hasOrgan;catSection.hidden=!hasOrgan || isArticle;
             searchWrap.hidden=!hasOrgan || isArticle;
             crumb.innerHTML=`<a href="${organsLink()}">Organsysteme</a>${hasOrgan ? ` <span>›</span> <a href="${symptomLink()}">${esc(organ.label)}</a>` : ''}${isArticle ? ` <span>›</span> <strong>${esc(current.title)}</strong>` : ''}`;
-            organBar.innerHTML=CF_TOPICS.map((t,i)=>{const count=differentials.filter(x=>t.groups.includes(x.group)).length;return `<a class="ost570-tile ost572-tile" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}"><span class="ost572-count">${count}</span><strong>${esc(t.label)}</strong><span class="ost572-chevron">›</span></a>`}).join('');
+            organBar.innerHTML=CF_TOPICS.filter(t=>!organMeta(t.id).hidden).map((t,i)=>{const count=differentials.filter(x=>!x.deleted&&t.groups.includes(x.group)).length;return `<div class="ost583-tile-wrap"><a class="ost570-tile ost572-tile" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}"><span class="ost572-count">${count}</span><strong>${esc(t.label)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-organ="${esc(t.id)}" aria-label="${esc(t.label)} umbenennen">✎</button></div>`}).join('');
+            if(!hasOrgan && ost576IsEditing()){const b=document.createElement('button');b.type='button';b.className='ost575-add';b.textContent='＋ Organsystem';b.onclick=()=>ost583CreateOrgan();organBar.after(b);}
             if(!hasOrgan){out.innerHTML='<p class="ost569-hint">Wähle ein Organsystem. Auf der nächsten Seite findest du die zugehörigen Leitsymptome.</p>';return;}
             const all=entries(), needle=normalizedSearch(input.value.trim());
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
-            categoryBar.innerHTML=found.map((x,i)=>`<a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
+            categoryBar.innerHTML=found.map((x,i)=>`<div class="ost583-tile-wrap"><a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-symptom="${esc(x.value.id)}" aria-label="${esc(x.title)} umbenennen">✎</button></div>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
             out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1 class="ost570-title-text">${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
             $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
             $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index || 0))));
+            out.querySelector('[data-ost583-cause-add]')?.addEventListener('click',()=>ost583CreateCause(current));
+        }
+        async function ost583CreateCause(item){
+          if(!await ost574Pin())return;
+          ost576Modal('Krankheitsbild hinzufügen',[
+            {key:'name',label:'Name des Krankheitsbildes',required:true},
+            {key:'articleHtml',label:'Fachinformationen',type:'rich',value:'<h3>Symptome</h3><p></p><h3>Befunde</h3><p></p><h3>Pharmakologie</h3><p></p>'}
+          ],async values=>{
+            const latest=await get('differential'),idx=latest.findIndex(x=>String(x.id)===String(item.value.id));if(idx<0)return false;
+            latest[idx]={...latest[idx],causes:[...arr(latest[idx].causes),{name:values.name.trim(),articleHtml:ost570CleanHtml(values.articleHtml)}],deletedCauseNames:arr(latest[idx].deletedCauseNames).filter(n=>normalizedSearch(n)!==normalizedSearch(values.name))};
+            if(await save('differential',latest)){location.reload();return true;}return false;
+          });
         }
         async function editArticle(item, part = "all", causeIndex = 0){
             let host=$('[data-ost570-editor]',out);
@@ -1506,10 +1629,20 @@
                 header.contentEditable='true';header.classList.add('ost575-heading-edit');
                 const fields=[['symptoms','Symptome'],['info','Einordnung'],['physiology','Pathophysiologie'],['findings','Befunde'],['medications','Pharmakologie'],['cave','CAVE / Warnzeichen']];
                 const initialHtml=source.articleHtml || fields.filter(([k])=>source[k]).map(([key,label])=>`<h3>${esc((source.sectionTitles||{})[key]||label)}</h3><div>${ost570CleanHtml(source[key])}</div>`).join('');
-                body.innerHTML=`<div class="ost575-disease-form"><p class="ost581-hint">Alle Unterüberschriften und Inhalte in einem Textfeld bearbeiten.</p>${ost573Toolbar()}<div class="ost573-editable ost581-disease-rich" contenteditable="true" data-cause-article></div><div class="ost575-edit-actions"><button class="btn primary" type="button" data-cause-save>Speichern</button><button class="btn" type="button" data-cause-cancel>Abbrechen</button><span data-cause-status role="status"></span></div></div>`;
+                body.innerHTML=`<div class="ost575-disease-form"><p class="ost581-hint">Alle Unterüberschriften und Inhalte in einem Textfeld bearbeiten.</p>${ost573Toolbar()}<div class="ost573-editable ost581-disease-rich" contenteditable="true" data-cause-article></div><div class="ost575-edit-actions"><button class="btn primary" type="button" data-cause-save>Speichern</button><button class="btn" type="button" data-cause-cancel>Abbrechen</button><button class="btn danger" type="button" data-cause-delete>Krankheitsbild löschen</button><span data-cause-status role="status"></span></div></div>`;
                 const rich=body.querySelector('[data-cause-article]');rich.innerHTML=ost570CleanHtml(initialHtml);ost573BindRich(body,rich);
                 const reset=()=>{header.textContent=originalName;header.contentEditable='false';header.classList.remove('ost575-heading-edit');body.innerHTML=originalBody;};
                 body.querySelector('[data-cause-cancel]').onclick=reset;
+                body.querySelector('[data-cause-delete]').onclick=async()=>{
+                    if(!confirm('Krankheitsbild endgültig aus diesem Leitsymptom entfernen?'))return;
+                    const latest=await get('differential'),i=latest.findIndex(x=>String(x.id)===String(current.id));if(i<0)return;
+                    const next={...latest[i],causes:[...arr(latest[i].causes)]};
+                    const removed=next.causes.splice(causeIndex,1)[0];
+                    const name=typeof removed==='string'?removed:removed?.name||originalName;
+                    next.deletedCauseNames=[...new Set([...arr(next.deletedCauseNames),name])];
+                    if(await save('differential',latest.map((v,n)=>n===i?next:v))){Object.assign(current,next);draw();}
+                    else body.querySelector('[data-cause-status]').textContent='Löschen fehlgeschlagen.';
+                };
                 body.querySelector('[data-cause-save]').onclick=async()=>{
                     const status=body.querySelector('[data-cause-status]');status.textContent='Speichere …';
                     const latest=await get('differential'), i=latest.findIndex(x=>String(x.id)===String(current.id));
@@ -1525,6 +1658,70 @@
             }
         }
         if(params.has('thema') && !params.has('eintrag'))ost575AddButton(area,'differential',{title:'Neues Leitsymptom',group:organ.groups[0]||'Weitere',questions:[],redflags:[],causes:[]});
+        async function ost583CreateOrgan(){
+            if(!await ost574Pin())return;
+            ost576Modal('Organsystem hinzufügen',[{key:'label',label:'Name des Organsystems',required:true}],async vals=>{
+                const label=vals.label.trim();if(!label)return false;
+                const id='fach-'+Date.now().toString(36);
+                const site=await get('organSystems');site.push({id,label,group:label,isCustom:true});
+                if(await save('organSystems',site)){location.reload();return true;}return false;
+            });
+        }
+        area.addEventListener('click',async e=>{
+            const ob=e.target.closest('[data-ost583-organ]');
+            const sb=e.target.closest('[data-ost583-symptom]');
+            if(!ob&&!sb)return;
+            e.preventDefault();e.stopPropagation();if(!await ost574Pin())return;
+            if(ob){
+                const t=CF_TOPICS.find(x=>x.id===ob.dataset.ost583Organ);if(!t)return;
+                const modal=ost576Modal('Organsystem bearbeiten',[{key:'label',label:'Titel',value:t.label,required:true}],async values=>{
+                    const list=await get('organSystems'),i=list.findIndex(x=>x.id===t.id);
+                    if(i>=0)list[i]={...list[i],label:values.label.trim()};
+                    else list.push({id:t.id,label:values.label.trim(),isCustom:false});
+                    if(await save('organSystems',list)){location.reload();return true;}return false;
+                });
+                const actions=modal.querySelector('.ost576-form-actions');
+                const organOrder=async delta=>{
+                    const current=CF_TOPICS.filter(x=>!organMeta(x.id).hidden).map(x=>x.id);
+                    const i=current.indexOf(t.id),j=i+delta;if(j<0||j>=current.length)return;
+                    [current[i],current[j]]=[current[j],current[i]];
+                    const list=await get('organSystems');
+                    current.forEach((id,k)=>{const n=list.findIndex(x=>x.id===id);if(n>=0)list[n]={...list[n],order:k};else list.push({id,label:CF_TOPICS.find(x=>x.id===id)?.label||id,order:k});});
+                    if(await save('organSystems',list))location.reload();else alert('Sortieren fehlgeschlagen.');
+                };
+                for(const [label,delta] of [['↑ Nach oben',-1],['↓ Nach unten',1]]){
+                    const b=document.createElement('button');b.type='button';b.className='btn';b.textContent=label;b.onclick=()=>organOrder(delta);actions.prepend(b);
+                }
+                const del=document.createElement('button');del.type='button';del.className='btn danger';del.textContent='Organsystem löschen';
+                del.onclick=async()=>{
+                    if(differentials.some(x=>t.groups.includes(x.group))){alert('Bitte zuerst alle Leitsymptome dieses Organsystems verschieben oder löschen.');return;}
+                    if(!confirm('Leeres Organsystem wirklich entfernen?'))return;
+                    const list=await get('organSystems'),i=list.findIndex(x=>x.id===t.id);
+                    if(i>=0){if(list[i].isCustom)list.splice(i,1);else list[i]={...list[i],hidden:true};}
+                    else list.push({id:t.id,label:t.label,hidden:true});
+                    if(await save('organSystems',list))location.href='themen-uebersicht.html';else alert('Löschen fehlgeschlagen.');
+                };actions.prepend(del);
+            }else{
+                const item=differentials.find(x=>String(x.id)===sb.dataset.ost583Symptom);if(!item)return;
+                const currentTopic=CF_TOPICS.find(t=>t.groups.includes(item.group))||organ;
+                const modal=ost576Modal('Leitsymptom bearbeiten',[
+                    {key:'title',label:'Titel',value:item.title,required:true},
+                    {key:'organId',label:'Organsystem',type:'select',value:currentTopic.id,options:CF_TOPICS.filter(t=>!organMeta(t.id).hidden).map(t=>({value:t.id,label:t.label}))}
+                ],async values=>{
+                    const latest=await get('differential'),idx=latest.findIndex(x=>String(x.id)===String(item.id));if(idx<0)return false;
+                    const target=CF_TOPICS.find(t=>t.id===values.organId)||currentTopic;
+                    latest[idx]={...latest[idx],title:values.title.trim(),group:target.groups[0]};
+                    if(await save('differential',latest)){location.reload();return true;}return false;
+                });
+                const del=document.createElement('button');del.type='button';del.className='btn danger';del.textContent='Leitsymptom löschen';
+                del.onclick=async()=>{
+                    if(!confirm('Leitsymptom einschließlich aller Krankheitsbilder endgültig löschen?'))return;
+                    const latest=await get('differential'),remaining=latest.filter(x=>String(x.id)!==String(item.id));
+                    if(remaining.length===latest.length)return;
+                    if(await save('differential',remaining))location.reload();else alert('Löschen fehlgeschlagen.');
+                };modal.querySelector('.ost576-form-actions')?.prepend(del);
+            }
+        });
         input.addEventListener('input',draw);
         draw();
     }
@@ -1566,18 +1763,27 @@
       if(!await ost574Pin())return;
       const items=await get(store),item=items.find(v=>String(v.id)===String(id));if(!item)return;
       card.open=true;card.classList.add('ost575-edit-links');
-      const host=card.querySelector('.cf563-entry-body');if(!host)return;
+      const host=card.querySelector('.cf563-entry-body,.cf548-archive-copy,.meeting-resources');if(!host)return;
       let prior=host.querySelector('.ost575-link-editor');if(prior)prior.remove();
       const panel=document.createElement('div');panel.className='ost575-link-editor';host.prepend(panel);
-      let links=store==='algorithms'?[...(item.materials?.background||[]),...(item.materials?.checklists||[])].map(x=>({...x})):(item.links||[]).map(x=>({...x}));
-      if(!links.length && (item.documentUrl||item.sourceUrl))links=[{title:item.title||'PDF / Link',url:item.documentUrl||item.sourceUrl,note:item.summary||item.source||''}];
+      let links=(store==='meetings'?(item.files||[]):(item.links||[])).map(x=>({...x}));
+      if(!links.length&&store==='algorithms')links=[...(item.materials?.background||[]),...(item.materials?.checklists||[])].map(x=>({...x}));
+      if(!links.length){const old=store==='articles'?(item.freeUrl||item.publisherUrl):(item.documentUrl||item.sourceUrl);
+        if(old)links=[{title:item.title||'PDF / Link',url:old,note:item.summary||item.source||''}];}
+      let draftTitle=item.title||'';
+      let draftDescription=item.why||item.explanation||item.body||item.summary||'';
+      let draftFeatured=!!item.featured;
+      let draftMeta={authors:item.authors||'',journal:item.journal||'',year:item.year||'',doi:item.doi||'',date:item.date||'',category:item.category||'',speaker:item.speaker||''};
       const render=()=>{
-        panel.innerHTML=`<h3>✎ Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(item.title||'')}"></label><div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><label class="ost581-upload-label">PDF hochladen<input type="file" data-link-upload="${i}" accept="application/pdf,.pdf"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><div class="ost575-edit-actions"><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><span data-link-status role="status"></span></div>`;
-        const collect=()=>{panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>links[i][key]=row.querySelector(`[data-link-field="${key}"]`).value.trim());});};
+        panel.innerHTML=`<h3>Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(draftTitle)}"></label>${store==='articles'?`<div class="ost583-doc-meta"><label>Autor:innen<input data-doc-meta="authors" value="${esc(draftMeta.authors)}"></label><label>Journal / Quelle<input data-doc-meta="journal" value="${esc(draftMeta.journal)}"></label><label>Jahr<input data-doc-meta="year" value="${esc(draftMeta.year)}"></label><label>DOI<input data-doc-meta="doi" value="${esc(draftMeta.doi)}"></label></div><label>Beschreibung / Lesetipp</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div><label class="ost583-check"><input type="checkbox" data-link-featured ${draftFeatured?'checked':''}>Als Lesetipp auf der Startseite anzeigen (maximal 30 Tage)</label>`:''}${store==='meetings'?`<div class="ost583-doc-meta"><label>Datum<input type="date" data-doc-meta="date" value="${esc(draftMeta.date)}"></label><label>Kategorie<input data-doc-meta="category" value="${esc(draftMeta.category)}"></label><label>Referent:in<input data-doc-meta="speaker" value="${esc(draftMeta.speaker)}"></label></div><label>Zusammenfassung</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div>`:''}<div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><label class="ost581-upload-label">PDF hochladen<input type="file" data-link-upload="${i}" accept="${store==='meetings'?'application/pdf,image/jpeg,image/png,image/webp':'application/pdf,.pdf'}"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><div class="ost575-edit-actions"><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><button type="button" class="btn danger" data-link-delete>Eintrag löschen</button><span data-link-status role="status"></span></div>`;
+        if(['articles','meetings'].includes(store))ost573BindRich(panel.querySelector('.ost583-doc-description'),panel.querySelector('[data-link-description]'));
+        const collect=()=>{draftTitle=panel.querySelector('[data-link-main-title]').value;
+          if(['articles','meetings'].includes(store)){draftDescription=ost570CleanHtml(panel.querySelector('[data-link-description]').innerHTML);draftFeatured=!!panel.querySelector('[data-link-featured]')?.checked;panel.querySelectorAll('[data-doc-meta]').forEach(x=>draftMeta[x.dataset.docMeta]=x.value.trim());}
+          panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>links[i][key]=row.querySelector(`[data-link-field="${key}"]`).value.trim());});};
         panel.querySelectorAll('[data-link-upload]').forEach(input=>input.onchange=async()=>{
           const file=input.files?.[0];if(!file)return;
           const status=panel.querySelector('[data-link-status]');
-          if(file.type!=='application/pdf' && !file.name.toLowerCase().endsWith('.pdf')){status.textContent='Nur PDF-Dateien erlaubt.';return;}
+          if(!((file.type==='application/pdf'||file.name.toLowerCase().endsWith('.pdf'))||(store==='meetings'&&['image/png','image/jpeg','image/webp'].includes(file.type)))){status.textContent='Nur PDFs'+(store==='meetings'?' oder Bilder':'')+' erlaubt.';return;}
           if(file.size>19*1024*1024){status.textContent='PDF zu groß (maximal 19 MB).';return;}
           collect();status.textContent='Lade PDF hoch …';input.disabled=true;
           try{const url=await uploadMedia(file);if(!url)throw Error('Upload hat keine Adresse zurückgegeben');links[Number(input.dataset.linkUpload)].url=url;render();}
@@ -1587,19 +1793,78 @@
         panel.querySelectorAll('[data-link-up],[data-link-down]').forEach(b=>b.onclick=()=>{collect();const i=Number(b.dataset.linkUp??b.dataset.linkDown);const j=i+(b.hasAttribute('data-link-up')?-1:1);if(j<0||j>=links.length)return;[links[i],links[j]]=[links[j],links[i]];render();});
         panel.querySelector('[data-link-add]').onclick=()=>{collect();links.push({title:'Neues Dokument',url:'',note:''});render();};
         panel.querySelector('[data-link-cancel]').onclick=()=>{panel.remove();card.classList.remove('ost575-edit-links');};
+        panel.querySelector('[data-link-delete]').onclick=async()=>{
+          if(!confirm('Diesen Eintrag einschließlich seiner Linkliste dauerhaft löschen?'))return;
+          const latest=await get(store),filtered=latest.filter(x=>String(x.id)!==String(id));
+          if(filtered.length===latest.length)return;
+          if(await save(store,filtered))location.reload();else panel.querySelector('[data-link-status]').textContent='Löschen fehlgeschlagen.';
+        };
         panel.querySelector('[data-link-save]').onclick=async()=>{
           collect();const status=panel.querySelector('[data-link-status]');
           if(links.some(x=>x.url && !/^https?:\/\//i.test(x.url))){status.textContent='Links müssen mit http:// oder https:// beginnen.';return;}
           status.textContent='Speichere …';const latest=await get(store),idx=latest.findIndex(x=>String(x.id)===String(id));if(idx<0){status.textContent='Eintrag nicht gefunden.';return;}
-          const next={...latest[idx],title:panel.querySelector('[data-link-main-title]').value.trim()||item.title};
-          if(store==='algorithms')next.materials={...(next.materials||{}),background:links.filter(x=>x.url),checklists:[]};
-          else {next.links=links.filter(x=>x.url);next.documentUrl=next.links[0]?.url||'';next.summary=next.links[0]?.note||next.summary||'';}
+          const next={...latest[idx],title:draftTitle.trim()||item.title,links:links.filter(x=>x.url)};
+          if(store==='knowledgeModules'){
+            next.documentUrl=next.links[0]?.url||'';
+            next.summary=next.links[0]?.note??next.summary??'';
+          }else if(store==='algorithms'){
+            // Legacy materials and source fields intentionally retained: no silent data loss.
+            next.sourceUrl=next.links[0]?.url||next.sourceUrl||'';
+          }else if(store==='articles'){
+            next.freeUrl=next.links[0]?.url||next.freeUrl||'';
+            next.why=draftDescription;
+            ['authors','journal','year','doi'].forEach(k=>next[k]=draftMeta[k]);
+            const featured=draftFeatured;
+            if(featured&&!next.featured)next.activeSince=new Date().toISOString().slice(0,10);
+            next.featured=featured;
+          }else if(store==='meetings'){
+            next.files=next.links;delete next.links;
+            next.summary=draftDescription;
+            ['date','category','speaker'].forEach(k=>next[k]=draftMeta[k]);
+          }
           latest[idx]=next;if(await save(store,latest))location.reload();else status.textContent='Speichern fehlgeschlagen.';
         };
       };render();
     }
     function ost579Documents(links){
       return (Array.isArray(links)?links:[]).filter(x=>x && /^https?:\/\//i.test(String(x.url||''))).map(x=>`<a class="ost579-doc-link" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer"><strong>${esc(x.title||'Dokument öffnen')}</strong>${x.note?`<small>${esc(x.note)}</small>`:''}<span aria-hidden="true">↗</span></a>`).join('');
+    }
+    async function ost583EditSkillRow(row,groupIndex,skillIndex){
+      if(row.querySelector('.ost583-skill-editor')||!await ost574Pin())return;
+      const groups=await get('skills'),skill=groups[groupIndex]?.skills?.[skillIndex];if(!skill)return;
+      let draftName=skill.name;
+      const original=Array.from(row.children).map(node=>[node,node.hidden]);
+      original.forEach(([node])=>node.hidden=true);
+      let sections=structuredClone(Array.isArray(skill.sections)?skill.sections:[]);
+      const panel=document.createElement('div');panel.className='ost583-skill-editor';row.appendChild(panel);
+      const htmlOf=s=>s.richHtml?ost570CleanHtml(s.richHtml):`<ul>${arr(s.items).map(it=>`<li>${esc(it)}</li>`).join('')}</ul>`;
+      const readSections=()=>{draftName=panel.querySelector('[data-skill-name]')?.value||draftName;panel.querySelectorAll('[data-skill-section-index]').forEach(box=>{
+        const i=Number(box.dataset.skillSectionIndex);const x=sections[i];if(!x)return;
+        x.title=box.querySelector('[data-skill-section-title]').value.trim();
+        x.richHtml=ost570CleanHtml(box.querySelector('[data-skill-section-rich]').innerHTML);
+        const list=document.createElement('div');list.innerHTML=x.richHtml;
+        const points=[...list.querySelectorAll('li')].map(n=>n.textContent.trim()).filter(Boolean);
+        x.items=points.length?points:list.textContent.split(/\n+/).map(v=>v.trim()).filter(Boolean);
+      });};
+      const end=()=>{panel.remove();original.forEach(([node,hidden])=>node.hidden=hidden);};
+      const render=()=>{
+        panel.innerHTML=`<label class="ost583-skill-title">Skilltitel<input data-skill-name value="${esc(draftName)}" required></label><div data-skill-sections>${sections.map((sec,i)=>`<section class="ost583-skill-section" data-skill-section-index="${i}"><div class="ost583-skill-section-head"><label>Abschnittstitel<input data-skill-section-title value="${esc(sec.title||'')}" required></label><div><button type="button" class="btn" data-skill-up="${i}" ${i===0?'disabled':''}>↑</button><button type="button" class="btn" data-skill-down="${i}" ${i===sections.length-1?'disabled':''}>↓</button><button type="button" class="btn danger" data-skill-remove="${i}">Löschen</button></div></div>${ost573Toolbar()}<div class="ost573-editable" contenteditable="true" data-skill-section-rich="${i}">${htmlOf(sec)}</div></section>`).join('')}</div><button type="button" class="btn" data-skill-section-add>＋ Abschnitt</button><div class="ost570-actions"><button class="btn primary" type="button" data-skill-save>Speichern</button><button class="btn" type="button" data-skill-cancel>Abbrechen</button><button class="btn danger" type="button" data-skill-delete>Skill löschen</button><button class="btn" type="button" data-skill-move="-1">Skill ↑</button><button class="btn" type="button" data-skill-move="1">Skill ↓</button><span role="status" data-skill-status></span></div>`;
+        panel.querySelectorAll('.ost583-skill-section').forEach(x=>ost573BindRich(x,x.querySelector('[data-skill-section-rich]')));
+        panel.querySelector('[data-skill-cancel]').onclick=end;
+        panel.querySelector('[data-skill-section-add]').onclick=()=>{readSections();sections.push({title:'Neuer Abschnitt',items:[],richHtml:'<p></p>'});render();};
+        panel.querySelectorAll('[data-skill-remove]').forEach(b=>b.onclick=()=>{readSections();sections.splice(Number(b.dataset.skillRemove),1);render();});
+        panel.querySelectorAll('[data-skill-up],[data-skill-down]').forEach(b=>b.onclick=()=>{readSections();const i=Number(b.dataset.skillUp??b.dataset.skillDown),j=i+(b.hasAttribute('data-skill-up')?-1:1);[sections[i],sections[j]]=[sections[j],sections[i]];render();});
+        panel.querySelector('[data-skill-save]').onclick=async()=>{
+          const status=panel.querySelector('[data-skill-status]');readSections();const name=panel.querySelector('[data-skill-name]').value.trim();
+          if(!name){status.textContent='Skilltitel erforderlich.';return;}status.textContent='Speichere …';
+          const latest=await get('skills');if(!latest[groupIndex]?.skills?.[skillIndex]){status.textContent='Skill nicht gefunden.';return;}
+          latest[groupIndex].skills[skillIndex]={...latest[groupIndex].skills[skillIndex],name,sections};
+          if(await save('skills',latest))location.reload();else status.textContent='Speichern fehlgeschlagen.';
+        };
+        panel.querySelector('[data-skill-delete]').onclick=async()=>{if(!confirm('Skill dauerhaft löschen?'))return;const latest=await get('skills');if(!latest[groupIndex]?.skills?.[skillIndex])return;latest[groupIndex].skills.splice(skillIndex,1);if(await save('skills',latest))location.reload();else panel.querySelector('[data-skill-status]').textContent='Löschen fehlgeschlagen.';};
+        panel.querySelectorAll('[data-skill-move]').forEach(b=>b.onclick=async()=>{const latest=await get('skills'),arrSkills=latest[groupIndex]?.skills||[],j=skillIndex+Number(b.dataset.skillMove);if(j<0||j>=arrSkills.length)return;[arrSkills[skillIndex],arrSkills[j]]=[arrSkills[j],arrSkills[skillIndex]];if(await save('skills',latest))location.reload();else panel.querySelector('[data-skill-status]').textContent='Verschieben fehlgeschlagen.';});
+      };
+      render();panel.querySelector('[data-skill-name]')?.focus();
     }
     async function trainingPage() {
         const [groups, modules] = await Promise.all([get('skills'), get('knowledgeModules')]);
@@ -1612,7 +1877,7 @@
         const main = $('[data-main]');
         main.innerHTML = `<section class="cf547 cf547-training"><h1>Training</h1><nav class="cf547-tabs" aria-label="Trainingstyp">${nav.map(([id, label, ico]) => `<button data-training-tab="${id}" class="${selected === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-training-content></section></section>`;
         const out = $('[data-training-content]');
-        ost575AddButton(out,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
+        if(selected==='skills')ost583SkillAdd(out);else ost575AddButton(out,'knowledgeModules',selected==='devices'?{module:'mpg'}:{module:'checklists'});
         function render() {
             $$('[data-training-tab]', main).forEach(b => b.classList.toggle('selected', b.dataset.trainingTab === selected));
             if (selected === 'skills') {
@@ -1630,10 +1895,11 @@
             }
         }
         main.addEventListener('click', async e => {
+            if(e.target.closest('.ost579-document-card > summary')){e.preventDefault();return;}
             const tab = e.target.closest('[data-training-tab]');
             if (tab) {
                 selected = tab.dataset.trainingTab;
-                main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(out,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
+                main.querySelector('[data-ost575-add]')?.remove();if(selected==='skills')ost583SkillAdd(out);else ost575AddButton(out,'knowledgeModules',selected==='devices'?{module:'mpg'}:{module:'checklists'});
                 history.replaceState(null, '', 'training.html?typ=' + selected);
                 render();
                 return;
@@ -1641,11 +1907,7 @@
             const pencil=e.target.closest('[data-ost573-training]');
             if(pencil){e.preventDefault();e.stopPropagation();if(selected==='checklists')ost575LinksEditor(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training);else ost573EditCard(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training,'body',render);return;}
             const single=e.target.closest('[data-ost576-skill]');
-            if(single){e.preventDefault();e.stopPropagation();const gi=Number(single.dataset.g),si=Number(single.dataset.s),sk=skillsList[gi]?.skills?.[si];if(!sk)return;
-              if(!await ost574Pin())return;
-              const fields=[{key:'name',label:'Skillname',value:sk.name,required:true},...arr(sk.sections).flatMap((sec,j)=>[{key:'title'+j,label:'Abschnitt '+(j+1),value:sec.title},{key:'items'+j,label:'Aufzählungspunkte (eine pro Zeile)',type:'textarea',value:arr(sec.items).join('\n')}])];
-              ost576Modal('Skill bearbeiten',fields,async values=>{const latest=await get('skills');if(!latest[gi]?.skills?.[si])return false;latest[gi].skills[si].name=values.name.trim();arr(latest[gi].skills[si].sections).forEach((sec,j)=>{sec.title=values['title'+j];sec.items=values['items'+j].split('\n').map(x=>x.trim()).filter(Boolean);});const ok=await save('skills',latest);if(ok)location.reload();return ok;});return;
-            }
+            if(single){e.preventDefault();e.stopPropagation();ost583EditSkillRow(single.closest('.ost576-skill-row'),Number(single.dataset.g),Number(single.dataset.s));return;}
             const groupEdit=e.target.closest('[data-ost575-skillgroup]');
             if(groupEdit){e.preventDefault();e.stopPropagation();ost574EditSkillGroup(groupEdit.closest('details'),skillsList[Number(groupEdit.dataset.ost575Skillgroup)]);return;}
             const skill = e.target.closest('[data-training-skill]');
@@ -1654,11 +1916,11 @@
                 const x = skillsList[gi]?.skills?.[si];
                 if (!x)
                     return;
-                open(x.name, `<div class="cf547-sheet">${arr(x.sections).map(sec => `<section class="cf547-source"><h3>${esc(sec.title)}</h3><ul>${arr(sec.items).map(it => `<li>${esc(it)}</li>`).join('')}</ul></section>`).join('')}</div>`, { sheet: true });
+                open(x.name, `<div class="cf547-sheet">${arr(x.sections).map(sec => `<section class="cf547-source"><h3>${esc(sec.title)}</h3>${sec.richHtml?ost570CleanHtml(sec.richHtml):`<ul>${arr(sec.items).map(it => `<li>${esc(it)}</li>`).join('')}</ul>`}</section>`).join('')}</div>`, { sheet: true });
             }
         });
         render();
-        ost575AddButton(out,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
+        if(selected==='skills')ost583SkillAdd(out);else ost575AddButton(out,'knowledgeModules',selected==='devices'?{module:'mpg'}:{module:'checklists'});
     }
     // ------------------------------------------------------------------------
     // Materialien
@@ -1679,7 +1941,6 @@
         const main = $('[data-main]');
         main.innerHTML = `<section class="cf547 cf547-materials cf553-materials"><h1>Materialien</h1><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id, label, ico]) => `<button type="button" data-mat-tab="${id}" class="${active === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
         const box = $('[data-material-list]');
-        ost575AddButton(main,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
         const safeLink = value => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
         const link = (url, label) => safeLink(url) ? `<a class="cf563-resource" href="${esc(safeLink(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>` : '';
         const card = (title, iconName, content) => `<details class="cf563-entry ost579-document-card" open><summary><span class="cf563-entry-icon">${ostIcon(iconName)}</span><strong>${esc(title || 'Ohne Titel')}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${content || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
@@ -1696,7 +1957,7 @@
             const materials = a.materials && typeof a.materials === 'object' ? a.materials : {};
             const items = [];
             for (const key of ['background', 'checklists']) for (const m of arr(materials[key])) {
-                if (m && typeof m === 'object' && safeLink(m.url)) items.push(link(m.url, m.title || 'Material'));
+                if (m && typeof m === 'object' && safeLink(m.url)) items.push(ost579Documents([m]));
             }
             return items.length ? `<div class="cf563-resources">${items.join('')}</div>` : '';
         };
@@ -1708,7 +1969,7 @@
             const steps = arr(a.steps);
             const image = String(a.imageUrl || '');
             const imageHtml = /^(https?:\/\/|assets\/)/i.test(image) ? `<figure class="cf563-figure"><img loading="lazy" src="${esc(image)}" alt="${esc(a.imageCaption || a.title || 'Leitliniengrafik')}">${a.imageCaption ? `<figcaption>${esc(a.imageCaption)}</figcaption>` : ''}</figure>` : '';
-            return `${a.stand ? `<p class="cf563-summary"><strong>Stand:</strong> ${esc(a.stand)}</p>` : ''}${a.explanation ? `<div class="cf563-rich">${renderModuleText(a.explanation)}</div>` : ''}${steps.length ? `<section class="cf563-section"><h3>Ablauf / Schritte</h3><ol class="cf563-steps">${steps.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : ''}${imageHtml}${a.source ? `<p class="cf563-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${link(a.sourceUrl, 'Leitlinie / Quelle öffnen')}${attachments(a)}${ost579Documents(a.materials?.background||[])}`;
+            return `${a.stand ? `<p class="cf563-summary"><strong>Stand:</strong> ${esc(a.stand)}</p>` : ''}${a.explanation ? `<div class="cf563-rich">${renderModuleText(a.explanation)}</div>` : ''}${steps.length ? `<section class="cf563-section"><h3>Ablauf / Schritte</h3><ol class="cf563-steps">${steps.map(t => `<li>${esc(t)}</li>`).join('')}</ol></section>` : ''}${imageHtml}${a.source ? `<p class="cf563-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${a.links?.length?ost579Documents(a.links):`${link(a.sourceUrl, 'Leitlinie / Quelle öffnen')}${attachments(a)}`}`;
         };
         function render() {
             $$('[data-mat-tab]', main).forEach(button => {
@@ -1719,7 +1980,7 @@
             const list = active === 'guidelines' ? guidelines : active === 'checklists' ? checklists : active === 'mnemonics' ? mnemonics : literature;
             const iconName = categories.find(c => c[0] === active)[2];
             const items = list.map(a => {
-                const editing=active==='literature'?'':`<button class="ost571-pencil ost573-card-pencil" type="button" data-ost573-material="${esc(a.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>`;
+                const editing=`<button class="ost571-pencil ost573-card-pencil" type="button" data-ost573-material="${esc(a.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>`;
                 if (active === 'guidelines') return card(a.title, iconName, editing+guidelinePanel(a));
                 if (active === 'mnemonics') return card(a.title, iconName, editing+schemaPanel(a));
                 if (active === 'checklists') {
@@ -1727,18 +1988,19 @@
                     return card(a.title, iconName, editing+content);
                 }
                 const details = [a.authors, a.journal, a.year].filter(Boolean).map(x => esc(x)).join(' · ');
-                const content = `${details ? `<p class="cf563-summary">${details}</p>` : ''}${a.why ? `<div class="cf563-rich">${renderModuleText(a.why)}</div>` : ''}${a.read ? `<p>${esc(a.read)}</p>` : ''}${link(a.freeUrl || a.publisherUrl, 'Artikel öffnen')}`;
-                return card(a.title, iconName, content);
+                const content = `${details ? `<p class="cf563-summary">${details}</p>` : ''}${a.why ? `<div class="cf563-rich">${renderModuleText(a.why)}</div>` : ''}${a.read ? `<p>${esc(a.read)}</p>` : ''}${ost579Documents(a.links?.length?a.links:(a.freeUrl||a.publisherUrl?[{url:a.freeUrl||a.publisherUrl,title:'Artikel öffnen',note:''}]:[]))}`;
+                return card(a.title, iconName, editing+content);
             });
             box.innerHTML = `<div class="cf547-content-title"><h2>${esc(categories.find(c => c[0] === active)[1])}</h2><span>${list.length} Einträge</span></div><div class="cf563-inline-list">${items.join('') || '<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
+            main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(box,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
         }
         main.addEventListener('click', event => {
+            if(event.target.closest('.ost579-document-card > summary')){event.preventDefault();return;}
             const edit=event.target.closest('[data-ost573-material]');
-            if(edit){event.preventDefault();event.stopPropagation();const storage=active==='checklists'?'knowledgeModules':'algorithms';const field=active==='checklists'?'body':'explanation';ost575LinksEditor(edit.closest('details'),storage,edit.dataset.ost573Material);return;}
+            if(edit){event.preventDefault();event.stopPropagation();const storage=active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms';const field=active==='checklists'?'body':'explanation';ost575LinksEditor(edit.closest('details'),storage,edit.dataset.ost573Material);return;}
             const tab = event.target.closest('[data-mat-tab]');
             if (!tab) return;
             active = tab.dataset.matTab;
-            main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(main,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
             history.replaceState(null, '', 'materialien.html?typ=' + active);
             render();
         });
@@ -1779,7 +2041,7 @@
             const q = normalizedSearch(input.value), tag = tagSel.value;
             const found = arts.filter(a => (!tag || tagsOf(a).includes(tag)) && (!q || normalizedSearch([a.title, a.authors, a.journal, a.why, ...tagsOf(a)].join(' ')).includes(q)));
             $('[data-lit-count]', root).textContent = `${found.length} ${found.length === 1 ? 'Artikel' : 'Artikel'}`;
-            box.innerHTML = found.map(a => { const link = String(a.freeUrl || a.publisherUrl || ''), safe = /^https?:\/\//i.test(link) ? link : ''; const auth = Array.isArray(a.authors) ? a.authors.join(', ') : String(a.authors || ''); const theseTags = tagsOf(a); return `<article class="cf548-archive-card"><span class="cf548-archive-icon">${ostIcon('book')}</span><div class="cf548-archive-copy"><h2>${esc(a.title)}</h2><p>${esc([auth, a.journal, a.year].filter(Boolean).join(' · '))}</p><div class="cf548-tag-list">${theseTags.slice(0, 5).map(t => `<button type="button" data-filter-tag="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>${safe ? `<a class="cf548-archive-open" href="${esc(safe)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(a.title)} öffnen">↗</a>` : ''}</article>`; }).join('') || '<p class="cf-muted">Keine Artikel für diese Auswahl gefunden.</p>';
+            box.innerHTML = found.map(a => { const link = String(a.freeUrl || a.publisherUrl || ''), safe = /^https?:\/\//i.test(link) ? link : ''; const auth = Array.isArray(a.authors) ? a.authors.join(', ') : String(a.authors || ''); const theseTags = tagsOf(a); return `<article class="cf548-archive-card" data-ost574-id="${esc(a.id)}"><span class="cf548-archive-icon">${ostIcon('book')}</span><div class="cf548-archive-copy"><h2>${esc(a.title)}</h2><p>${esc([auth, a.journal, a.year].filter(Boolean).join(' · '))}</p><div class="cf548-tag-list">${theseTags.slice(0, 5).map(t => `<button type="button" data-filter-tag="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>${safe ? `<a class="cf548-archive-open" href="${esc(safe)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(a.title)} öffnen">↗</a>` : ''}</article>`; }).join('') || '<p class="cf-muted">Keine Artikel für diese Auswahl gefunden.</p>';
             box.querySelectorAll('[data-filter-tag]').forEach(b => b.onclick = () => { tagSel.value = b.dataset.filterTag; draw(); });
         }
         input.addEventListener('input', draw);
@@ -2027,27 +2289,31 @@
         } };
         const asset = f => { const url = safe(f.url), kind = /\.(png|jpe?g|gif|webp|svg)(?:[?#]|$)/i.test(url) ? 'image' : /\.pdf(?:[?#]|$)/i.test(url) ? 'pdf' : /\.(pptx?|key)(?:[?#]|$)/i.test(url) ? 'slide' : 'link'; return `<article class="meeting-resource"><span class="meeting-file-icon">${{ image: '🖼️', pdf: '📄', slide: '📊', link: '🔗' }[kind]}</span><div><strong>${esc(f.title || 'Material')}</strong><p>${esc(f.note || '')}</p>${kind === 'image' && url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${esc(url)}" alt="${esc(f.title || 'Grafik')}"></a>` : ''}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Material öffnen ↗</a>` : '<small>Kein Link hinterlegt</small>'}</div></article>`; };
         if (item) {
-            $('[data-main]').innerHTML = `<section class="page-banner compact-banner"><h1>${esc(item.title)}</h1></section><article class="meeting-detail"><div class="meeting-meta"><span>${esc(item.date || '')}</span><span>${esc(item.category || 'Dienstbesprechung')}</span>${item.speaker ? `<span>Referent:in: ${esc(item.speaker)}</span>` : ''}</div><p class="meeting-summary">${esc(item.summary || 'Keine Zusammenfassung hinterlegt.')}</p><h2>Vorträge, Grafiken und Links</h2><div class="meeting-resources">${arr(item.files).map(asset).join('') || '<p>Noch keine Materialien.</p>'}</div></article>`;
+            $('[data-main]').innerHTML = `<article class="meeting-detail" data-ost574-id="${esc(item.id)}"><h1 class="ost583-detail-title">${esc(item.title)}</h1><div class="meeting-meta"><span>${esc(item.date || '')}</span><span>${esc(item.category || 'Dienstbesprechung')}</span>${item.speaker ? `<span>Referent:in: ${esc(item.speaker)}</span>` : ''}</div><div class="meeting-summary">${renderModuleText(item.summary || 'Keine Zusammenfassung hinterlegt.')}</div><h2>Vorträge, Grafiken und Links</h2><div class="meeting-resources">${arr(item.files).map(asset).join('') || '<p>Noch keine Materialien.</p>'}</div></article>`;
             return;
         }
         const unique = [...new Map(d.map(x => [x.id, x])).values()].sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-        $('[data-main]').innerHTML = `<section class="page-banner"><h1>Dienstbesprechungen</h1></section><div class="meeting-grid ost-tonal-grid">${unique.map(x => `<a class="meeting-tile" href="dienstbesprechungen.html?id=${encodeURIComponent(x.id)}"><span class="meeting-tile-icon">${ostIcon('users')}</span><span class="meeting-date">${esc(x.date || 'Dienstbesprechung')} · ${esc(x.category || 'Allgemein')}</span><h2>${esc(x.title)}</h2><p>${esc(x.summary || 'Materialien ansehen').slice(0, 170)}</p><span class="meeting-tile-cta">Materialsammlung ansehen →</span></a>`).join('') || '<div class="empty">Noch keine Dienstbesprechungen hinterlegt. In der Redaktion können Einträge erstellt werden.</div>'}</div>`;
+        $('[data-main]').innerHTML = `<section class="page-banner"><h1>Dienstbesprechungen</h1></section><div class="meeting-grid ost-tonal-grid">${unique.map(x => `<a class="meeting-tile" data-ost574-id="${esc(x.id)}" href="dienstbesprechungen.html?id=${encodeURIComponent(x.id)}"><span class="meeting-tile-icon">${ostIcon('users')}</span><span class="meeting-date">${esc(x.date || 'Dienstbesprechung')} · ${esc(x.category || 'Allgemein')}</span><h2>${esc(x.title)}</h2><p>${esc(String(x.summary || 'Materialien ansehen').replace(/<[^>]*>/g,' ').slice(0,170))}</p><span class="meeting-tile-cta">Materialsammlung ansehen →</span></a>`).join('') || '<div class="empty">Noch keine Dienstbesprechungen hinterlegt. In der Redaktion können Einträge erstellt werden.</div>'}</div>`;
     }
     async function skills() {
         const d = await get('skills');
-        $('[data-main]').innerHTML = `<h1 class="ost-visually-hidden">Skilltraining</h1><section class="ost-skill-accordions">${d.map((g, gi) => `<details class="ost-skill-group"><summary><span class="ost-skill-acc-icon">${ostIcon('training')}</span><span class="ost-skill-acc-title">${esc(g.name)}</span><span class="ost-skill-count">${arr(g.skills).length}</span><span class="ost-skill-toggle" aria-hidden="true">⌄</span></summary><div class="ost-skill-acc-items">${arr(g.skills).map((sk, si) => `<button class="ost-skill-acc-item" type="button" data-g="${gi}" data-s="${si}"><span>${esc(sk.name)}</span><b aria-hidden="true">›</b></button>`).join('')}</div></details>`).join('')}</section>`;
-        $('[data-main]').onclick = e => { const b = e.target.closest('[data-g][data-s]'); if (!b)
-            return; const sk = d[+b.dataset.g].skills[+b.dataset.s], sections = sk.sections || [{ title: 'Ablauf', items: arr(sk.items) }]; open(sk.name, sections.map((sec, sidx) => `<section class="overlay-section skill-overlay-section"><div class="skill-overlay-head"><span>${String(sidx + 1).padStart(2, '0')}</span><h3>${esc(sec.title)}</h3></div>${arr(sec.items).length ? `<ul class="skill-detail-list">${arr(sec.items).map((v, i) => `<li><span class="skill-point">${i + 1}</span><span>${esc(v)}</span></li>`).join('')}</ul>` : '<div class="skill-empty">Noch keine Inhalte</div>'}</section>`).join('')); };
+        $('[data-main]').innerHTML = `<h1 class="ost-visually-hidden">Skilltraining</h1><section class="ost-skill-accordions">${d.map((g, gi) => `<details class="ost-skill-group"><summary><span class="ost-skill-acc-icon">${ostIcon('training')}</span><span class="ost-skill-acc-title">${esc(g.name)}</span><span class="ost-skill-count">${arr(g.skills).length}</span><span class="ost-skill-toggle" aria-hidden="true">⌄</span></summary><div class="ost-skill-acc-items">${arr(g.skills).map((sk, si) => `<div class="ost576-skill-row"><button class="ost-skill-acc-item" type="button" data-g="${gi}" data-s="${si}"><span>${esc(sk.name)}</span><b aria-hidden="true">›</b></button><button type="button" class="ost576-skill-pencil" data-ost576-skill data-g="${gi}" data-s="${si}" aria-label="${esc(sk.name)} bearbeiten">✎</button></div>`).join('')}</div></details>`).join('')}</section>`;
+        ost583SkillAdd(document.querySelector('.ost-skill-accordions'));
+        $('[data-main]').onclick = e => {
+            const pencil=e.target.closest('[data-ost576-skill]');
+            if(pencil){e.preventDefault();e.stopPropagation();ost583EditSkillRow(pencil.closest('.ost576-skill-row'),Number(pencil.dataset.g),Number(pencil.dataset.s));return;}
+            const b = e.target.closest('[data-g][data-s]'); if (!b)
+            return; const sk = d[+b.dataset.g].skills[+b.dataset.s], sections = sk.sections || [{ title: 'Ablauf', items: arr(sk.items) }]; open(sk.name, sections.map((sec, sidx) => `<section class="overlay-section skill-overlay-section"><div class="skill-overlay-head"><span>${String(sidx + 1).padStart(2, '0')}</span><h3>${esc(sec.title)}</h3></div>${sec.richHtml?ost570CleanHtml(sec.richHtml):arr(sec.items).length?`<ul class="skill-detail-list">${arr(sec.items).map((v, i) => `<li><span class="skill-point">${i + 1}</span><span>${esc(v)}</span></li>`).join('')}</ul>`:'<div class="skill-empty">Noch keine Inhalte</div>'}</section>`).join('')); };
     }
     async function changesPage() {
         const d = await get('changes'), params = new URLSearchParams(location.search), id = params.get('id'), x = d.find(v => v.id === id);
         if (x) {
-            $('[data-main]').innerHTML = `<section class="page-banner compact-banner"><h1>${esc(x.title)}</h1></section><section class="detail-page change-detail">${x.imageUrl ? `<img class="change-image" src="${esc(x.imageUrl)}" alt="${esc(x.title)}">` : ''}<div class="before-after"><section class="compare-card old"><span>BISHER</span><h3>Alt</h3><p>${esc(x.old || '')}</p></section><section class="compare-card new"><span>NEU</span><h3>Neu</h3><p>${esc(x.new || '')}</p></section></div><section class="guideline-box"><h3>Quelle / Einordnung</h3><p>${esc(x.source || '')}</p></section><section class="guideline-box change-validity"><h3>Gültigkeit</h3><p>${esc(x.validity || 'Noch nicht hinterlegt')}</p></section></section>`;
+            $('[data-main]').innerHTML = `<section class="detail-page change-detail" data-ost574-id="${esc(x.id)}"><h1 class="ost583-detail-title">${esc(x.title)}</h1>${x.imageUrl ? `<img class="change-image" src="${esc(x.imageUrl)}" alt="${esc(x.title)}">` : ''}<div class="before-after"><section class="compare-card old"><span>BISHER</span><h3>Alt</h3><div class="ost583-rich-render">${renderModuleText(x.old || '')}</div></section><section class="compare-card new"><span>NEU</span><h3>Neu</h3><div class="ost583-rich-render">${renderModuleText(x.new || '')}</div></section></div><section class="guideline-box"><h3>Quelle / Einordnung</h3><div class="ost583-rich-render">${renderModuleText(x.source || '')}</div></section><section class="guideline-box change-validity"><h3>Gültigkeit</h3><div class="ost583-rich-render">${renderModuleText(x.validity || 'Noch nicht hinterlegt')}</div></section></section>`;
             const catalog = await contentCatalog();
             $('.change-detail')?.insertAdjacentHTML('beforeend', relatedHtml(x, catalog));
             return;
         }
-        $('[data-main]').innerHTML = `<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list ost-tonal-list">${d.map(x => `<a class="row-card" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">${ostIcon('changes')}</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`;
+        $('[data-main]').innerHTML = `<section class="page-banner"><h1>Lehrmeinungsänderungen</h1></section><div class="list ost-tonal-list">${d.map(x => `<a class="row-card" data-ost574-id="${esc(x.id)}" href="lehrmeinung.html?id=${encodeURIComponent(x.id)}"><span class="row-icon">${ostIcon('changes')}</span><span><strong>${esc(x.title)}</strong></span><span class="arrow">›</span></a>`).join('')}</div>`;
     }
     async function guidePage() {
         const d = await get('guide');
@@ -2191,7 +2457,7 @@
             if (archive)
                 list = d.filter(eventHasEnded).sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time)).slice(0, 8);
             $('[data-list-title]').textContent = selected ? new Date(selected + 'T12:00:00').toLocaleDateString('de-DE', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' }) : archive ? 'Vergangene Termine' : 'Kommende Termine';
-            $('[data-events]').innerHTML = list.map(e => { const attendees = attendeeEntries(e.attendees), cap = Number(e.capacity) || 10, joined = attendeeJoined(e.attendees, clientId), waitlisted = (Array.isArray(e.waitlist) ? e.waitlist : []).some(a => a.clientId === clientId), count = attendees.length, pct = Math.min(100, Math.round(count / cap * 100)), ended = eventHasEnded(e); return `<article class="event-card"><span class="event-icon">${e.category === 'Skilltraining' ? '🫁' : e.category === 'Simulationstraining' ? '❤️' : '📅'}</span><span><span class="cat-pill">${esc(e.category || 'Termin')}</span><h3>${esc(e.title)}</h3><div class="event-meta">🕒 ${esc(e.time)} · 📍 ${esc(e.location)}</div></span><span class="event-right"><div class="participants">👥 ${count}/${cap}</div><div class="progress"><span style="width:${pct}%"></span></div><button class="join-btn ${joined ? 'joined' : ''}" data-rsvp="${esc(e.id)}" ${ended ? 'disabled aria-disabled="true"' : ''}>${ended ? 'Termin vorbei' : joined ? 'Teilnahme zurückziehen' : waitlisted ? 'Warteliste verlassen' : count >= cap ? 'Auf Warteliste' : 'Teilnehmen'}</button></span></article>`; }).join('') || '<div class="empty">Keine Termine vorhanden. Weitere Termine können in der Redaktion angelegt werden.</div>';
+            $('[data-events]').innerHTML = list.map(e => { const attendees = attendeeEntries(e.attendees), cap = Number(e.capacity) || 10, joined = attendeeJoined(e.attendees, clientId), waitlisted = (Array.isArray(e.waitlist) ? e.waitlist : []).some(a => a.clientId === clientId), count = attendees.length, pct = Math.min(100, Math.round(count / cap * 100)), ended = eventHasEnded(e); return `<article class="event-card" data-ost574-id="${esc(e.id)}"><span class="event-icon">${e.category === 'Skilltraining' ? '🫁' : e.category === 'Simulationstraining' ? '❤️' : '📅'}</span><span><span class="cat-pill">${esc(e.category || 'Termin')}</span><h3>${esc(e.title)}</h3><div class="event-meta">🕒 ${esc(e.time)} · 📍 ${esc(e.location)}</div></span><span class="event-right"><div class="participants">👥 ${count}/${cap}</div><div class="progress"><span style="width:${pct}%"></span></div><button class="join-btn ${joined ? 'joined' : ''}" data-rsvp="${esc(e.id)}" ${ended ? 'disabled aria-disabled="true"' : ''}>${ended ? 'Termin vorbei' : joined ? 'Teilnahme zurückziehen' : waitlisted ? 'Warteliste verlassen' : count >= cap ? 'Auf Warteliste' : 'Teilnehmen'}</button></span></article>`; }).join('') || '<div class="empty">Keine Termine vorhanden. Weitere Termine können in der Redaktion angelegt werden.</div>';
         }
         $('[data-main]').onclick = async (e) => { if (e.target.closest('[data-prev]')) {
             cursor.setMonth(cursor.getMonth() - 1);
