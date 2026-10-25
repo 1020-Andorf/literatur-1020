@@ -24,7 +24,13 @@
     "category": "Übungen",
     "capacity": 10,
     "description": "test",
-    "attendees": [],
+    "attendees": [
+      {
+        "clientId": "c-kqxarypj0eimun798wb",
+        "name": "Simon Halas",
+        "registeredAt": "2026-10-25T20:17:52.106Z"
+      }
+    ],
     "waitlist": [],
     "id": "inline-mvo9rg8v-9gw6"
   }
