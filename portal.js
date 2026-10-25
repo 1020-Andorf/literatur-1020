@@ -1245,28 +1245,38 @@
       if(await ost574Pin()){sessionStorage.setItem('ost1020-edit-unlocked','1');ost576SyncEdit();}
     }
     function ost576InstallSwitch(){
-      // Only the start page may contain the unlock/lock control.
       const home=/^(index\.html)?$/.test(location.pathname.split('/').pop());
       if(!home){document.querySelector('[data-ost576-edit-switch]')?.remove();ost576SyncEdit();return;}
       const area=document.querySelector('[data-main]');
       if(!area)return;
-      // Never append to body/topbar: doing so broke flex/grid layouts.
-      let button=area.querySelector('[data-ost576-edit-switch]');
-      if(!button){
-        button=document.createElement('button');button.type='button';button.dataset.ost576EditSwitch='';
-        button.className='ost576-edit-switch';
-        const menu=area.querySelector('.cf548-menu,.cf548-tiles,.cf-menu-grid,.cf548-home-menu,[data-home-menu]');
-        const host=area.querySelector('[data-ost577-switch-host]')||document.createElement('div');
-        host.dataset.ost577SwitchHost='';host.className='ost577-switch-host';
-        const eventsSection=area.querySelector('[data-events-section]');
-        if(eventsSection) eventsSection.insertAdjacentElement('afterend',host);
-        else if(menu?.parentElement)menu.insertAdjacentElement('afterend',host);
+      // Reuse the single host created by the home page, without duplicating controls.
+      let host=area.querySelector('[data-ost577-switch-host]');
+      if(!host){
+        host=document.createElement('div');
+        host.dataset.ost577SwitchHost='';
+        const events=area.querySelector('[data-events-section]');
+        if(events)events.insertAdjacentElement('afterend',host);
         else area.appendChild(host);
-        host.appendChild(button);
-        button.onclick=async()=>{await ost576ToggleEdit();ost576InstallSwitch();};
       }
+      host.className='ost577-switch-host';
+      let button=host.querySelector('[data-ost576-edit-switch]');
+      if(!button){
+        button=document.createElement('button');
+        button.type='button';
+        button.dataset.ost576EditSwitch='';
+        button.className='ost576-edit-switch';
+        host.appendChild(button);
+      }
+      button.onclick=async()=>{await ost576ToggleEdit();ost576InstallSwitch();};
       let adminLink=host.querySelector('[data-ost588-admin]');
-      if(!adminLink){adminLink=document.createElement('a');adminLink.href='administration.html';adminLink.dataset.ost588Admin='';adminLink.className='ost576-edit-switch ost588-admin-link';adminLink.textContent='⚙ Verwaltung';host.appendChild(adminLink);}
+      if(!adminLink){
+        adminLink=document.createElement('a');
+        adminLink.href='administration.html';
+        adminLink.dataset.ost588Admin='';
+        adminLink.className='ost576-edit-switch ost588-admin-link';
+        adminLink.textContent='⚙ Verwaltung';
+        host.appendChild(adminLink);
+      }
       button.textContent=ost576IsEditing()?'🔒 Bearbeitung beenden':'✎ Bearbeitung freigeben';
       button.setAttribute('aria-pressed',String(ost576IsEditing()));
       ost576SyncEdit();

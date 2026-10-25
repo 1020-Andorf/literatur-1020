@@ -503,3 +503,39 @@ body.app-shell .cf548-home .cf-home-updates .cf-simple-list,
 .ost588-admin-output{border:1px solid #d0e0e9;border-radius:14px;padding:16px;background:#fff;min-height:100px;white-space:pre-wrap;overflow-wrap:anywhere}
 .ost588-admin-output select{font:inherit;padding:10px;border:1px solid #bfd1dc;border-radius:8px;max-width:100%}
 .ost588-admin-output .admin-version-row,.ost588-admin-output .admin-report{padding:12px 0;border-bottom:1px solid #d6e1e8}
+/* 589: Compact Aktuelles cards. The previous inherited grid row sizing left large empty gaps. */
+body.app-shell .cf548-home section.cf-home-updates .cf-simple-list,
+body .cf548-home section.cf-home-updates .cf-simple-list{
+  display:flex!important;flex-flow:column nowrap!important;align-items:stretch!important;
+  justify-content:flex-start!important;align-content:initial!important;
+  gap:7px!important;row-gap:7px!important;column-gap:0!important;
+  height:auto!important;min-height:0!important;grid-auto-rows:auto!important;
+  margin:0!important;padding:0!important;
+}
+body .cf548-home .cf-home-updates .ost583-home-news-row{
+  display:flex!important;flex-flow:row nowrap!important;align-items:stretch!important;
+  flex:0 0 auto!important;width:100%!important;max-width:100%!important;
+  height:auto!important;min-height:0!important;margin:0!important;padding:0!important;
+  gap:7px!important;position:relative!important;
+}
+body .cf548-home .cf-home-updates .ost583-home-news-row>[data-news]{
+  flex:1 1 auto!important;width:auto!important;min-width:0!important;
+  margin:0!important;padding:12px 14px!important;height:auto!important;min-height:45px!important;
+  box-sizing:border-box!important;
+}
+body:not(.ost576-edit-enabled) .cf548-home .cf-home-updates .ost583-home-news-row>.ost583-home-pencil{display:none!important}
+body .cf548-home .ost577-switch-host,
+body.app-shell .cf548-home .ost577-switch-host{
+  display:flex!important;flex-flow:row wrap!important;justify-content:center!important;
+  align-items:center!important;gap:10px!important;width:100%!important;
+  min-height:42px!important;height:auto!important;margin:18px auto 8px!important;
+  padding:0!important;visibility:visible!important;
+}
+body .cf548-home .ost577-switch-host .ost576-edit-switch{
+  display:inline-flex!important;justify-content:center!important;align-items:center!important;
+  flex:0 0 auto!important;max-width:100%!important;min-width:155px!important;
+  min-height:40px!important;width:auto!important;height:auto!important;
+  padding:9px 14px!important;font:600 13px/1.3 system-ui,sans-serif!important;
+  color:#16465f!important;background:#fff!important;border:1px solid #b9cedc!important;
+  border-radius:9px!important;opacity:1!important;visibility:visible!important;
+}
