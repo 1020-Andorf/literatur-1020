@@ -2462,7 +2462,35 @@
         cursor.setDate(1);
         let selected = '';
         const clientId = localStorage.getItem('ost1020-client-id') || (() => { const id = 'c-' + Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('ost1020-client-id', id); return id; })();
-        $('[data-main]').innerHTML = `<section class="page-banner ost585-event-head"><h1>Termine</h1><a class="btn ost585-attendance" href="editor.html?bereich=attendance" aria-label="Teilnehmerlisten und PDF-Export öffnen">Teilnehmerlisten / PDF-Export</a></section><section class="calendar" data-cal></section><section class="section"><div class="section-head ost586-participants-head"><h2 data-list-title>Kommende Termine</h2><a href="editor.html?bereich=attendance" class="btn ost586-participants" aria-label="Teilnehmerlisten verwalten und als PDF exportieren">👥 Teilnehmerlisten & Export</a></div><div class="event-list" data-events></div></section>`;
+        $('[data-main]').innerHTML = `<section class="page-banner ost585-event-head"><h1>Termine</h1><button type="button" class="btn ost585-attendance" data-attendance-open>Teilnehmerlisten / PDF-Export</button></section><section class="calendar" data-cal></section><section class="section"><div class="section-head ost586-participants-head"><h2 data-list-title>Kommende Termine</h2><button type="button" class="btn ost586-participants" data-attendance-open>👥 Teilnehmerlisten & Export</button></div><div class="event-list" data-events></div></section>`;
+        // Teilnehmerverwaltung unabhängig von der alten Redaktion. PDF-Erzeugung bleibt unverändert.
+        function openAttendanceWindow(){
+            document.querySelector('[data-ost587-attendance]')?.remove();
+            const overlay=document.createElement('div');overlay.className='ost587-attendance-overlay';overlay.dataset.ost587Attendance='';
+            overlay.innerHTML=`<section class="ost587-attendance-dialog" role="dialog" aria-modal="true" aria-label="Teilnehmerlisten und PDF-Export"><header><h2>Teilnehmerlisten & Export</h2><button type="button" class="btn" data-attendance-close aria-label="Schließen">✕</button></header><div data-attendance-content></div></section>`;
+            document.body.appendChild(overlay);
+            const close=()=>overlay.remove();
+            overlay.querySelector('[data-attendance-close]').onclick=close;
+            overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
+            const escape=e=>{if(e.key==='Escape'){close();document.removeEventListener('keydown',escape)}};
+            document.addEventListener('keydown',escape);
+            const target=overlay.querySelector('[data-attendance-content]');
+            const today=new Date(), todayLocal=dayKey(today.getFullYear(),today.getMonth(),today.getDate());
+            const groups=[['Aktuelle Termine','Heute und kommende Termine',d.filter(x=>(x.date||'')>=todayLocal).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time))],['Vergangene Termine','Anwesenheitsarchiv',d.filter(x=>(x.date||'')<todayLocal).sort((a,b)=>(b.date+b.time).localeCompare(a.date+a.time))]];
+            const eventCard=ev=>{const people=attendeeEntries(ev.attendees),date=ev.date?new Date(ev.date+'T12:00:00').toLocaleDateString('de-DE'):'';return `<details class="attendance-event"><summary class="attendance-event-head"><div><span class="cat-pill">${esc(ev.category||'Termin')}</span><h3>${esc(ev.title)}</h3><p>${esc(date)}${ev.time?' · '+esc(ev.time):''}${ev.location?' · '+esc(ev.location):''}</p></div><strong>${people.length}/${Number(ev.capacity)||10}</strong></summary><div class="attendance-event-body">${people.length?`<div class="attendance-table">${people.map((p,i)=>`<div class="attendance-row"><span class="attendance-no">${i+1}</span><span><strong>${esc(p.name||'Ohne Namensangabe')}</strong><small>${p.registeredAt?'angemeldet '+new Date(p.registeredAt).toLocaleString('de-DE'):''}</small></span></div>`).join('')}</div>`:'<div class="empty compact">Noch keine Anmeldungen.</div>'}<div class="attendance-tools"><button type="button" class="btn" data-attendance-pdf="${esc(ev.id)}">PDF exportieren</button>${people.length?`<button type="button" class="btn" data-attendance-clear="${esc(ev.id)}">Liste leeren</button>`:''}</div></div></details>`;};
+            const redraw=()=>{target.innerHTML=groups.map(([title,desc,items])=>`<section class="attendance-group"><div class="attendance-group-head"><div><h3>${title}</h3><p>${desc}</p></div><span>${items.length}</span></div><div class="attendance-editor-list">${items.map(eventCard).join('')||'<div class="empty">Keine Termine vorhanden.</div>'}</div></section>`).join('');};
+            redraw();
+            target.onclick=async e=>{
+                const pdf=e.target.closest('[data-attendance-pdf]');if(pdf){const ev=d.find(x=>String(x.id)===pdf.dataset.attendancePdf);if(ev)exportAttendancePdf(ev);return;}
+                const clear=e.target.closest('[data-attendance-clear]');if(clear){const ev=d.find(x=>String(x.id)===clear.dataset.attendanceClear);if(!ev)return;
+                    if(!ost576IsEditing()){alert('Zum Leeren bitte zuerst auf der Startseite die Bearbeitung freigeben.');return;}
+                    if(!confirm(`Teilnehmerliste für „${ev.title}“ wirklich leeren?`))return;
+                    const latest=await get('events'),index=latest.findIndex(x=>String(x.id)===String(ev.id));if(index<0)return;
+                    latest[index]={...latest[index],attendees:[]};if(await save('events',latest)){ev.attendees=[];groups.forEach(g=>{g[2]=g[2].map(x=>String(x.id)===String(ev.id)?ev:x)});redraw();drawEvents();}else alert('Speichern fehlgeschlagen.');
+                }
+            };
+        }
+        $('[data-main]').addEventListener('click',e=>{if(e.target.closest('[data-attendance-open]'))openAttendanceWindow();});
         function drawCal() {
             const y = cursor.getFullYear(), m = cursor.getMonth(), first = new Date(y, m, 1), offset = (first.getDay() + 6) % 7, daysInMonth = new Date(y, m + 1, 0).getDate();
             const today = new Date(), todayKey = dayKey(today.getFullYear(), today.getMonth(), today.getDate());

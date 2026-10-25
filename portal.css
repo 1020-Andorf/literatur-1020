@@ -476,3 +476,17 @@ body:not(.ost576-edit-enabled) .ost583-home-pencil,body:not(.ost576-edit-enabled
 .ost586-participants{display:inline-flex;align-items:center;justify-content:center;white-space:normal;text-align:center;font-size:.88rem}
 .ost575-link-editor textarea[data-link-main-subtitle]{display:block;width:100%;box-sizing:border-box;min-height:80px;resize:vertical;padding:10px 12px;border:1px solid #bed2de;border-radius:9px;font:inherit;background:white;color:#173b53}
 @media(max-width:650px){.ost586-participants-head{align-items:stretch}.ost586-participants{width:100%}}
+
+/* 587: Startmeldungen im gesperrten Modus ohne Phantomabstände */
+body:not(.ost576-edit-enabled) .cf-home-updates .cf-simple-list{display:grid!important;gap:7px!important;row-gap:7px!important}
+body:not(.ost576-edit-enabled) .cf-home-updates .ost583-home-news-row{margin:0!important;padding:0!important;min-height:0!important;display:block!important}
+body:not(.ost576-edit-enabled) .cf-home-updates .ost583-home-news-row>[data-news]{margin:0!important;min-height:46px!important;width:100%!important}
+/* Merkhilfen: nur ein Bearbeitungsstift und keine Quellenzeile */
+.cf553-materials [data-material-list] .ost584-collapsible .cf563-source{display:none!important}
+.cf553-materials [data-material-list] .ost584-collapsible .ost573-card-pencil{display:none!important}
+.ost587-attendance-overlay{position:fixed;inset:0;z-index:99999;background:rgba(12,34,49,.56);display:grid;place-items:center;padding:16px;box-sizing:border-box}
+.ost587-attendance-dialog{background:#fff;border-radius:18px;width:min(900px,100%);max-height:calc(100dvh - 32px);overflow:auto;padding:18px;box-shadow:0 20px 80px #0e2b4550;box-sizing:border-box}
+.ost587-attendance-dialog>header{display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:-18px;background:#fff;padding:12px 0;z-index:1;border-bottom:1px solid #dce6ea}
+.ost587-attendance-dialog>header h2{margin:0;font-size:1.3rem}
+.ost587-attendance-dialog .attendance-event{margin:.5rem 0}.ost587-attendance-dialog .attendance-tools{display:flex;flex-wrap:wrap;gap:.5rem}
+@media(max-width:600px){.ost587-attendance-dialog{padding:12px}.ost587-attendance-overlay{padding:8px}}
