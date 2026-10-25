@@ -100,3 +100,22 @@ body[data-page="editor"] .ost567-disease-workspace .cf551-disease-meta{display:g
 .ost570-rich [data-callout=note],.ost570-editable [data-callout=note]{border-color:#bc8526;background:#fff7dd}
 .ost570-rich [data-callout=success],.ost570-editable [data-callout=success]{border-color:#26805a;background:#e8f7ed}
 @media(max-width:560px){.ost570-hub .cf551-organ-nav,.ost570-hub .cf551-category-nav{grid-template-columns:1fr}.ost570-tile,.ost570-symptom-tile{min-height:75px}.ost570-edit-btn span{display:none}}
+
+/* 571 – lesbare Auswahlkarten und sichtbare Krankheitsbild-Karten */
+.ost570-hub .cf551-organ-nav,.ost570-hub .cf551-category-nav{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr))!important;gap:14px!important;align-items:stretch}
+.ost570-hub .ost570-tile,.ost570-hub .ost570-symptom-tile{box-sizing:border-box;display:grid!important;grid-template-columns:42px minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;row-gap:5px;min-width:0;width:100%;height:auto;min-height:110px;padding:20px 22px;align-items:center;text-align:left;overflow-wrap:anywhere;line-height:1.35}
+.ost570-hub .ost570-tile svg,.ost570-hub .ost570-symptom-tile svg{grid-column:1;grid-row:1 / span 2;max-width:32px}
+.ost570-hub .ost570-tile strong,.ost570-hub .ost570-symptom-tile strong{grid-column:2;grid-row:1;font-size:1.08rem;line-height:1.35;min-width:0}
+.ost570-hub .ost570-tile span,.ost570-hub .ost570-symptom-tile span{grid-column:2;grid-row:2;min-width:0;font-size:.84rem;line-height:1.4}
+.ost570-hub .ost570-tile:hover,.ost570-hub .ost570-symptom-tile:hover{border-color:#7baec5;box-shadow:0 8px 22px #103c5418;transform:translateY(-1px)}
+.ost571-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.ost571-section-head h3,.ost571-section-head h4{margin:0!important;min-width:0}
+.ost571-pencil{flex:none;border:1px solid #acc8d7;border-radius:9px;background:#fff;padding:5px 9px;font-size:.88rem;color:#164c69;cursor:pointer}
+.ost571-pencil:hover{background:#e5f2f8}.ost571-pencil:focus-visible{outline:3px solid #2d86af;outline-offset:2px}
+.ost571-diseases{margin-top:20px}.ost571-disease-list{display:grid;gap:14px}
+.ost571-disease-card{border:1px solid #cbdfe9;background:#f0f7fb;border-radius:15px;padding:18px 20px;min-width:0}
+.ost571-disease-card h4{color:#133d55;font-size:1.14rem}
+.ost571-disease-field{margin:12px 0 0;padding:12px 15px;border-radius:9px;background:white;border:1px solid #e0ebef;line-height:1.65;overflow-wrap:anywhere}
+.ost571-disease-field strong{display:block;color:#285570;margin-bottom:4px}.ost571-disease-field p{margin:0}
+.ost571-disease-field.ost571-cave{background:#fff0f0;border-color:#e8bbbb;color:#8c242a}
+@media(max-width:620px){.ost570-hub .cf551-organ-nav,.ost570-hub .cf551-category-nav{grid-template-columns:1fr!important}.ost570-hub .ost570-tile,.ost570-hub .ost570-symptom-tile{min-height:96px;padding:16px}.ost571-pencil span{display:none}}
