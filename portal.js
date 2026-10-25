@@ -1108,7 +1108,7 @@
     // ------------------------------------------------------------------------
     function ost570CleanHtml(markup) {
         const input = document.createElement('template'); input.innerHTML = String(markup || '');
-        const allowed = new Set(['P','DIV','H2','H3','H4','STRONG','B','EM','I','U','UL','OL','LI','BLOCKQUOTE','BR','A','IMG']);
+        const allowed = new Set(['P','DIV','H2','H3','H4','STRONG','B','EM','I','U','UL','OL','LI','BLOCKQUOTE','BR','A','IMG','FONT','SPAN']);
         function clean(node) {
             if (node.nodeType === 3) return document.createTextNode(node.textContent);
             if (node.nodeType !== 1) return document.createDocumentFragment();
@@ -1116,6 +1116,7 @@
             const el = document.createElement(tag);
             if (tag === 'a') { try {const u = new URL(node.getAttribute('href') || '', location.href); if (['https:','http:'].includes(u.protocol)) {el.href=u.href;el.rel='noopener noreferrer';el.target='_blank';}} catch(e){} }
             if (tag === 'img') { try {const u = new URL(node.getAttribute('src') || '', location.href);if(['https:','http:'].includes(u.protocol)){el.src=u.href;el.alt=node.getAttribute('alt') || 'Illustration';el.loading='lazy';}} catch(e){} }
+            if (tag === 'font') { const face=node.getAttribute('face');if(['Arial','Georgia','Verdana','Times New Roman','Courier New'].includes(face))el.setAttribute('face',face);const size=Number(node.getAttribute('size'));if(size>=1&&size<=7)el.setAttribute('size',String(size));}
             if (node.dataset?.callout && ['danger','info','note','success'].includes(node.dataset.callout)) el.dataset.callout=node.dataset.callout;
             for (const child of [...node.childNodes]) el.appendChild(clean(child));
             return el;
@@ -1124,6 +1125,15 @@
         for(const node of [...input.content.childNodes]) wrap.appendChild(clean(node));
         return wrap.innerHTML;
     }
+        const ost573Toolbar = () => `<div class="ost573-toolbar" role="toolbar" aria-label="Text formatieren"><button type="button" data-rt="bold"><b>F</b></button><button type="button" data-rt="italic"><i>K</i></button><button type="button" data-rt="underline"><u>U</u></button><button type="button" data-rt="insertUnorderedList">• Liste</button><button type="button" data-rt="insertOrderedList">1. Liste</button><button type="button" data-rt="formatBlock" data-val="H3">Überschrift</button><button type="button" data-rt="formatBlock" data-val="P">Absatz</button><select data-rt-font aria-label="Schriftart"><option value="">Schriftart</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Verdana">Verdana</option><option value="Times New Roman">Times New Roman</option><option value="Courier New">Courier New</option></select><select data-rt-size aria-label="Schriftgröße"><option value="">Größe</option><option value="2">Klein</option><option value="3">Normal</option><option value="4">Groß</option><option value="5">Sehr groß</option></select><button type="button" data-rt-link>Link</button><button type="button" data-rt-img>Bild-URL</button></div>`;
+        function ost573BindRich(host, editor){
+            $$("[data-rt]",host).forEach(b=>b.addEventListener('mousedown',e=>e.preventDefault()));
+            $$("[data-rt]",host).forEach(b=>b.onclick=()=>{editor.focus();document.execCommand(b.dataset.rt,false,b.dataset.val||null);});
+            $('[data-rt-font]',host).onchange=e=>{editor.focus();document.execCommand('fontName',false,e.target.value);};
+            $('[data-rt-size]',host).onchange=e=>{editor.focus();document.execCommand('fontSize',false,e.target.value);};
+            $('[data-rt-link]',host).onclick=()=>{const u=prompt('HTTPS-Link:');if(!u)return;try{const x=new URL(u);if(x.protocol!=='https:')throw Error();editor.focus();document.execCommand('createLink',false,x.href);}catch{alert('Bitte eine gültige HTTPS-Adresse eingeben.');}};
+            $('[data-rt-img]',host).onclick=()=>{const u=prompt('Öffentliche HTTPS-Bildadresse:');if(!u)return;try{const x=new URL(u);if(x.protocol!=='https:')throw Error();editor.focus();document.execCommand('insertImage',false,x.href);}catch{alert('Bitte eine gültige HTTPS-Bildadresse eingeben.');}};
+        }
     async function topicHub() {
         const params = new URLSearchParams(location.search);
         const [modules, differentials, literature, mnemonicStore] = await Promise.all([get('knowledgeModules'), get('differential'), articles(), get('algorithms')]);
@@ -1176,7 +1186,7 @@
                 const questions = arr(v.questions);
                 const causes = arr(v.causes).map(c => typeof c === 'string' ? { name: c } : c);
                 const pencil = (part, index = '') => `<button type="button" class="ost571-pencil" data-ost571-part="${part}" data-ost571-index="${index}" aria-label="Abschnitt bearbeiten (PIN erforderlich)" title="Abschnitt bearbeiten">✎ <span>Bearbeiten</span></button>`;
-                body = `<section class="ost568-panel ost568-info" id="ueberblick"><div class="ost571-section-head"><h3>Überblick</h3>${pencil('theory')}</div><div class="ost-module-body">${renderModuleText(v.theory || 'Noch kein Überblick hinterlegt.')}</div></section>`
+                body = `<section class="ost568-panel ost568-info" id="ueberblick"><div class="ost571-section-head"><h3>Überblick</h3>${pencil('theory')}</div><div class="ost-module-body">${ost570CleanHtml(v.theory || '<p>Noch kein Überblick hinterlegt.</p>')}</div></section>`
                   + `<section class="ost568-panel ost568-danger" id="red-flags"><div class="ost571-section-head"><h3>⚠ Red Flags · Warnzeichen</h3>${pencil('redflags')}</div>${warning.length ? `<ul>${warning.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Keine Warnzeichen hinterlegt.</p>'}</section>`
                   + `<section class="ost568-panel ost568-blue" id="anamnese"><div class="ost571-section-head"><h3>Wichtige Fragen / Anamnese</h3>${pencil('questions')}</div>${questions.length ? `<ul>${questions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Noch keine Fragen hinterlegt.</p>'}</section>`
                   + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${[['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</section>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
@@ -1213,14 +1223,14 @@
             organSection.hidden=hasOrgan;catSection.hidden=!hasOrgan || isArticle;
             searchWrap.hidden=!hasOrgan || isArticle;
             crumb.innerHTML=`<a href="${organsLink()}">Organsysteme</a>${hasOrgan ? ` <span>›</span> <a href="${symptomLink()}">${esc(organ.label)}</a>` : ''}${isArticle ? ` <span>›</span> <strong>${esc(current.title)}</strong>` : ''}`;
-            organBar.innerHTML=CF_TOPICS.map((t,i)=>{const count=differentials.filter(x=>t.groups.includes(x.group)).length;return `<a class="ost570-tile ost572-tile" style="--tile-color:${['#69b288','#ef8065','#ecad32','#326380','#df719e','#8f7ac4'][i%6]}" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}"><span class="ost572-count">${count}</span><strong>${esc(t.label)}</strong><span class="ost572-chevron">›</span></a>`}).join('');
+            organBar.innerHTML=CF_TOPICS.map((t,i)=>{const count=differentials.filter(x=>t.groups.includes(x.group)).length;return `<a class="ost570-tile ost572-tile" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}"><span class="ost572-count">${count}</span><strong>${esc(t.label)}</strong><span class="ost572-chevron">›</span></a>`}).join('');
             if(!hasOrgan){out.innerHTML='<p class="ost569-hint">Wähle ein Organsystem. Auf der nächsten Seite findest du die zugehörigen Leitsymptome.</p>';return;}
             const all=entries(), needle=normalizedSearch(input.value.trim());
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
-            categoryBar.innerHTML=found.map((x,i)=>`<a class="ost570-symptom-tile ost572-tile" style="--tile-color:${['#326380','#69b288','#ef8065','#8f7ac4'][i%4]}" href="${articleLink(x)}"><span class="ost572-count">${String(i+1).padStart(2,'0')}</span><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
+            categoryBar.innerHTML=found.map((x,i)=>`<a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><span class="ost572-count">${String(i+1).padStart(2,'0')}</span><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
-            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1>${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Artikel mit PIN bearbeiten" title="Bearbeiten">✎ <span>Bearbeiten</span></button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
-            $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current));
+            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1>${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎ <span>Bearbeiten</span></button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
+            $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
             $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index || 0))));
         }
         async function editArticle(item, part = "all", causeIndex = 0){
@@ -1233,16 +1243,17 @@
             }
             const current=item.value;
             if(part !== 'all') {
-                const target = part === 'cause' ? $$('.ost571-disease-card',out)[causeIndex] : ({theory:'#ueberblick',redflags:'#red-flags',questions:'#anamnese',richContent:'#artikel-ergaenzungen'})[part] ? $(({theory:'#ueberblick',redflags:'#red-flags',questions:'#anamnese',richContent:'#artikel-ergaenzungen'})[part],out) : null;
+                const target = part === 'title' ? $('.ost570-article-head',out) : part === 'cause' ? $$('.ost571-disease-card',out)[causeIndex] : ({theory:'#ueberblick',redflags:'#red-flags',questions:'#anamnese',richContent:'#artikel-ergaenzungen'})[part] ? $(({theory:'#ueberblick',redflags:'#red-flags',questions:'#anamnese',richContent:'#artikel-ergaenzungen'})[part],out) : null;
                 if(target) {target.appendChild(host); host.classList.add('ost572-embedded');if(target.tagName==='DETAILS')target.open=true;}
             }
             if(part !== 'all') {
                 const fields=['name','symptoms','info','physiology','findings','medications','cave'];
                 const cause=typeof (current.causes || [])[causeIndex] === 'string' ? {name:current.causes[causeIndex]} : {...((current.causes || [])[causeIndex] || {})};
-                const values=part==='cause' ? fields.map(key=>`<label>${esc(({name:'Krankheitsbild',symptoms:'Symptome',info:'Einordnung',physiology:'Pathophysiologie',findings:'Befunde',medications:'Pharmakologie',cave:'CAVE / Warnzeichen'})[key])}<textarea data-ost571-field="${key}">${esc(cause[key] || '')}</textarea></label>`).join('') : part==='richContent' ? `<label>Merksätze & Fachinformationen (HTML-Formatierung)</label><div class="ost570-toolbar"><button type="button" data-command="bold">Fett</button><button type="button" data-command="italic">Kursiv</button><button type="button" data-command="insertUnorderedList">Liste</button><button type="button" data-image>Bild-URL</button></div><div class="ost570-editable" contenteditable="true" data-ost571-rich></div>` : `<label>${part==='theory' ? 'Überblick' : part==='redflags' ? 'Red Flags – eine pro Zeile' : 'Anamnesefragen – eine pro Zeile'}<textarea data-ost571-value>${esc(part==='theory' ? current.theory || '' : arr(current[part]).join('\n'))}</textarea></label>`;
+                const values=part==='title' ? `<label>Leitsymptom-Titel<input data-ost573-title maxlength=180 value="${esc(current.title || '')}"></label>` : part==='cause' ? fields.map(key=>`<label>${esc(({name:'Krankheitsbild',symptoms:'Symptome',info:'Einordnung',physiology:'Pathophysiologie',findings:'Befunde',medications:'Pharmakologie',cave:'CAVE / Warnzeichen'})[key])}<textarea data-ost571-field="${key}">${esc(cause[key] || '')}</textarea></label>`).join('') : part==='richContent' ? `<label>Merksätze & Fachinformationen (HTML-Formatierung)</label><div class="ost570-toolbar"><button type="button" data-command="bold">Fett</button><button type="button" data-command="italic">Kursiv</button><button type="button" data-command="insertUnorderedList">Liste</button><button type="button" data-image>Bild-URL</button></div><div class="ost570-editable" contenteditable="true" data-ost571-rich></div>` : `<label>${part==='theory' ? 'Überblick' : part==='redflags' ? 'Red Flags – eine pro Zeile' : 'Anamnesefragen – eine pro Zeile'}${part==='theory' ? `${ost573Toolbar()}<div class="ost573-editable" contenteditable="true" data-ost573-theory></div>` : `<textarea data-ost571-value>${esc(arr(current[part]).join('\n'))}</textarea>`}</label>`;
                 host.hidden=false;
                 host.innerHTML=`<h2>✎ Abschnitt bearbeiten</h2><p>PIN-geprüfte Bearbeitung. Änderungen erscheinen erst nach erfolgreicher Speicherung.</p>${values}<div class="ost570-actions"><button class="btn primary" type="button" data-ost571-save>Speichern</button><button class="btn" type="button" data-ost571-cancel>Abbrechen</button><span role="status" data-ost571-status></span></div>`;
                 const rich=$('[data-ost571-rich]',host);
+                if(part==='theory'){const ed=$('[data-ost573-theory]',host);ed.innerHTML=ost570CleanHtml(current.theory || '');ost573BindRich(host,ed);}
                 if(rich){ rich.innerHTML=ost570CleanHtml(current.richContent || ''); $$('[data-command]',host).forEach(b=>b.onclick=()=>{rich.focus();document.execCommand(b.dataset.command,false,null);}); $('[data-image]',host).onclick=()=>{const url=prompt('Öffentliche HTTPS-Bildadresse:');if(!url)return;try{const parsed=new URL(url);if(parsed.protocol!=='https:')throw Error();rich.focus();document.execCommand('insertImage',false,parsed.href);}catch{alert('Nur gültige HTTPS-Bildadressen.');}}; }
                 $('[data-ost571-cancel]',host).onclick=()=>host.hidden=true;
                 $('[data-ost571-save]',host).onclick=async()=>{
@@ -1252,7 +1263,8 @@
                     const updated={...latest[index]};
                     if(part==='cause'){updated.causes=[...arr(updated.causes)];updated.causes[causeIndex]={...cause};fields.forEach(key=>updated.causes[causeIndex][key]=$(`[data-ost571-field="${key}"]`,host).value);}
                     else if(part==='richContent')updated.richContent=ost570CleanHtml(rich.innerHTML);
-                    else if(part==='theory')updated.theory=$('[data-ost571-value]',host).value;
+                    else if(part==='title')updated.title=$('[data-ost573-title]',host).value.trim().slice(0,180) || updated.title;
+                    else if(part==='theory')updated.theory=ost570CleanHtml($('[data-ost573-theory]',host).innerHTML);
                     else updated[part]=$('[data-ost571-value]',host).value.split('\n').map(x=>x.trim()).filter(Boolean);
                     const ok=await save('differential',latest.map((x,i)=>i===index?updated:x));
                     if(ok){Object.assign(current,updated);host.hidden=true;draw();}else status.textContent='Speichern fehlgeschlagen. Bitte Worker und Verbindung prüfen.';
@@ -1289,6 +1301,30 @@
     // ------------------------------------------------------------------------
     // Training
     // ------------------------------------------------------------------------
+    // Gemeinsame In-situ-Bearbeitung für strukturierte Datensätze (Titel + Freitext).
+    async function ost573EditCard(card, store, id, textField, rerender){
+        let pin=sessionStorage.getItem('ost1020-editor-pin') || '';
+        if(!pin || !await verifyEditorPin(pin)){
+            pin=prompt('Redaktions-PIN eingeben:') || '';
+            if(!pin || !await verifyEditorPin(pin)){alert('PIN ungültig.');return;}
+            sessionStorage.setItem('ost1020-editor-pin',pin);
+        }
+        const data=await get(store), idx=data.findIndex(x=>String(x.id)===String(id));
+        if(idx<0){alert('Datensatz nicht gefunden.');return;}
+        card.open=true;
+        let host=card.querySelector('.ost573-card-editor');
+        if(!host){host=document.createElement('section');host.className='ost573-card-editor';card.querySelector('.cf563-entry-body')?.prepend(host);}
+        host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
+        const rich=host.querySelector('[data-ost573-card-rich]');rich.innerHTML=ost570CleanHtml(data[idx][textField]||'');ost573BindRich(host,rich);
+        host.querySelector('[data-ost573-card-cancel]').onclick=()=>host.remove();
+        host.querySelector('[data-ost573-card-save]').onclick=async()=>{
+            const state=host.querySelector('[data-ost573-card-status]');state.textContent='Speichere …';
+            const latest=await get(store), index=latest.findIndex(x=>String(x.id)===String(id));
+            if(index<0){state.textContent='Datensatz nicht gefunden.';return;}
+            latest[index]={...latest[index],title:host.querySelector('[data-ost573-card-title]').value.trim()||latest[index].title,[textField]:ost570CleanHtml(rich.innerHTML)};
+            if(await save(store,latest)){Object.assign(data[idx],latest[index]);location.reload();}else state.textContent='Speichern fehlgeschlagen.';
+        };
+    }
     async function trainingPage() {
         const [groups, modules] = await Promise.all([get('skills'), get('knowledgeModules')]);
         const km = (Array.isArray(modules) ? modules : []).filter(x => x.status !== 'draft');
@@ -1312,7 +1348,7 @@
                 out.innerHTML = `<h2>${selected === 'devices' ? 'Geräte' : 'Übungschecklisten'}</h2><div class="cf563-inline-list">${items.map(x => {
                     const url = safeDocument(x.documentUrl);
                     const detail = [x.summary ? `<p class="cf563-summary">${esc(x.summary)}</p>` : '', x.body ? `<div class="cf563-rich">${renderModuleText(x.body)}</div>` : '', url ? `<a class="cf563-resource" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Dokument / PDF öffnen ↗</a>` : ''].filter(Boolean).join('');
-                    return `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
+                    return `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body"><button type="button" class="ost571-pencil ost573-card-pencil" data-ost573-training="${esc(x.id)}" aria-label="Eintrag direkt bearbeiten">✎ Bearbeiten</button>${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
                 }).join('') || '<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
             }
         }
@@ -1324,6 +1360,8 @@
                 render();
                 return;
             }
+            const pencil=e.target.closest('[data-ost573-training]');
+            if(pencil){e.preventDefault();e.stopPropagation();ost573EditCard(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training,'body',render);return;}
             const skill = e.target.closest('[data-training-skill]');
             if (skill) {
                 const [gi, si] = skill.dataset.trainingSkill.split('-').map(Number);
@@ -1393,11 +1431,12 @@
             const list = active === 'guidelines' ? guidelines : active === 'checklists' ? checklists : active === 'mnemonics' ? mnemonics : literature;
             const iconName = categories.find(c => c[0] === active)[2];
             const items = list.map(a => {
-                if (active === 'guidelines') return card(a.title, iconName, guidelinePanel(a));
-                if (active === 'mnemonics') return card(a.title, iconName, schemaPanel(a));
+                const editing=active==='literature'?'':`<button class="ost571-pencil ost573-card-pencil" type="button" data-ost573-material="${esc(a.id)}" aria-label="Eintrag direkt bearbeiten">✎ Bearbeiten</button>`;
+                if (active === 'guidelines') return card(a.title, iconName, editing+guidelinePanel(a));
+                if (active === 'mnemonics') return card(a.title, iconName, editing+schemaPanel(a));
                 if (active === 'checklists') {
                     const content = `${a.summary ? `<p class="cf563-summary">${esc(a.summary)}</p>` : ''}${a.body ? `<div class="cf563-rich">${renderModuleText(a.body)}</div>` : ''}${link(a.documentUrl, 'Dokument / PDF öffnen')}`;
-                    return card(a.title, iconName, content);
+                    return card(a.title, iconName, editing+content);
                 }
                 const details = [a.authors, a.journal, a.year].filter(Boolean).map(x => esc(x)).join(' · ');
                 const content = `${details ? `<p class="cf563-summary">${details}</p>` : ''}${a.why ? `<div class="cf563-rich">${renderModuleText(a.why)}</div>` : ''}${a.read ? `<p>${esc(a.read)}</p>` : ''}${link(a.freeUrl || a.publisherUrl, 'Artikel öffnen')}`;
@@ -1406,6 +1445,8 @@
             box.innerHTML = `<div class="cf547-content-title"><h2>${esc(categories.find(c => c[0] === active)[1])}</h2><span>${list.length} Einträge</span></div><div class="cf563-inline-list">${items.join('') || '<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
         }
         main.addEventListener('click', event => {
+            const edit=event.target.closest('[data-ost573-material]');
+            if(edit){event.preventDefault();event.stopPropagation();const storage=active==='checklists'?'knowledgeModules':'algorithms';const field=active==='checklists'?'body':'explanation';ost573EditCard(edit.closest('details'),storage,edit.dataset.ost573Material,field,render);return;}
             const tab = event.target.closest('[data-mat-tab]');
             if (!tab) return;
             active = tab.dataset.matTab;
