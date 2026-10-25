@@ -133,8 +133,15 @@
       "background": [],
       "checklists": []
     },
-    "sourceUrl": "https:test",
+    "sourceUrl": "https://test",
     "source": "Test",
-    "id": "inline-mvo5wd4b-dhl3"
+    "id": "inline-mvo5wd4b-dhl3",
+    "links": [
+      {
+        "title": "Neue Leitlinie test",
+        "url": "https://test",
+        "note": "Da komme ich hin"
+      }
+    ]
   }
 ]
