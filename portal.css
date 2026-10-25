@@ -465,3 +465,14 @@ body:not(.ost576-edit-enabled) button.ost583-home-pencil, body:not(.ost576-edit-
 .ost584-schema-edit .ost584-schema-row{display:grid;grid-template-columns:minmax(80px,120px) minmax(0,1fr) auto;gap:12px;align-items:end}
 .ost584-schema-edit input,.ost584-schema-edit textarea{min-width:0}
 @media(max-width:620px){.ost584-schema-edit .ost584-schema-row{grid-template-columns:minmax(0,1fr)}.ost585-attendance{width:100%;text-align:center}}
+
+/* Update 586 – consistent width when editing controls are locked */
+body:not(.ost576-edit-enabled) .ost583-home-news-row,body:not(.ost576-edit-enabled) .ost583-reading-row{display:block!important;width:100%!important}
+body:not(.ost576-edit-enabled) .ost583-home-news-row>[data-news],body:not(.ost576-edit-enabled) .ost583-reading-row>.cf548-reading-item{display:flex;width:100%!important;max-width:none!important;box-sizing:border-box}
+body:not(.ost576-edit-enabled) .ost583-home-pencil,body:not(.ost576-edit-enabled) .ost583-home-add{display:none!important}
+/* Only one schema subtitle; hide read-only version while direct editing is active */
+.ost586-schema-editing .ost584-schema-subtitle{display:none!important}
+.ost586-participants-head{display:flex!important;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.ost586-participants{display:inline-flex;align-items:center;justify-content:center;white-space:normal;text-align:center;font-size:.88rem}
+.ost575-link-editor textarea[data-link-main-subtitle]{display:block;width:100%;box-sizing:border-box;min-height:80px;resize:vertical;padding:10px 12px;border:1px solid #bed2de;border-radius:9px;font:inherit;background:white;color:#173b53}
+@media(max-width:650px){.ost586-participants-head{align-items:stretch}.ost586-participants{width:100%}}
