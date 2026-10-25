@@ -193,7 +193,8 @@
     },
     "redflagsHtml": "<ul><li>Hypotonie</li><li>Kaltschweißigkeit</li><li>Neurologische Defizite</li><li>Schwere Dyspnoe</li></ul>",
     "sectionTitles": {
-      "theory": "Überblick"
+      "theory": "Überblick",
+      "redflags": "⚠ Red Flags"
     }
   },
   {
