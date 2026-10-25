@@ -312,3 +312,12 @@ body.app-shell .cf547-training .ost574-pencil,body.app-shell .cf547-materials .o
 .ost574-editable-card .ost574-fields{min-width:0;max-width:100%;width:100%;display:block;float:none;clear:both}
 .ost574-editable-card .ost574-fields .ost573-toolbar{max-width:100%;min-width:0;flex-wrap:wrap}
 .ost574-editable-card .ost574-fields .ost573-editable{min-width:0;width:100%;box-sizing:border-box}
+
+/* Update 578: home markup restored; preserve original OST-1020 menu grid */
+body.app-shell .cf548-home,body.app-shell .cf548-home .cf548-menu,body.app-shell .cf548-home .cf-home-grid{min-width:0;width:100%;box-sizing:border-box}
+body.app-shell .cf548-home .cf-home-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important;align-items:stretch!important}
+body.app-shell .cf548-home .cf-destination{min-width:0!important;box-sizing:border-box!important}
+body.app-shell .cf548-home .ost577-switch-host{display:flex!important;justify-content:flex-end!important;position:static!important;float:none!important;margin:14px 0 0!important;grid-column:1/-1!important}
+@media(max-width:700px){body.app-shell .cf548-home .cf-home-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:410px){body.app-shell .cf548-home .cf-home-grid{grid-template-columns:minmax(0,1fr)!important}}
+#quellen .ost573-editable{min-height:100px}

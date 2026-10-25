@@ -490,7 +490,7 @@
         const external = a => { const u = String(a.freeUrl || a.publisherUrl || ''); return /^https?:\/\//i.test(u) ? u : ''; };
         $('[data-main]').innerHTML = `<div class="cf-home cf548-home"><header class="cf548-welcome"><h1>Wissenssammlung <span>OST 1020</span></h1></header>
  <section class="cf-search"><span>${ostIcon('search')}</span><input data-global-search type="search" placeholder="Symptome, Medikamente, Themen suchen …" aria-label="Alle Inhalte durchsuchen"><div class="search-results hidden" data-search-results></div></section>
- <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button></div>`).join('') || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
+ <section class="cf-section cf-home-updates cf548-news"><div class="cf-section-title"><h2>Aktuelles</h2><a href="aktuelles.html">Alle →</a></div><div class="cf-simple-list">${active.map((n, i) => `<button type="button" data-news="${i}"><span>${esc(n.title)}</span><b>›</b></button>`).join('')} || '<p class="cf-muted">Keine aktuellen Meldungen</p>'}</div></section>
  <section class="cf-section cf548-menu"><div class="cf-section-title"><h2>Menü</h2></div><nav class="cf-home-grid" aria-label="Themenbereiche">${destinations.map(([klass, title, href, ico]) => `<a class="cf-destination cf-${klass}" href="${href}"><span class="cf-destination-icon">${ostIcon(ico)}</span><strong>${title}</strong></a>`).join('')}</nav></section>
  <section class="cf-section cf548-reading" data-reading-section><div class="cf-section-title"><h2>Lesetipps</h2><a href="literatur.html">Literatur-Archiv →</a></div><div class="cf548-reading-list">${picks.length ? picks.map(a => { const link = external(a); return `<a class="cf548-reading-item" href="${link ? esc(link) : 'literatur.html'}" ${link ? 'target="_blank" rel="noopener noreferrer"' : ''}><span class="cf548-reading-icon">${ostIcon('book')}</span><span><strong>${esc(a.title)}</strong>${a.why ? `<small>${esc(String(a.why).replace(/[*#\[\]]/g, '').slice(0, 110))}</small>` : ''}</span><b>↗</b></a>`; }).join('') : '<p class="cf-muted">Lesetipps lassen sich in der Redaktion unter Literatur & Lesetipps auswählen.</p>'}</div></section>
  <section class="cf-section cf548-dates" data-events-section><div class="cf-section-title"><h2>Nächste Termine</h2><a href="termine.html">Kalender →</a></div><div class="cf-simple-list">${upcoming.map(e => `<a href="termine.html"><span>${esc(e.title)}</span><small>${esc(e.date || '')}</small></a>`).join('') || '<p class="cf-muted">Keine kommenden Termine</p>'}</div></section>
@@ -1369,7 +1369,7 @@
                   + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${[['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</div></details>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
                 body += `<section class="ost570-rich ${panelTone('richContent','amber')}" id="artikel-ergaenzungen"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).richContent || 'Merksätze & weitere Fachinformationen')}</h3>${pencil('richContent')}</div><div class="ost571-edit-region">${ost570CleanHtml(v.richContent || '<p>Noch keine Merksätze hinterlegt.</p>')}</div></section>`;
                 const sourceLinks = causes.filter(c => href(c.sourceUrl));
-                if (sourceLinks.length) body += `<section class="ost569-extra" id="quellen"><h3>Quellen und weiterführende Informationen</h3><ul>${sourceLinks.map(c => `<li><a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.sourceLabel || c.name || 'Fachquelle')}</a></li>`).join('')}</ul></section>`;
+                { const legacy = sourceLinks.length ? `<ul>${sourceLinks.map(c => `<li><a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.sourceLabel || c.name || 'Fachquelle')}</a></li>`).join('')}</ul>` : '<p>Noch keine Quellen hinterlegt.</p>'; body += `<section class="ost568-panel ost568-plain" id="quellen"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).sources || 'Quellen und weiterführende Informationen')}</h3>${pencil('sources')}</div><div class="ost571-edit-region">${v.sourcesHtml ? ost570CleanHtml(v.sourcesHtml) : legacy}</div></section>`; }
             }
             else if (item.type === 'disease') {
                 const symptom = v.symptoms || item.source.title;
@@ -1444,8 +1444,8 @@
                 };
                 return;
             }
-            if(['theory','redflags','questions','richContent'].includes(part)){
-                const selector={theory:'#ueberblick .ost571-edit-region',redflags:'#red-flags .ost571-edit-region',questions:'#anamnese .ost571-edit-region',richContent:'#artikel-ergaenzungen .ost571-edit-region'}[part];
+            if(['theory','redflags','questions','richContent','sources'].includes(part)){
+                const selector={theory:'#ueberblick .ost571-edit-region',redflags:'#red-flags .ost571-edit-region',questions:'#anamnese .ost571-edit-region',richContent:'#artikel-ergaenzungen .ost571-edit-region',sources:'#quellen .ost571-edit-region'}[part];
                 const region=$(selector,out);
                 if(!region) return;
                 const section=region.closest('section');
@@ -1453,8 +1453,8 @@
                 const originalHeading=heading?.textContent || '';
                 const originalHtml=region.innerHTML;
                 section?.classList.add('ost573-is-inline-editing');
-                const currentTone=((current.sectionTones||{})[part]) || ({theory:'info',redflags:'danger',questions:'blue',richContent:'amber'}[part]);
-                const valueHtml = part==='theory' ? ost570CleanHtml(current.theory || '<p>Noch kein Überblick hinterlegt.</p>') : part==='richContent' ? ost570CleanHtml(current.richContent || '<p>Noch keine Merksätze hinterlegt.</p>') : part==='redflags' ? (current.redflagsHtml ? ost570CleanHtml(current.redflagsHtml) : listHtml(current.redflags,'Keine Warnzeichen hinterlegt.')) : (current.questionsHtml ? ost570CleanHtml(current.questionsHtml) : listHtml(current.questions,'Noch keine Fragen hinterlegt.'));
+                const currentTone=((current.sectionTones||{})[part]) || ({theory:'info',redflags:'danger',questions:'blue',richContent:'amber',sources:'plain'}[part]);
+                const valueHtml = part==='sources' ? (current.sourcesHtml ? ost570CleanHtml(current.sourcesHtml) : originalHtml) : part==='theory' ? ost570CleanHtml(current.theory || '<p>Noch kein Überblick hinterlegt.</p>') : part==='richContent' ? ost570CleanHtml(current.richContent || '<p>Noch keine Merksätze hinterlegt.</p>') : part==='redflags' ? (current.redflagsHtml ? ost570CleanHtml(current.redflagsHtml) : listHtml(current.redflags,'Keine Warnzeichen hinterlegt.')) : (current.questionsHtml ? ost570CleanHtml(current.questionsHtml) : listHtml(current.questions,'Noch keine Fragen hinterlegt.'));
                 if(heading){heading.contentEditable="true";heading.classList.add("ost575-heading-edit");heading.setAttribute("aria-label","Abschnittstitel bearbeiten");}
                 region.innerHTML=`<div class="ost573-inline-editor-shell">${ost573Toolbar()}<div class="ost573-inline-toolbar-row">${toneOptions(currentTone)}</div><div class="ost573-editable" contenteditable="true" data-ost573-inline-rich></div><div class="ost570-actions"><button class="btn primary" type="button" data-ost573-inline-save>Speichern</button><button class="btn" type="button" data-ost573-inline-cancel>Abbrechen</button><span role="status" data-ost573-inline-status></span></div></div>`;
                 const editor=$('[data-ost573-inline-rich]',region); editor.innerHTML=valueHtml; ost573BindRich(region,editor);
@@ -1467,6 +1467,7 @@
                     const clean=ost570CleanHtml(editor.innerHTML);
                     if(part==='theory') updated.theory=clean;
                     else if(part==='richContent') updated.richContent=clean;
+                    else if(part==='sources') updated.sourcesHtml=clean;
                     else if(part==='redflags'){ updated.redflagsHtml=clean; updated.redflags=extractList(clean); }
                     else if(part==='questions'){ updated.questionsHtml=clean; updated.questions=extractList(clean); }
                     updated.sectionTones={...(updated.sectionTones||{}), [part]: $('[data-ost573-tone]',region).value};
