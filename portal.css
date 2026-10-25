@@ -3,15 +3,15 @@
    Menuefarben ausschliesslich in portal-style-06-auswahlfarben.css aendern.
    Aktualisierung: CSS-Version in allen HTML-Seiten und hier hochzaehlen.
 */
-@import url("portal-style-01-bestand.css?v=560");
-@import url("portal-style-02-design-und-module.css?v=560");
-@import url("portal-style-03-wissen-und-training.css?v=561");
-@import url("portal-style-04-oberflaeche.css?v=560");
-@import url("portal-style-05-redaktion.css?v=560");
-@import url("portal-style-06-auswahlfarben.css?v=562");
+@import url("portal-style-01-bestand.css?v=591");
+@import url("portal-style-02-design-und-module.css?v=591");
+@import url("portal-style-03-wissen-und-training.css?v=591");
+@import url("portal-style-04-oberflaeche.css?v=591");
+@import url("portal-style-05-redaktion.css?v=591");
+@import url("portal-style-06-auswahlfarben.css?v=591");
 
 /* Version 563 – aufklappbare Inhalte über volle Breite */
-@import url("portal-style-07-inline-inhalte.css?v=564");
+@import url("portal-style-07-inline-inhalte.css?v=591");
 
 /* 565: Fachimport ohne Overlay */
 .ost565-import{margin:1rem 0;padding:1rem;border:1px solid #d9e0e7;border-radius:12px;background:#fff}.ost565-import summary{cursor:pointer;font-weight:700}.ost565-import-rows{display:grid;gap:.45rem;max-height:320px;overflow:auto;margin:1rem 0}.ost565-import-row{display:flex;align-items:center;gap:.7rem;padding:.65rem;border:1px solid #e1e6eb;border-radius:8px}.ost565-import-row span{display:grid;gap:.2rem}.ost565-import-row small{color:#607181}.ost565-import-confirm{display:flex;gap:.7rem;align-items:flex-start;margin:.9rem 0}.ost565-import input[type=file]{display:block;max-width:100%;margin:.5rem 0}
