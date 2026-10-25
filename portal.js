@@ -1146,6 +1146,31 @@
       'training.html': {store:'knowledgeModules', cards:'.cf563-entry', title:'summary strong', rich:['body','summary'], fields:['category','documentUrl']},
       'skilltraining.html': {store:'skills', cards:'.ost-skill-group', title:'.ost-skill-acc-title', rich:[], fields:[]}
     };
+
+    // Neue Einträge auf den jeweiligen Seiten, PIN und identischer Speicherdienst.
+    const ost575Defaults={
+      news:{title:'Neue Meldung',category:'Allgemeines',date:new Date().toISOString().slice(0,10),text:''},
+      events:{title:'Neuer Termin',date:new Date().toISOString().slice(0,10),time:'18:00',location:'',category:'Übungen',capacity:10,description:'',attendees:[],waitlist:[]},
+      changes:{title:'Neue Lehrmeinung',date:new Date().toISOString().slice(0,10),category:'Allgemein',old:'',new:'',source:'',active:true},
+      meetings:{title:'Neue Besprechung',date:new Date().toISOString().slice(0,10),category:'Allgemein',speaker:'',summary:'',files:[]},
+      articles:{title:'Neue Literatur',authors:'',journal:'',year:new Date().getFullYear(),why:'',topics:[],tags:[]},
+      knowledgeModules:{title:'Neue Checkliste',module:'checklists',status:'published',body:'',summary:'',documentUrl:''},
+      algorithms:{title:'Neue Leitlinie',category:'Leitlinie',steps:[],materials:{background:[],checklists:[]},sourceUrl:'',source:''},
+      skills:{name:'Neue Skillgruppe',skills:[]}
+    };
+    async function ost575Create(store,overrides={}){
+      if(!await ost574Pin())return;
+      const latest=await get(store);if(!Array.isArray(latest)){alert('Speicher nicht verfügbar.');return;}
+      const item={...ost575Defaults[store],...overrides,id:'inline-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6)};
+      const name=prompt('Titel des neuen Eintrags:',item.title||item.name||'Neuer Eintrag');if(name===null)return;item[item.title!==undefined?'title':'name']=name.trim()||item.title||item.name;
+      if(await save(store,[...latest,item]))location.reload();else alert('Speichern fehlgeschlagen.');
+    }
+    function ost575AddButton(root,store,overrides={}){
+      if(!root || root.querySelector('[data-ost575-add]'))return;
+      const head=root.querySelector('h1,h2')||root;
+      const b=document.createElement('button');b.type='button';b.className='ost575-add';b.dataset.ost575Add='';b.textContent='＋ Neuer Eintrag';b.title='PIN-geschützt hinzufügen';
+      head.insertAdjacentElement('afterend',b);b.onclick=()=>ost575Create(store,overrides);
+    }
     let ost574Decorating=false;
     function ost574MatchesTitle(rec, title){return String(rec?.title || rec?.name || '').trim() === title.trim();}
     async function ost574Pin(){
@@ -1167,6 +1192,7 @@
       const mainTitle=entry.querySelector(config.title);
       if(!mainTitle){alert('Titel nicht gefunden.');return;}
       entry.dataset.ost574Editing='yes';
+      entry.addEventListener('click',ev=>{if(entry.dataset.ost574Editing==='yes' && ev.target.closest('.ost574-fields')){ev.preventDefault();ev.stopPropagation();}},true);
       const originalTitle=mainTitle.innerHTML;
       const originalSnapshot=[...entry.children].filter(el=>!el.matches('.ost574-tools,.ost574-fields')).map(el=>[el,el.hidden]);
       // Titel wird direkt an seiner bisherigen Stelle bearbeitet.
@@ -1175,7 +1201,7 @@
       mainTitle.focus();
       const widget=document.createElement('div');widget.className='ost574-fields';
       const fields=ost574Fields(record,config);
-      widget.innerHTML=fields.map(({key,label,rich})=>`<div class="ost574-field"><label>${esc(label)}</label>${rich ? `${ost573Toolbar()}<div class="ost573-editable ost574-rich-live" contenteditable="true" data-ost574-field="${key}"></div>` : `<input data-ost574-field="${key}" value="${esc(record[key]??'')}">`}</div>`).join('') + `<div class="ost570-actions"><button class="btn primary" type="button" data-ost574-save>Speichern</button><button class="btn" type="button" data-ost574-cancel>Abbrechen</button><span role="status" data-ost574-status></span></div>`;
+      widget.innerHTML=fields.map(({key,label,rich})=>`<div class="ost574-field"><label>${esc(({date:'Datum',time:'Uhrzeit',location:'Ort',category:'Kategorie',capacity:'Teilnehmerlimit',imageUrl:'Bildadresse',old:'Bisherige Lehrmeinung',new:'Neue Lehrmeinung',source:'Quelle',description:'Beschreibung',summary:'Kurzbeschreibung',documentUrl:'PDF oder Link',sourceUrl:'Link',stand:'Stand'})[label]||label)}</label>${rich ? `${ost573Toolbar()}<div class="ost573-editable ost574-rich-live" contenteditable="true" data-ost574-field="${key}"></div>` : `<input data-ost574-field="${key}" value="${esc(record[key]??'')}">`}</div>`).join('') + `<div class="ost570-actions"><button class="btn primary" type="button" data-ost574-save>Speichern</button><button class="btn" type="button" data-ost574-cancel>Abbrechen</button><span role="status" data-ost574-status></span></div>`;
       entry.appendChild(widget);
       fields.filter(x=>x.rich).forEach(({key})=>{const ed=widget.querySelector(`[data-ost574-field="${key}"]`);ed.innerHTML=ost570CleanHtml(record[key]||'');ost573BindRich(ed.closest('.ost574-field'),ed);});
       // Redundante alte Beschreibung während der Bearbeitung ausblenden, Titel bleibt sichtbar.
@@ -1197,13 +1223,13 @@
       const data=await get('skills');const idx=data.findIndex(x=>String(x.id)===String(group.id));
       if(idx<0)return;
       entry.dataset.ost574Editing='yes';entry.open=true;
-      const title=entry.querySelector('.ost-skill-acc-title');const initial=title.textContent;
+      const title=entry.querySelector('.ost-skill-acc-title,summary strong');if(!title){alert('Skillgruppen-Titel nicht gefunden.');delete entry.dataset.ost574Editing;return;}const initial=title.textContent;
       title.contentEditable='true';title.classList.add('ost574-title-live');
-      const list=entry.querySelector('.ost-skill-acc-items');const prev=list.hidden;list.hidden=true;
+      const list=entry.querySelector('.ost-skill-acc-items')||entry.querySelector('summary + div');const prev=list?.hidden||false;if(list)list.hidden=true;
       const host=document.createElement('div');host.className='ost574-fields';
       host.innerHTML=arr(group.skills).map((sk,i)=>`<section class="ost574-skill"><label>Skill ${i+1}</label><input data-skill-title="${i}" value="${esc(sk.name)}">${arr(sk.sections).map((sec,j)=>`<div class="ost574-skill-section"><label>Abschnitt</label><input data-skill-section-title="${i}-${j}" value="${esc(sec.title)}"><label>Aufzählungspunkte (je eine Zeile)</label><textarea data-skill-items="${i}-${j}" rows="5">${esc(arr(sec.items).join('\n'))}</textarea></div>`).join('')}</section>`).join('')+`<div class="ost570-actions"><button class="btn primary" data-skill-save>Speichern</button><button class="btn" data-skill-cancel>Abbrechen</button><span data-skill-status role="status"></span></div>`;
       entry.appendChild(host);
-      const stop=()=>{title.textContent=initial;title.contentEditable='false';title.classList.remove('ost574-title-live');list.hidden=prev;host.remove();delete entry.dataset.ost574Editing;};
+      const stop=()=>{title.textContent=initial;title.contentEditable='false';title.classList.remove('ost574-title-live');if(list)list.hidden=prev;host.remove();delete entry.dataset.ost574Editing;};
       host.querySelector('[data-skill-cancel]').onclick=stop;
       host.querySelector('[data-skill-save]').onclick=async()=>{
         const status=host.querySelector('[data-skill-status]');status.textContent='Speichere …';
@@ -1217,7 +1243,8 @@
       const path=location.pathname.split('/').pop();const cfg=ost574Config[path];if(!cfg || ost574Decorating)return;
       ost574Decorating=true;
       try{
-        const data=await get(cfg.store);if(!Array.isArray(data))return;
+        const data=await get(cfg.store);
+      ost575AddButton(document.querySelector('[data-main]'),cfg.store);if(!Array.isArray(data))return;
         document.querySelectorAll(cfg.cards).forEach(entry=>{
           if(entry.dataset.ost574Enhanced)return;
           const titleNode=entry.querySelector(cfg.title);if(!titleNode)return;
@@ -1292,11 +1319,11 @@
                 const panelTone = (key, fallback) => `ost568-panel ost568-${sectionTones[key] || fallback}`;
                 const redFlagsHtml = v.redflagsHtml ? ost570CleanHtml(v.redflagsHtml) : (warning.length ? `<ul>${warning.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Keine Warnzeichen hinterlegt.</p>');
                 const questionHtml = v.questionsHtml ? ost570CleanHtml(v.questionsHtml) : (questions.length ? `<ul>${questions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>` : '<p>Noch keine Fragen hinterlegt.</p>');
-                body = `<section class="${panelTone('theory','info')}" id="ueberblick"><div class="ost571-section-head"><h3>Überblick</h3>${pencil('theory')}</div><div class="ost571-edit-region ost-module-body">${ost570CleanHtml(v.theory || '<p>Noch kein Überblick hinterlegt.</p>')}</div></section>`
-                  + `<section class="${panelTone('redflags','danger')}" id="red-flags"><div class="ost571-section-head"><h3>⚠ Red Flags · Warnzeichen</h3>${pencil('redflags')}</div><div class="ost571-edit-region">${redFlagsHtml}</div></section>`
-                  + `<section class="${panelTone('questions','blue')}" id="anamnese"><div class="ost571-section-head"><h3>Wichtige Fragen / Anamnese</h3>${pencil('questions')}</div><div class="ost571-edit-region">${questionHtml}</div></section>`
+                body = `<section class="${panelTone('theory','info')}" id="ueberblick"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).theory || 'Überblick')}</h3>${pencil('theory')}</div><div class="ost571-edit-region ost-module-body">${ost570CleanHtml(v.theory || '<p>Noch kein Überblick hinterlegt.</p>')}</div></section>`
+                  + `<section class="${panelTone('redflags','danger')}" id="red-flags"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).redflags || '⚠ Red Flags · Warnzeichen')}</h3>${pencil('redflags')}</div><div class="ost571-edit-region">${redFlagsHtml}</div></section>`
+                  + `<section class="${panelTone('questions','blue')}" id="anamnese"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).questions || 'Wichtige Fragen / Anamnese')}</h3>${pencil('questions')}</div><div class="ost571-edit-region">${questionHtml}</div></section>`
                   + `<section class="ost571-diseases" id="differenzialdiagnosen"><h3>Mögliche Krankheitsbilder</h3><div class="ost571-disease-list">${causes.map((c,i)=>`<details class="ost571-disease-card ost572-accordion"><summary><strong>${esc(c.name || 'Unbenannt')}</strong><span class="ost572-expand">＋</span></summary><div class="ost571-section-head ost572-card-edit">${pencil('cause',i)}</div><div class="ost572-disease-content">${[['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications || c.medication],['CAVE / Warnzeichen',c.cave]].filter(x=>x[1]).map(([heading,value])=>`<div class="ost571-disease-field ${heading.startsWith('CAVE') ? 'ost571-cave' : ''}"><strong>${esc(heading)}</strong><div>${renderModuleText(value)}</div></div>`).join('')}</div></details>`).join('') || '<p>Noch keine Krankheitsbilder eingetragen.</p>'}</div></section>`;
-                body += `<section class="ost570-rich ${panelTone('richContent','amber')}" id="artikel-ergaenzungen"><div class="ost571-section-head"><h3>Merksätze & weitere Fachinformationen</h3>${pencil('richContent')}</div><div class="ost571-edit-region">${ost570CleanHtml(v.richContent || '<p>Noch keine Merksätze hinterlegt.</p>')}</div></section>`;
+                body += `<section class="ost570-rich ${panelTone('richContent','amber')}" id="artikel-ergaenzungen"><div class="ost571-section-head"><h3>${esc((v.sectionTitles||{}).richContent || 'Merksätze & weitere Fachinformationen')}</h3>${pencil('richContent')}</div><div class="ost571-edit-region">${ost570CleanHtml(v.richContent || '<p>Noch keine Merksätze hinterlegt.</p>')}</div></section>`;
                 const sourceLinks = causes.filter(c => href(c.sourceUrl));
                 if (sourceLinks.length) body += `<section class="ost569-extra" id="quellen"><h3>Quellen und weiterführende Informationen</h3><ul>${sourceLinks.map(c => `<li><a href="${esc(c.sourceUrl)}" target="_blank" rel="noopener noreferrer">${esc(c.sourceLabel || c.name || 'Fachquelle')}</a></li>`).join('')}</ul></section>`;
             }
@@ -1333,7 +1360,7 @@
             if(!hasOrgan){out.innerHTML='<p class="ost569-hint">Wähle ein Organsystem. Auf der nächsten Seite findest du die zugehörigen Leitsymptome.</p>';return;}
             const all=entries(), needle=normalizedSearch(input.value.trim());
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
-            categoryBar.innerHTML=found.map((x,i)=>`<a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><span class="ost572-count">${String(i+1).padStart(2,'0')}</span><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
+            categoryBar.innerHTML=found.map((x,i)=>`<a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
             out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1 class="ost570-title-text">${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎ <span>Bearbeiten</span></button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
             $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
@@ -1378,13 +1405,16 @@
                 const region=$(selector,out);
                 if(!region) return;
                 const section=region.closest('section');
+                const heading=section?.querySelector('.ost571-section-head h3');
+                const originalHeading=heading?.textContent || '';
                 const originalHtml=region.innerHTML;
                 section?.classList.add('ost573-is-inline-editing');
                 const currentTone=((current.sectionTones||{})[part]) || ({theory:'info',redflags:'danger',questions:'blue',richContent:'amber'}[part]);
                 const valueHtml = part==='theory' ? ost570CleanHtml(current.theory || '<p>Noch kein Überblick hinterlegt.</p>') : part==='richContent' ? ost570CleanHtml(current.richContent || '<p>Noch keine Merksätze hinterlegt.</p>') : part==='redflags' ? (current.redflagsHtml ? ost570CleanHtml(current.redflagsHtml) : listHtml(current.redflags,'Keine Warnzeichen hinterlegt.')) : (current.questionsHtml ? ost570CleanHtml(current.questionsHtml) : listHtml(current.questions,'Noch keine Fragen hinterlegt.'));
+                if(heading){heading.contentEditable="true";heading.classList.add("ost575-heading-edit");heading.setAttribute("aria-label","Abschnittstitel bearbeiten");}
                 region.innerHTML=`<div class="ost573-inline-editor-shell">${ost573Toolbar()}<div class="ost573-inline-toolbar-row">${toneOptions(currentTone)}</div><div class="ost573-editable" contenteditable="true" data-ost573-inline-rich></div><div class="ost570-actions"><button class="btn primary" type="button" data-ost573-inline-save>Speichern</button><button class="btn" type="button" data-ost573-inline-cancel>Abbrechen</button><span role="status" data-ost573-inline-status></span></div></div>`;
                 const editor=$('[data-ost573-inline-rich]',region); editor.innerHTML=valueHtml; ost573BindRich(region,editor);
-                $('[data-ost573-inline-cancel]',region).onclick=()=>cleanupCancel(region,originalHtml);
+                $('[data-ost573-inline-cancel]',region).onclick=()=>{if(heading){heading.textContent=originalHeading;heading.contentEditable='false';heading.classList.remove('ost575-heading-edit');}cleanupCancel(region,originalHtml);};
                 $('[data-ost573-inline-save]',region).onclick=async()=>{
                     const status=$('[data-ost573-inline-status]',region); status.textContent='Speichere …';
                     const latest=await get('differential'); const index=latest.findIndex(x=>String(x.id)===String(current.id));
@@ -1396,6 +1426,7 @@
                     else if(part==='redflags'){ updated.redflagsHtml=clean; updated.redflags=extractList(clean); }
                     else if(part==='questions'){ updated.questionsHtml=clean; updated.questions=extractList(clean); }
                     updated.sectionTones={...(updated.sectionTones||{}), [part]: $('[data-ost573-tone]',region).value};
+                    updated.sectionTitles={...(updated.sectionTitles||{}),[part]:heading?.textContent.trim()||originalHeading};
                     const ok=await save('differential', latest.map((x,i)=>i===index?updated:x));
                     if(ok){ Object.assign(current,updated); draw(); } else status.textContent='Speichern fehlgeschlagen.';
                 };
@@ -1404,24 +1435,34 @@
             }
             if(part==='cause'){
                 const target=$$('.ost571-disease-card',out)[causeIndex];
-                if(target){target.open=true; target.appendChild(host); host.classList.add('ost572-embedded');}
-                const fields=['name','symptoms','info','physiology','findings','medications','cave'];
-                const cause=typeof (current.causes || [])[causeIndex] === 'string' ? {name:current.causes[causeIndex]} : {...((current.causes || [])[causeIndex] || {})};
-                host.hidden=false;
-                host.innerHTML=`<h2>✎ Krankheitsbild bearbeiten</h2><p>PIN-geprüfte Bearbeitung direkt im Krankheitsbild.</p>${fields.map(key=>`<label>${esc(({name:'Krankheitsbild',symptoms:'Symptome',info:'Einordnung',physiology:'Pathophysiologie',findings:'Befunde',medications:'Pharmakologie',cave:'CAVE / Warnzeichen'})[key])}<textarea data-ost571-field="${key}">${esc(cause[key] || '')}</textarea></label>`).join('')}<div class="ost570-actions"><button class="btn primary" type="button" data-ost571-save>Speichern</button><button class="btn" type="button" data-ost571-cancel>Abbrechen</button><span role="status" data-ost571-status></span></div>`;
-                $('[data-ost571-cancel]',host).onclick=()=>host.hidden=true;
-                $('[data-ost571-save]',host).onclick=async()=>{
-                    const status=$('[data-ost571-status]',host);status.textContent='Speichere …';
-                    const latest=await get('differential');const index=latest.findIndex(x=>String(x.id)===String(current.id));
-                    if(index<0){status.textContent='Leitsymptom nicht gefunden.';return;}
-                    const updated={...latest[index], causes:[...arr(latest[index].causes)]};
-                    updated.causes[causeIndex]={...cause}; fields.forEach(key=>updated.causes[causeIndex][key]=$(`[data-ost571-field="${key}"]`,host).value);
-                    const ok=await save('differential',latest.map((x,i)=>i===index?updated:x));
-                    if(ok){Object.assign(current,updated);host.hidden=true;draw();}else status.textContent='Speichern fehlgeschlagen.';
+                if(!target)return;
+                target.open=true;
+                const header=target.querySelector('summary strong');
+                const body=target.querySelector('.ost572-disease-content');
+                const originalBody=body.innerHTML;
+                const originalName=header.textContent;
+                const source=typeof (current.causes||[])[causeIndex]==='string' ? {name:current.causes[causeIndex]} : {...((current.causes||[])[causeIndex]||{})};
+                header.contentEditable='true';header.classList.add('ost575-heading-edit');
+                const fields=[['symptoms','Symptome'],['info','Einordnung'],['physiology','Pathophysiologie'],['findings','Befunde'],['medications','Pharmakologie'],['cave','CAVE / Warnzeichen']];
+                body.innerHTML=`<div class="ost575-disease-form">${fields.map(([key,label])=>`<div class="ost575-disease-editfield"><label>${label}</label>${ost573Toolbar()}<div contenteditable="true" class="ost575-disease-rich ost573-editable" data-cause-key="${key}"></div></div>`).join('')}<div class="ost575-edit-actions"><button class="btn primary" type="button" data-cause-save>Speichern</button><button class="btn" type="button" data-cause-cancel>Abbrechen</button><span data-cause-status role="status"></span></div></div>`;
+                fields.forEach(([key])=>{const rich=body.querySelector(`[data-cause-key="${key}"]`);rich.innerHTML=ost570CleanHtml(source[key]||'');ost573BindRich(rich.parentElement,rich);});
+                const reset=()=>{header.textContent=originalName;header.contentEditable='false';header.classList.remove('ost575-heading-edit');body.innerHTML=originalBody;};
+                body.querySelector('[data-cause-cancel]').onclick=reset;
+                body.querySelector('[data-cause-save]').onclick=async()=>{
+                    const status=body.querySelector('[data-cause-status]');status.textContent='Speichere …';
+                    const latest=await get('differential'), i=latest.findIndex(x=>String(x.id)===String(current.id));
+                    if(i<0){status.textContent='Eintrag nicht gefunden.';return;}
+                    const updated={...latest[i],causes:[...arr(latest[i].causes)]};
+                    const cause={...source,name:header.textContent.trim()||originalName};
+                    fields.forEach(([key])=>cause[key]=ost570CleanHtml(body.querySelector(`[data-cause-key="${key}"]`).innerHTML));
+                    updated.causes[causeIndex]=cause;
+                    if(await save('differential',latest.map((item,n)=>n===i?updated:item))){Object.assign(current,updated);draw();}
+                    else status.textContent='Speichern fehlgeschlagen.';
                 };
                 return;
             }
         }
+        ost575AddButton(area,'differential',{title:'Neues Leitsymptom',group:organ.groups[0]||'Weitere',questions:[],redflags:[],causes:[]});
         input.addEventListener('input',draw);
         draw();
     }
@@ -1445,7 +1486,7 @@
         card.classList.add('ost573-editing-card');
         let host=card.querySelector('.ost573-card-editor');
         if(!host){host=document.createElement('section');host.className='ost573-card-editor';card.querySelector('.cf563-entry-body')?.prepend(host);}
-        host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
+        host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt / Beschreibung</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><label>PDF- oder Weblink<input type="url" data-ost575-document-url value="${esc(data[idx].documentUrl||data[idx].sourceUrl||'')}" placeholder="https://…"></label><label>Untertitel<input data-ost575-subtitle value="${esc(data[idx].summary||data[idx].source||'')}"></label><div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
         const rich=host.querySelector('[data-ost573-card-rich]');rich.innerHTML=ost570CleanHtml(data[idx][textField]||'');ost573BindRich(host,rich);
         host.querySelector('[data-ost573-card-cancel]').onclick=()=>{card.classList.remove('ost573-editing-card'); host.remove();};
         host.querySelector('[data-ost573-card-save]').onclick=async()=>{
@@ -1453,8 +1494,37 @@
             const latest=await get(store), index=latest.findIndex(x=>String(x.id)===String(id));
             if(index<0){state.textContent='Datensatz nicht gefunden.';return;}
             latest[index]={...latest[index],title:host.querySelector('[data-ost573-card-title]').value.trim()||latest[index].title,[textField]:ost570CleanHtml(rich.innerHTML)};
+            const url=host.querySelector('[data-ost575-document-url]').value.trim();if(url && !/^https?:\/\//i.test(url)){state.textContent='Nur HTTP(S)-Links erlaubt.';return;}
+            latest[index][store==='algorithms'?'sourceUrl':'documentUrl']=url;latest[index][store==='algorithms'?'source':'summary']=host.querySelector('[data-ost575-subtitle]').value.trim();
             if(await save(store,latest)){Object.assign(data[idx],latest[index]);location.reload();}else state.textContent='Speichern fehlgeschlagen.';
         };
+    }
+    // Link-/PDF-Sammlung im jeweiligen Kasten; pro Link Titel, URL und Untertitel.
+    async function ost575LinksEditor(card,store,id){
+      if(!await ost574Pin())return;
+      const items=await get(store),item=items.find(v=>String(v.id)===String(id));if(!item)return;
+      card.open=true;card.classList.add('ost575-edit-links');
+      const host=card.querySelector('.cf563-entry-body');if(!host)return;
+      let prior=host.querySelector('.ost575-link-editor');if(prior)prior.remove();
+      const panel=document.createElement('div');panel.className='ost575-link-editor';host.prepend(panel);
+      let links=store==='algorithms'?[...(item.materials?.background||[]),...(item.materials?.checklists||[])].map(x=>({...x})):(item.links||[]).map(x=>({...x}));
+      if(!links.length && (item.documentUrl||item.sourceUrl))links=[{title:item.title||'PDF / Link',url:item.documentUrl||item.sourceUrl,note:item.summary||item.source||''}];
+      const render=()=>{
+        panel.innerHTML=`<h3>✎ Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(item.title||'')}"></label><div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div>`).join('')}</div><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><div class="ost575-edit-actions"><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><span data-link-status role="status"></span></div>`;
+        const collect=()=>{panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>links[i][key]=row.querySelector(`[data-link-field="${key}"]`).value.trim());});};
+        panel.querySelectorAll('[data-link-remove]').forEach(b=>b.onclick=()=>{collect();links.splice(Number(b.dataset.linkRemove),1);render();});
+        panel.querySelector('[data-link-add]').onclick=()=>{collect();links.push({title:'Neues Dokument',url:'',note:''});render();};
+        panel.querySelector('[data-link-cancel]').onclick=()=>{panel.remove();card.classList.remove('ost575-edit-links');};
+        panel.querySelector('[data-link-save]').onclick=async()=>{
+          collect();const status=panel.querySelector('[data-link-status]');
+          if(links.some(x=>x.url && !/^https?:\/\//i.test(x.url))){status.textContent='Links müssen mit http:// oder https:// beginnen.';return;}
+          status.textContent='Speichere …';const latest=await get(store),idx=latest.findIndex(x=>String(x.id)===String(id));if(idx<0){status.textContent='Eintrag nicht gefunden.';return;}
+          const next={...latest[idx],title:panel.querySelector('[data-link-main-title]').value.trim()||item.title};
+          if(store==='algorithms')next.materials={...(next.materials||{}),background:links.filter(x=>x.url),checklists:[]};
+          else {next.links=links.filter(x=>x.url);next.documentUrl=next.links[0]?.url||'';next.summary=next.links[0]?.note||next.summary||'';}
+          latest[idx]=next;if(await save(store,latest))location.reload();else status.textContent='Speichern fehlgeschlagen.';
+        };
+      };render();
     }
     async function trainingPage() {
         const [groups, modules] = await Promise.all([get('skills'), get('knowledgeModules')]);
@@ -1467,10 +1537,11 @@
         const main = $('[data-main]');
         main.innerHTML = `<section class="cf547 cf547-training"><h1>Training</h1><nav class="cf547-tabs" aria-label="Trainingstyp">${nav.map(([id, label, ico]) => `<button data-training-tab="${id}" class="${selected === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-training-content></section></section>`;
         const out = $('[data-training-content]');
+        ost575AddButton(main,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
         function render() {
             $$('[data-training-tab]', main).forEach(b => b.classList.toggle('selected', b.dataset.trainingTab === selected));
             if (selected === 'skills') {
-                out.innerHTML = `<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g, i) => `<details class="cf547-training-group"><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div>${arr(g.skills).map((sk, j) => `<button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button>`).join('')}</div></details>`).join('')}</div>`;
+                out.innerHTML = `<h2>Skills</h2><div class="cf547-training-groups">${skillsList.map((g, i) => `<details class="cf547-training-group"><summary>${ostIcon('training')} <strong>${esc(g.name)}</strong><small>${arr(g.skills).length}</small><span class="cf549-expand" aria-hidden="true"></span></summary><div><button type="button" class="ost571-pencil ost575-skill-pencil" data-ost575-skillgroup="${i}">✎ Skillgruppe bearbeiten</button>${arr(g.skills).map((sk, j) => `<button class="cf547-row" data-training-skill="${i}-${j}"><span class="cf547-row-icon">${ostIcon('check')}</span><strong>${esc(sk.name)}</strong><b>›</b></button>`).join('')}</div></details>`).join('')}</div>`;
             }
             else {
                 const type = selected === 'devices' ? 'mpg' : 'checklists';
@@ -1487,12 +1558,15 @@
             const tab = e.target.closest('[data-training-tab]');
             if (tab) {
                 selected = tab.dataset.trainingTab;
+                main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(main,selected==='skills'?'skills':'knowledgeModules',selected==='devices'?{module:'mpg'}:selected==='checklists'?{module:'checklists'}:{});
                 history.replaceState(null, '', 'training.html?typ=' + selected);
                 render();
                 return;
             }
             const pencil=e.target.closest('[data-ost573-training]');
-            if(pencil){e.preventDefault();e.stopPropagation();ost573EditCard(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training,'body',render);return;}
+            if(pencil){e.preventDefault();e.stopPropagation();if(selected==='checklists')ost575LinksEditor(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training);else ost573EditCard(pencil.closest('details'),'knowledgeModules',pencil.dataset.ost573Training,'body',render);return;}
+            const groupEdit=e.target.closest('[data-ost575-skillgroup]');
+            if(groupEdit){e.preventDefault();e.stopPropagation();ost574EditSkillGroup(groupEdit.closest('details'),skillsList[Number(groupEdit.dataset.ost575Skillgroup)]);return;}
             const skill = e.target.closest('[data-training-skill]');
             if (skill) {
                 const [gi, si] = skill.dataset.trainingSkill.split('-').map(Number);
@@ -1523,6 +1597,7 @@
         const main = $('[data-main]');
         main.innerHTML = `<section class="cf547 cf547-materials cf553-materials"><h1>Materialien</h1><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id, label, ico]) => `<button type="button" data-mat-tab="${id}" class="${active === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
         const box = $('[data-material-list]');
+        ost575AddButton(main,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
         const safeLink = value => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
         const link = (url, label) => safeLink(url) ? `<a class="cf563-resource" href="${esc(safeLink(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>` : '';
         const card = (title, iconName, content) => `<details class="cf563-entry"><summary><span class="cf563-entry-icon">${ostIcon(iconName)}</span><strong>${esc(title || 'Ohne Titel')}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${content || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
@@ -1577,10 +1652,11 @@
         }
         main.addEventListener('click', event => {
             const edit=event.target.closest('[data-ost573-material]');
-            if(edit){event.preventDefault();event.stopPropagation();const storage=active==='checklists'?'knowledgeModules':'algorithms';const field=active==='checklists'?'body':'explanation';ost573EditCard(edit.closest('details'),storage,edit.dataset.ost573Material,field,render);return;}
+            if(edit){event.preventDefault();event.stopPropagation();const storage=active==='checklists'?'knowledgeModules':'algorithms';const field=active==='checklists'?'body':'explanation';ost575LinksEditor(edit.closest('details'),storage,edit.dataset.ost573Material);return;}
             const tab = event.target.closest('[data-mat-tab]');
             if (!tab) return;
             active = tab.dataset.matTab;
+            main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(main,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
             history.replaceState(null, '', 'materialien.html?typ=' + active);
             render();
         });

@@ -224,3 +224,48 @@ html body.app-shell main .ost570-hub a.ost572-tile .ost572-chevron {grid-column:
 .ost574-rich-live{background:white}
 
 .ost574-skill{border-bottom:1px solid #d9e4ea;padding:10px 0}.ost574-skill-section{padding:8px;background:#fff;border-radius:9px;margin:8px 0}.ost574-skill label{display:block;font-weight:650;margin:6px 0}.ost574-skill input,.ost574-skill textarea{display:block;width:100%;box-sizing:border-box;padding:10px;border:1px solid #b9cbd5;border-radius:9px;font:inherit}
+
+/* Update 575: compact, full-width, unnumbered symptom navigation */
+html body.app-shell main .ost570-hub nav.cf551-organ-nav,
+html body.app-shell main .ost570-hub nav.cf551-category-nav{width:100%!important;max-width:none!important;min-width:0!important;display:flex!important;flex-direction:column!important;gap:8px!important}
+html body.app-shell main .ost570-hub .ost570-symptom-tile.ost572-tile{display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:58px!important;padding:11px 17px!important;gap:12px!important;width:100%!important}
+html body.app-shell main .ost570-hub .ost570-symptom-tile.ost572-tile .ost572-count{display:none!important}
+html body.app-shell main .ost570-hub .ost570-symptom-tile.ost572-tile strong{display:block!important;flex:1!important;min-width:0!important;font-size:1.05rem!important;overflow-wrap:normal!important;word-break:normal!important;hyphens:auto!important}
+html body.app-shell main .ost570-hub .ost570-symptom-tile.ost572-tile .ost572-chevron{flex:none!important}
+html body.app-shell main .ost570-hub .ost570-tile.ost572-tile{min-height:62px!important}
+/* Title buttons must not inherit h1 styling */
+.ost570-article-head h1 .ost573-title-inline{display:flex!important;flex-wrap:wrap!important;gap:6px!important;width:100%!important;font-size:1rem!important;line-height:1.35!important}
+.ost570-article-head h1 .ost573-title-inline input{flex:1 1 260px!important;min-width:0!important;width:auto!important;font-size:clamp(1.35rem,3vw,2rem)!important;line-height:1.35!important;min-height:44px!important;box-sizing:border-box!important}
+.ost570-article-head h1 .ost573-title-inline button{font-size:14px!important;font-weight:600!important;line-height:1.1!important;padding:9px 13px!important;min-height:36px!important;width:auto!important;max-width:max-content!important;border-radius:9px!important;white-space:nowrap!important;flex:none!important}
+.ost570-article-head h1 .ost573-inline-status{font-size:13px!important}
+/* White nested display card removed: show content right on tinted panel */
+.ost570-hub #ueberblick .ost571-edit-region:not(:has(.ost573-inline-editor-shell)),
+.ost570-hub #ueberblick .ost571-edit-region:not(:has(.ost573-inline-editor-shell)) > *{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important}
+/* Panel tones supported regardless of former color rules */
+.ost570-hub .ost568-success{background:#edf8f0!important;border-color:#a4d6b4!important;color:#17472f!important}
+.ost570-hub .ost568-plain{background:#fff!important;border-color:#d4e2e9!important;color:#183e58!important}
+.ost570-hub .ost568-amber{background:#fff6e4!important;border-color:#edcf91!important}
+.ost570-hub .ost568-info,.ost570-hub .ost568-blue{background:#edf6fd!important;border-color:#bfdbea!important}
+.ost570-hub .ost568-danger{background:#fff0f0!important;border-color:#f2b2b2!important}
+.ost575-heading-edit{outline:2px solid #31819f;outline-offset:4px;min-width:5ch;border-radius:5px;cursor:text}
+.ost575-disease-form{display:flex;flex-direction:column;gap:12px;width:100%;min-width:0}
+.ost575-disease-editfield{min-width:0;border:1px solid #d3e1e8;border-radius:12px;background:#fff;padding:12px}
+.ost575-disease-editfield>label{display:block;font-weight:700;margin-bottom:6px;color:#204861}
+.ost575-disease-rich{min-height:75px}
+.ost575-edit-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+/* In-place panel styling for calendars, changes, news, literature */
+.ost574-editable-card{display:flow-root!important;min-width:0!important;position:relative!important}
+.ost574-editable-card.ost574-editable-card .ost574-fields{display:block!important;position:relative!important;float:none!important;clear:both!important;width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;margin:14px 0 12px!important;padding:14px!important;grid-column:1/-1!important;flex:0 0 100%!important;overflow:visible!important}
+.ost574-fields .ost574-field,.ost574-fields .ost573-toolbar,.ost574-fields .ost573-editable{width:100%!important;min-width:0!important;max-width:100%!important;box-sizing:border-box!important}
+.ost574-fields .ost573-toolbar{display:flex!important;flex-flow:row wrap!important;align-items:center!important;gap:6px!important}
+.ost574-fields .ost573-toolbar button,.ost574-fields .ost573-toolbar select{flex:0 0 auto!important;width:auto!important;min-width:32px!important;font-size:13px!important;max-width:100%!important;white-space:normal!important}
+.ost574-fields input{min-width:0!important}
+.ost574-editable-card .ost574-pencil{position:absolute;right:10px;top:10px;z-index:4}
+.ost575-add{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:10px 15px;border:1px solid #b7d0dd;border-radius:10px;background:white;color:#174c67;font:600 14px/1.2 inherit;cursor:pointer;margin:12px 0}
+@media(max-width:680px){.ost570-article-head h1 .ost573-title-inline input{flex-basis:100%!important}.ost574-fields{padding:10px!important}.ost574-fields .ost573-toolbar{overflow-x:auto!important}}
+.ost575-link-editor{width:100%;box-sizing:border-box;background:#f7fafc;border:1px solid #cfdee7;border-radius:12px;padding:14px;margin-bottom:12px;clear:both}
+.ost575-link-editor h3{margin:0 0 12px}
+.ost575-link-editor label{display:block;font-weight:650;margin:8px 0;color:#22445b}
+.ost575-link-editor input{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;padding:10px;border:1px solid #c4d7e1;border-radius:8px;background:#fff;font:inherit}
+.ost575-links{display:grid;gap:10px}.ost575-link-row{border:1px solid #d4e2ea;border-radius:10px;background:white;padding:12px}.ost575-link-row .btn{margin-top:8px}
+.ost575-skill-pencil{margin:10px 12px}.ost575-edit-links .cf563-resource{display:none}
