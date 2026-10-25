@@ -419,3 +419,36 @@ body:not(.ost576-edit-enabled) .ost583-no-reading{display:none!important}
 .ost573-toolbar{min-width:0;box-sizing:border-box;width:100%}
 .ost573-toolbar select{width:auto;min-width:105px}
 .ost583-rt-status{font-size:.8rem;color:#4b697c;flex:1}
+
+/* 584: edit skill occupies the entire available width rather than the right column */
+.ost576-skill-row:has(.ost583-skill-editor){display:block!important;width:100%;box-sizing:border-box}
+.ost576-skill-row:has(.ost583-skill-editor)>.cf547-row,.ost576-skill-row:has(.ost583-skill-editor)>.ost-skill-acc-item,.ost576-skill-row:has(.ost583-skill-editor)>.ost576-skill-pencil{display:none!important}
+.ost576-skill-row .ost583-skill-editor{width:100%!important;max-width:100%!important;flex:none!important;box-sizing:border-box;min-width:0!important}
+.ost583-skill-section-head{display:flex;flex-wrap:wrap;gap:10px}.ost583-skill-section-head>label{flex:1;min-width:min(100%,260px)}
+/* 584: document edits align with document title and do not create extra rows */
+.ost579-document-card>.cf563-entry-body{position:relative}
+.ost579-document-card .ost573-card-pencil{position:absolute!important;top:10px!important;right:12px!important;margin:0!important;z-index:2}
+.ost579-document-card .cf563-entry-body{padding-right:58px!important}
+/* 584: avoid the narrow inherited columns in Lehrmeinung */
+.ost-tonal-list .row-card{display:grid!important;grid-template-columns:44px minmax(0,1fr) 20px!important;align-items:center!important;gap:14px!important;min-width:0!important}
+.ost-tonal-list .row-card .row-icon{grid-column:1!important;grid-row:1!important}
+.ost-tonal-list .row-card>span:nth-child(2){grid-column:2!important;grid-row:1!important;min-width:0!important;overflow-wrap:break-word!important;word-break:normal!important}
+.ost-tonal-list .row-card>.arrow{grid-column:3!important;grid-row:1!important}
+/* 584: clean list cards and collapsed archive rows */
+.ost584-archive-entry{border:1px solid #d5e1e8;border-radius:12px;background:white;margin:8px 0;overflow:hidden}
+.ost584-archive-entry>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none;cursor:pointer;padding:16px;font-weight:700;color:#173b55}
+.ost584-archive-entry>summary::-webkit-details-marker{display:none}
+.ost584-archive-entry>summary:after{content:'⌄';flex:none;color:#54758a}
+.ost584-archive-entry[open]>summary:after{content:'⌃'}
+.ost584-archive-entry .cf548-archive-card{margin:0;border:0;border-top:1px solid #e1e9ed}
+.ost584-schema-subtitle{color:#56768b;font-size:.91rem;padding:0 0 11px}
+body:not(.ost576-edit-enabled) .ost584-schema-pencil{display:none!important}
+.ost584-schema-edit{padding:14px;border:1px solid #bcd4e1;border-radius:12px;background:#f5f9fb;margin:10px 0}
+.ost584-schema-edit label{display:block;margin:10px 0;color:#23485d;font-weight:600}
+.ost584-schema-edit input,.ost584-schema-edit textarea{box-sizing:border-box;width:100%;min-width:0;padding:10px;border:1px solid #bed2de;border-radius:8px;font:inherit}
+.ost584-schema-row{display:grid;grid-template-columns:75px minmax(0,1fr) auto;gap:8px;align-items:end;margin:8px 0}
+.ost584-schema-row label{margin:0}
+.ost584-schema-row button{align-self:end}
+@media(max-width:600px){.ost584-schema-row{grid-template-columns:65px minmax(0,1fr)}.ost584-schema-row button{grid-column:2}}
+
+.cf-section-title{display:flex;align-items:center;gap:10px}.cf-section-title>a{margin-left:auto}.cf-section-title .ost583-home-add{margin-left:0}
