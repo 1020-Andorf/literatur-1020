@@ -5298,3 +5298,26 @@ body .ost-tonal-list a.ost590-change-card > .ost590-change-arrow{
   position:static!important; order:2!important; flex:0 0 18px!important;
   width:18px!important; margin:0 0 0 auto!important; text-align:right!important;
 }
+
+
+/* Fix 593: mobile top haze / blurry header (iOS Safari and Android Chrome).
+   Opaque backgrounds and no backdrop blur avoid a fog-like layer over text.
+   Keep overlay/modal backdrops unchanged. */
+@media (max-width:1099px) {
+  body.app-shell .topbar,
+  body.app-shell:not(.page-home) .topbar,
+  body.app-shell:not(.page-home).subpage-topbar .topbar,
+  body.app-shell .compact-top-navigation {
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    filter:none!important;
+    background:#f4f8fb!important;
+  }
+  body.app-shell .topbar .top-action,
+  body.app-shell .hero-control {
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    filter:none!important;
+  }
+  body.app-shell .hero-control { background:#fff!important; }
+}
