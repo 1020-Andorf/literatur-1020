@@ -5647,3 +5647,31 @@ html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost570-symptom-til
 }
 html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost570-symptom-tile.ost572-tile::before,
 html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost570-symptom-tile.ost572-tile::after{display:none!important;content:none!important;}
+
+/* Version 602: identical three-colour sequence for ALL tiles within Leitsymptome:
+   Körpersysteme and the symptoms themselves. No red side accent. */
+html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(3n+1) a.ost572-tile,
+html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(3n+1) a.ost572-tile {
+ background:#fff1f2!important; border-color:#ecdde0!important;
+}
+html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(3n+2) a.ost572-tile,
+html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(3n+2) a.ost572-tile {
+ background:#fff!important; border-color:#e0e5e9!important;
+}
+html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(3n) a.ost572-tile,
+html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(3n) a.ost572-tile {
+ background:#f2f3f5!important; border-color:#e0e3e7!important;
+}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) a.ost572-tile {
+ border-width:1px!important; border-style:solid!important; background-image:none!important; box-shadow:none!important;
+}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) a.ost572-tile::before,
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) a.ost572-tile::after {
+ content:none!important;display:none!important;
+}
+
+/* v603 — Kategorieverwaltung ausschließlich bei freigegebener Bearbeitung. */
+body.app-shell:not(.ost576-edit-enabled) .ost597-lit-cats-toolbar,
+body.app-shell:not(.ost576-edit-enabled) [data-ost597-manage],
+body.app-shell:not(.ost576-edit-enabled) [data-lit-manage]{display:none!important;}
+body.app-shell.ost576-edit-enabled .ost597-lit-cats-toolbar{display:flex!important;}
