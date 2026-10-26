@@ -5321,3 +5321,42 @@ body .ost-tonal-list a.ost590-change-card > .ost590-change-arrow{
   }
   body.app-shell .hero-control { background:#fff!important; }
 }
+
+
+/* Release 594 — consistent typography and navigation, including mobile.
+   Source styles: home Aktuelles label, Training Skills rows, Training icon tabs. */
+:root { --ost594-font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; --ost594-label:1rem; --ost594-weight:600; --ost594-leading:1.42; }
+/* All navigation tiles use one font; icons preserve their own glyph styling. */
+html body.app-shell main :is(.cf-destination,.cf547-row,.cf563-entry>summary,.cf547-training-group>summary,.ost-skill-acc-item,.ost570-hub a.ost572-tile,.cf551-tab,.cf547-tabs button,.row-card,.meeting-tile,.news-list button,.news-list a,.ost-tonal-list a,.cf563-inline-list a,.cf563-inline-list button) {font-family:var(--ost594-font)!important;letter-spacing:normal!important;}
+/* Main menu labels match the readable news tile labels. */
+html body.app-shell .cf548-home .cf-home-grid .cf-destination strong {font-family:var(--ost594-font)!important;font-size:var(--ost594-label)!important;font-weight:var(--ost594-weight)!important;line-height:var(--ost594-leading)!important;letter-spacing:normal!important;hyphens:auto!important;overflow-wrap:break-word!important;}
+/* Reusable submenu labels, based on Training > Skills. Keep medical body text unchanged. */
+html body.app-shell main :is(.cf547-training-group .cf547-row strong,.cf547-training-group summary strong,.ost-skill-acc-item span,.ost-skill-acc-title,.cf547-materials .cf563-entry>summary strong,.cf547-materials .cf547-row strong,.cf549-knowledge .cf547-row strong,.cf563-inline-list strong,.ost-tonal-list a.row-card strong,.meeting-tile h2,.ost570-hub a.ost572-tile strong,.cf551-tab strong) {font-family:var(--ost594-font)!important;font-size:var(--ost594-label)!important;font-weight:var(--ost594-weight)!important;line-height:var(--ost594-leading)!important;letter-spacing:normal!important;}
+/* Materials tabs: exactly the same column/icon-above-label layout as Training. */
+html body.app-shell main .cf547-materials nav.cf550-material-tabs.cf547-tabs {display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px!important;width:100%!important;max-width:100%!important;overflow:visible!important;padding:5px!important;margin:0 0 12px!important;border:1px solid #d9e5ec!important;border-radius:16px!important;background:#fff!important;}
+html body.app-shell main .cf547-materials nav.cf550-material-tabs.cf547-tabs>button {display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;flex:initial!important;gap:5px!important;width:100%!important;min-width:0!important;min-height:66px!important;margin:0!important;padding:8px 4px!important;text-align:center!important;white-space:normal!important;word-break:normal!important;overflow-wrap:break-word!important;hyphens:auto!important;font-family:var(--ost594-font)!important;font-size:.78rem!important;font-weight:600!important;line-height:1.24!important;border-radius:12px!important;}
+html body.app-shell main .cf547-materials nav.cf550-material-tabs.cf547-tabs>button svg {display:block!important;width:23px!important;height:23px!important;flex:0 0 23px!important;margin:0 auto!important;}
+html body.app-shell main .cf547-materials .ost594-tab-label {display:block!important;width:100%;text-align:center;overflow-wrap:anywhere;}
+/* Organ systems and symptoms: same calm tiles as the other submenus,
+   but larger and automatically distributed into balanced rows. */
+html body.app-shell main .ost570-hub nav.cf551-organ-nav,
+html body.app-shell main .ost570-hub nav.cf551-category-nav {display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;width:100%!important;max-width:100%!important;align-items:stretch!important;padding:7px 4px 18px!important;box-sizing:border-box!important;}
+html body.app-shell main .ost570-hub nav :is(.ost583-tile-wrap,.ost570-tile,.ost570-symptom-tile) {min-width:0!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;}
+html body.app-shell main .ost570-hub a.ost572-tile,
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile,
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile {display:grid!important;grid-template-columns:46px minmax(0,1fr) 18px!important;align-items:center!important;justify-content:initial!important;gap:12px!important;min-height:104px!important;height:100%!important;padding:18px!important;border:1px solid #d4e2e9!important;border-left:4px solid #ad2434!important;border-radius:16px!important;background:#fff!important;box-shadow:0 3px 12px #15394f0c!important;color:#183e58!important;}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile {grid-template-columns:minmax(0,1fr) 18px!important;min-height:92px!important;}
+html body.app-shell main .ost570-hub a.ost572-tile strong {grid-column:auto!important;grid-row:auto!important;display:block!important;min-width:0!important;flex:initial!important;font-size:var(--ost594-label)!important;font-weight:var(--ost594-weight)!important;line-height:var(--ost594-leading)!important;color:#183e58!important;text-align:left!important;white-space:normal!important;overflow-wrap:break-word!important;hyphens:auto!important;}
+html body.app-shell main .ost570-hub a.ost572-tile .ost572-count {display:grid!important;grid-column:1!important;grid-row:1!important;place-items:center!important;width:42px!important;height:42px!important;margin:0!important;border-radius:10px!important;background:#f0f5f8!important;color:#294f67!important;font-size:.94rem!important;}
+html body.app-shell main .ost570-hub a.ost572-tile .ost572-chevron {display:block!important;grid-column:-2/-1!important;grid-row:1!important;color:#52768a!important;font-size:1.35rem!important;}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile strong {grid-column:1!important;}
+@media(max-width:680px) {
+ html body.app-shell main .ost570-hub nav.cf551-organ-nav,
+ html body.app-shell main .ost570-hub nav.cf551-category-nav {grid-template-columns:minmax(0,1fr)!important;gap:11px!important;}
+ html body.app-shell main .ost570-hub a.ost572-tile,
+ html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile,
+ html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile {min-height:87px!important;padding:15px 16px!important;}
+ html body.app-shell main .cf547-materials nav.cf550-material-tabs.cf547-tabs>button {font-size:.73rem!important;min-height:73px!important;padding:7px 2px!important;}
+ html body.app-shell .cf548-home .cf-home-grid .cf-destination strong {font-size:1rem!important;}
+}
+@media(max-width:360px) {html body.app-shell main .cf547-materials nav.cf550-material-tabs.cf547-tabs {grid-template-columns:repeat(2,minmax(0,1fr))!important;}}

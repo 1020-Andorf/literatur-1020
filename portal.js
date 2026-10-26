@@ -1970,7 +1970,7 @@
         const param = new URLSearchParams(location.search).get('typ');
         let active = categories.some(c => c[0] === param) ? param : 'guidelines';
         const main = $('[data-main]');
-        main.innerHTML = `<section class="cf547 cf547-materials cf553-materials"><h1>Materialien</h1><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id, label, ico]) => `<button type="button" data-mat-tab="${id}" class="${active === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
+        main.innerHTML = `<section class="cf547 cf547-materials cf553-materials"><h1>Materialien</h1><nav class="cf547-tabs cf550-responsive-tabs cf550-material-tabs" aria-label="Materialtypen">${categories.map(([id, label, ico]) => `<button type="button" data-mat-tab="${id}" class="${active === id ? 'selected' : ''}">${ostIcon(ico)}<span class="ost594-tab-label">${label}</span></button>`).join('')}</nav><section class="cf547-content" data-material-list></section></section>`;
         const box = $('[data-material-list]');
         const safeLink = value => /^https?:\/\//i.test(String(value || '')) ? String(value) : '';
         const link = (url, label) => safeLink(url) ? `<a class="cf563-resource" href="${esc(safeLink(url))}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>` : '';
