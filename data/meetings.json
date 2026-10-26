@@ -20,7 +20,13 @@
     "category": "Dienstbesprechung",
     "speaker": "",
     "summary": "",
-    "files": [],
+    "files": [
+      {
+        "title": "Präsentation März Dienstbesprechung 2026",
+        "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793048870873-Dienstbesprechung-02M-rz2026-Verbrennungen.pdf",
+        "note": "Verbrennungen und Stromunfälle"
+      }
+    ],
     "id": "inline-mvpqyex5-4fho"
   }
 ]
