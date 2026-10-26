@@ -1325,7 +1325,8 @@
       const item={...ost575Defaults[store],...overrides,id:'inline-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6)};
       const map={news:['title','date','category','text'],events:['title','date','time','location','category','capacity','description'],changes:['title','date','category','old','new','source'],meetings:['title','date','category','speaker','summary'],articles:['title','authors','journal','year','why','freeUrl'],differential:['title','theory'],knowledgeModules:['title','summary','documentUrl'],algorithms:['title','sourceUrl','source'],skills:['name']};
       const keys=map[store]||['title'];const fields=keys.map(k=>({key:k,label:({title:'Titel',name:'Skillgruppe',date:'Datum',time:'Uhrzeit',location:'Ort',category:'Kategorie',capacity:'Teilnehmerlimit',description:'Beschreibung',summary:'Untertitel',documentUrl:'PDF-/Web-Link',sourceUrl:'PDF-/Web-Link',old:'Bisherige Lehrmeinung',new:'Neue Lehrmeinung',text:'Meldung',why:'Beschreibung',theory:'Überblick'})[k]||k,value:item[k]??'',type:k==='date'?'date':k==='capacity'?'number':['description','text','old','new','why','theory'].includes(k)?'rich':'text',required:k==='title'||k==='name'}));
-      ost576Modal('Neuen Eintrag erstellen',fields,async values=>{const data=await get(store);if(!Array.isArray(data))return false;Object.assign(item,values);if('capacity' in item)item.capacity=Number(item.capacity)||10;const ok=await save(store,[...data,item]);if(ok)location.reload();return ok;});
+      if(store==='articles'){const cats=await ostLitCategories(await articles());fields.push({key:'litCategory',label:'Literaturkategorie',type:'select',options:[{value:'',label:'– Kategorie wählen –'},...cats.map(c=>({value:c,label:c}))]});}
+      ost576Modal('Neuen Eintrag erstellen',fields,async values=>{const data=await get(store);if(!Array.isArray(data))return false;Object.assign(item,values);if(store==='articles'){item.tags=values.litCategory?[values.litCategory]:[];delete item.litCategory;}if('capacity' in item)item.capacity=Number(item.capacity)||10;const ok=await save(store,[...data,item]);if(ok)location.reload();return ok;});
     }
     async function ost583CreateSkill(){
       if(!await ost574Pin())return;
@@ -1787,17 +1788,18 @@
       if(!links.length&&store==='algorithms')links=[...(item.materials?.background||[]),...(item.materials?.checklists||[])].map(x=>({...x}));
       if(!links.length){const old=store==='articles'?(item.freeUrl||item.publisherUrl):(item.documentUrl||item.sourceUrl);
         if(old)links=[{title:item.title||'PDF / Link',url:old,note:item.summary||item.source||''}];}
+      if(store==='articles')window.OST_LIT_TAGS=await ostLitCategories(await articles());
       let draftTitle=item.title||'';
       let draftSubtitle=store==='knowledgeModules'?(item.summary||''):'';
       let draftDescription=item.why||item.explanation||item.body||item.summary||'';
       let draftFeatured=!!item.featured;
       let draftMeta={authors:item.authors||'',journal:item.journal||'',year:item.year||'',doi:item.doi||'',date:item.date||'',category:item.category||'',speaker:item.speaker||'',tags:Array.isArray(item.tags)?item.tags.join(', '):String(item.tags||'')};
       const render=()=>{
-        panel.innerHTML=`<h3>Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(draftTitle)}"></label>${store==='knowledgeModules'?`<label>Untertitel / Beschreibung der Checkliste<textarea data-link-main-subtitle rows="3">${esc(draftSubtitle)}</textarea></label>`:''}${store==='articles'?`<div class="ost583-doc-meta"><label>Autor:innen<input data-doc-meta="authors" value="${esc(draftMeta.authors)}"></label><label>Journal / Quelle<input data-doc-meta="journal" value="${esc(draftMeta.journal)}"></label><label>Jahr<input data-doc-meta="year" value="${esc(draftMeta.year)}"></label><label>DOI<input data-doc-meta="doi" value="${esc(draftMeta.doi)}"></label><label>Kategorien / Tags (mit Komma trennen)<input data-doc-meta="tags" value="${esc(draftMeta.tags)}"></label></div><label>Beschreibung / Lesetipp</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div><label class="ost583-check"><input type="checkbox" data-link-featured ${draftFeatured?'checked':''}>Als Lesetipp auf der Startseite anzeigen (maximal 30 Tage)</label>`:''}${store==='meetings'?`<div class="ost583-doc-meta"><label>Datum<input type="date" data-doc-meta="date" value="${esc(draftMeta.date)}"></label><label>Kategorie<input data-doc-meta="category" value="${esc(draftMeta.category)}"></label><label>Referent:in<input data-doc-meta="speaker" value="${esc(draftMeta.speaker)}"></label></div><label>Zusammenfassung</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div>`:''}<div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><label class="ost581-upload-label">PDF hochladen<input type="file" data-link-upload="${i}" accept="${store==='meetings'?'application/pdf,image/jpeg,image/png,image/webp':'application/pdf,.pdf'}"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><div class="ost575-edit-actions"><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><button type="button" class="btn danger" data-link-delete>Eintrag löschen</button><span data-link-status role="status"></span></div>`;
+        panel.innerHTML=`<h3>Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(draftTitle)}"></label>${store==='knowledgeModules'?`<label>Untertitel / Beschreibung der Checkliste<textarea data-link-main-subtitle rows="3">${esc(draftSubtitle)}</textarea></label>`:''}${store==='articles'?`<div class="ost583-doc-meta"><label>Autor:innen<input data-doc-meta="authors" value="${esc(draftMeta.authors)}"></label><label>Journal / Quelle<input data-doc-meta="journal" value="${esc(draftMeta.journal)}"></label><label>Jahr<input data-doc-meta="year" value="${esc(draftMeta.year)}"></label><label>DOI<input data-doc-meta="doi" value="${esc(draftMeta.doi)}"></label><label>Kategorie auswählen<select data-lit-choose-tag><option value="">– Kategorie wählen –</option>${(window.OST_LIT_TAGS||OST_LIT_DEFAULT_CATEGORIES).map(c=>`<option value="${esc(c)}" ${String(draftMeta.tags).split(',').map(x=>x.trim()).includes(c)?'selected':''}>${esc(c)}</option>`).join('')}</select></label><label>Weitere Tags (optional, mit Komma trennen)<input data-doc-meta="tags" value="${esc(draftMeta.tags)}"></label></div><label>Beschreibung / Lesetipp</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div><label class="ost583-check"><input type="checkbox" data-link-featured ${draftFeatured?'checked':''}>Als Lesetipp auf der Startseite anzeigen (maximal 30 Tage)</label>`:''}${store==='meetings'?`<div class="ost583-doc-meta"><label>Datum<input type="date" data-doc-meta="date" value="${esc(draftMeta.date)}"></label><label>Kategorie<input data-doc-meta="category" value="${esc(draftMeta.category)}"></label><label>Referent:in<input data-doc-meta="speaker" value="${esc(draftMeta.speaker)}"></label></div><label>Zusammenfassung</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div>`:''}<div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><label class="ost581-upload-label">PDF hochladen<input type="file" data-link-upload="${i}" accept="${store==='meetings'?'application/pdf,image/jpeg,image/png,image/webp':'application/pdf,.pdf'}"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><div class="ost575-edit-actions"><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><button type="button" class="btn danger" data-link-delete>Eintrag löschen</button><span data-link-status role="status"></span></div>`;
         if(['articles','meetings'].includes(store))ost573BindRich(panel.querySelector('.ost583-doc-description'),panel.querySelector('[data-link-description]'));
         const collect=()=>{draftTitle=panel.querySelector('[data-link-main-title]').value;
           if(store==='knowledgeModules')draftSubtitle=panel.querySelector('[data-link-main-subtitle]').value;
-          if(['articles','meetings'].includes(store)){draftDescription=ost570CleanHtml(panel.querySelector('[data-link-description]').innerHTML);draftFeatured=!!panel.querySelector('[data-link-featured]')?.checked;panel.querySelectorAll('[data-doc-meta]').forEach(x=>draftMeta[x.dataset.docMeta]=x.value.trim());}
+          if(['articles','meetings'].includes(store)){draftDescription=ost570CleanHtml(panel.querySelector('[data-link-description]').innerHTML);draftFeatured=!!panel.querySelector('[data-link-featured]')?.checked;panel.querySelectorAll('[data-doc-meta]').forEach(x=>draftMeta[x.dataset.docMeta]=x.value.trim());if(store==='articles'){const chosen=panel.querySelector('[data-lit-choose-tag]')?.value;if(chosen){const existing=String(draftMeta.tags||'').split(',').map(x=>x.trim()).filter(Boolean);draftMeta.tags=[chosen,...existing.filter(x=>x!==chosen)].join(', ');}}}
           panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>links[i][key]=row.querySelector(`[data-link-field="${key}"]`).value.trim());});};
         panel.querySelectorAll('[data-link-upload]').forEach(input=>input.onchange=async()=>{
           const file=input.files?.[0];if(!file)return;
@@ -1971,6 +1973,8 @@
         const checklists = km.filter(x => x.module === 'material-checklists' && x.status !== 'draft').sort(ostEditorialOrder);
         const mnemonics = allAlgorithms.filter(x => String(x.category || '').startsWith('Schema')).sort(ostEditorialOrder);
         const literature = Array.isArray(docs) ? docs : [];
+        const literatureCategories = await ostLitCategories(literature);
+        let literatureCategory = '';
         const categories = [['guidelines', 'Leitlinien', 'guideline'], ['checklists', 'Checklisten', 'checklist'], ['mnemonics', 'Merkhilfen', 'notes'], ['literature', 'Literatur', 'book']];
         const param = new URLSearchParams(location.search).get('typ');
         let active = categories.some(c => c[0] === param) ? param : 'guidelines';
@@ -2013,7 +2017,7 @@
                 button.classList.toggle('selected', selected);
                 button.setAttribute('aria-pressed', String(selected));
             });
-            const list = active === 'guidelines' ? guidelines : active === 'checklists' ? checklists : active === 'mnemonics' ? mnemonics : literature;
+            const list = active === 'guidelines' ? guidelines : active === 'checklists' ? checklists : active === 'mnemonics' ? mnemonics : literature.filter(a=>!literatureCategory||ostLitGroup(a,literatureCategories)===literatureCategory);
             const iconName = categories.find(c => c[0] === active)[2];
             const items = list.map(a => {
                 const editing=`<button class="ost571-pencil ost573-card-pencil" type="button" data-ost573-material="${esc(a.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>`;
@@ -2027,7 +2031,7 @@
                 const content = `${details ? `<p class="cf563-summary">${details}</p>` : ''}${a.why ? `<div class="cf563-rich">${renderModuleText(a.why)}</div>` : ''}${a.read ? `<p>${esc(a.read)}</p>` : ''}${ost579Documents(a.links?.length?a.links:(a.freeUrl||a.publisherUrl?[{url:a.freeUrl||a.publisherUrl,title:'Artikel öffnen',note:''}]:[]))}`;
                 return card(a.title, iconName, editing+content, active==='literature');
             });
-            box.innerHTML = `<div class="cf547-content-title"><h2>${esc(categories.find(c => c[0] === active)[1])}</h2><span>${list.length} Einträge</span></div><div class="cf563-inline-list">${items.join('') || '<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
+            box.innerHTML = `${active==='literature'?`<div class="ost597-lit-cats-toolbar"><button type="button" data-ost597-manage>Kategorien bearbeiten</button></div><nav class="ost597-lit-categories" aria-label="Literaturkategorien">${literatureCategories.map(c=>`<button type="button" class="ost597-lit-category ${literatureCategory===c?'active':''}" data-ost597-category="${esc(c)}"><strong>${esc(c)}</strong><span>${literature.filter(a=>ostLitGroup(a,literatureCategories)===c).length} Artikel</span></button>`).join('')}</nav>`:''}<div class="cf547-content-title"><h2>${esc(categories.find(c => c[0] === active)[1])}</h2><span>${list.length} Einträge</span></div><div class="cf563-inline-list">${items.join('') || '<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
             main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(box,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
         }
         main.addEventListener('click', event => {
@@ -2035,6 +2039,8 @@
             const schema=event.target.closest('[data-ost584-schema]');if(schema){event.preventDefault();event.stopPropagation();ost584EditSchema(schema.closest('details'),schema.dataset.ost584Schema);return;}
             const edit=event.target.closest('[data-ost573-material]');
             if(edit){event.preventDefault();event.stopPropagation();const storage=active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms';const field=active==='checklists'?'body':'explanation';ost575LinksEditor(edit.closest('details'),storage,edit.dataset.ost573Material);return;}
+            const cat=event.target.closest('[data-ost597-category]');if(cat){literatureCategory=literatureCategory===cat.dataset.ost597Category?'':cat.dataset.ost597Category;render();return;}
+            if(event.target.closest('[data-ost597-manage]')){ostLitManageCategories(()=>location.reload());return;}
             const tab = event.target.closest('[data-mat-tab]');
             if (!tab) return;
             active = tab.dataset.matTab;
@@ -2067,26 +2073,44 @@
         } };
         draw('all');
     }
+
+    const OST_LIT_DEFAULT_CATEGORIES = ['Notfallmedizin','Anatomie & Physiologie','Pharmakologie','Diagnostik','Ausbildung & Training','Leitlinien & Studien','Sonstiges'];
+    const ostLitTags = article => (Array.isArray(article.tags) ? article.tags : String(article.tags || '').split(',')).map(v=>String(v).trim()).filter(Boolean);
+    async function ostLitCategories(articlesList=[]) {
+        const saved=await get('literatureCategories');
+        const names=(Array.isArray(saved) && saved.length ? saved.map(v=>typeof v==='string'?v:v?.name) : OST_LIT_DEFAULT_CATEGORIES).filter(Boolean).map(v=>String(v).trim()).filter(Boolean);
+        const existing=(articlesList||[]).flatMap(ostLitTags);
+        return [...new Set([...names,...existing])];
+    }
+    const ostLitGroup = (a,cats) => {const tags=ostLitTags(a);return cats.find(c=>tags.some(t=>normalizedSearch(t)===normalizedSearch(c))) || 'Sonstiges';};
+    async function ostLitManageCategories(afterSave) {
+        if(!await ost574Pin())return;
+        const arts=await articles();const cats=await ostLitCategories(arts);
+        ost576Modal('Literaturkategorien bearbeiten',[{key:'names',label:'Kategorien – eine pro Zeile',type:'textarea',value:cats.join('\n')}],async values=>{
+            const cleaned=[...new Set(String(values.names||'').split('\n').map(x=>x.trim()).filter(Boolean))];
+            if(!cleaned.length)return false;
+            const ok=await save('literatureCategories',cleaned);
+            if(ok && typeof afterSave==='function')afterSave();
+            return ok;
+        });
+    }
     async function literature() {
-        const arts = await articles();
-        const tagsOf = a => [...new Set([...(Array.isArray(a.tags) ? a.tags : String(a.tags || '').split(',')), ...(Array.isArray(a.topics) ? a.topics : String(a.topics || '').split(','))].map(v => String(v).trim()).filter(Boolean))];
-        const tags = [...new Set(arts.flatMap(tagsOf))].sort((a, b) => a.localeCompare(b, 'de'));
-        $('[data-main]').innerHTML = `<section class="cf548-archive"><header class="cf548-archive-head"><h1>Literatur</h1><p>Alle Fachartikel, Studien und Quellen an einem Ort.</p></header><div class="cf548-archive-controls"><label><span class="ost-visually-hidden">Literatur suchen</span><input type="search" data-lit-query placeholder="Titel, Autor:innen oder Tags suchen …"></label><label><span class="ost-visually-hidden">Nach Tag filtern</span><select data-lit-tag><option value="">Alle Tags</option>${tags.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('')}</select></label></div><p class="cf548-archive-count" data-lit-count></p><div class="cf548-archive-list" data-lit-list></div></section>`;
-        const root = $('[data-main]');
-        const input = $('[data-lit-query]', root), tagSel = $('[data-lit-tag]', root), box = $('[data-lit-list]', root);
-        let pageLimit = 10;
-        function draw() {
-            const q = normalizedSearch(input.value), tag = tagSel.value;
-            const found = arts.filter(a => (!tag || tagsOf(a).includes(tag)) && (!q || normalizedSearch([a.title, a.authors, a.journal, a.why, ...tagsOf(a)].join(' ')).includes(q)));
-            $('[data-lit-count]', root).textContent = `${found.length} ${found.length === 1 ? 'Artikel' : 'Artikel'}`;
-            box.innerHTML = found.slice(0,pageLimit).map(a => { const link = String(a.freeUrl || a.publisherUrl || ''), safe = /^https?:\/\//i.test(link) ? link : ''; const auth = Array.isArray(a.authors) ? a.authors.join(', ') : String(a.authors || ''); const theseTags = tagsOf(a); return `<details class="ost584-archive-entry"><summary>${esc(a.title)}</summary><article class="cf548-archive-card" data-ost574-id="${esc(a.id)}"><span class="cf548-archive-icon">${ostIcon('book')}</span><div class="cf548-archive-copy"><h2>${esc(a.title)}</h2><p>${esc([auth, a.journal, a.year].filter(Boolean).join(' · '))}</p><div class="cf548-tag-list">${theseTags.slice(0, 5).map(t => `<button type="button" data-filter-tag="${esc(t)}">${esc(t)}</button>`).join('')}</div></div>${safe ? `<a class="cf548-archive-open" href="${esc(safe)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(a.title)} öffnen">↗</a>` : ''}</article></details>`; }).join('') || '<p class="cf-muted">Keine Artikel für diese Auswahl gefunden.</p>';
-            if(found.length>pageLimit)box.insertAdjacentHTML('beforeend',`<button type="button" class="btn ost585-more" data-lit-more>Weitere 10 anzeigen (${found.length-pageLimit} verbleibend)</button>`);
-            box.querySelector('[data-lit-more]')?.addEventListener('click',()=>{pageLimit+=10;draw();});
-            box.querySelectorAll('[data-filter-tag]').forEach(b => b.onclick = () => { tagSel.value = b.dataset.filterTag; draw(); });
-        }
-        input.addEventListener('input', ()=>{pageLimit=10;draw();});
-        tagSel.addEventListener('change', ()=>{pageLimit=10;draw();});
-        draw();
+        const arts=await articles(), categories=await ostLitCategories(arts);
+        const root=$('[data-main]');let selected='';
+        root.innerHTML=`<section class="cf548-archive ost597-literature"><header class="cf548-archive-head"><h1>Literatur</h1></header><div class="ost597-lit-controls"><input type="search" data-lit-query placeholder="Artikel suchen …" aria-label="Artikel suchen"><button type="button" data-lit-manage class="ost597-edit-cats">Kategorien bearbeiten</button></div><nav class="ost597-lit-categories" data-lit-cats aria-label="Literaturkategorien"></nav><div data-lit-items></div></section>`;
+        const nav=$('[data-lit-cats]',root),box=$('[data-lit-items]',root),input=$('[data-lit-query]',root);
+        const norm=normalizedSearch;
+        const render=()=>{
+            const counts=c=>arts.filter(a=>ostLitGroup(a,categories)===c).length;
+            nav.innerHTML=categories.map(c=>`<button type="button" class="ost597-lit-category ${selected===c?'active':''}" data-lit-cat="${esc(c)}"><strong>${esc(c)}</strong><span>${counts(c)} Artikel</span></button>`).join('');
+            const q=norm(input.value);
+            const visible=arts.filter(a=>(!selected||ostLitGroup(a,categories)===selected) && (!q||norm([a.title,a.authors,a.journal,a.why,...ostLitTags(a)].join(' ')).includes(q)));
+            box.innerHTML=`<div class="ost597-lit-heading"><h2>${esc(selected||'Alle Artikel')}</h2><span>${visible.length} Artikel</span></div><div class="ost597-lit-articles">${visible.map(a=>{const url=String(a.freeUrl||a.publisherUrl||'');return `<details class="ost584-archive-entry"><summary>${esc(a.title||'Ohne Titel')}</summary><div class="ost597-lit-details"><p>${esc([a.authors,a.journal,a.year].filter(Boolean).join(' · '))}</p>${a.why?`<div>${renderModuleText(a.why)}</div>`:''}<div>${ostLitTags(a).map(t=>`<span class="ost597-lit-tag">${esc(t)}</span>`).join('')}</div>${/^https?:\/\//i.test(url)?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Artikel öffnen ↗</a>`:''}</div></details>`}).join('')||'<p class="cf-muted">Keine Artikel in dieser Kategorie.</p>'}</div>`;
+        };
+        nav.onclick=e=>{const b=e.target.closest('[data-lit-cat]');if(!b)return;selected=selected===b.dataset.litCat?'':b.dataset.litCat;render();};
+        input.oninput=render;
+        root.querySelector('[data-lit-manage]').onclick=()=>ostLitManageCategories(()=>location.reload());
+        render();
     }
     async function abcdePage() {
         const d = await get('abcde'), labels = { A: 'Airway', B: 'Breathing', C: 'Circulation', D: 'Disability', E: 'Exposure' }, sub = { A: 'Atemweg', B: 'Atmung', C: 'Kreislauf', D: 'Neurologie', E: 'Umgebung' }, vis = { A: '🫁', B: '🫁', C: '❤️', D: '🧠', E: '🌡️' };
