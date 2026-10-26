@@ -4,7 +4,7 @@
     "title": "Prähospitale Diagnostik und Therapie des akuten Schlaganfalls",
     "authors": "Berberich A, Podasca C, Urbanek C, Nagel S, Purrucker J et al.",
     "journal": "Notfall + Rettungsmedizin",
-    "year": 2024,
+    "year": "2024",
     "doi": "10.1007/s10049-023-01273-3",
     "topics": [
       "Neurologie",
@@ -24,7 +24,10 @@
     "added": "2026-09-08",
     "archived": false,
     "archiveDate": "",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": [
+      "Sonstiges"
+    ]
   },
   {
     "id": "erc-guidelines-2025",
