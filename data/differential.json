@@ -175,10 +175,12 @@
       }
     ],
     "questions": [
-      "Druck, Enge oder Stechen?",
+      "Druck, Enge oder Stechen? Zerreißender Schmerz?",
       "Ausstrahlung?",
       "Belastungsabhängig?",
-      "Dyspnoe, Übelkeit oder Synkope?"
+      "Dyspnoe, Übelkeit oder Synkope?",
+      "Seit wann?",
+      "Vorerkrankungen bekann? (Angina pectoris, KHK, Linksherzinsuffizienz, ...)"
     ],
     "redflags": [
       "Bewegungsunabhängiger Druckschmerz",
@@ -193,15 +195,18 @@
     "sectionTones": {
       "theory": "plain",
       "redflags": "danger",
-      "sources": "plain"
+      "sources": "plain",
+      "questions": "amber"
     },
     "sectionTitles": {
       "theory": "Überblick",
       "redflags": "⚠ Red Flags · Warnzeichen",
-      "sources": "Quellen und weiterführende Informationen"
+      "sources": "Quellen und weiterführende Informationen",
+      "questions": "Wichtige Fragen / Anamnese"
     },
     "redflagsHtml": "<ul><li>Bewegungsunabhängiger Druckschmerz</li><li>Kaltschweißigkeit</li><li>Neurologische Defizite</li><li>Schwere Dyspnoe</li><li>KHK in der Patientengeschichte</li></ul>",
-    "sourcesHtml": "<ul><li><a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis\" rel=\"noopener noreferrer\" target=\"_blank\">Fachliteratur auf PubMed suchen</a></li></ul>"
+    "sourcesHtml": "<ul><li><a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis\" rel=\"noopener noreferrer\" target=\"_blank\">Fachliteratur auf PubMed suchen</a></li></ul>",
+    "questionsHtml": "<ul><li>Druck, Enge oder Stechen? Zerreißender Schmerz?</li><li>Ausstrahlung?</li><li>Belastungsabhängig?</li><li>Dyspnoe, Übelkeit oder Synkope?</li><li>Seit wann?</li><li>Vorerkrankungen bekann? (Angina pectoris, KHK, Linksherzinsuffizienz, ...)</li></ul>"
   },
   {
     "id": "bewusstsein",
