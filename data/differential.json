@@ -181,17 +181,18 @@
       "Dyspnoe, Übelkeit oder Synkope?"
     ],
     "redflags": [
-      "Hypotonie",
+      "Bewegungsunabhängiger Druckschmerz",
       "Kaltschweißigkeit",
       "Neurologische Defizite",
-      "Schwere Dyspnoe"
+      "Schwere Dyspnoe",
+      "KHK in der Patientengeschichte"
     ],
     "group": "Kreislauf",
     "theory": "Organperfusion hängt nicht allein vom Blutdruck ab, sondern auch von Herzzeitvolumen, Gefäßwiderstand und regionaler Mikrozirkulation. Ein kompensierter Schock kann anfangs mit scheinbar normalen Blutdruckwerten auftreten.",
     "related": [],
     "sectionTones": {
       "theory": "plain",
-      "redflags": "info",
+      "redflags": "danger",
       "sources": "plain"
     },
     "sectionTitles": {
@@ -199,7 +200,7 @@
       "redflags": "⚠ Red Flags · Warnzeichen",
       "sources": "Quellen und weiterführende Informationen"
     },
-    "redflagsHtml": "<ul><li>Hypotonie</li><li>Kaltschweißigkeit</li><li>Neurologische Defizite</li><li>Schwere Dyspnoe</li></ul>",
+    "redflagsHtml": "<ul><li>Bewegungsunabhängiger Druckschmerz</li><li>Kaltschweißigkeit</li><li>Neurologische Defizite</li><li>Schwere Dyspnoe</li><li>KHK in der Patientengeschichte</li></ul>",
     "sourcesHtml": "<ul><li><a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis\" rel=\"noopener noreferrer\" target=\"_blank\">Fachliteratur auf PubMed suchen</a></li></ul>"
   },
   {
