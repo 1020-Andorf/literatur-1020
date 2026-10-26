@@ -54,7 +54,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-06"
+    "activeSince": "2026-09-06",
+    "tags": []
   },
   {
     "id": "who-prehospital-emergency-care-2025",
@@ -81,7 +82,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-05"
+    "activeSince": "2026-09-05",
+    "tags": []
   },
   {
     "id": "ems-sepsis-systematic-review",
@@ -108,7 +110,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-04"
+    "activeSince": "2026-09-04",
+    "tags": []
   },
   {
     "id": "emergency-team-competencies",
@@ -136,7 +139,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-03"
+    "activeSince": "2026-09-03",
+    "tags": []
   },
   {
     "id": "hems-simulation-program",
@@ -164,7 +168,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-02"
+    "activeSince": "2026-09-02",
+    "tags": []
   },
   {
     "id": "learning-simulation-prehospital",
@@ -191,7 +196,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-01"
+    "activeSince": "2026-09-01",
+    "tags": []
   },
   {
     "id": "debriefing-systematic-review-2024",
@@ -218,7 +224,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-08-30"
+    "activeSince": "2026-08-30",
+    "tags": []
   },
   {
     "id": "human-factors-simulation-em",
@@ -245,7 +252,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-08-28"
+    "activeSince": "2026-08-28",
+    "tags": []
   },
   {
     "id": "abcde-debriefing",
@@ -272,7 +280,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-08-27"
+    "activeSince": "2026-08-27",
+    "tags": []
   },
   {
     "id": "ai-debriefing-2026",
@@ -300,7 +309,8 @@
     "license": "",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-08-26"
+    "activeSince": "2026-08-26",
+    "tags": []
   },
   {
     "id": "de-stroke-praxis-dach-2024",
@@ -328,7 +338,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-ueberlebensnetz-2026",
@@ -355,7 +366,8 @@
     "added": "2026-09-08",
     "archived": false,
     "archiveDate": "",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-eckpunktepapier-2025",
@@ -383,7 +395,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-medikamente-rettungsmittel-2024",
@@ -411,7 +424,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-integrierte-versorgung-rd-2024",
@@ -439,7 +453,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-notfallleitsystem-2024",
@@ -467,7 +482,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-rettungsdienststrukturen-neu-denken-2026",
@@ -494,7 +510,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-digitale-rettungskette-2026",
@@ -522,7 +539,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-bridging-kritisch-2024",
@@ -550,7 +568,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "de-gruende-praeklinische-notfallversorgung-2021",
@@ -578,7 +597,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "stroke-missed-ems-2021",
@@ -605,7 +625,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "stroke-recognition-first-aid-2020",
@@ -632,7 +653,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "clinical-reasoning-ems-2019",
@@ -659,7 +681,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "pain-experiences-prehospital-2023",
@@ -686,7 +709,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "paediatric-prehospital-pain-2021",
@@ -713,7 +737,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "patient-safety-paramedics-review-2024",
@@ -740,7 +765,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "non-conveyance-safety-2017",
@@ -767,7 +793,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "sepsis-identification-prehospital-2016",
@@ -794,7 +821,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "death-dying-prehospital-2020",
@@ -821,7 +849,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "ems-work-wellbeing-2020",
@@ -848,7 +877,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "ptsd-paramedics-2023",
@@ -875,7 +905,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "pre-ems-first-responders-review-2021",
@@ -903,7 +934,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "urban-rural-prehospital-times-2022",
@@ -930,7 +962,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "als-vs-bls-2010",
@@ -958,7 +991,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "prehospital-airway-management-2022",
@@ -985,7 +1019,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "prehospital-pocus-2018",
@@ -1013,7 +1048,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "post-rosc-targets-2024",
@@ -1040,7 +1076,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "stop-the-bleed-2025",
@@ -1068,7 +1105,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "adult-prehospital-pain-scoping-2026",
@@ -1095,7 +1133,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "grey-areas-ohca-2026",
@@ -1122,7 +1161,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "austria-hems-ohca-2024",
@@ -1149,7 +1189,8 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   },
   {
     "id": "austria-alpine-urban-ohca-2025",
@@ -1177,6 +1218,7 @@
     "added": "2026-09-08",
     "archived": true,
     "archiveDate": "2026-09-08",
-    "activeSince": "2026-09-08"
+    "activeSince": "2026-09-08",
+    "tags": []
   }
 ]
