@@ -5606,3 +5606,27 @@ html body.app-shell .ost570-hub,
 html body.app-shell .ost570-hub .cf552-filter-group{
   border-top:0!important;box-shadow:none!important;
 }
+
+/* Release 600 — user-requested final visual refinements */
+/* All main subpage headers blend into the page, without dividers. */
+html body.app-shell:not(.page-home) .topbar,
+html body.app-shell:not(.page-home) .topbar-inner,
+html body.app-shell:not(.page-home).subpage-topbar .topbar,
+html body.app-shell:not(.page-home).subpage-topbar .topbar-inner{
+ background:#f4f8fb!important;background-color:#f4f8fb!important;
+ border:0!important;border-bottom:0!important;box-shadow:none!important;
+ -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+}
+html body.app-shell:not(.page-home) .main::before{border:0!important;box-shadow:none!important;}
+/* Subtle 3-tone carousel of tiles: gray-blue, mint, warm-neutral. No left red bar. */
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) .ost583-tile-wrap:nth-child(3n+1) a.ost572-tile{background:#eef4f7!important;border-color:#dce6eb!important;}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) .ost583-tile-wrap:nth-child(3n+2) a.ost572-tile{background:#f0f6f2!important;border-color:#dee8e1!important;}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) .ost583-tile-wrap:nth-child(3n) a.ost572-tile{background:#f8f4f0!important;border-color:#e9e1d9!important;}
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost570-symptom-tile.ost572-tile,
+html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost570-tile.ost572-tile{
+ border-left-width:1px!important;border-left-style:solid!important;
+ box-shadow:none!important;min-height:48px!important;height:auto!important;padding:10px 14px!important;
+}
+/* Consistently visible edit/delete controls beneath each literature entry. */
+.ost597-literature .ost598-article-actions{display:flex!important;justify-content:flex-end;gap:8px!important;margin:0 0 14px!important;padding:4px 0 10px!important;}
+.ost597-literature .ost598-article-actions button{display:inline-flex!important;align-items:center;min-height:38px!important;position:relative;z-index:2;}

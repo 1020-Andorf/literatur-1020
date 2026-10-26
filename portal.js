@@ -2029,11 +2029,19 @@
                 }
                 const details = [a.authors, a.journal, a.year].filter(Boolean).map(x => esc(x)).join(' · ');
                 const content = `${details ? `<p class="cf563-summary">${details}</p>` : ''}${a.why ? `<div class="cf563-rich">${renderModuleText(a.why)}</div>` : ''}${a.read ? `<p>${esc(a.read)}</p>` : ''}${ost579Documents(a.links?.length?a.links:(a.freeUrl||a.publisherUrl?[{url:a.freeUrl||a.publisherUrl,title:'Artikel öffnen',note:''}]:[]))}`;
-                return card(a.title, iconName, editing+content, active==='literature');
+                return card(a.title, iconName, `<div class="ost598-article-actions"><button type="button" data-ost598-mat-edit="${esc(a.id)}">Bearbeiten</button><button type="button" data-ost598-mat-delete="${esc(a.id)}">Löschen</button></div>`+content, true);
             });
             box.innerHTML = `${active==='literature'?`<div class="ost597-lit-cats-toolbar"><button type="button" data-ost597-manage>Kategorien bearbeiten</button></div><nav class="ost597-lit-categories" aria-label="Literaturkategorien">${literatureCategories.map(c=>`<button type="button" class="ost597-lit-category ${literatureCategory===c?'active':''}" data-ost597-category="${esc(c)}"><strong>${esc(c)}</strong><span>${literature.filter(a=>ostLitGroup(a,literatureCategories)===c).length} Artikel</span></button>`).join('')}</nav>`:''}<div class="cf547-content-title"><h2>${esc(categories.find(c => c[0] === active)[1])}</h2><span>${list.length} Einträge</span></div><div class="cf563-inline-list">${items.join('') || '<p class="cf547-empty">Hier sind noch keine veröffentlichten Inhalte hinterlegt.</p>'}</div>`;
             main.querySelector('[data-ost575-add]')?.remove();ost575AddButton(box,active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms',active==='checklists'?{module:'material-checklists'}:active==='guidelines'?{category:'Leitlinie'}:{});
         }
+        main.addEventListener('click', event => {
+            const litEdit=event.target.closest('[data-ost598-mat-edit]');
+            const litDelete=event.target.closest('[data-ost598-mat-delete]');
+            if(!litEdit&&!litDelete)return;
+            event.preventDefault();event.stopImmediatePropagation();
+            if(litEdit){const entry=literature.find(a=>String(a.id)===litEdit.dataset.ost598MatEdit);if(entry)void ost598ArticleEditor(entry,()=>location.reload());}
+            if(litDelete)void ost598DeleteArticle(litDelete.dataset.ost598MatDelete,()=>location.reload());
+        },true);
         main.addEventListener('click', event => {
             if(event.target.closest('.ost579-document-card > summary')){event.preventDefault();return;}
             const schema=event.target.closest('[data-ost584-schema]');if(schema){event.preventDefault();event.stopPropagation();ost584EditSchema(schema.closest('details'),schema.dataset.ost584Schema);return;}
@@ -2041,6 +2049,8 @@
             if(edit){event.preventDefault();event.stopPropagation();const storage=active==='checklists'?'knowledgeModules':active==='literature'?'articles':'algorithms';const field=active==='checklists'?'body':'explanation';ost575LinksEditor(edit.closest('details'),storage,edit.dataset.ost573Material);return;}
             const cat=event.target.closest('[data-ost597-category]');if(cat){literatureCategory=literatureCategory===cat.dataset.ost597Category?'':cat.dataset.ost597Category;render();return;}
             if(event.target.closest('[data-ost597-manage]')){ostLitManageCategories(()=>location.reload());return;}
+            const litEdit=event.target.closest('[data-ost598-mat-edit]');if(litEdit){ost598ArticleEditor(literature.find(a=>String(a.id)===litEdit.dataset.ost598MatEdit),()=>location.reload());return;}
+            const litDelete=event.target.closest('[data-ost598-mat-delete]');if(litDelete){ost598DeleteArticle(litDelete.dataset.ost598MatDelete,()=>location.reload());return;}
             const tab = event.target.closest('[data-mat-tab]');
             if (!tab) return;
             active = tab.dataset.matTab;
@@ -2077,7 +2087,7 @@
     const OST_LIT_DEFAULT_CATEGORIES = ['Notfallmedizin','Anatomie & Physiologie','Pharmakologie','Diagnostik','Ausbildung & Training','Leitlinien & Studien','Sonstiges'];
     const ostLitTags = article => (Array.isArray(article.tags) ? article.tags : String(article.tags || '').split(',')).map(v=>String(v).trim()).filter(Boolean);
     async function ostLitCategories(articlesList=[]) {
-        const saved=await get('literatureCategories');
+        const saved=(()=>{try{return JSON.parse(localStorage.getItem('ost1020-literature-categories')||'null');}catch(e){return null;}})();
         const names=(Array.isArray(saved) && saved.length ? saved.map(v=>typeof v==='string'?v:v?.name) : OST_LIT_DEFAULT_CATEGORIES).filter(Boolean).map(v=>String(v).trim()).filter(Boolean);
         const existing=(articlesList||[]).flatMap(ostLitTags);
         return [...new Set([...names,...existing])];
@@ -2085,19 +2095,58 @@
     const ostLitGroup = (a,cats) => {const tags=ostLitTags(a);return cats.find(c=>tags.some(t=>normalizedSearch(t)===normalizedSearch(c))) || 'Sonstiges';};
     async function ostLitManageCategories(afterSave) {
         if(!await ost574Pin())return;
-        const arts=await articles();const cats=await ostLitCategories(arts);
-        ost576Modal('Literaturkategorien bearbeiten',[{key:'names',label:'Kategorien – eine pro Zeile',type:'textarea',value:cats.join('\n')}],async values=>{
-            const cleaned=[...new Set(String(values.names||'').split('\n').map(x=>x.trim()).filter(Boolean))];
-            if(!cleaned.length)return false;
-            const ok=await save('literatureCategories',cleaned);
-            if(ok && typeof afterSave==='function')afterSave();
-            return ok;
+        const arts=await articles(), cats=await ostLitCategories(arts);
+        ost576Modal('Literaturkategorien bearbeiten',[{key:'names',label:'Kategorien (eine pro Zeile; zum Umbenennen Zeile ändern)',type:'textarea',value:cats.join('\n')}],async values=>{
+            const renamed=String(values.names||'').split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+            const cleaned=[...new Set(renamed)];if(!cleaned.length)return false;
+            const updated=arts.map(a=>({...a,tags:ostLitTags(a).map(tag=>{const i=cats.findIndex(old=>normalizedSearch(old)===normalizedSearch(tag));return i>=0 && renamed[i] ? renamed[i] : tag;})}));
+            const changed=updated.some((a,i)=>JSON.stringify(a.tags)!==JSON.stringify(arts[i]?.tags));
+            if(changed && !await save('articles',updated))return false;
+            localStorage.setItem('ost1020-literature-categories',JSON.stringify(cleaned));
+            if(typeof afterSave==='function')afterSave();return true;
         });
+    }
+    async function ost598ArticleEditor(existing, afterSave) {
+        if(!await ost574Pin())return;
+        const data=await articles(), cats=await ostLitCategories(data);
+        const entry=existing ? data.find(a=>String(a.id)===String(existing.id)) : null;
+        const tag=entry ? ostLitGroup(entry,cats) : cats[0] || 'Sonstiges';
+        const fields=[
+            {key:'title',label:'Titel',value:entry?.title||'',required:true},
+            {key:'litCategory',label:'Literaturkategorie / Tag',type:'select',value:tag,options:cats.map(c=>({value:c,label:c}))},
+            {key:'authors',label:'Autor:innen',value:entry?.authors||''},
+            {key:'journal',label:'Journal / Quelle',value:entry?.journal||''},
+            {key:'year',label:'Jahr',value:entry?.year||''},
+            {key:'doi',label:'DOI',value:entry?.doi||''},
+            {key:'why',label:'Beschreibung / Lesetipp',type:'textarea',value:entry?.why||''},
+            {key:'freeUrl',label:'Link zum Volltext',value:entry?.freeUrl||''},
+            {key:'publisherUrl',label:'Verlagslink',value:entry?.publisherUrl||''},
+            {key:'featured',label:'Auf Startseite als Lesetipp (ja/nein)',type:'select',value:entry?.featured?'yes':'no',options:[{value:'no',label:'Nein'},{value:'yes',label:'Ja'}]}
+        ];
+        ost576Modal(entry?'Artikel bearbeiten':'Artikel hinzufügen',fields,async values=>{
+            const latest=await articles();const old=entry?latest.find(a=>String(a.id)===String(entry.id)):null;
+            const chosen=values.litCategory;
+            const tags=[...new Set([...ostLitTags(old||{}).filter(t=>!cats.some(c=>normalizedSearch(c)===normalizedSearch(t))),chosen].filter(Boolean))];
+            const updated={...(old||{}),...values,title:values.title.trim(),tags,featured:values.featured==='yes'};
+            delete updated.litCategory;
+            if(!updated.title)return false;
+            if(!old)updated.id='article-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+            const result=old?latest.map(a=>String(a.id)===String(old.id)?updated:a):[updated,...latest];
+            if(!await save('articles',result))return false;
+            if(typeof afterSave==='function')afterSave();return true;
+        });
+    }
+    async function ost598DeleteArticle(id,afterSave){
+        if(!await ost574Pin())return;
+        const latest=await articles(),entry=latest.find(a=>String(a.id)===String(id));if(!entry)return;
+        if(!confirm(`Artikel „${entry.title}“ wirklich dauerhaft löschen?`))return;
+        if(await save('articles',latest.filter(a=>String(a.id)!==String(id)))){if(typeof afterSave==='function')afterSave();}
+        else alert('Löschen fehlgeschlagen. Bitte PIN und Worker-Verbindung überprüfen.');
     }
     async function literature() {
         const arts=await articles(), categories=await ostLitCategories(arts);
         const root=$('[data-main]');let selected='';
-        root.innerHTML=`<section class="cf548-archive ost597-literature"><header class="cf548-archive-head"><h1>Literatur</h1></header><div class="ost597-lit-controls"><input type="search" data-lit-query placeholder="Artikel suchen …" aria-label="Artikel suchen"><button type="button" data-lit-manage class="ost597-edit-cats">Kategorien bearbeiten</button></div><nav class="ost597-lit-categories" data-lit-cats aria-label="Literaturkategorien"></nav><div data-lit-items></div></section>`;
+        root.innerHTML=`<section class="cf548-archive ost597-literature"><header class="cf548-archive-head"><h1>Literatur</h1></header><div class="ost597-lit-controls"><input type="search" data-lit-query placeholder="Artikel suchen …" aria-label="Artikel suchen"><button type="button" data-lit-new class="ost597-edit-cats">+ Artikel</button><button type="button" data-lit-manage class="ost597-edit-cats">Kategorien bearbeiten</button></div><nav class="ost597-lit-categories" data-lit-cats aria-label="Literaturkategorien"></nav><div data-lit-items></div></section>`;
         const nav=$('[data-lit-cats]',root),box=$('[data-lit-items]',root),input=$('[data-lit-query]',root);
         const norm=normalizedSearch;
         const render=()=>{
@@ -2105,11 +2154,19 @@
             nav.innerHTML=categories.map(c=>`<button type="button" class="ost597-lit-category ${selected===c?'active':''}" data-lit-cat="${esc(c)}"><strong>${esc(c)}</strong><span>${counts(c)} Artikel</span></button>`).join('');
             const q=norm(input.value);
             const visible=arts.filter(a=>(!selected||ostLitGroup(a,categories)===selected) && (!q||norm([a.title,a.authors,a.journal,a.why,...ostLitTags(a)].join(' ')).includes(q)));
-            box.innerHTML=`<div class="ost597-lit-heading"><h2>${esc(selected||'Alle Artikel')}</h2><span>${visible.length} Artikel</span></div><div class="ost597-lit-articles">${visible.map(a=>{const url=String(a.freeUrl||a.publisherUrl||'');return `<details class="ost584-archive-entry"><summary>${esc(a.title||'Ohne Titel')}</summary><div class="ost597-lit-details"><p>${esc([a.authors,a.journal,a.year].filter(Boolean).join(' · '))}</p>${a.why?`<div>${renderModuleText(a.why)}</div>`:''}<div>${ostLitTags(a).map(t=>`<span class="ost597-lit-tag">${esc(t)}</span>`).join('')}</div>${/^https?:\/\//i.test(url)?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Artikel öffnen ↗</a>`:''}</div></details>`}).join('')||'<p class="cf-muted">Keine Artikel in dieser Kategorie.</p>'}</div>`;
+            box.innerHTML=`<div class="ost597-lit-heading"><h2>${esc(selected||'Alle Artikel')}</h2><span>${visible.length} Artikel</span></div><div class="ost597-lit-articles">${visible.map(a=>{const url=String(a.freeUrl||a.publisherUrl||'');return `<details class="ost584-archive-entry"><summary>${esc(a.title||'Ohne Titel')}</summary><div class="ost597-lit-details"><p>${esc([a.authors,a.journal,a.year].filter(Boolean).join(' · '))}</p>${a.why?`<div>${renderModuleText(a.why)}</div>`:''}<div>${ostLitTags(a).map(t=>`<span class="ost597-lit-tag">${esc(t)}</span>`).join('')}</div>${/^https?:\/\//i.test(url)?`<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Artikel öffnen ↗</a>`:''}</div></details><div class="ost598-article-actions"><button type="button" data-lit-edit="${esc(a.id)}">Bearbeiten</button><button type="button" data-lit-delete="${esc(a.id)}">Löschen</button></div>`}).join('')||'<p class="cf-muted">Keine Artikel in dieser Kategorie.</p>'}</div>`;
         };
         nav.onclick=e=>{const b=e.target.closest('[data-lit-cat]');if(!b)return;selected=selected===b.dataset.litCat?'':b.dataset.litCat;render();};
         input.oninput=render;
         root.querySelector('[data-lit-manage]').onclick=()=>ostLitManageCategories(()=>location.reload());
+        root.querySelector('[data-lit-new]').onclick=()=>ost598ArticleEditor(null,()=>location.reload());
+        root.addEventListener('click',e=>{
+            const edit=e.target.closest('[data-lit-edit]'),del=e.target.closest('[data-lit-delete]');
+            if(!edit&&!del)return;
+            e.preventDefault();e.stopImmediatePropagation();
+            if(edit){const item=arts.find(a=>String(a.id)===edit.dataset.litEdit);if(item)void ost598ArticleEditor(item,()=>location.reload());}
+            if(del)void ost598DeleteArticle(del.dataset.litDelete,()=>location.reload());
+        },true);
         render();
     }
     async function abcdePage() {
@@ -3218,7 +3275,8 @@
                 }
                 const addMat = e.target.closest('[data-add-alg-material]');
                 if (addMat) {
-                    if (name === 'meetings') {
+                    if(name==='articles'){const chosen=row.querySelector('[data-ost598-lit-tag]')?.value; if(chosen)x.tags=[...new Set([chosen,...(x.tags||[])].filter(Boolean))];}
+                if (name === 'meetings') {
                         const ci = +addMat.closest('[data-index]').dataset.index;
                         sync();
                         d[ci].files = d[ci].files || [];
@@ -3324,7 +3382,7 @@
                 body = `<div class="editor-grid two">${field('Zuordnung: führendes Leitsymptom', x.title, 'title')}${field('Fachbereich / Gruppe', x.group || 'Weitere', 'group')}${field('Symbol / Emoji', x.icon, 'icon')}</div>${field('Physiologisches Hintergrundwissen', x.theory, 'theory', 'textarea')}<section class="editor-subsection"><h3>Wichtige Fragen</h3>${listEditor(x.questions, 'questions', 'Frage')}</section><section class="editor-subsection"><h3>Red Flags</h3>${listEditor(x.redflags, 'redflags', 'Red Flag')}</section><section class="editor-subsection"><h3>Krankheitsbilder mit Symptomen & Medikamenten</h3><div class="disease-editor-list">${arr(x.causes).map((c, ci) => { const o = typeof c === 'string' ? { name: c, info: '' } : c; return `<div class="disease-editor-card" data-disease-index="${ci}">${field('Name des Krankheitsbildes', o.name, 'diseaseName')}${field('Typische Symptome', o.symptoms, 'diseaseSymptoms', 'textarea')}${field('Physiologie / Pathophysiologie', o.physiology, 'diseasePhysiology', 'textarea')}${field('Typische Befunde / auffällige Werte', o.findings, 'diseaseFindings', 'textarea')}${field('CAVE / Warnzeichen', o.cave, 'diseaseCave', 'textarea')}${field('Weitere Informationen (optional)', o.info, 'diseaseInfo', 'textarea')}${field('Relevante Medikamente / Wirkstoffe', o.medications, 'diseaseMedications', 'textarea')}${field('Quellenlink (https://…)', o.sourceUrl, 'diseaseSourceUrl')}${field('Linktext', o.sourceLabel, 'diseaseSourceLabel')}</div>`; }).join('')}</div><button class="small-add" type="button" data-add-disease>+ Krankheitsbild</button></section>`;
             }
             else if (name === 'articles') {
-                body = `<section class="editor-subsection"><h3>Bibliografische Daten</h3><div class="editor-grid two">${field('Titel', x.title, 'title')}${field('DOI', x.doi, 'doi')}${field('Autor:innen', x.authors, 'authors')}${field('Journal / Quelle', x.journal, 'journal')}${field('Jahr', x.year, 'year')}${field('Dokumenttyp', x.type, 'type')}</div><button class="btn" type="button" data-doi-lookup>DOI-Daten abrufen</button></section><section class="editor-subsection"><h3>Einordnung</h3><div class="editor-grid two">${field('Themen / Kategorien', Array.isArray(x.topics) ? x.topics.join(', ') : x.topics, 'topics')}${field('Tags für Literatur', Array.isArray(x.tags) ? x.tags.join(', ') : x.tags, 'tags')}${field('Zielgruppe', x.level, 'level')}${field('Sprache', x.language, 'language')}${field('Lizenz', x.license, 'license')}${field('Lesezeit', x.read, 'read')}${field('Zugriff', x.access, 'access')}${field('Hinzugefügt am', x.added, 'added', 'date')}</div><div class="cf548-editor-feature"><label class="cf548-feature-label"><input data-k="featured" type="checkbox" ${x.featured ? 'checked' : ''}><span>Auf der Startseite als Lesetipp anzeigen</span></label>${field('Reihenfolge der Lesetipps (1 oder 2)', x.featureRank || 1, 'featureRank', 'number')}<p>Auf der Startseite erscheinen höchstens zwei markierte Artikel. Alle Artikel bleiben in Literatur auffindbar.</p></div><div class="ost-lit-description-title">Beschreibung / Warum lesenswert?</div>${ostRichEditor('why', x.why)}</section><section class="editor-subsection"><h3>Links</h3><div class="editor-grid two">${field('Original-/Verlagslink', x.publisherUrl, 'publisherUrl')}${field('Freier Volltext', x.freeUrl, 'freeUrl')}</div></section>`;
+                body = `<section class="editor-subsection"><h3>Bibliografische Daten</h3><div class="editor-grid two">${field('Titel', x.title, 'title')}${field('DOI', x.doi, 'doi')}${field('Autor:innen', x.authors, 'authors')}${field('Journal / Quelle', x.journal, 'journal')}${field('Jahr', x.year, 'year')}${field('Dokumenttyp', x.type, 'type')}</div><button class="btn" type="button" data-doi-lookup>DOI-Daten abrufen</button></section><section class="editor-subsection"><h3>Einordnung</h3><div class="editor-grid two">${field('Themen / Kategorien', Array.isArray(x.topics) ? x.topics.join(', ') : x.topics, 'topics')}<label class="ux-field"><span>Literaturkategorie / Tag</span><select data-ost598-lit-tag><option value="">– Kategorie wählen –</option>${(window.OST_LIT_TAGS||OST_LIT_DEFAULT_CATEGORIES).map(c=>`<option value="${esc(c)}" ${ostLitTags(x).includes(c)?'selected':''}>${esc(c)}</option>`).join('')}</select></label>${field('Weitere Tags (optional)', ostLitTags(x).filter(t=>!(window.OST_LIT_TAGS||OST_LIT_DEFAULT_CATEGORIES).includes(t)).join(', '), 'tags')}${field('Zielgruppe', x.level, 'level')}${field('Sprache', x.language, 'language')}${field('Lizenz', x.license, 'license')}${field('Lesezeit', x.read, 'read')}${field('Zugriff', x.access, 'access')}${field('Hinzugefügt am', x.added, 'added', 'date')}</div><div class="cf548-editor-feature"><label class="cf548-feature-label"><input data-k="featured" type="checkbox" ${x.featured ? 'checked' : ''}><span>Auf der Startseite als Lesetipp anzeigen</span></label>${field('Reihenfolge der Lesetipps (1 oder 2)', x.featureRank || 1, 'featureRank', 'number')}<p>Auf der Startseite erscheinen höchstens zwei markierte Artikel. Alle Artikel bleiben in Literatur auffindbar.</p></div><div class="ost-lit-description-title">Beschreibung / Warum lesenswert?</div>${ostRichEditor('why', x.why)}</section><section class="editor-subsection"><h3>Links</h3><div class="editor-grid two">${field('Original-/Verlagslink', x.publisherUrl, 'publisherUrl')}${field('Freier Volltext', x.freeUrl, 'freeUrl')}</div></section>`;
             }
             else if (name === 'news')
                 body = field('Titel', x.title, 'title') + `<div class="editor-grid two">${field('Kategorie', x.category, 'category')}${field('Datum', x.date, 'date', 'date')}</div>` + `<div class="ost-lit-description-title">Beschreibung mit Formatierung</div>` + ostRichEditor('text', x.text, { upload: true });
@@ -3347,6 +3405,7 @@
                     v = String(v).split(',').map(s => s.trim()).filter(Boolean); if (k === 'capacity')
                     v = Number(v) || 10; if (k === 'featureRank')
                     v = Math.max(1, Number(v) || 1); x[k] = v; });
+                if(name==='articles'){const chosen=row.querySelector('[data-ost598-lit-tag]')?.value; if(chosen)x.tags=[...new Set([chosen,...(x.tags||[])].filter(Boolean))];}
                 if (name === 'meetings') {
                     x.files = [...row.querySelectorAll('[data-material-item][data-kind="files"]')].map(m => ({ title: $('[data-k="matTitle"]', m)?.value || '', note: $('[data-k="matNote"]', m)?.value || '', url: $('[data-k="matUrl"]', m)?.value || '' }));
                 }
