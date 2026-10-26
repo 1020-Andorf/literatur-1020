@@ -5557,3 +5557,52 @@ html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile strong{font-size:
 .ost597-lit-tag{display:inline-block;margin:3px;padding:5px 9px;border-radius:9px;background:#edf4f9;color:#42637d;font-size:.78rem;}
 @media(max-width:700px){.ost597-lit-categories{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
 @media(max-width:390px){.ost597-lit-categories{grid-template-columns:1fr!important;}}
+
+/* Release 598: neutral mobile header and precise symptom tiles. */
+@media(max-width:1099px){
+  html body.app-shell:not(.page-home) .topbar,
+  html body.app-shell:not(.page-home) .topbar-inner{
+    background:#f4f8fb!important;background-color:#f4f8fb!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;box-shadow:none!important;
+  }
+  html body.app-shell.page-home::before,html body.app-shell.page-home::after,
+  html body.app-shell.page-home .main::before,html body.app-shell.page-home .main::after{
+    display:none!important;content:none!important;
+  }
+  html body.app-shell.page-home .cf548-home,html body.app-shell.page-home .cf548-welcome,
+  html body.app-shell.page-home .cf548-welcome h1{
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;opacity:1!important;
+    mask-image:none!important;-webkit-mask-image:none!important;
+  }
+  html body.app-shell.page-home .main{padding-top:18px!important;}
+}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile,
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile{
+  border-left:1px solid #dce3e9!important;
+}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile::before,
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile::after{content:none!important;display:none!important;}
+.ost598-article-actions{display:flex;gap:9px;margin-top:12px;flex-wrap:wrap;}
+.ost598-article-actions button{border:1px solid #cfdae3;border-radius:9px;background:#fff;color:#204560;padding:9px 13px;font:inherit;cursor:pointer;}
+.ost598-article-actions button:last-child{color:#a32b3b;border-color:#e5cbd0;}
+
+
+/* Release 599: restore red left accent on Leitsymptome; remove only the thin horizontal separator left behind by the old breadcrumb/header. */
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile{
+  border-left:4px solid #ad2434!important;
+}
+/* Keep the Körpersysteme tiles unchanged; this correction is limited to Leitsymptome. */
+html body.app-shell .ost570-breadcrumb,
+html body.app-shell .ost570-hub [data-cf-crumb]{
+  display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;
+}
+html body.app-shell.page-topics .topbar,
+html body.app-shell.page-wissen .topbar,
+html body.app-shell[data-page="topics"] .topbar,
+html body.app-shell[data-page="wissen"] .topbar{
+  border-bottom:0!important;box-shadow:none!important;
+}
+html body.app-shell .ost570-hub,
+html body.app-shell .ost570-hub .cf552-filter-group{
+  border-top:0!important;box-shadow:none!important;
+}
