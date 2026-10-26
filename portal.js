@@ -1222,7 +1222,7 @@
       'aktuelles.html': {store:'news', cards:'.news-list [data-news]', title:'h2,h3,strong', rich:['text'], fields:['category','date','link']},
       'literatur.html': {store:'articles', cards:'.cf548-archive-card', title:'h2', rich:['why'], fields:['authors','journal','year','doi','freeUrl','publisherUrl']},
       'lehrmeinung.html': {store:'changes', cards:'.change-detail,.ost-tonal-list .row-card', title:'h1,strong', rich:['old','new','source','validity'], fields:['date','category','imageUrl']},
-      'dienstbesprechungen.html': {store:'meetings', cards:'.meeting-detail,.meeting-tile', title:'h1,h2', rich:['summary'], fields:['date','category','speaker']},
+      'dienstbesprechungen.html': {store:'meetings', cards:'.ost604-disabled-auto', title:'h2', rich:[], fields:[]},
       'termine.html': {store:'events', cards:'.event-card', title:'h3', rich:['description'], fields:['date','time','location','category','capacity']},
       'materialien.html': {store:'algorithms', cards:'.cf563-entry', title:'summary strong', rich:['explanation'], fields:['category','stand','source','sourceUrl']},
       'training.html': {store:'knowledgeModules', cards:'.cf563-entry', title:'summary strong', rich:['body','summary'], fields:['category','documentUrl']},
@@ -1780,7 +1780,7 @@
     async function ost575LinksEditor(card,store,id){
       if(!await ost574Pin())return;
       const items=await get(store),item=items.find(v=>String(v.id)===String(id));if(!item)return;
-      card.open=true;card.classList.add('ost575-edit-links');
+      if(card.tagName==='DETAILS')card.open=true;card.classList.add('ost575-edit-links');
       const host=card.querySelector('.cf563-entry-body,.cf548-archive-copy,.meeting-resources');if(!host)return;
       let prior=host.querySelector('.ost575-link-editor');if(prior)prior.remove();
       const panel=document.createElement('div');panel.className='ost575-link-editor';host.prepend(panel);
@@ -1795,12 +1795,12 @@
       let draftFeatured=!!item.featured;
       let draftMeta={authors:item.authors||'',journal:item.journal||'',year:item.year||'',doi:item.doi||'',date:item.date||'',category:item.category||'',speaker:item.speaker||'',tags:Array.isArray(item.tags)?item.tags.join(', '):String(item.tags||'')};
       const render=()=>{
-        panel.innerHTML=`<h3>Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(draftTitle)}"></label>${store==='knowledgeModules'?`<label>Untertitel / Beschreibung der Checkliste<textarea data-link-main-subtitle rows="3">${esc(draftSubtitle)}</textarea></label>`:''}${store==='articles'?`<div class="ost583-doc-meta"><label>Autor:innen<input data-doc-meta="authors" value="${esc(draftMeta.authors)}"></label><label>Journal / Quelle<input data-doc-meta="journal" value="${esc(draftMeta.journal)}"></label><label>Jahr<input data-doc-meta="year" value="${esc(draftMeta.year)}"></label><label>DOI<input data-doc-meta="doi" value="${esc(draftMeta.doi)}"></label><label>Kategorie auswählen<select data-lit-choose-tag><option value="">– Kategorie wählen –</option>${(window.OST_LIT_TAGS||OST_LIT_DEFAULT_CATEGORIES).map(c=>`<option value="${esc(c)}" ${String(draftMeta.tags).split(',').map(x=>x.trim()).includes(c)?'selected':''}>${esc(c)}</option>`).join('')}</select></label><label>Weitere Tags (optional, mit Komma trennen)<input data-doc-meta="tags" value="${esc(draftMeta.tags)}"></label></div><label>Beschreibung / Lesetipp</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div><label class="ost583-check"><input type="checkbox" data-link-featured ${draftFeatured?'checked':''}>Als Lesetipp auf der Startseite anzeigen (maximal 30 Tage)</label>`:''}${store==='meetings'?`<div class="ost583-doc-meta"><label>Datum<input type="date" data-doc-meta="date" value="${esc(draftMeta.date)}"></label><label>Kategorie<input data-doc-meta="category" value="${esc(draftMeta.category)}"></label><label>Referent:in<input data-doc-meta="speaker" value="${esc(draftMeta.speaker)}"></label></div><label>Zusammenfassung</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div>`:''}<div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label><label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label><label class="ost581-upload-label">PDF hochladen<input type="file" data-link-upload="${i}" accept="${store==='meetings'?'application/pdf,image/jpeg,image/png,image/webp':'application/pdf,.pdf'}"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><div class="ost575-edit-actions"><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><button type="button" class="btn danger" data-link-delete>Eintrag löschen</button><span data-link-status role="status"></span></div>`;
-        if(['articles','meetings'].includes(store))ost573BindRich(panel.querySelector('.ost583-doc-description'),panel.querySelector('[data-link-description]'));
+        panel.innerHTML=`<h3>Link- und PDF-Sammlung</h3><label>Überschrift<input data-link-main-title value="${esc(draftTitle)}"></label>${store==='knowledgeModules'?`<label>Untertitel / Beschreibung der Checkliste<textarea data-link-main-subtitle rows="3">${esc(draftSubtitle)}</textarea></label>`:''}${store==='articles'?`<div class="ost583-doc-meta"><label>Autor:innen<input data-doc-meta="authors" value="${esc(draftMeta.authors)}"></label><label>Journal / Quelle<input data-doc-meta="journal" value="${esc(draftMeta.journal)}"></label><label>Jahr<input data-doc-meta="year" value="${esc(draftMeta.year)}"></label><label>DOI<input data-doc-meta="doi" value="${esc(draftMeta.doi)}"></label><label>Kategorie auswählen<select data-lit-choose-tag><option value="">– Kategorie wählen –</option>${(window.OST_LIT_TAGS||OST_LIT_DEFAULT_CATEGORIES).map(c=>`<option value="${esc(c)}" ${String(draftMeta.tags).split(',').map(x=>x.trim()).includes(c)?'selected':''}>${esc(c)}</option>`).join('')}</select></label><label>Weitere Tags (optional, mit Komma trennen)<input data-doc-meta="tags" value="${esc(draftMeta.tags)}"></label></div><label>Beschreibung / Lesetipp</label><div class="ost583-doc-description">${ost573Toolbar()}<div class="ost573-editable" data-link-description contenteditable="true">${ost570CleanHtml(draftDescription)}</div></div><label class="ost583-check"><input type="checkbox" data-link-featured ${draftFeatured?'checked':''}>Als Lesetipp auf der Startseite anzeigen (maximal 30 Tage)</label>`:''}${store==='meetings'?'<div class="ost604-meeting-editor-note">Titel und PDF-/Präsentationsdateien bearbeiten</div>':''}<div class="ost575-links">${links.map((x,i)=>`<div class="ost575-link-row" data-link-row="${i}"><label>Titel<input data-link-field="title" value="${esc(x.title||'')}"></label><label>Link / PDF-Adresse<input data-link-field="url" type="url" value="${esc(x.url||'')}"></label>${store==='meetings'?'':`<label>Untertitel<input data-link-field="note" value="${esc(x.note||'')}"></label>`}<label class="ost581-upload-label">PDF hochladen<input type="file" data-link-upload="${i}" accept="${store==='meetings'?'application/pdf,image/jpeg,image/png,image/webp':'application/pdf,.pdf'}"></label><div class="ost576-link-actions"><button type="button" data-link-up="${i}" class="btn" ${i===0?'disabled':''}>↑</button><button type="button" data-link-down="${i}" class="btn" ${i===links.length-1?'disabled':''}>↓</button><button type="button" data-link-remove="${i}" class="btn">Entfernen</button></div></div>`).join('')}</div><div class="ost575-edit-actions"><button type="button" class="btn" data-link-add>＋ Weiteren Link</button><button type="button" class="btn primary" data-link-save>Speichern</button><button type="button" class="btn" data-link-cancel>Abbrechen</button><button type="button" class="btn danger" data-link-delete>Eintrag löschen</button><span data-link-status role="status"></span></div>`;
+        if(store==='articles')ost573BindRich(panel.querySelector('.ost583-doc-description'),panel.querySelector('[data-link-description]'));
         const collect=()=>{draftTitle=panel.querySelector('[data-link-main-title]').value;
           if(store==='knowledgeModules')draftSubtitle=panel.querySelector('[data-link-main-subtitle]').value;
-          if(['articles','meetings'].includes(store)){draftDescription=ost570CleanHtml(panel.querySelector('[data-link-description]').innerHTML);draftFeatured=!!panel.querySelector('[data-link-featured]')?.checked;panel.querySelectorAll('[data-doc-meta]').forEach(x=>draftMeta[x.dataset.docMeta]=x.value.trim());if(store==='articles'){const chosen=panel.querySelector('[data-lit-choose-tag]')?.value;if(chosen){const existing=String(draftMeta.tags||'').split(',').map(x=>x.trim()).filter(Boolean);draftMeta.tags=[chosen,...existing.filter(x=>x!==chosen)].join(', ');}}}
-          panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>links[i][key]=row.querySelector(`[data-link-field="${key}"]`).value.trim());});};
+          if(store==='articles'){draftDescription=ost570CleanHtml(panel.querySelector('[data-link-description]').innerHTML);draftFeatured=!!panel.querySelector('[data-link-featured]')?.checked;panel.querySelectorAll('[data-doc-meta]').forEach(x=>draftMeta[x.dataset.docMeta]=x.value.trim());if(store==='articles'){const chosen=panel.querySelector('[data-lit-choose-tag]')?.value;if(chosen){const existing=String(draftMeta.tags||'').split(',').map(x=>x.trim()).filter(Boolean);draftMeta.tags=[chosen,...existing.filter(x=>x!==chosen)].join(', ');}}}
+          panel.querySelectorAll('[data-link-row]').forEach(row=>{const i=Number(row.dataset.linkRow);['title','url','note'].forEach(key=>{const control=row.querySelector(`[data-link-field="${key}"]`);if(control)links[i][key]=control.value.trim();});});};
         panel.querySelectorAll('[data-link-upload]').forEach(input=>input.onchange=async()=>{
           const file=input.files?.[0];if(!file)return;
           const status=panel.querySelector('[data-link-status]');
@@ -1840,8 +1840,7 @@
             next.featured=featured;
           }else if(store==='meetings'){
             next.files=next.links;delete next.links;
-            next.summary=draftDescription;
-            ['date','category','speaker'].forEach(k=>next[k]=draftMeta[k]);
+            // Keep existing meeting metadata untouched; only title and files change.
           }
           latest[idx]=next;if(await save(store,latest))location.reload();else status.textContent='Speichern fehlgeschlagen.';
         };
@@ -2404,21 +2403,32 @@
         $('[data-main]').innerHTML = `<section class="clinical-combined-intro"><h1>Algorithmen & Materialien</h1></section><nav class="clinical-content-tabs" aria-label="Inhaltstyp">${tabs.map(([id, label]) => `<a href="algorithmen.html?typ=${id}" class="${id === selected ? 'is-active' : ''}" ${id === selected ? 'aria-current="page"' : ''}>${label}</a>`).join('')}</nav><div class="clinical-content-list">${list || '<p class="empty">Noch keine Inhalte hinterlegt.</p>'}</div>`;
     }
     async function meetingsPage() {
-        const d = await get('meetings'), p = new URLSearchParams(location.search), item = d.find(x => x.id === p.get('id'));
-        const safe = u => { try {
-            const a = new URL(u);
-            return ['https:', 'http:'].includes(a.protocol) ? a.href : '';
-        }
-        catch {
-            return '';
-        } };
-        const asset = f => { const url = safe(f.url), kind = /\.(png|jpe?g|gif|webp|svg)(?:[?#]|$)/i.test(url) ? 'image' : /\.pdf(?:[?#]|$)/i.test(url) ? 'pdf' : /\.(pptx?|key)(?:[?#]|$)/i.test(url) ? 'slide' : 'link'; return `<article class="meeting-resource"><span class="meeting-file-icon">${{ image: '🖼️', pdf: '📄', slide: '📊', link: '🔗' }[kind]}</span><div><strong>${esc(f.title || 'Material')}</strong><p>${esc(f.note || '')}</p>${kind === 'image' && url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer"><img loading="lazy" src="${esc(url)}" alt="${esc(f.title || 'Grafik')}"></a>` : ''}${url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">Material öffnen ↗</a>` : '<small>Kein Link hinterlegt</small>'}</div></article>`; };
-        if (item) {
-            $('[data-main]').innerHTML = `<article class="meeting-detail" data-ost574-id="${esc(item.id)}"><h1 class="ost583-detail-title">${esc(item.title)}</h1><div class="meeting-meta"><span>${esc(item.date || '')}</span><span>${esc(item.category || 'Dienstbesprechung')}</span>${item.speaker ? `<span>Referent:in: ${esc(item.speaker)}</span>` : ''}</div><div class="meeting-summary">${renderModuleText(item.summary || 'Keine Zusammenfassung hinterlegt.')}</div><h2>Vorträge, Grafiken und Links</h2><div class="meeting-resources">${arr(item.files).map(asset).join('') || '<p>Noch keine Materialien.</p>'}</div></article>`;
-            return;
-        }
-        const unique = [...new Map(d.map(x => [x.id, x])).values()].sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
-        $('[data-main]').innerHTML = `<section class="page-banner"><h1>Dienstbesprechungen</h1></section><div class="meeting-grid ost-tonal-grid">${unique.map(x => `<a class="meeting-tile" data-ost574-id="${esc(x.id)}" href="dienstbesprechungen.html?id=${encodeURIComponent(x.id)}"><span class="meeting-tile-icon">${ostIcon('users')}</span><span class="meeting-date">${esc(x.date || 'Dienstbesprechung')} · ${esc(x.category || 'Allgemein')}</span><h2>${esc(x.title)}</h2><p>${esc(String(x.summary || 'Materialien ansehen').replace(/<[^>]*>/g,' ').slice(0,170))}</p><span class="meeting-tile-cta">Materialsammlung ansehen →</span></a>`).join('') || '<div class="empty">Noch keine Dienstbesprechungen hinterlegt. In der Redaktion können Einträge erstellt werden.</div>'}</div>`;
+        const rows = await get('meetings');
+        const main = $('[data-main]');
+        const safe = value => { try {
+            const u = new URL(String(value || ''));
+            return ['https:', 'http:'].includes(u.protocol) ? u.href : '';
+        } catch { return ''; } };
+        const entries = [...new Map((Array.isArray(rows)?rows:[]).map(x=>[String(x.id),x])).values()]
+            .sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+        const files = item => arr(item.files).map(f=>{
+            const url=safe(f.url);
+            if(!url)return '';
+            return `<a class="ost604-material" href="${esc(url)}" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">${/\\.pdf(?:[?#]|$)/i.test(url)?'▤':'▹'}</span><span>${esc(f.title||'Dokument öffnen')}</span><span aria-hidden="true">↗</span></a>`;
+        }).join('') || '<p class="ost604-empty">Noch keine Materialien hinterlegt.</p>';
+        main.innerHTML = `<section class="ost604-meetings" aria-label="Dienstbesprechungen">
+            ${entries.map(x=>`<article class="ost604-meeting" data-ost574-id="${esc(x.id)}">
+                <div class="ost604-meeting-head"><h2>${esc(x.title||'Besprechung')}</h2>
+                    <button type="button" class="ost604-edit" data-ost604-edit="${esc(x.id)}" aria-label="${esc(x.title||'Besprechung')} bearbeiten">✎ Bearbeiten</button></div>
+                <div class="meeting-resources ost604-resources">${files(x)}</div>
+            </article>`).join('')||'<p class="empty">Noch keine Besprechungen hinterlegt.</p>'}
+            <button type="button" class="ost575-add ost604-add" data-ost604-add>＋ Neue Besprechung</button>
+        </section>`;
+        main.querySelectorAll('[data-ost604-edit]').forEach(button=>button.onclick=()=>{
+            const card=button.closest('.ost604-meeting');
+            ost575LinksEditor(card,'meetings',button.dataset.ost604Edit);
+        });
+        main.querySelector('[data-ost604-add]')?.addEventListener('click',()=>ost575Create('meetings'));
     }
     async function skills() {
         const d = await get('skills');

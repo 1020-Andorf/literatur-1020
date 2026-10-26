@@ -5675,3 +5675,23 @@ body.app-shell:not(.ost576-edit-enabled) .ost597-lit-cats-toolbar,
 body.app-shell:not(.ost576-edit-enabled) [data-ost597-manage],
 body.app-shell:not(.ost576-edit-enabled) [data-lit-manage]{display:none!important;}
 body.app-shell.ost576-edit-enabled .ost597-lit-cats-toolbar{display:flex!important;}
+
+
+/* 604: compact, always-visible meeting materials, no separate detail navigation. */
+body.app-shell .ost604-meetings{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;max-width:1120px;margin:12px auto 25px;}
+body.app-shell .ost604-meeting{position:relative;background:#fff;border:1px solid #dce6ed;border-radius:15px;padding:14px 17px;box-shadow:none;min-width:0;}
+body.app-shell .ost604-meeting-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 7px;}
+body.app-shell .ost604-meeting-head h2{font-size:1rem;font-weight:650;line-height:1.3;margin:0;min-width:0;}
+body.app-shell .ost604-meeting .meeting-resources{display:grid;gap:5px;margin:0;padding:0;background:none!important;}
+body.app-shell .ost604-material{display:grid;grid-template-columns:18px minmax(0,1fr) 16px;gap:8px;align-items:center;text-decoration:none;color:#2b576f;font-size:.91rem;line-height:1.3;padding:7px 9px;border:1px solid #e5ebf0;border-radius:9px;background:#f9fbfc;}
+body.app-shell .ost604-material span:nth-child(2){overflow-wrap:anywhere}
+body.app-shell .ost604-material:hover{background:#eff5f8;}
+body.app-shell .ost604-edit{display:none;flex:none;border:1px solid #d6e3ed;background:#fff;border-radius:9px;padding:7px 10px;font:inherit;font-size:.78rem;color:#24516e;cursor:pointer;}
+body.ost576-edit-enabled .ost604-edit{display:inline-flex;}
+body.app-shell .ost604-meetings .ost604-add{display:none;margin:3px 0;}
+body.ost576-edit-enabled .ost604-meetings .ost604-add{display:inline-flex;justify-self:start;}
+body.app-shell .ost604-empty{font-size:.82rem;color:#82909b;margin:4px 0;}
+body.app-shell .ost604-meeting .ost575-link-editor{margin-top:10px;}
+body.app-shell .ost604-meeting-editor-note{font-size:.85rem;color:#627889;}
+body.app-shell .ost604-meeting .ost574-pencil{display:none!important;}
+@media(max-width:640px){body.app-shell .ost604-meeting{padding:12px;}body.app-shell .ost604-meeting-head h2{font-size:.96rem;}}
