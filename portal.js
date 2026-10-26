@@ -409,6 +409,11 @@
         question: '<circle cx="12" cy="12" r="10"/><path d="M9.5 9a2.7 2.7 0 1 1 4.4 2.1c-1.3 1-1.9 1.5-1.9 3M12 17.5v.5"/>',
         changes: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h5M9 16h3"/><path d="m15 15 2 2 4-4"/>',
         anatomy: '<path d="M12 21s-8-4.8-9-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c-1 5.2-9 10-9 10Z"/><path d="M3 12h5l2-3 3 6 2-3h6"/>',
+        lungs: '<path d="M10 4v7"/><path d="M14 4v7"/><path d="M12 4V2"/><path d="M10 11c-1.8-1.2-4.8-.7-6 1.6-1.1 2.1-.3 5.8 2 7.2 1.9 1.2 4 .7 4-1.6V11Z"/><path d="M14 11c1.8-1.2 4.8-.7 6 1.6 1.1 2.1.3 5.8-2 7.2-1.9 1.2-4 .7-4-1.6V11Z"/>',
+        brain: '<path d="M9 6a3 3 0 0 1 5-2 3 3 0 0 1 4 4 3 3 0 0 1 0 6 4 4 0 0 1-4 6H10a4 4 0 0 1-4-4 3 3 0 0 1-1-5 3 3 0 0 1 2-5 3 3 0 0 1 2 0Z"/><path d="M10 8c-1 1-1 2.5 0 3.5M14 8c1 1 1 2.5 0 3.5M12 11v5"/>',
+        metabolism: '<path d="M4 12c2.5-4.5 5-6 8-6s5.5 1.5 8 6c-2.5 4.5-5 6-8 6s-5.5-1.5-8-6Z"/><path d="M12 6v12"/><path d="M8 10h8M9 15c1-.7 2-.9 3-.9s2 .2 3 .9"/>',
+        kidney: '<path d="M10 5c-3.5 0-6 2.8-6 6.4 0 3 1.7 5.8 4.4 7.1 1.5.8 3.6-.3 3.6-2.2V5Z"/><path d="M14 5c3.5 0 6 2.8 6 6.4 0 3-1.7 5.8-4.4 7.1-1.5.8-3.6-.3-3.6-2.2V5Z"/><path d="M12 7v10"/>',
+        bone: '<path d="M7 9a2.5 2.5 0 1 1 3-3l4 4a2.5 2.5 0 0 1 3 3l-3 3a2.5 2.5 0 0 1-3 3l-4-4a2.5 2.5 0 1 1-3-3l3-3Z"/>',
         edit: '<path d="M12 4H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-7"/><path d="m16 5 3-3 3 3-9 9-4 1 1-4 9-9"/>',
         news: '<path d="M3 10v4h3l9 5V5L6 10H3Z"/><path d="M7 14l2 6h3M19 9a5 5 0 0 1 0 6"/>',
         folder: '<path d="M3 7a2 2 0 0 1 2-2h5l2 3h7a2 2 0 0 1 2 2v9H3Z"/>',
@@ -1130,11 +1135,11 @@
     }
     const CF_TOPICS = [
         { id: 'herz', label: 'Herz & Kreislauf', icon: 'heart', image: 'herz', groups: ['Kreislauf'], anatomy: /herz|kreislauf|blut und sauerstoff/i, pharma: /sympathomim|katechol|antiarrhythm|antithromb|volumen/i, terms: ['herz', 'kreislauf', 'koronar', 'cardio', 'kardio', 'ekg', 'rhythm', 'infarkt', 'aorta', 'schock', 'synkope', 'palpitation', 'thorax', 'reanimation', 'cpr'] },
-        { id: 'atmung', label: 'Atmung & Atemwege', icon: 'device', image: 'atmung', groups: ['Atmung', 'Atemweg'], anatomy: /atmung|gasaustausch/i, pharma: /bronchodil|glukokortikoid/i, terms: ['atem', 'lungen', 'lunge', 'asthma', 'copd', 'hypox', 'dyspnoe', 'bronch', 'respira', 'pneumo', 'stridor', 'husten'] },
-        { id: 'neurologie', label: 'Neurologie', icon: 'anatomy', image: 'gehirn', groups: ['Neurologie'], anatomy: /gehirn|nervensystem/i, pharma: /antikonvuls|sedativ/i, terms: ['gehirn', 'nerv', 'schlaganfall', 'krampf', 'stroke', 'bewusst', 'neuro', 'schwindel', 'kopfschmerz'] },
-        { id: 'abdomen', label: 'Abdomen & Stoffwechsel', icon: 'search', image: 'bauch', groups: ['Abdomen', 'Stoffwechsel', 'Infektion'], anatomy: /verdau|leber|stoffwechsel|säure-basen/i, pharma: /antiemet|glukoseregulation|volumen/i, terms: ['bauch', 'abdomen', 'magen', 'stoffwechsel', 'diabet', 'zucker', 'leber', 'verdau', 'gastro', 'metabol', 'übelkeit'] },
-        { id: 'niere', label: 'Niere & Harnsystem', icon: 'pill', image: 'niere', groups: ['Urologie', 'Geburtshilfe'], anatomy: /niere|flüssigkeitshaushalt|säure-basen/i, pharma: /volumen|elektrolyte/i, terms: ['niere', 'harn', 'uro', 'flüssigkeit', 'elektrolyt', 'diure', 'geburtshilfe', 'gynäk'] },
-        { id: 'trauma', label: 'Trauma & Bewegung', icon: 'training', image: null, groups: ['Trauma', 'Umwelt'], anatomy: /bewegung|knochen|muskel/i, pharma: /analget|schmerz/i, terms: ['trauma', 'fraktur', 'verletz', 'wirbel', 'lagerung', 'schiene', 'beweg', 'knochen', 'blutung'] }
+        { id: 'atmung', label: 'Atmung & Atemwege', icon: 'lungs', image: 'atmung', groups: ['Atmung', 'Atemweg'], anatomy: /atmung|gasaustausch/i, pharma: /bronchodil|glukokortikoid/i, terms: ['atem', 'lungen', 'lunge', 'asthma', 'copd', 'hypox', 'dyspnoe', 'bronch', 'respira', 'pneumo', 'stridor', 'husten'] },
+        { id: 'neurologie', label: 'Neurologie', icon: 'brain', image: 'gehirn', groups: ['Neurologie'], anatomy: /gehirn|nervensystem/i, pharma: /antikonvuls|sedativ/i, terms: ['gehirn', 'nerv', 'schlaganfall', 'krampf', 'stroke', 'bewusst', 'neuro', 'schwindel', 'kopfschmerz'] },
+        { id: 'abdomen', label: 'Abdomen & Stoffwechsel', icon: 'metabolism', image: 'bauch', groups: ['Abdomen', 'Stoffwechsel', 'Infektion'], anatomy: /verdau|leber|stoffwechsel|säure-basen/i, pharma: /antiemet|glukoseregulation|volumen/i, terms: ['bauch', 'abdomen', 'magen', 'stoffwechsel', 'diabet', 'zucker', 'leber', 'verdau', 'gastro', 'metabol', 'übelkeit'] },
+        { id: 'niere', label: 'Niere & Harnsystem', icon: 'kidney', image: 'niere', groups: ['Urologie', 'Geburtshilfe'], anatomy: /niere|flüssigkeitshaushalt|säure-basen/i, pharma: /volumen|elektrolyte/i, terms: ['niere', 'harn', 'uro', 'flüssigkeit', 'elektrolyt', 'diure', 'geburtshilfe', 'gynäk'] },
+        { id: 'trauma', label: 'Trauma & Bewegung', icon: 'bone', image: null, groups: ['Trauma', 'Umwelt'], anatomy: /bewegung|knochen|muskel/i, pharma: /analget|schmerz/i, terms: ['trauma', 'fraktur', 'verletz', 'wirbel', 'lagerung', 'schiene', 'beweg', 'knochen', 'blutung'] }
     ];
     const CF_ORGAN_TABS = [['anatomy', 'Anatomie & Physiologie', 'anatomy'], ['diseases', 'Krankheitsbilder', 'heart'], ['terms', 'Fachbegriffe', 'dictionary'], ['materials', 'Materialien', 'book']];
     const cfTopicContains = (value, topic) => { const text = normalizedSearch(value); return topic.terms.some(term => text.includes(normalizedSearch(term))); };
@@ -1523,7 +1528,7 @@
                 body = `<div class="ost-module-body">${renderModuleText(v.body || v.summary || '')}</div>` + (href(v.documentUrl) ? `<a class="cf551-source-link" href="${esc(v.documentUrl)}" target="_blank" rel="noopener noreferrer">Checkliste öffnen ↗</a>` : '');
             else
                 body = section('Einordnung', v.why) + (href(v.freeUrl || v.publisherUrl) ? `<a class="cf551-source-link" href="${esc(v.freeUrl || v.publisherUrl)}" target="_blank" rel="noopener noreferrer">Artikel öffnen ↗</a>` : '');
-            const headings = [...body.matchAll(/<h3>([^<]+)<\/h3>/g)].map(m => m[1]); const jump = item.type === 'symptom' ? `<details class="ost572-jump"><summary>☰ Inhaltsübersicht</summary><nav><a href="#ueberblick">Überblick</a><a href="#red-flags">Red Flags</a><a href="#anamnese">Anamnese</a><a href="#differenzialdiagnosen">Krankheitsbilder</a><a href="#artikel-ergaenzungen">Merksätze & Fachinformationen</a></nav></details>` : ''; return `<article class="cf551-article cf552-inline-article ost567-article ost568-article">${jump}${body || '<p class="cf551-article-blank">Dieser Inhalt kann in der Redaktion ergänzt werden.</p>'}</article>`;
+            const headings = [...body.matchAll(/<h3>([^<]+)<\/h3>/g)].map(m => m[1]); const jump = item.type === 'symptom' ? `<details class="ost572-jump"><summary>Inhaltsübersicht</summary><nav><a href="#ueberblick">Überblick</a><a href="#red-flags">Red Flags</a><a href="#anamnese">Anamnese</a><a href="#differenzialdiagnosen">Krankheitsbilder</a><a href="#artikel-ergaenzungen">Merksätze & Fachinformationen</a></nav></details>` : ''; return `<article class="cf551-article cf552-inline-article ost567-article ost568-article">${jump}${body || '<p class="cf551-article-blank">Dieser Inhalt kann in der Redaktion ergänzt werden.</p>'}</article>`;
         }
         const crumb = $('[data-cf-crumb]',area), searchWrap=$('[data-cf-search-wrap]',area), organSection=$('[data-cf-organ-section]',area), catSection=$('[data-cf-category-section]',area);
         function articleLink(item) { const u=new URLSearchParams({thema:organ.id,eintrag:item.id});return 'themen-uebersicht.html?'+u.toString(); }
@@ -1537,7 +1542,7 @@
             const hasOrgan=!!params.get('thema');
             organSection.hidden=hasOrgan;catSection.hidden=!hasOrgan || isArticle;
             searchWrap.hidden=true;
-            crumb.innerHTML=`${hasOrgan ? `<a href="${organsLink()}">Körpersysteme</a>` : ''}${hasOrgan ? ` <span>›</span> <a href="${symptomLink()}">${esc(organ.label)}</a>` : ''}${isArticle ? ` <span>›</span> <strong>${esc(current.title)}</strong>` : ''}`;
+            crumb.innerHTML='';
             organBar.innerHTML=CF_TOPICS.filter(t=>!organMeta(t.id).hidden).map((t,i)=>`<div class="ost583-tile-wrap"><a class="ost570-tile ost572-tile" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}"><span class="ost572-count" aria-hidden="true">${ostIcon(t.icon || 'anatomy')}</span><strong>${esc(t.label)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-organ="${esc(t.id)}" aria-label="${esc(t.label)} umbenennen">✎</button></div>`).join('');
             if(!hasOrgan && ost576IsEditing()){const b=document.createElement('button');b.type='button';b.className='ost575-add';b.textContent='＋ Körpersystem';b.onclick=()=>ost583CreateOrgan();organBar.after(b);}
             if(!hasOrgan){out.innerHTML='';return;}
@@ -1545,7 +1550,7 @@
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
             categoryBar.innerHTML=found.map((x,i)=>`<div class="ost583-tile-wrap"><a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-symptom="${esc(x.value.id)}" aria-label="${esc(x.title)} umbenennen">✎</button></div>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
-            out.innerHTML=`<header class="ost570-article-head"><div><span class="ost567-eyebrow">LEITSYMPTOM · ${esc(organ.label)}</span><h1 class="ost570-title-text">${esc(current.title)}</h1><p>Fachwissen für RS & NFS</p></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
+            out.innerHTML=`<header class="ost570-article-head ost570-title-only"><div><h1 class="ost570-title-text">${esc(current.title)}</h1></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
             $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
             $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index || 0))));
             out.querySelector('[data-ost583-cause-add]')?.addEventListener('click',()=>ost583CreateCause(current));
@@ -1994,7 +1999,7 @@
         };
         const schemaPanel = a => {
             const steps = arr(a.steps);
-            return `${steps.length ? `<ol class="cf553-schema-steps">${steps.map(schemaItem).join('')}</ol>` : ''}${String(a.explanation || '').trim() ? `<section class="cf561-schema-explanation"><h3>Erklärung zum Schema</h3><div class="cf561-schema-description">${renderModuleText(a.explanation)}</div></section>` : ''}${a.source ? `<p class="cf553-schema-source"><strong>Quelle:</strong> ${esc(a.source)}</p>` : ''}${link(a.sourceUrl, 'Originalquelle öffnen')}${attachments(a)}`;
+            return `${steps.length ? `<ol class="cf553-schema-steps">${steps.map(schemaItem).join('')}</ol>` : ''}${String(a.explanation || '').trim() ? `<section class="cf561-schema-explanation"><h3>Erklärung zum Schema</h3><div class="cf561-schema-description">${renderModuleText(a.explanation)}</div></section>` : ''}${link(a.sourceUrl, 'Originalquelle öffnen')}${attachments(a)}`;
         };
         const guidelinePanel = a => {
             const steps = arr(a.steps);

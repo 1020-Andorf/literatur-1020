@@ -5446,3 +5446,81 @@ html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile strong{
   html body.app-shell .topbar::after{content:none!important;display:none!important;}
   html body.app-shell:not(.page-home) .main{padding-top:14px!important;}
 }
+
+
+/* Release 596 — knowledge area cleanup, compact tiles, icon refresh, and robust mobile top fix. */
+/* Wissen: no breadcrumb row at the top. */
+html body.app-shell .ost570-breadcrumb{display:none!important;}
+/* Title areas in Wissen: show only the actual title. */
+html body.app-shell .ost570-article-head.ost570-title-only{padding:0 0 8px!important;min-height:0!important;display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:10px!important;}
+html body.app-shell .ost570-article-head.ost570-title-only .ost570-title-text{margin:0!important;font-size:clamp(2rem,5vw,2.3rem)!important;line-height:1.06!important;}
+html body.app-shell .ost570-article-head :is(.ost567-eyebrow,p){display:none!important;}
+/* Hide decorative intro/kicker lines in Wissen article/detail headers. */
+html body.app-shell :is(.diag-summary-kicker,.ost-theory-label,.cf547-topic-hero p,.cf547-article-head p,.ost-module-detail-head .ost-module-kicker,.ost-module-detail-head .ost-module-subtitle){display:none!important;}
+/* Inhaltsübersicht: arrow only, no extra line/list symbol. */
+html body.app-shell .ost572-jump>summary{list-style:none!important;padding:15px 18px!important;display:flex!important;align-items:center!important;gap:0!important;}
+html body.app-shell .ost572-jump>summary::-webkit-details-marker{display:none!important;}
+html body.app-shell .ost572-jump>summary::before{content:'▸';display:inline-block;margin-right:10px;color:#183e58;font-size:1rem;transition:transform .15s ease;}
+html body.app-shell .ost572-jump[open]>summary::before{transform:rotate(90deg);}
+/* Körpersysteme: refined SVG presentation. */
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile{min-height:78px!important;padding:14px 16px!important;grid-template-columns:44px minmax(0,1fr) 16px!important;border-radius:16px!important;box-shadow:0 2px 8px rgba(19,57,80,.04)!important;}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile .ost572-count{width:40px!important;height:40px!important;border-radius:12px!important;background:#fff!important;border:1px solid #dbe7f0!important;}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile .ost572-count svg{width:20px!important;height:20px!important;stroke-width:1.8!important;color:#305c7d!important;}
+/* Leitsymptome + Wissen tiles: hug the text more closely, similar to the Merkhilfen cards. */
+html body.app-shell main .ost570-hub nav.cf551-category-nav{gap:12px!important;}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile,
+html body.app-shell .cf549-knowledge .cf547-row,
+html body.app-shell .cf547-materials .cf547-row{
+  min-height:50px!important;
+  padding:10px 14px!important;
+  border-radius:15px!important;
+  box-shadow:none!important;
+}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile strong,
+html body.app-shell .cf549-knowledge .cf547-row strong,
+html body.app-shell .cf547-materials .cf547-row strong{
+  font-size:.98rem!important;line-height:1.28!important;font-weight:600!important;
+}
+/* Remove small decorative left icon/bullet in Wissen lists for a cleaner text-first layout. */
+html body.app-shell .cf549-knowledge .cf547-row>span:first-child,
+html body.app-shell .cf549-knowledge .cf563-entry>summary>span:first-child,
+html body.app-shell .cf549-knowledge .ost-skill-acc-item>span:first-child{display:none!important;}
+html body.app-shell .cf549-knowledge .cf547-row,
+html body.app-shell .cf549-knowledge .cf563-entry>summary,
+html body.app-shell .cf549-knowledge .ost-skill-acc-item{grid-template-columns:minmax(0,1fr) 16px!important;padding-left:14px!important;}
+/* Strong final mobile top fix: fully opaque safe-area and topbar, no blur, no translucent overlay. */
+@media(max-width:1099px){
+  html,body{background:#f4f8fb!important;}
+  html body.app-shell::before{
+    content:'';position:fixed;top:0;left:0;right:0;
+    height:calc(env(safe-area-inset-top,0px) + 72px);
+    background:#fff!important;z-index:998!important;pointer-events:none!important;
+  }
+  html body.app-shell .topbar,
+  html body.app-shell:not(.page-home) .topbar{
+    position:sticky!important;top:0!important;z-index:999!important;
+    background:#fff!important;opacity:1!important;
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+    box-shadow:none!important;border-bottom:1px solid #dce6ed!important;
+    isolation:isolate!important;
+  }
+  html body.app-shell .topbar-inner,
+  html body.app-shell .topbar .top-action,
+  html body.app-shell .compact-top-navigation,
+  html body.app-shell .hero-control,
+  html body.app-shell .shade,
+  html body.app-shell .overlay,
+  html body.app-shell .menu,
+  html body.app-shell .menu-sheet{
+    -webkit-backdrop-filter:none!important;backdrop-filter:none!important;filter:none!important;
+  }
+  html body.app-shell .topbar-inner{background:#fff!important;}
+  html body.app-shell .topbar::before,
+  html body.app-shell .topbar::after,
+  html body.app-shell::after{content:none!important;display:none!important;}
+}
+@media(max-width:680px){
+  html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile{min-height:74px!important;padding:13px 14px!important;}
+  html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile{min-height:48px!important;padding:9px 13px!important;}
+  html body.app-shell .ost570-article-head.ost570-title-only .ost570-title-text{font-size:1.75rem!important;}
+}
