@@ -195,7 +195,7 @@
     "sectionTones": {
       "theory": "info",
       "redflags": "danger",
-      "sources": "plain",
+      "sources": "blue",
       "questions": "amber",
       "richContent": "amber"
     },
