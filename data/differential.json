@@ -196,17 +196,20 @@
       "theory": "plain",
       "redflags": "danger",
       "sources": "plain",
-      "questions": "amber"
+      "questions": "amber",
+      "richContent": "amber"
     },
     "sectionTitles": {
       "theory": "Überblick",
       "redflags": "⚠ Red Flags · Warnzeichen",
       "sources": "Quellen und weiterführende Informationen",
-      "questions": "Wichtige Fragen / Anamnese"
+      "questions": "Wichtige Fragen / Anamnese",
+      "richContent": "Merksätze & weitere Fachinformationen"
     },
     "redflagsHtml": "<ul><li>Bewegungsunabhängiger Druckschmerz</li><li>Kaltschweißigkeit</li><li>Neurologische Defizite</li><li>Schwere Dyspnoe</li><li>KHK in der Patientengeschichte</li></ul>",
     "sourcesHtml": "<ul><li><a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=Akutes%20Koronarsyndrom%20review%20diagnosis\" rel=\"noopener noreferrer\" target=\"_blank\">Fachliteratur auf PubMed suchen</a></li></ul>",
-    "questionsHtml": "<ul><li>Druck, Enge oder Stechen? Zerreißender Schmerz?</li><li>Ausstrahlung?</li><li>Belastungsabhängig?</li><li>Dyspnoe, Übelkeit oder Synkope?</li><li>Seit wann?</li><li>Vorerkrankungen bekann? (Angina pectoris, KHK, Linksherzinsuffizienz, ...)</li></ul>"
+    "questionsHtml": "<ul><li>Druck, Enge oder Stechen? Zerreißender Schmerz?</li><li>Ausstrahlung?</li><li>Belastungsabhängig?</li><li>Dyspnoe, Übelkeit oder Synkope?</li><li>Seit wann?</li><li>Vorerkrankungen bekann? (Angina pectoris, KHK, Linksherzinsuffizienz, ...)</li></ul>",
+    "richContent": "OPQRST zur besseren Eingrenzung der Schmerzen:<div><ul><li><b>O</b> - onset (wann haben die Schmerzen begonnen)</li><li><b>P</b> - provocation / pallation (kann der Schmerz verschlimmert oder gelindert werden)</li><li><b>Q</b> - quality (wie sind die Schmerzen - ziehend, stechend, ...)</li><li><b>R</b> - radiation (wo sind die Schmerzen und gibt es Ausstrahlungen)</li><li><b>S</b> - severity (wie stark sind die Schmerzen, NRS Rating)</li><li><b>T</b> - time (seit wann und wie war der zeitliche Verlauf)</li></ul></div>"
   },
   {
     "id": "bewusstsein",
