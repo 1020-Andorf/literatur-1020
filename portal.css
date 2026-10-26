@@ -5360,3 +5360,89 @@ html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile strong {g
  html body.app-shell .cf548-home .cf-home-grid .cf-destination strong {font-size:1rem!important;}
 }
 @media(max-width:360px) {html body.app-shell main .cf547-materials nav.cf550-material-tabs.cf547-tabs {grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+
+
+/* Release 595 — fine-tuning after review: compact Wissen tiles, Körpersysteme visuals, and mobile header cleanup. */
+:root{--ost595-menu-size:.95rem;--ost595-menu-weight:600;--ost595-menu-leading:1.34;}
+/* Main menu labels: match the optical size of the Aktuelles rows more closely. */
+html body.app-shell .cf548-home .cf-home-grid .cf-destination strong{
+  font-size:var(--ost595-menu-size)!important;
+  font-weight:var(--ost595-menu-weight)!important;
+  line-height:var(--ost595-menu-leading)!important;
+}
+/* Körpersysteme: restore subtle gradient and icon styling. */
+html body.app-shell main .ost570-hub nav.cf551-organ-nav{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;padding:6px 2px 14px!important;}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile{
+  grid-template-columns:48px minmax(0,1fr) 18px!important;
+  min-height:84px!important;
+  padding:16px 18px!important;
+  border:1px solid #d4e3ed!important;
+  border-left:0!important;
+  background:linear-gradient(135deg,#f7fbff 0%,#ffffff 54%,#f2f8ff 100%)!important;
+  box-shadow:0 4px 14px rgba(21,57,79,.05)!important;
+  position:relative!important;
+  overflow:hidden!important;
+}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile::before{
+  content:'';position:absolute;inset:0 auto 0 0;width:6px;border-radius:16px 0 0 16px;
+  background:linear-gradient(180deg,#c11f33 0%,#dd4a5f 100%);
+}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile::after{
+  content:'';position:absolute;right:-28px;top:-28px;width:92px;height:92px;border-radius:50%;
+  background:radial-gradient(circle,rgba(199,223,244,.58) 0%,rgba(199,223,244,0) 72%);
+}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile .ost572-count{
+  width:42px!important;height:42px!important;border-radius:14px!important;
+  background:rgba(255,255,255,.88)!important;border:1px solid #d7e6f1!important;
+  display:grid!important;place-items:center!important;position:relative!important;z-index:1!important;
+}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile .ost572-count svg{
+  width:22px!important;height:22px!important;color:#335c7b!important;
+}
+html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile strong{position:relative!important;z-index:1!important;}
+/* Leitsymptome in Wissen: compact again, only slightly taller than the text. */
+html body.app-shell main .ost570-hub nav.cf551-category-nav{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;padding:6px 2px 10px!important;}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile{
+  grid-template-columns:minmax(0,1fr) 18px!important;
+  min-height:58px!important;
+  padding:11px 16px!important;
+  border:1px solid #d4e2e9!important;
+  border-left:4px solid #ad2434!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  box-shadow:0 3px 10px rgba(21,57,79,.04)!important;
+}
+html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile strong{
+  font-size:1rem!important;line-height:1.34!important;font-weight:600!important;
+}
+@media(max-width:680px){
+  html body.app-shell main .ost570-hub nav.cf551-organ-nav,
+  html body.app-shell main .ost570-hub nav.cf551-category-nav{grid-template-columns:1fr!important;gap:11px!important;}
+  html body.app-shell main .ost570-hub a.ost570-tile.ost572-tile{min-height:80px!important;padding:15px 16px!important;}
+  html body.app-shell main .ost570-hub a.ost570-symptom-tile.ost572-tile{min-height:56px!important;padding:11px 15px!important;}
+}
+/* Mobile top area: remove every remaining blur/frosted overlay to stop the milky haze. */
+@media(max-width:1099px){
+  html body.app-shell .topbar,
+  html body.app-shell .topbar-inner,
+  html body.app-shell .compact-top-navigation,
+  html body.app-shell .mobile-more-shade,
+  html body.app-shell .mobile-bottom-nav,
+  html body.app-shell .topbar .top-action,
+  html body.app-shell .hero-control{
+    -webkit-backdrop-filter:none!important;
+    backdrop-filter:none!important;
+    filter:none!important;
+  }
+  html body.app-shell .topbar,
+  html body.app-shell .topbar-inner,
+  html body.app-shell .compact-top-navigation{
+    background:#fff!important;
+    box-shadow:none!important;
+  }
+  html body.app-shell .compact-top-navigation::before,
+  html body.app-shell .compact-top-navigation::after,
+  html body.app-shell .topbar::before,
+  html body.app-shell .topbar::after{content:none!important;display:none!important;}
+  html body.app-shell:not(.page-home) .main{padding-top:14px!important;}
+}
