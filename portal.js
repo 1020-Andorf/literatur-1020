@@ -2087,7 +2087,9 @@
     const OST_LIT_DEFAULT_CATEGORIES = ['Notfallmedizin','Anatomie & Physiologie','Pharmakologie','Diagnostik','Ausbildung & Training','Leitlinien & Studien','Sonstiges'];
     const ostLitTags = article => (Array.isArray(article.tags) ? article.tags : String(article.tags || '').split(',')).map(v=>String(v).trim()).filter(Boolean);
     async function ostLitCategories(articlesList=[]) {
-        const saved=(()=>{try{return JSON.parse(localStorage.getItem('ost1020-literature-categories')||'null');}catch(e){return null;}})();
+        // Kategorie-Namen zentral aus dem Worker laden. Alte lokale Einstellungen
+        // werden nur für eine einmalige manuelle Übernahme aufbewahrt.
+        const saved=await get('literatureCategories');
         const names=(Array.isArray(saved) && saved.length ? saved.map(v=>typeof v==='string'?v:v?.name) : OST_LIT_DEFAULT_CATEGORIES).filter(Boolean).map(v=>String(v).trim()).filter(Boolean);
         const existing=(articlesList||[]).flatMap(ostLitTags);
         return [...new Set([...names,...existing])];
@@ -2102,7 +2104,9 @@
             const updated=arts.map(a=>({...a,tags:ostLitTags(a).map(tag=>{const i=cats.findIndex(old=>normalizedSearch(old)===normalizedSearch(tag));return i>=0 && renamed[i] ? renamed[i] : tag;})}));
             const changed=updated.some((a,i)=>JSON.stringify(a.tags)!==JSON.stringify(arts[i]?.tags));
             if(changed && !await save('articles',updated))return false;
-            localStorage.setItem('ost1020-literature-categories',JSON.stringify(cleaned));
+            // Zuerst zentral sichern; bei Fehlern nicht als gespeichert melden.
+            if(!await save('literatureCategories',cleaned))return false;
+            localStorage.removeItem('ost1020-literature-categories');
             if(typeof afterSave==='function')afterSave();return true;
         });
     }

@@ -5630,3 +5630,20 @@ html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost570-tile.ost572-ti
 /* Consistently visible edit/delete controls beneath each literature entry. */
 .ost597-literature .ost598-article-actions{display:flex!important;justify-content:flex-end;gap:8px!important;margin:0 0 14px!important;padding:4px 0 10px!important;}
 .ost597-literature .ost598-article-actions button{display:inline-flex!important;align-items:center;min-height:38px!important;position:relative;z-index:2;}
+
+
+/* Version 601: rot / weiß / grau, nur die Leitsymptome-Kacheln. */
+html body.app-shell main .ost570-hub nav.cf551-category-nav .ost583-tile-wrap:nth-child(3n+1) a.ost570-symptom-tile.ost572-tile{
+ background:#fff1f2!important;border-color:#ecdde0!important;
+}
+html body.app-shell main .ost570-hub nav.cf551-category-nav .ost583-tile-wrap:nth-child(3n+2) a.ost570-symptom-tile.ost572-tile{
+ background:#ffffff!important;border-color:#e0e5e9!important;
+}
+html body.app-shell main .ost570-hub nav.cf551-category-nav .ost583-tile-wrap:nth-child(3n) a.ost570-symptom-tile.ost572-tile{
+ background:#f2f3f5!important;border-color:#e0e3e7!important;
+}
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost570-symptom-tile.ost572-tile{
+ border-left-width:1px!important;border-left-style:solid!important;
+}
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost570-symptom-tile.ost572-tile::before,
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost570-symptom-tile.ost572-tile::after{display:none!important;content:none!important;}
