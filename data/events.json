@@ -15,17 +15,5 @@
       }
     ],
     "description": ""
-  },
-  {
-    "title": "Neuer Termin",
-    "date": "2026-10-27",
-    "time": "18:00",
-    "location": "",
-    "category": "Übungen",
-    "capacity": 10,
-    "description": "test",
-    "attendees": [],
-    "waitlist": [],
-    "id": "inline-mvo9rg8v-9gw6"
   }
 ]
