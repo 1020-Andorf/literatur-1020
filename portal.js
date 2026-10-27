@@ -142,7 +142,7 @@
                 { id: 'training', label: 'Training', href: 'training.html', icon: svg.skill, match: ['training', 'skills', 'guide', 'faq'] },
                 { id: 'materials', label: 'Materialien', href: 'materialien.html', icon: ostIcon('book'), match: ['materials', 'guidelines', 'literature'] },
                 { id: 'events', label: 'Termine', href: 'termine.html', icon: svg.calendar, match: ['events'] },
-                { id: 'meetings', label: 'Dienstbesprechungen', href: 'dienstbesprechungen.html', icon: ostIcon('users'), match: ['meetings'] },
+                { id: 'meetings', label: 'Besprechungen & Vorträge', href: 'dienstbesprechungen.html', icon: ostIcon('users'), match: ['meetings'] },
                 { id: 'changes', label: 'Lehrmeinungsänderungen', href: 'lehrmeinung.html', icon: ostIcon('changes'), match: ['changes'] }
             ];
             const current = (menu.find(x => x.match.includes(page)) || {}).id;
@@ -425,7 +425,7 @@
     function normalizedTitle(t) { return String(t || '').replace(/^[^\p{L}\p{N}]+/gu, '').replace(/\s+/g, ' ').trim(); }
     function headerTitle() {
         const params = new URLSearchParams(location.search);
-        const map = { home: 'Wissenssammlung', wissen: 'Leitsymptome', topics: 'Leitsymptome', training: 'Training', events: 'Termine', news: 'Aktuelles', meetings: 'Dienstbesprechungen', editor: 'Redaktion', differential: 'Diagnostik', algorithms: 'Algorithmen & Merkhilfen', literature: 'Literatur', guidelines: 'Leitlinien / Guidelines', abcde: 'ABCDE-Schema', changes: 'Lehrmeinungsänderungen', materials: 'Materialien', skills: 'Training · Skills', guide: 'Training · Simulation', faq: 'Training · FAQ' };
+        const map = { home: 'Wissenssammlung', wissen: 'Leitsymptome', topics: 'Leitsymptome', training: 'Training', events: 'Termine', news: 'Aktuelles', meetings: 'Besprechungen & Vorträge', editor: 'Redaktion', differential: 'Diagnostik', algorithms: 'Algorithmen & Merkhilfen', literature: 'Literatur', guidelines: 'Leitlinien / Guidelines', abcde: 'ABCDE-Schema', changes: 'Lehrmeinungsänderungen', materials: 'Materialien', skills: 'Training · Skills', guide: 'Training · Simulation', faq: 'Training · FAQ' };
         if (page === 'modules') {
             const slug = params.get('bereich') || 'anatomy';
             return (MODULE_TYPES[slug] && MODULE_TYPES[slug].title) || 'Wissensbereich';
@@ -466,7 +466,7 @@
     function newsHtml(n, i = '') { const map = { Lehrmeinung: '🔄', Leitlinie: '📋', Ausbildung: '🎓', Termin: '📅', Simulationstraining: '🖥️', Organisation: '📣', Literatur: '📚' }; const c = n.category || 'Organisation'; return `<button class="news-item news-title-only" data-ost574-id="${esc(n.id)}" data-news="${i}"><h3>${esc(n.title)}</h3><span class="arrow" aria-hidden="true">›</span></button>`; }
     const RECENT_KEY = 'ost1020-recent-pages', FAV_KEY = 'ost1020-favorites';
     function rememberPage() { if (page === 'home' || page === 'editor')
-        return; const labels = { home: 'Start', topics: 'Leitsymptome', wissen: 'Leitsymptome', news: 'Aktuelles', literature: 'Literatur', abcde: 'ABCDE-Schema', differential: 'Diagnostik', skills: 'Training · Skills', algorithms: 'Algorithmen & Merkhilfen', meetings: 'Dienstbesprechungen', changes: 'Lehrmeinungsänderungen', events: 'Termine', guide: 'Quick Guide Simulation', materials: 'Materialien' }; const href = location.pathname.split('/').pop() || 'index.html'; let r = []; try {
+        return; const labels = { home: 'Start', topics: 'Leitsymptome', wissen: 'Leitsymptome', news: 'Aktuelles', literature: 'Literatur', abcde: 'ABCDE-Schema', differential: 'Diagnostik', skills: 'Training · Skills', algorithms: 'Algorithmen & Merkhilfen', meetings: 'Besprechungen & Vorträge', changes: 'Lehrmeinungsänderungen', events: 'Termine', guide: 'Quick Guide Simulation', materials: 'Materialien' }; const href = location.pathname.split('/').pop() || 'index.html'; let r = []; try {
         r = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
     }
     catch (e) { } r = [{ page, label: labels[page] || document.title, href }, ...r.filter(x => x.page !== page)].slice(0, 4); localStorage.setItem(RECENT_KEY, JSON.stringify(r)); }
@@ -1343,7 +1343,7 @@
       const b=document.createElement('button');b.type='button';b.className='ost575-add';b.dataset.ost583SkillAdd='';b.textContent='＋ Skill hinzufügen';b.onclick=ost583CreateSkill;root.appendChild(b);
     }
     function ost575AddButton(root,store,overrides={}){
-      if(!root || root.querySelector('[data-ost575-add]'))return;
+      if(!root || page==='meetings' || root.querySelector('[data-ost575-add]'))return;
       const b=document.createElement('button');b.type='button';b.className='ost575-add';b.dataset.ost575Add='';b.textContent='＋ Neuer Eintrag';b.title='Neuen Eintrag anlegen';
       root.appendChild(b);b.onclick=()=>ost575Create(store,overrides);
     }
@@ -2405,6 +2405,7 @@
     async function meetingsPage() {
         const rows = await get('meetings');
         const main = $('[data-main]');
+        main.querySelectorAll('[data-ost575-add]').forEach(b=>b.remove());
         const safe = value => { try {
             const u = new URL(String(value || ''));
             return ['https:', 'http:'].includes(u.protocol) ? u.href : '';
@@ -2416,7 +2417,7 @@
             if(!url)return '';
             return `<a class="ost604-material" href="${esc(url)}" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">${/\\.pdf(?:[?#]|$)/i.test(url)?'▤':'▹'}</span><span>${esc(f.title||'Dokument öffnen')}</span><span aria-hidden="true">↗</span></a>`;
         }).join('') || '<p class="ost604-empty">Noch keine Materialien hinterlegt.</p>';
-        main.innerHTML = `<section class="ost604-meetings" aria-label="Dienstbesprechungen">
+        main.innerHTML = `<section class="ost604-meetings" aria-label="Besprechungen & Vorträge">
             ${entries.map(x=>`<article class="ost604-meeting" data-ost574-id="${esc(x.id)}">
                 <div class="ost604-meeting-head"><h2>${esc(x.title||'Besprechung')}</h2>
                     <button type="button" class="ost604-edit" data-ost604-edit="${esc(x.id)}" aria-label="${esc(x.title||'Besprechung')} bearbeiten">✎ Bearbeiten</button></div>

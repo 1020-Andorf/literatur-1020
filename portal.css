@@ -5695,3 +5695,18 @@ body.app-shell .ost604-meeting .ost575-link-editor{margin-top:10px;}
 body.app-shell .ost604-meeting-editor-note{font-size:.85rem;color:#627889;}
 body.app-shell .ost604-meeting .ost574-pencil{display:none!important;}
 @media(max-width:640px){body.app-shell .ost604-meeting{padding:12px;}body.app-shell .ost604-meeting-head h2{font-size:.96rem;}}
+
+
+/* Release 605 – polished meeting/document library */
+body.page-meetings .ost604-meetings{gap:12px!important;margin-top:14px!important;}
+body.page-meetings .ost604-meeting{padding:17px 19px 17px 22px!important;border:1px solid #dce6ee!important;border-radius:18px!important;background:#fff!important;box-shadow:0 2px 8px rgba(21,51,73,.025)!important;}
+body.page-meetings .ost604-meeting-head{margin-bottom:10px!important;align-items:center!important;}
+body.page-meetings .ost604-meeting-head h2{font-size:1.03rem!important;font-weight:670!important;line-height:1.4!important;letter-spacing:-.012em!important;color:#19394f!important;}
+body.page-meetings .ost604-material{min-height:43px!important;padding:10px 13px!important;grid-template-columns:22px minmax(0,1fr) 17px!important;gap:10px!important;border:1px solid #e4ebf0!important;border-radius:11px!important;background:#f7f9fb!important;color:#285473!important;font-weight:480!important;}
+body.page-meetings .ost604-material>span:first-child{color:#a4293b!important;font-size:1rem!important;font-weight:700!important;text-align:center!important;}
+body.page-meetings .ost604-material>span:last-child{color:#7b92a2!important;font-size:1.1rem!important;}
+body.page-meetings .ost604-material:hover{background:#f0f5f8!important;border-color:#cadbe6!important;}
+body.page-meetings .ost604-edit{min-height:35px!important;background:#f8fafc!important;border-color:#d6e3eb!important;border-radius:10px!important;padding:7px 11px!important;color:#335873!important;}
+body.page-meetings .ost604-add{border-radius:12px!important;padding:11px 16px!important;margin-top:5px!important;}
+body.page-meetings [data-ost575-add]{display:none!important;}
+@media(max-width:640px){body.page-meetings .ost604-meeting{padding:13px 14px!important;}body.page-meetings .ost604-meeting-head h2{font-size:.95rem!important;}body.page-meetings .ost604-material{padding:9px 10px!important;}}
