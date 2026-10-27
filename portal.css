@@ -5710,3 +5710,28 @@ body.page-meetings .ost604-edit{min-height:35px!important;background:#f8fafc!imp
 body.page-meetings .ost604-add{border-radius:12px!important;padding:11px 16px!important;margin-top:5px!important;}
 body.page-meetings [data-ost575-add]{display:none!important;}
 @media(max-width:640px){body.page-meetings .ost604-meeting{padding:13px 14px!important;}body.page-meetings .ost604-meeting-head h2{font-size:.95rem!important;}body.page-meetings .ost604-material{padding:9px 10px!important;}}
+
+
+/* Release 606: editorial actions only when edit mode is explicitly enabled. */
+body.app-shell:not(.ost576-edit-enabled) .ost598-article-actions{display:none!important;}
+body.app-shell.ost576-edit-enabled .ost598-article-actions,
+body.app-shell.ost576-edit-enabled .ost597-literature .ost598-article-actions{
+  display:flex!important;justify-content:flex-end!important;gap:7px!important;
+  margin:14px 0 0!important;padding:10px 0 0!important;
+  border-top:1px solid #edf0f3!important;
+}
+body.app-shell.ost576-edit-enabled .ost598-article-actions button{
+  min-height:29px!important;padding:5px 9px!important;font-size:.75rem!important;
+  background:transparent!important;border:1px solid #e1e7eb!important;
+  color:#5a6f7d!important;border-radius:8px!important;font-weight:450!important;
+}
+body.app-shell.ost576-edit-enabled .ost598-article-actions button:last-child{color:#a65a62!important;border-color:#eedcde!important;}
+/* Meetings presented as a checklist / guideline list: quiet, compact and one column. */
+body.page-meetings .ost604-meetings{gap:9px!important;margin-top:8px!important;}
+body.page-meetings .ost604-meeting{background:#fff!important;padding:13px 16px!important;border:1px solid #dae4eb!important;border-radius:14px!important;box-shadow:none!important;}
+body.page-meetings .ost604-meeting-head{margin-bottom:7px!important;}
+body.page-meetings .ost604-meeting-head h2{font-size:.98rem!important;font-weight:625!important;line-height:1.35!important;}
+body.page-meetings .ost604-material{min-height:0!important;padding:8px 11px!important;background:#fbfcfd!important;border:1px solid #e6ebef!important;border-radius:9px!important;grid-template-columns:19px minmax(0,1fr) 16px!important;font-size:.89rem!important;font-weight:450!important;}
+body.page-meetings .ost604-material>span:first-child{font-size:.95rem!important;color:#668194!important;font-weight:500!important;}
+body.page-meetings .ost604-edit{font-size:.76rem!important;background:transparent!important;border:1px solid #e1e7ed!important;color:#668096!important;min-height:30px!important;padding:5px 9px!important;}
+@media(max-width:640px){body.page-meetings .ost604-meeting{padding:11px 12px!important;}body.page-meetings .ost604-material{padding:8px 9px!important;}}
