@@ -5735,3 +5735,20 @@ body.page-meetings .ost604-material{min-height:0!important;padding:8px 11px!impo
 body.page-meetings .ost604-material>span:first-child{font-size:.95rem!important;color:#668194!important;font-weight:500!important;}
 body.page-meetings .ost604-edit{font-size:.76rem!important;background:transparent!important;border:1px solid #e1e7ed!important;color:#668096!important;min-height:30px!important;padding:5px 9px!important;}
 @media(max-width:640px){body.page-meetings .ost604-meeting{padding:11px 12px!important;}body.page-meetings .ost604-material{padding:8px 9px!important;}}
+
+/* 607: Leitsymptom menus in exactly the red/white palette of Materialien. */
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(odd) a.ost572-tile {
+ background:#bd2734!important;border:1px solid #bd2734!important;color:#fff!important;
+}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(even) a.ost572-tile {
+ background:#fff!important;border:1px solid #dce5eb!important;color:#243f50!important;
+}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(odd) a.ost572-tile :is(strong,small,span,.ost572-chevron,svg) {
+ color:#fff!important;stroke:currentColor!important;
+}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(even) a.ost572-tile :is(strong,small,span,.ost572-chevron,svg) {
+ color:#243f50!important;stroke:currentColor!important;
+}
+html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap a.ost572-tile {
+ background-image:none!important;box-shadow:none!important;border-left-width:1px!important;
+}
