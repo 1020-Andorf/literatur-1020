@@ -5752,3 +5752,37 @@ html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-
 html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap a.ost572-tile {
  background-image:none!important;box-shadow:none!important;border-left-width:1px!important;
 }
+
+
+/* 608 — single consistent white/red-outlined card style in BOTH
+   Körpersysteme and the individual symptom menus (e.g. Thoraxschmerz).
+   Matches anchors regardless of their wrapper position, overruling
+   older nth-child palettes and the 607 red/white alternate styling. */
+html body.app-shell main .ost570-hub nav.cf551-organ-nav .ost583-tile-wrap a.ost570-tile.ost572-tile,
+html body.app-shell main .ost570-hub nav.cf551-category-nav .ost583-tile-wrap a.ost570-symptom-tile.ost572-tile,
+html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile,
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile {
+  background:#fff !important;
+  background-color:#fff !important;
+  background-image:none !important;
+  border:1px solid #bf293d !important;
+  border-left:1px solid #bf293d !important;
+  color:#253e4c !important;
+  box-shadow:none !important;
+}
+html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile :is(strong,small,span,.ost572-chevron,svg),
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile :is(strong,small,span,.ost572-chevron,svg) {
+  color:#253e4c !important;
+  stroke:currentColor !important;
+}
+html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile:is(:hover,:focus-visible),
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile:is(:hover,:focus-visible) {
+  background:#fff7f8 !important;
+  border-color:#a82437 !important;
+}
+html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile::before,
+html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile::after,
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile::before,
+html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile::after {
+  content:none !important; display:none !important;
+}
