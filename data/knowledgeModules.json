@@ -1927,12 +1927,19 @@
     ]
   },
   {
-    "title": "Checkliste für traumatologischen Notfall",
+    "title": "Checkliste Traumatologischer Notfall",
     "module": "checklists",
     "status": "published",
     "body": "",
     "summary": "",
-    "documentUrl": "",
-    "id": "inline-mvvmltxi-6ygh"
+    "documentUrl": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404360954-RS-Trainingscheckliste-Station-2.x-Trauma-V7.2.pdf",
+    "id": "inline-mvvmltxi-6ygh",
+    "links": [
+      {
+        "title": "Checkliste für die traumatologische Prüfungsstation",
+        "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404360954-RS-Trainingscheckliste-Station-2.x-Trauma-V7.2.pdf",
+        "note": ""
+      }
+    ]
   }
 ]
