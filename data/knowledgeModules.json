@@ -1916,7 +1916,14 @@
     "status": "published",
     "body": "",
     "summary": "",
-    "documentUrl": "",
-    "id": "inline-mvvmkchg-ewxw"
+    "documentUrl": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404272838-RS-Trainingscheckliste-Station-1.x-intern-V7.2.pdf",
+    "id": "inline-mvvmkchg-ewxw",
+    "links": [
+      {
+        "title": "Checkliste für die interne Prüfungsstation",
+        "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404272838-RS-Trainingscheckliste-Station-1.x-intern-V7.2.pdf",
+        "note": ""
+      }
+    ]
   }
 ]
