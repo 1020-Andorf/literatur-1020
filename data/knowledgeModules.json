@@ -1872,12 +1872,19 @@
     "links": []
   },
   {
-    "title": "Neue Checkliste",
+    "title": "CPR Kind",
     "module": "checklists",
     "status": "published",
     "body": "",
-    "summary": "Test",
-    "documentUrl": "Testlink",
-    "id": "inline-mvo600t0-882i"
+    "summary": "",
+    "documentUrl": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404090731-RS-Trainingscheckliste-HLW-DEFI-Kind-V8.pdf",
+    "id": "inline-mvo600t0-882i",
+    "links": [
+      {
+        "title": "Checkliste für die Kinder CPR",
+        "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404090731-RS-Trainingscheckliste-HLW-DEFI-Kind-V8.pdf",
+        "note": ""
+      }
+    ]
   }
 ]
