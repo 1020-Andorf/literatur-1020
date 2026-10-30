@@ -1544,12 +1544,24 @@
             organSection.hidden=hasOrgan;catSection.hidden=!hasOrgan || isArticle;
             searchWrap.hidden=true;
             crumb.innerHTML='';
+            const ost611Paint=nav=>nav.querySelectorAll('a.ost572-tile').forEach(tile=>{
+                const set=(node,prop,value)=>node.style.setProperty(prop,value,'important');
+                set(tile,'background','#ffffff');set(tile,'background-color','#ffffff');
+                set(tile,'background-image','none');set(tile,'border','1px solid #bf293d');
+                set(tile,'border-left','1px solid #bf293d');set(tile,'color','#183e58');
+                set(tile,'box-shadow','none');set(tile,'text-shadow','none');
+                tile.querySelectorAll('strong,.ost572-chevron').forEach(el=>{
+                    set(el,'color','#183e58');set(el,'-webkit-text-fill-color','#183e58');set(el,'opacity','1');
+                });
+            });
             organBar.innerHTML=CF_TOPICS.filter(t=>!organMeta(t.id).hidden).map((t,i)=>`<div class="ost583-tile-wrap"><a class="ost570-tile ost572-tile" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}"><span class="ost572-count" aria-hidden="true">${ostIcon(t.icon || 'anatomy')}</span><strong>${esc(t.label)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-organ="${esc(t.id)}" aria-label="${esc(t.label)} umbenennen">✎</button></div>`).join('');
             if(!hasOrgan && ost576IsEditing()){const b=document.createElement('button');b.type='button';b.className='ost575-add';b.textContent='＋ Körpersystem';b.onclick=()=>ost583CreateOrgan();organBar.after(b);}
+            ost611Paint(organBar);
             if(!hasOrgan){out.innerHTML='';return;}
             const all=entries(), needle=normalizedSearch(input.value.trim());
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
             categoryBar.innerHTML=found.map((x,i)=>`<div class="ost583-tile-wrap"><a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-symptom="${esc(x.value.id)}" aria-label="${esc(x.title)} umbenennen">✎</button></div>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
+            ost611Paint(categoryBar);
             if(!isArticle){out.innerHTML='';return;}
             out.innerHTML=`<header class="ost570-article-head ost570-title-only"><div><h1 class="ost570-title-text">${esc(current.title)}</h1></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
             $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
