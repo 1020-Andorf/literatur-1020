@@ -5736,125 +5736,38 @@ body.page-meetings .ost604-material>span:first-child{font-size:.95rem!important;
 body.page-meetings .ost604-edit{font-size:.76rem!important;background:transparent!important;border:1px solid #e1e7ed!important;color:#668096!important;min-height:30px!important;padding:5px 9px!important;}
 @media(max-width:640px){body.page-meetings .ost604-meeting{padding:11px 12px!important;}body.page-meetings .ost604-material{padding:8px 9px!important;}}
 
-/* 607: Leitsymptom menus in exactly the red/white palette of Materialien. */
-html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(odd) a.ost572-tile {
- background:#bd2734!important;border:1px solid #bd2734!important;color:#fff!important;
+/* 610 — unified symptom and organ cards: correct contrast on all positions.
+   Intentionally REPLACES releases 607–609 to remove conflicting palettes. */
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > .ost583-tile-wrap:nth-child(n) > a.ost572-tile,
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > a.ost572-tile {
+    background: #fff !important;
+    background-color: #fff !important;
+    background-image: none !important;
+    color: #183e58 !important;
+    border: 1px solid #bf293d !important;
+    border-left: 1px solid #bf293d !important;
+    box-shadow: none !important;
+    filter: none !important;
+    text-shadow: none !important;
 }
-html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(even) a.ost572-tile {
- background:#fff!important;border:1px solid #dce5eb!important;color:#243f50!important;
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > .ost583-tile-wrap:nth-child(n) > a.ost572-tile strong,
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > .ost583-tile-wrap:nth-child(n) > a.ost572-tile span,
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > a.ost572-tile strong,
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > a.ost572-tile span {
+    color: #183e58 !important;
+    -webkit-text-fill-color: #183e58 !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
 }
-html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(odd) a.ost572-tile :is(strong,small,span,.ost572-chevron,svg) {
- color:#fff!important;stroke:currentColor!important;
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > .ost583-tile-wrap:nth-child(n) > a.ost572-tile .ost572-count {
+    display: none !important;
 }
-html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap:nth-child(even) a.ost572-tile :is(strong,small,span,.ost572-chevron,svg) {
- color:#243f50!important;stroke:currentColor!important;
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > .ost583-tile-wrap:nth-child(n) > a.ost572-tile::before,
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > .ost583-tile-wrap:nth-child(n) > a.ost572-tile::after {
+    display: none !important;
+    content: none !important;
 }
-html body.app-shell main .ost570-hub :is(nav.cf551-organ-nav,nav.cf551-category-nav) > .ost583-tile-wrap a.ost572-tile {
- background-image:none!important;box-shadow:none!important;border-left-width:1px!important;
-}
-
-
-/* 608 — single consistent white/red-outlined card style in BOTH
-   Körpersysteme and the individual symptom menus (e.g. Thoraxschmerz).
-   Matches anchors regardless of their wrapper position, overruling
-   older nth-child palettes and the 607 red/white alternate styling. */
-html body.app-shell main .ost570-hub nav.cf551-organ-nav .ost583-tile-wrap a.ost570-tile.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav .ost583-tile-wrap a.ost570-symptom-tile.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile {
-  background:#fff !important;
-  background-color:#fff !important;
-  background-image:none !important;
-  border:1px solid #bf293d !important;
-  border-left:1px solid #bf293d !important;
-  color:#253e4c !important;
-  box-shadow:none !important;
-}
-html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile :is(strong,small,span,.ost572-chevron,svg),
-html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile :is(strong,small,span,.ost572-chevron,svg) {
-  color:#253e4c !important;
-  stroke:currentColor !important;
-}
-html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile:is(:hover,:focus-visible),
-html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile:is(:hover,:focus-visible) {
-  background:#fff7f8 !important;
-  border-color:#a82437 !important;
-}
-html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile::before,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav a.ost572-tile::after,
-html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile::before,
-html body.app-shell main .ost570-hub nav.cf551-category-nav a.ost572-tile::after {
-  content:none !important; display:none !important;
-}
-
-/* 609 — final Leitsymptome card cleanup.
-   Force a single consistent style for ALL cards in Körpersysteme and
-   the symptom lists, overriding every older palette rule that may still
-   color odd/even items. */
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(odd) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(even) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(3n) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(3n+1) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap:nth-child(3n+2) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(odd) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(even) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(3n) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(3n+1) > a.ost572-tile,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap:nth-child(3n+2) > a.ost572-tile {
-  background:#ffffff !important;
-  background-color:#ffffff !important;
-  background-image:none !important;
-  border:1px solid #c53143 !important;
-  border-left:1px solid #c53143 !important;
-  box-shadow:none !important;
-  filter:none !important;
-}
-
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile strong,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile strong,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile strong,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile strong,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile .ost572-chevron,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile .ost572-chevron,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile .ost572-chevron,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile .ost572-chevron,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile span,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile span,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile span,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile span {
-  color:#173d55 !important;
-  fill:currentColor !important;
-  stroke:currentColor !important;
-}
-
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile .ost572-count,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile .ost572-count,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile .ost572-count,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile .ost572-count {
-  display:none !important;
-}
-
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile::before,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile::before,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile::before,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile::before,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile::after,
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile::after,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile::after,
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile::after {
-  content:none !important;
-  display:none !important;
-}
-
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > .ost583-tile-wrap > a.ost572-tile:is(:hover,:focus-visible),
-html body.app-shell main .ost570-hub nav.cf551-organ-nav > a.ost572-tile:is(:hover,:focus-visible),
-html body.app-shell main .ost570-hub nav.cf551-category-nav > .ost583-tile-wrap > a.ost572-tile:is(:hover,:focus-visible),
-html body.app-shell main .ost570-hub nav.cf551-category-nav > a.ost572-tile:is(:hover,:focus-visible) {
-  background:#fff7f8 !important;
-  border-color:#af2133 !important;
-  box-shadow:none !important;
+html body.app-shell main .ost570-hub nav:is(.cf551-organ-nav,.cf551-category-nav) > .ost583-tile-wrap:nth-child(n) > a.ost572-tile:is(:hover,:focus-visible) {
+    background: #fff7f8 !important;
+    border-color: #a82437 !important;
 }
