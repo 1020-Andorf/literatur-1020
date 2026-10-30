@@ -1900,7 +1900,14 @@
     "status": "published",
     "body": "",
     "summary": "",
-    "documentUrl": "",
-    "id": "inline-mvvmiuwq-m6xd"
+    "documentUrl": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404197405-RS-Trainingscheckliste-HLW-DEFI-Sgl-V8.pdf",
+    "id": "inline-mvvmiuwq-m6xd",
+    "links": [
+      {
+        "title": "Checkliste für die Säuglings CPR",
+        "url": "https://raw.githubusercontent.com/1020-Andorf/literatur-1020/main/assets/uploads/1793404197405-RS-Trainingscheckliste-HLW-DEFI-Sgl-V8.pdf",
+        "note": ""
+      }
+    ]
   }
 ]
