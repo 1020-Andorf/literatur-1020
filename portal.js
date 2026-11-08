@@ -235,6 +235,10 @@
             scroll.scrollTop = 0;
     }
     function mergeDiagnostics(remote) {
+        // Full 620+ curated medical library is authoritative. Never silently
+        // repopulate its intentionally replaced entries from legacy seeds.
+        if(Array.isArray(remote) && remote.some(x=>String(x?.editorialOrigin||'').includes('KI-Erstbefüllung 620')))
+            return remote.filter(x=>!x.deleted);
         const base = clone(D.differential || []), incoming = Array.isArray(remote) ? remote : [];
         const extras = window.OST1020_DIAGNOSTIC_THEORY || {};
         base.forEach(x => { if (!x.theory && extras[x.id])
@@ -312,6 +316,12 @@
         catch (e) { }
         if (name === 'knowledgeModules')
             return seedModules(clone(D[name] || []));
+        if (name === 'differential') {
+            try {
+                const r=await fetch('data/differential.json?v=621',{cache:'no-store'});
+                if(r.ok){const rows=await r.json();if(Array.isArray(rows))return mergeDiagnostics(rows);}
+            }catch(e){}
+        }
         if (Array.isArray(D[name]) && D[name].length)
             return clone(D[name]);
         // Die bestehende statische Datendatei verwenden, wenn der Worker nicht erreichbar ist.
@@ -1501,6 +1511,7 @@
         area.innerHTML = `<section class="cf551-wissen cf552-wissen ost570-hub mw613-library">
           <div class="mw613-intro" data-mw613-intro><span class="mw613-eyebrow">OST 1020 / WISSEN</span><h1>Medizinisches Wissen</h1><p>Fachwissen, Krankheitsbilder und klinische Zusammenhänge für den Rettungsdienst.</p></div>
           <div class="ost570-breadcrumb" data-cf-crumb></div>
+          <div class="mw621-import" data-mw621-import hidden><div class="mw621-import-copy"><strong>Neue Wissensartikel übernehmen</strong><span>Die 60 Entwürfe aus Version 620 sind noch nicht im aktuellen Datenbestand. Vor dem Import wird eine Sicherung heruntergeladen.</span></div><button type="button" class="mw621-import-btn" data-mw621-import-btn>60 Artikel übernehmen</button><span class="mw621-import-status" data-mw621-import-status role="status"></span></div>
           <section class="cf552-filter-group cf552-organ-group mw613-systems-section" data-cf-organ-section><h2>Körpersysteme</h2><nav class="cf551-organ-nav mw613-systems" data-cf-organs aria-label="Körpersystem auswählen"></nav></section>
           <section class="cf552-filter-group cf552-category-group mw613-topics-section" data-cf-category-section>
             <div class="mw613-section-heading"><div><span class="mw613-eyebrow">WISSENSARTIKEL</span><h2 data-mw613-group-title></h2></div><span class="mw613-result-count" data-mw613-count></span></div>
@@ -1667,6 +1678,10 @@
         const activeOrgans=()=>CF_TOPICS.filter(t=>!organMeta(t.id).hidden);
         const typeGlyph={symptom:'✚',disease:'♡',basics:'▤'};
         function draw() {
+            // Resolve the current view from browser history, without a new page load.
+            const here=new URLSearchParams(location.search);
+            organ=CF_TOPICS.find(t=>t.id===here.get('thema'))||CF_TOPICS[0];
+            chosen=here.get('eintrag')||'';
             const currentTitle = $('.topbar .brand strong');
             if(currentTitle)currentTitle.textContent=chosen ? 'Fachartikel' : 'Medizinisches Wissen';
             const current=entries().find(x=>x.id===chosen);
@@ -1679,6 +1694,9 @@
             $('[data-mw613-intro]',area).hidden=isArticle;
             crumb.innerHTML=isArticle?`<a class="mw613-back" href="${symptomLink()}">‹ Zurück zu ${esc(organ.label)}</a>`:'';
             const organs=activeOrgans();
+            const importBox=$('[data-mw621-import]',area);
+            const imported=differentials.some(x=>String(x.editorialOrigin||'').includes('KI-Erstbefüllung 620'));
+            if(importBox)importBox.hidden=!ost576IsEditing()||imported||isArticle;
             organBar.innerHTML=organs.map(t=>{
               const count=differentials.filter(x=>!x.deleted&&t.groups.includes(x.group)).length;
               const selected=t.id===organ.id;
@@ -1920,6 +1938,60 @@
                     if(await save('differential',remaining))location.reload();else alert('Löschen fehlgeschlagen.');
                 };modal.querySelector('.ost576-form-actions')?.prepend(del);
             }
+        });
+        // In-page navigation: reuse the already loaded datasets. Back and Forward
+        // are handled by popstate, and the search input keeps keyboard focus.
+        area.addEventListener('click',event=>{
+            const link=event.target.closest('a.mw613-system-link, a.mw613-article-link, a.mw613-back');
+            if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+            const url=new URL(link.href,location.href);
+            if(url.origin!==location.origin||url.pathname!==location.pathname)return;
+            event.preventDefault();history.pushState(null,'',url.pathname+url.search+url.hash);
+            input.value='';draw();window.scrollTo({top:0,behavior:'instant'});
+        });
+        window.addEventListener('popstate',()=>{input.value='';draw();});
+        const importButton=$('[data-mw621-import-btn]',area);
+        if(importButton)importButton.addEventListener('click',async()=>{
+            const status=$('[data-mw621-import-status]',area);
+            const setStatus=msg=>{if(status)status.textContent=msg;};
+            if(!ost576IsEditing()){setStatus('Bitte zuerst Bearbeitung freigeben.');return;}
+            if(!await ost574Pin())return;
+            importButton.disabled=true;
+            try{
+                setStatus('Importdaten prüfen …');
+                const r=await fetch('data/differential.json?v=621',{cache:'no-store'});
+                if(!r.ok)throw new Error('Importdatei fehlt auf GitHub. Bitte alle Dateien aus Version 621 hochladen.');
+                const items=await r.json();
+                if(!Array.isArray(items)||items.length!==60||!items.every(x=>x.id&&x.title&&x.group&&x.articleHtml&&x.knowledgeType)||!items.some(x=>String(x.editorialOrigin||'').includes('KI-Erstbefüllung 620')))
+                    throw new Error('Die Importdatei ist nicht die geprüfte Sammlung mit 60 Artikeln.');
+                if(!API)throw new Error('Die Cloudflare-API ist nicht konfiguriert.');
+                // Use the unmerged remote data for the backup, not seeded get().
+                const raw=await fetch(`${API}/content/differential`,{cache:'no-store'});
+                if(!raw.ok)throw new Error('Aktueller Cloudflare-Datenbestand konnte nicht gelesen werden.');
+                const previous=await raw.json();
+                if(!Array.isArray(previous))throw new Error('Aktueller Datenbestand ist ungültig.');
+                if(!confirm(`Die 60 neuen Wissensartikel ersetzen ${previous.length} bisherige Datensätze im Bereich Medizinisches Wissen. Andere Bereiche bleiben unverändert. Fortfahren?`)){
+                    setStatus('Import abgebrochen.');return;
+                }
+                const backup=new Blob([JSON.stringify(previous,null,2)],{type:'application/json'});
+                const url=URL.createObjectURL(backup);
+                const download=document.createElement('a');download.href=url;download.download='OST1020_Wissen_Backup_vor_621.json';document.body.append(download);download.click();download.remove();
+                // Delay revocation to give the download dispatcher time to start.
+                setTimeout(()=>URL.revokeObjectURL(url),30000);
+                if(!confirm('Die Sicherungsdatei wurde zum Download angeboten. Hast du sie gespeichert und möchtest die 60 Entwürfe jetzt übernehmen?')){
+                    setStatus('Import abgebrochen. Sicherung bitte aufbewahren.');return;
+                }
+                setStatus('60 Artikel werden gespeichert …');
+                const ok=await save('differential',items);
+                if(!ok)throw new Error('Cloudflare hat den Import nicht bestätigt. Bitte PIN/Worker prüfen.');
+                const verify=await fetch(`${API}/content/differential`,{cache:'no-store'});
+                if(!verify.ok)throw new Error('Gespeichert, aber eine abschließende Prüfung war nicht möglich. Bitte Website neu laden.');
+                const verified=await verify.json();
+                if(!Array.isArray(verified)||verified.length!==60||verified[0]?.id!==items[0].id)
+                    throw new Error('Speicherprüfung fehlgeschlagen: Bitte den Worker-Datenstand kontrollieren.');
+                differentials.splice(0,differentials.length,...verified);setStatus('60 Artikel erfolgreich übernommen.');draw();
+            }catch(err){setStatus(err.message||'Import fehlgeschlagen.');}
+            finally{importButton.disabled=false;}
         });
         input.addEventListener('input',draw);
         draw();

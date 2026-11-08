@@ -6012,3 +6012,26 @@ html body.app-shell main .ost616-article .ost616-card-content.ost-module-body,
 html body.app-shell main .ost616-article .ost616-card .ost-module-body{
   padding-top:0!important;
 }
+
+/* 621 — responsive medical library navigation and guarded one-time import */
+html body.app-shell main .mw613-library .mw613-system-link,
+html body.app-shell main .mw613-library .mw613-article-link{
+  transition:border-color .16s ease,background-color .16s ease,box-shadow .16s ease;
+  touch-action:manipulation;
+}
+html body.app-shell main .mw613-library .mw613-article-link:focus-visible,
+html body.app-shell main .mw613-library .mw613-system-link:focus-visible{
+  outline:2px solid #c43649;outline-offset:3px;
+}
+html body.app-shell main .mw621-import{
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  border:1px solid #e9c4cb;background:#fff8f9;border-radius:12px;
+  padding:12px 14px;margin:12px 0 16px;
+}
+html body.app-shell main .mw621-import[hidden]{display:none!important;}
+html body.app-shell main .mw621-import-copy{display:grid;gap:3px;flex:1 1 250px;color:#244154;font-size:.85rem;line-height:1.35;}
+html body.app-shell main .mw621-import-copy strong{font-size:.94rem;}
+html body.app-shell main .mw621-import-btn{background:#b52c40;border:1px solid #b52c40;border-radius:9px;color:white;padding:9px 13px;font:inherit;font-size:.86rem;cursor:pointer;}
+html body.app-shell main .mw621-import-btn:disabled{opacity:.6;cursor:wait;}
+html body.app-shell main .mw621-import-status{width:100%;font-size:.82rem;color:#785465;}
+@media(prefers-reduced-motion:reduce){html body.app-shell main .mw613-library .mw613-system-link,html body.app-shell main .mw613-library .mw613-article-link{transition:none;}}
