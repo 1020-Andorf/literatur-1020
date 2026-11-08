@@ -1898,6 +1898,31 @@
       };
       render();panel.querySelector('[data-skill-name]')?.focus();
     }
+    // 612: Reliable inline creation of a published equipment record. Only the
+    // Training > Geräte tab uses this, so other module editors remain intact.
+    async function ost612CreateDevice(){
+        if(!await ost574Pin())return;
+        ost576Modal('Neues Gerät hinzufügen',[
+          {key:'title',label:'Gerätename / Modell',value:'',required:true},
+          {key:'body',label:'Beschreibung / Hinweise',type:'rich',value:''},
+          {key:'documentUrl',label:'Anleitung / PDF-Link (optional)',value:''}
+        ],async values=>{
+          const title=String(values.title||'').trim();
+          const url=String(values.documentUrl||'').trim();
+          if(!title)throw new Error('Bitte einen Gerätenamen eingeben.');
+          if(url&&!/^https?:\/\//i.test(url))throw new Error('Bitte eine gültige HTTP(S)-Adresse eingeben.');
+          const existing=await get('knowledgeModules');
+          if(!Array.isArray(existing))throw new Error('Die Gerätedaten konnten nicht geladen werden.');
+          const item={
+            id:'device-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),
+            module:'mpg',status:'published',category:'Geräte',
+            title,summary:'',body:ost570CleanHtml(values.body||''),documentUrl:url
+          };
+          const ok=await save('knowledgeModules',[...existing,item]);
+          if(ok)location.reload();
+          return ok;
+        });
+    }
     async function trainingPage() {
         const [groups, modules] = await Promise.all([get('skills'), get('knowledgeModules')]);
         const km = (Array.isArray(modules) ? modules : []).filter(x => x.status !== 'draft');
@@ -1909,7 +1934,6 @@
         const main = $('[data-main]');
         main.innerHTML = `<section class="cf547 cf547-training"><h1>Training</h1><nav class="cf547-tabs" aria-label="Trainingstyp">${nav.map(([id, label, ico]) => `<button data-training-tab="${id}" class="${selected === id ? 'selected' : ''}">${ostIcon(ico)} ${label}</button>`).join('')}</nav><section class="cf547-content" data-training-content></section></section>`;
         const out = $('[data-training-content]');
-        if(selected==='skills')ost583SkillAdd(out);else ost575AddButton(out,'knowledgeModules',selected==='devices'?{module:'mpg'}:{module:'checklists'});
         function render() {
             $$('[data-training-tab]', main).forEach(b => b.classList.toggle('selected', b.dataset.trainingTab === selected));
             if (selected === 'skills') {
@@ -1922,16 +1946,24 @@
                 out.innerHTML = `<h2>${selected === 'devices' ? 'Geräte' : 'Übungschecklisten'}</h2><div class="cf563-inline-list">${items.map(x => {
                     const url = safeDocument(x.documentUrl);
                     const detail = [x.summary ? `<p class="cf563-summary ost579-subtitle">${esc(x.summary)}</p>` : '', x.body ? `<div class="cf563-rich">${renderModuleText(x.body)}</div>` : '', ost579Documents(x.links?.length ? x.links : (url ? [{url,title:'PDF / Dokument',note:x.summary||''}] : []))].filter(Boolean).join('');
-                    return `<details class="cf563-entry ${selected === 'checklists' ? 'ost579-document-card' : ''}" ${selected === 'checklists' ? 'open' : ''}><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong><span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body"><button type="button" class="ost571-pencil ost573-card-pencil" data-ost573-training="${esc(x.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
+                    return `<details class="cf563-entry ${selected === 'checklists' ? 'ost579-document-card' : 'ost612-device-card'}" ${selected === 'checklists' ? 'open' : ''}><summary><span class="cf563-entry-icon">${ostIcon(selected === 'devices' ? 'device' : 'checklist')}</span><strong>${esc(x.title)}</strong>${selected === 'devices' ? `<button type="button" class="ost612-device-edit" data-ost573-training="${esc(x.id)}" aria-label="${esc(x.title)} bearbeiten" title="Gerät bearbeiten">✎ Bearbeiten</button>` : ''}<span class="cf563-chevron" aria-hidden="true"></span></summary><div class="cf563-entry-body">${selected === 'checklists' ? `<button type="button" class="ost571-pencil ost573-card-pencil" data-ost573-training="${esc(x.id)}" aria-label="Eintrag direkt bearbeiten">✎</button>` : ''}${detail || '<p>Zu diesem Eintrag sind noch keine Details hinterlegt.</p>'}</div></details>`;
                 }).join('') || '<p class="cf547-empty">Für diesen Bereich sind noch keine redaktionell veröffentlichten Einträge vorhanden.</p>'}</div>`;
             }
+            // Add action AFTER rebuilding the content, otherwise innerHTML wipes it.
+            if(selected==='skills')ost583SkillAdd(out);
+            else if(selected==='devices'){
+              const add=document.createElement('button');
+              add.type='button';add.className='ost575-add ost612-device-add';
+              add.dataset.ost612DeviceAdd='';add.textContent='＋ Gerät hinzufügen';
+              add.onclick=ost612CreateDevice;
+              out.prepend(add);
+            } else ost575AddButton(out,'knowledgeModules',{module:'checklists'});
         }
         main.addEventListener('click', async e => {
             if(e.target.closest('.ost579-document-card > summary')){e.preventDefault();return;}
             const tab = e.target.closest('[data-training-tab]');
             if (tab) {
                 selected = tab.dataset.trainingTab;
-                main.querySelector('[data-ost575-add]')?.remove();if(selected==='skills')ost583SkillAdd(out);else ost575AddButton(out,'knowledgeModules',selected==='devices'?{module:'mpg'}:{module:'checklists'});
                 history.replaceState(null, '', 'training.html?typ=' + selected);
                 render();
                 return;
@@ -1952,7 +1984,6 @@
             }
         });
         render();
-        if(selected==='skills')ost583SkillAdd(out);else ost575AddButton(out,'knowledgeModules',selected==='devices'?{module:'mpg'}:{module:'checklists'});
     }
     // ------------------------------------------------------------------------
     // Materialien
