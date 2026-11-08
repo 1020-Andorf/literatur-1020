@@ -5855,3 +5855,52 @@ html body.app-shell.ost576-edit-enabled main .ost615-edit{display:inline-flex;}
 html body.app-shell main .ost615-edit:hover{border-color:#c53143;color:#a32434;}
 html body.app-shell .ost576-modal .ost583-modal-rich .ost573-editable{min-height:260px;max-height:55vh;overflow-y:auto;line-height:1.65;}
 @media(max-width:640px){html body.app-shell main .ost615-body{padding:15px;}html body.app-shell main .ost615-heading{flex-wrap:wrap;}}
+
+/* 616 — optional quick-reference boxes above the unified medical article */
+html body.app-shell main .ost616-article .ost616-card-grid {
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;gap:12px;margin:0 0 17px;width:100%;
+}
+html body.app-shell main .ost616-article .ost616-card {
+  min-width:0;padding:15px 16px;border-radius:14px;border:1px solid #e2e8ed;
+  background:#f7f9fb;box-shadow:none!important;color:#253f52;
+}
+html body.app-shell main .ost616-article .ost616-card-redflags {
+  background:#fff3f4;border-color:#edcfd5;
+}
+html body.app-shell main .ost616-article .ost616-card-heading {
+  display:flex;align-items:center;gap:9px;margin:0 0 9px;
+}
+html body.app-shell main .ost616-article .ost616-card-heading h2 {
+  font-size:.92rem!important;line-height:1.25!important;margin:0!important;
+  padding:0!important;border:0!important;font-weight:700!important;color:#173d55!important;
+}
+html body.app-shell main .ost616-article .ost616-card-icon {
+  display:inline-grid;place-items:center;flex:none;width:25px;height:25px;
+  border-radius:7px;background:#f5e5e9;color:#b52c40;
+  font-weight:700;font-size:.91rem;
+}
+html body.app-shell main .ost616-article .ost616-card-content {
+  font-size:.87rem;line-height:1.55;overflow-wrap:anywhere;color:#344c5b;
+}
+html body.app-shell main .ost616-article .ost616-card-content p {margin:0 0 8px}
+html body.app-shell main .ost616-article .ost616-card-content p:last-child {margin-bottom:0}
+html body.app-shell main .ost616-article .ost616-card-content ul,
+html body.app-shell main .ost616-article .ost616-card-content ol {margin:3px 0 0 1.15em;padding:0}
+html body.app-shell main .ost616-article .ost616-card-content li {margin:0 0 5px}
+html body.app-shell main .ost616-article .ost616-card-content img {max-width:100%;height:auto}
+html body.app-shell .ost576-modal .ost616-checkbox-field {padding:5px 0 0}
+html body.app-shell .ost576-modal .ost616-checkbox-field label {
+  display:flex!important;align-items:center;gap:10px;cursor:pointer;
+  font-size:.94rem;font-weight:650;color:#294a5f;
+}
+html body.app-shell .ost576-modal .ost616-checkbox-field input[type=checkbox] {
+  display:inline-block!important;flex:none;appearance:auto!important;
+  width:19px!important;height:19px!important;margin:0!important;
+  accent-color:#b92c3f;
+}
+html body.app-shell .ost576-modal .ost616-checkbox-field + .ost583-modal-field {margin-top:1px}
+@media(max-width:790px) {
+  html body.app-shell main .ost616-article .ost616-card-grid {grid-template-columns:1fr;gap:9px}
+  html body.app-shell main .ost616-article .ost616-card {padding:13px 15px}
+}

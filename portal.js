@@ -1301,11 +1301,12 @@
       const showField=f=>{
         const key=esc(f.key),label=esc(f.label||f.key),value=esc(f.value??'');
         let control='';
-        if(f.type==='textarea')control=`<textarea name="${key}" rows="5" ${f.required?'required':''}>${value}</textarea>`;
+        if(f.type==='checkbox')control=`<input id="ost583-${key}" name="${key}" type="checkbox" ${f.value?'checked':''} class="ost616-check">`;
+        else if(f.type==='textarea')control=`<textarea name="${key}" rows="5" ${f.required?'required':''}>${value}</textarea>`;
         else if(f.type==='rich')control=`<div class="ost583-modal-rich">${ost573Toolbar()}<div class="ost573-editable" data-ost583-rich="${key}" contenteditable="true" role="textbox" aria-label="${label}">${ost570CleanHtml(f.value||'')}</div></div>`;
         else if(f.type==='select')control=`<select name="${key}">${(f.options||[]).map(o=>`<option value="${esc(o.value)}" ${String(o.value)===String(f.value)?'selected':''}>${esc(o.label)}</option>`).join('')}</select>`;
         else control=`<input name="${key}" type="${f.type||'text'}" value="${value}" ${f.required?'required':''}>`;
-        return `<div class="ost583-modal-field"><label for="ost583-${key}">${label}</label>${control}</div>`;
+        return f.type==='checkbox'?`<div class="ost583-modal-field ost616-checkbox-field"><label for="ost583-${key}">${control}<span>${label}</span></label></div>`:`<div class="ost583-modal-field"><label for="ost583-${key}">${label}</label>${control}</div>`;
       };
       backdrop.innerHTML=`<section class="ost576-modal ost583-modal" role="dialog" aria-modal="true" aria-label="${esc(title)}"><header><h2>${esc(title)}</h2><button class="ost576-close" type="button" aria-label="Schließen">×</button></header><form class="ost576-form">${fields.map(showField).join('')}<div class="ost576-form-actions"><button class="btn primary" type="submit">Speichern</button><button class="btn" type="button" data-cancel>Abbrechen</button><span role="status" data-status></span></div></form></section>`;
       document.body.appendChild(backdrop);
@@ -1321,6 +1322,7 @@
         if(!form.reportValidity())return;
         submit.disabled=true;status.textContent='Speichere …';
         const vals=Object.fromEntries(new FormData(form).entries());
+        fields.filter(f=>f.type==='checkbox').forEach(f=>vals[f.key]=!!form.elements.namedItem(f.key)?.checked);
         backdrop.querySelectorAll('[data-ost583-rich]').forEach(node=>vals[node.dataset.ost583Rich]=ost570CleanHtml(node.innerHTML));
         try{if(await onSave(vals))close();else status.textContent='Speichern fehlgeschlagen. Bitte Verbindung und PIN prüfen.';}
         catch(err){status.textContent=err.message||'Speichern fehlgeschlagen.';}
@@ -1336,13 +1338,21 @@
         const fields=[
           {key:'title',label:'Titel',value:'',required:true},
           {key:'knowledgeType',label:'Artikelart',type:'select',value:'symptom',options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]},
-          {key:'articleSummary',label:'Kurzüberblick (optional)',type:'textarea',value:''},
-          {key:'articleHtml',label:'Artikelinhalt',type:'rich',value:'<h2>Überblick</h2><p></p>'}
+          {key:'show_overview',label:'Übersicht anzeigen',type:'checkbox',value:true},
+          {key:'card_overview',label:'Übersicht – Inhalt',type:'rich',value:''},
+          {key:'show_redflags',label:'Red Flags / Warnzeichen anzeigen',type:'checkbox',value:false},
+          {key:'card_redflags',label:'Red Flags / Warnzeichen – Inhalt',type:'rich',value:''},
+          {key:'show_anamnesis',label:'Anamnese anzeigen',type:'checkbox',value:false},
+          {key:'card_anamnesis',label:'Anamnese – Inhalt',type:'rich',value:''},
+          {key:'articleHtml',label:'Fachartikel – frei formatierbarer Inhalt',type:'rich',value:'<h2>Fachartikel</h2><p></p>'}
         ];
         ost576Modal('Neuen Wissensartikel anlegen',fields,async values=>{
           const data=await get('differential');if(!Array.isArray(data))return false;
           const next={...item,title:String(values.title||'').trim(),knowledgeType:values.knowledgeType,
-            articleSummary:String(values.articleSummary||'').trim(),articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
+            quickInfo:Object.fromEntries(['overview','redflags','anamnesis'].map(key=>[key,{
+                visible:values['show_'+key]===true,html:ost570CleanHtml(values['card_'+key]||'')
+            }])),
+            articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
           if(!next.title)return false;
           const ok=await save('differential',[...data,next]);if(ok)location.reload();return ok;
         });
@@ -1554,6 +1564,58 @@
             block((v.sectionTitles||{}).sources||'Quellen und Literatur',v.sourcesHtml);
             return blocks.join('')||'<p>Dieser Artikel kann noch ergänzt werden.</p>';
         }
+        // 616: optional cards are independent of the free rich-text article.
+        // Missing toggles inherit the existing data and are not written until save.
+        function ost616LegacyList(items){
+            const list=arr(items);
+            return list.length?`<ul>${list.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'';
+        }
+        function ost616Cards(v){
+            const value=(key,legacy)=>v.quickInfo?.[key]?.html!==undefined?v.quickInfo[key].html:legacy;
+            const overview=value('overview',v.articleSummary||v.theory||'');
+            const redflags=value('redflags',v.redflagsHtml||ost616LegacyList(v.redflags));
+            const anamnesis=value('anamnesis',v.questionsHtml||ost616LegacyList(v.questions));
+            const shown=(key,html)=>typeof v.quickInfo?.[key]?.visible==='boolean'?v.quickInfo[key].visible:!!String(html||'').trim();
+            return [
+                {key:'overview',label:'Übersicht',html:overview,visible:shown('overview',overview),icon:'▤'},
+                {key:'redflags',label:'Red Flags / Warnzeichen',html:redflags,visible:shown('redflags',redflags),icon:'!'},
+                {key:'anamnesis',label:'Anamnese',html:anamnesis,visible:shown('anamnesis',anamnesis),icon:'☷'}
+            ];
+        }
+        function ost616LegacyBody(v){
+            const blocks=[];
+            const block=(title,content)=>{if(String(content||'').trim())blocks.push(`<h2>${esc(title)}</h2>${ost570CleanHtml(content)}`);};
+            const causes=arr(v.causes).map(c=>typeof c==='string'?{name:c}:c).filter(Boolean);
+            if(causes.length){
+                blocks.push('<h2>Mögliche Krankheitsbilder</h2>');
+                for(const c of causes){
+                    blocks.push(`<h3>${esc(c.name||'Krankheitsbild')}</h3>`);
+                    if(c.articleHtml)blocks.push(ost570CleanHtml(c.articleHtml));
+                    else for(const [title,value] of [['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications||c.medication],['CAVE / Warnzeichen',c.cave]]){
+                        if(value)blocks.push(`<h4>${esc(title)}</h4>${ost570CleanHtml(renderModuleText(value))}`);
+                    }
+                    if(/^https?:\/\//i.test(String(c.sourceUrl||'')))blocks.push(`<p><a href="${esc(c.sourceUrl)}">${esc(c.sourceLabel||'Fachquelle')}</a></p>`);
+                }
+            }
+            block((v.sectionTitles||{}).richContent||'Weitere Fachinformationen',v.richContent);
+            block((v.sectionTitles||{}).sources||'Quellen und Literatur',v.sourcesHtml);
+            return blocks.join('');
+        }
+        function ost616ArticleBody(v){
+            const saved=String(v.articleHtml||'').trim();
+            if(!saved)return ost616LegacyBody(v)||'<p>Dieser Artikel kann noch ergänzt werden.</p>';
+            // If 615 stored the exact automated legacy conversion, the first
+            // three sections are now shown in their own cards; don't duplicate them.
+            // A user-modified article is never destructively rewritten here.
+            const legacy=ost570CleanHtml(ost615LegacyHtml(v)).trim();
+            if(ost570CleanHtml(saved).trim()===legacy)return ost616LegacyBody(v)||'<p>Dieser Artikel kann noch ergänzt werden.</p>';
+            return ost570CleanHtml(saved);
+        }
+        function ost616CardMarkup(v){
+            const cards=ost616Cards(v).filter(c=>c.visible);
+            if(!cards.length)return '';
+            return `<div class="ost616-card-grid">${cards.map(c=>`<section class="ost616-card ost616-card-${c.key}"><div class="ost616-card-heading"><span class="ost616-card-icon" aria-hidden="true">${c.icon}</span><h2>${c.label}</h2></div><div class="ost616-card-content ost-module-body">${ost570CleanHtml(c.html||'<p>Noch kein Inhalt hinterlegt.</p>')}</div></section>`).join('')}</div>`;
+        }
         function article(item) {
             if (!item)
                 return '<div class="cf551-empty">Hier sind noch keine Inhalte hinterlegt.</div>';
@@ -1561,9 +1623,8 @@
             let body = '';
             if (item.type === 'symptom') {
                 // All three knowledge types have the same uncluttered article view.
-                const html=v.articleHtml?.trim()?ost570CleanHtml(v.articleHtml):ost615LegacyHtml(v);
-                const subtitle=String(v.articleSummary||'').trim();
-                return `<article class="ost615-article"><div class="ost615-body">${subtitle?`<p class="ost615-summary">${esc(subtitle)}</p>`:''}<div class="ost615-rich ost-module-body">${html}</div></div></article>`;
+                const html=ost616ArticleBody(v);
+                return `<article class="ost615-article ost616-article">${ost616CardMarkup(v)}<div class="ost615-body"><div class="ost615-rich ost-module-body">${html}</div></div></article>`;
                 const warning = arr(v.redflags);
                 const questions = arr(v.questions);
                 const causes = arr(v.causes).map(c => typeof c === 'string' ? { name: c } : c);
@@ -1644,18 +1705,26 @@
             if(!ost576IsEditing()){alert('Bitte auf der Startseite zuerst „Bearbeitung freigeben“ aktivieren.');return;}
             if(!await ost574Pin())return;
             const v=record.value||record;
-            const originalContent=v.articleHtml?.trim()?v.articleHtml:ost615LegacyHtml(v);
+            const originalContent=ost616ArticleBody(v);
+            const cards=ost616Cards(v);
+            const cardFields=cards.flatMap(c=>[
+                {key:'show_'+c.key,label:c.label+' anzeigen',type:'checkbox',value:c.visible},
+                {key:'card_'+c.key,label:c.label+' – Inhalt',type:'rich',value:c.html}
+            ]);
             ost576Modal('Wissensartikel bearbeiten',[
                 {key:'title',label:'Titel',value:v.title||'',required:true},
                 {key:'knowledgeType',label:'Artikelart',type:'select',value:typeOf(v),options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]},
-                {key:'articleSummary',label:'Kurzüberblick (optional)',type:'textarea',value:v.articleSummary||''},
+                ...cardFields,
                 {key:'articleHtml',label:'Fachartikel – frei formatierbarer Inhalt',type:'rich',value:originalContent}
             ],async values=>{
                 const title=values.title?.trim();if(!title)return false;
                 const latest=await get('differential');
                 const i=latest.findIndex(x=>String(x.id)===String(v.id));if(i<0)throw new Error('Artikel nicht mehr gefunden.');
                 const next={...latest[i],title:title.slice(0,180),knowledgeType:values.knowledgeType,
-                    articleSummary:(values.articleSummary||'').trim(),
+                    quickInfo:Object.fromEntries(['overview','redflags','anamnesis'].map(key=>[key,{
+                        visible:values['show_'+key]===true,
+                        html:ost570CleanHtml(values['card_'+key]||'')
+                    }])),
                     articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
                 // Preserve theory/redflags/questions/causes and every unknown field.
                 const ok=await save('differential',latest.map((x,j)=>j===i?next:x));
