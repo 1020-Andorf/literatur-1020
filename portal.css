@@ -5979,3 +5979,36 @@ html body.app-shell main .ost616-article .ost616-card .ost-module-body h3,
 html body.app-shell main .ost616-article .ost616-card .ost-module-body h4{
   display:none!important;
 }
+
+
+/* 619 — stronger distinct tones and editable quick-info card headings */
+html body.app-shell main .ost616-article .ost616-card-grid{
+  gap:8px!important;
+  max-width:860px!important;
+}
+html body.app-shell main .ost616-article .ost616-card-redflags{
+  background:#fff1f3!important;
+  border-color:#efb8c1!important;
+}
+html body.app-shell main .ost616-article .ost616-card-redflags .ost616-card-icon{
+  background:#f7d9df!important;
+  color:#b42335!important;
+}
+html body.app-shell main .ost616-article .ost616-card-anamnesis{
+  background:#fff8e8!important;
+  border-color:#edd9a6!important;
+}
+html body.app-shell main .ost616-article .ost616-card-anamnesis .ost616-card-icon{
+  background:#f8ebc6!important;
+  color:#9b6a09!important;
+}
+html body.app-shell main .ost616-article .ost616-card{
+  padding:11px 14px!important;
+}
+html body.app-shell main .ost616-article .ost616-card-heading{
+  margin:0 0 5px!important;
+}
+html body.app-shell main .ost616-article .ost616-card-content.ost-module-body,
+html body.app-shell main .ost616-article .ost616-card .ost-module-body{
+  padding-top:0!important;
+}

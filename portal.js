@@ -1339,8 +1339,10 @@
           {key:'title',label:'Titel',value:'',required:true},
           {key:'knowledgeType',label:'Artikelart',type:'select',value:'symptom',options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]},
           {key:'show_redflags',label:'Red Flags / Warnzeichen anzeigen',type:'checkbox',value:false},
+          {key:'title_redflags',label:'Überschrift Red Flags / Warnzeichen',value:'Red Flags / Warnzeichen'},
           {key:'card_redflags',label:'Red Flags / Warnzeichen – Inhalt',type:'rich',value:''},
           {key:'show_anamnesis',label:'Anamnese anzeigen',type:'checkbox',value:false},
+          {key:'title_anamnesis',label:'Überschrift Anamnese',value:'Anamnese'},
           {key:'card_anamnesis',label:'Anamnese – Inhalt',type:'rich',value:''},
           {key:'articleHtml',label:'Fachartikel – frei formatierbarer Inhalt',type:'rich',value:'<h2>Fachartikel</h2><p></p>'}
         ];
@@ -1348,7 +1350,9 @@
           const data=await get('differential');if(!Array.isArray(data))return false;
           const next={...item,title:String(values.title||'').trim(),knowledgeType:values.knowledgeType,
             quickInfo:Object.fromEntries(['redflags','anamnesis'].map(key=>[key,{
-                visible:values['show_'+key]===true,html:ost570CleanHtml(values['card_'+key]||'')
+                visible:values['show_'+key]===true,
+                title:String(values['title_'+key]|| (key==='redflags'?'Red Flags / Warnzeichen':'Anamnese')).trim(),
+                html:ost570CleanHtml(values['card_'+key]||'')
             }])),
             articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
           if(!next.title)return false;
@@ -1570,12 +1574,13 @@
         }
         function ost616Cards(v){
             const value=(key,legacy)=>v.quickInfo?.[key]?.html!==undefined?v.quickInfo[key].html:legacy;
+            const title=(key,legacy)=>String(v.quickInfo?.[key]?.title||((v.sectionTitles||{})[key])||legacy||'').trim();
             const redflags=value('redflags',v.redflagsHtml||ost616LegacyList(v.redflags));
             const anamnesis=value('anamnesis',v.questionsHtml||ost616LegacyList(v.questions));
             const shown=(key,html)=>typeof v.quickInfo?.[key]?.visible==='boolean'?v.quickInfo[key].visible:!!String(html||'').trim();
             return [
-                {key:'redflags',label:'Red Flags / Warnzeichen',html:redflags,visible:shown('redflags',redflags),icon:'!'},
-                {key:'anamnesis',label:'Anamnese',html:anamnesis,visible:shown('anamnesis',anamnesis),icon:'☷'}
+                {key:'redflags',label:title('redflags','Red Flags / Warnzeichen'),html:redflags,visible:shown('redflags',redflags),icon:'!'},
+                {key:'anamnesis',label:String(v.quickInfo?.anamnesis?.title||((v.sectionTitles||{}).questions)||((v.sectionTitles||{}).anamnesis)||'Anamnese').trim(),html:anamnesis,visible:shown('anamnesis',anamnesis),icon:'☷'}
             ];
         }
         function ost616LegacyBody(v){
@@ -1705,6 +1710,7 @@
             const cards=ost616Cards(v);
             const cardFields=cards.flatMap(c=>[
                 {key:'show_'+c.key,label:c.label+' anzeigen',type:'checkbox',value:c.visible},
+                {key:'title_'+c.key,label:'Überschrift – '+c.label,value:c.label},
                 {key:'card_'+c.key,label:c.label+' – Inhalt',type:'rich',value:c.html}
             ]);
             ost576Modal('Wissensartikel bearbeiten',[
@@ -1718,7 +1724,9 @@
                 const i=latest.findIndex(x=>String(x.id)===String(v.id));if(i<0)throw new Error('Artikel nicht mehr gefunden.');
                 const next={...latest[i],title:title.slice(0,180),knowledgeType:values.knowledgeType,
                     quickInfo:{...latest[i].quickInfo,...Object.fromEntries(['redflags','anamnesis'].map(key=>[key,{
+                        ...(latest[i].quickInfo?.[key]||{}),
                         visible:values['show_'+key]===true,
+                        title:String(values['title_'+key]|| (key==='redflags'?'Red Flags / Warnzeichen':'Anamnese')).trim(),
                         html:ost570CleanHtml(values['card_'+key]||'')
                     }]))},
                     articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
