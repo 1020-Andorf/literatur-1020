@@ -1247,7 +1247,8 @@
         "sourceLabel": "Fachliteratur auf PubMed suchen"
       }
     ],
-    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung."
+    "theory": "Neurologische Symptome können aus fokalen Läsionen, metabolischen Störungen oder einer globalen zerebralen Minderperfusion entstehen. Zeitlicher Verlauf, Lateralisierung und reversible Ursachen wie Hypoglykämie helfen bei der Einordnung.",
+    "knowledgeType": "disease"
   },
   {
     "id": "diag-schwindel-ataxie",
