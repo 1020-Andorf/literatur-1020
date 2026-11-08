@@ -214,7 +214,7 @@
     "quickInfo": {
       "redflags": {
         "visible": true,
-        "html": "<ul><li><b><font color=\"#193c55\">Bewegungsunabhängiger Druckschmerz</font></b></li><li><b><font color=\"#193c55\">Kaltschweißigkeit</font></b></li><li><b><font color=\"#193c55\">Neurologische Defizite</font></b></li><li><b><font color=\"#193c55\">Schwere Dyspnoe</font></b></li><li><b><font color=\"#193c55\">KHK in der Patientengeschichte</font></b></li></ul>",
+        "html": "<ul><li><font color=\"#193c55\">Bewegungsunabhängiger Druckschmerz</font></li><li><font color=\"#193c55\">Kaltschweißigkeit</font></li><li><font color=\"#193c55\">Neurologische Defizite</font></li><li><font color=\"#193c55\">Schwere Dyspnoe</font></li><li><font color=\"#193c55\">KHK in der Patientengeschichte</font></li></ul>",
         "title": "⚠ Red Flags · Warnzeichen"
       },
       "anamnesis": {
