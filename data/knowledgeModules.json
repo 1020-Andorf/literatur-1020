@@ -1941,5 +1941,15 @@
         "note": ""
       }
     ]
+  },
+  {
+    "id": "device-mw7zbaql-xg2ho",
+    "module": "mpg",
+    "status": "published",
+    "category": "Geräte",
+    "title": "Fahrtrage / Stryker M1",
+    "summary": "",
+    "body": "",
+    "documentUrl": ""
   }
 ]
