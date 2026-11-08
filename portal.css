@@ -5835,3 +5835,23 @@ html body.app-shell main .mw613-library .mw613-organ-add{margin-top:10px!importa
 body.app-shell .ost573-card-editor .ost614-pdf-label{display:grid;gap:7px;font-size:.9rem;font-weight:600;color:#25465b;}
 body.app-shell .ost573-card-editor input[data-ost614-device-pdf]{background:#fff;border:1px solid #d1dde5;border-radius:9px;padding:9px;width:100%;font-size:.87rem;}
 body.app-shell .ost614-upload-status{display:block;min-height:1.2em;font-size:.83rem;color:#48677a;margin:4px 0 8px;}
+
+
+/* 615: unified medical knowledge article */
+html body.app-shell main .ost615-article{max-width:940px;margin:0 auto 38px;background:transparent;border:0;box-shadow:none;}
+html body.app-shell main .ost615-body{background:#fff;border:1px solid #e0e7ed;border-radius:17px;padding:clamp(17px,3vw,31px);box-shadow:0 2px 10px #1a40550a;}
+html body.app-shell main .ost615-summary{background:#f5f8fa;border-left:3px solid #bf293d;border-radius:7px;padding:13px 16px;color:#24485e;font-size:1rem;line-height:1.65;margin:0 0 24px;}
+html body.app-shell main .ost615-rich{font-size:1rem;line-height:1.75;color:#253f52;overflow-wrap:anywhere;}
+html body.app-shell main .ost615-rich h2{font-size:1.13rem;font-weight:700;color:#17364b;margin:29px 0 10px;padding:0 0 8px;border-bottom:1px solid #e7edf1;}
+html body.app-shell main .ost615-rich h2:first-child{margin-top:0;}
+html body.app-shell main .ost615-rich h3{font-size:1.04rem;font-weight:680;color:#263f52;margin:21px 0 8px;}
+html body.app-shell main .ost615-rich h4{font-size:.96rem;margin:15px 0 6px;}
+html body.app-shell main .ost615-rich p,html body.app-shell main .ost615-rich ul,html body.app-shell main .ost615-rich ol{margin:9px 0 13px;}
+html body.app-shell main .ost615-rich li{margin-bottom:5px;}
+html body.app-shell main .ost615-rich img{max-width:100%;height:auto;border-radius:10px;}
+html body.app-shell main .ost615-heading{max-width:940px;margin-left:auto!important;margin-right:auto!important;display:flex!important;align-items:start;justify-content:space-between;gap:16px;}
+html body.app-shell main .ost615-edit{display:none;flex-shrink:0;border:1px solid #dfe7ed;border-radius:9px;background:#fff;color:#536d7c;font-size:.82rem;padding:7px 11px;cursor:pointer;}
+html body.app-shell.ost576-edit-enabled main .ost615-edit{display:inline-flex;}
+html body.app-shell main .ost615-edit:hover{border-color:#c53143;color:#a32434;}
+html body.app-shell .ost576-modal .ost583-modal-rich .ost573-editable{min-height:260px;max-height:55vh;overflow-y:auto;line-height:1.65;}
+@media(max-width:640px){html body.app-shell main .ost615-body{padding:15px;}html body.app-shell main .ost615-heading{flex-wrap:wrap;}}

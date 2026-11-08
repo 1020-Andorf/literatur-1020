@@ -1332,6 +1332,22 @@
       if(!await ost574Pin())return;
       const item={...ost575Defaults[store],...overrides,id:'inline-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6)};
       const map={news:['title','date','category','text'],events:['title','date','time','location','category','capacity','description'],changes:['title','date','category','old','new','source'],meetings:['title','date','category','speaker','summary'],articles:['title','authors','journal','year','why','freeUrl'],differential:['title','theory'],knowledgeModules:['title','summary','documentUrl'],algorithms:['title','sourceUrl','source'],skills:['name']};
+      if(store==='differential'){
+        const fields=[
+          {key:'title',label:'Titel',value:'',required:true},
+          {key:'knowledgeType',label:'Artikelart',type:'select',value:'symptom',options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]},
+          {key:'articleSummary',label:'Kurzüberblick (optional)',type:'textarea',value:''},
+          {key:'articleHtml',label:'Artikelinhalt',type:'rich',value:'<h2>Überblick</h2><p></p>'}
+        ];
+        ost576Modal('Neuen Wissensartikel anlegen',fields,async values=>{
+          const data=await get('differential');if(!Array.isArray(data))return false;
+          const next={...item,title:String(values.title||'').trim(),knowledgeType:values.knowledgeType,
+            articleSummary:String(values.articleSummary||'').trim(),articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
+          if(!next.title)return false;
+          const ok=await save('differential',[...data,next]);if(ok)location.reload();return ok;
+        });
+        return;
+      }
       const keys=map[store]||['title'];const fields=keys.map(k=>({key:k,label:({title:'Titel',name:'Skillgruppe',date:'Datum',time:'Uhrzeit',location:'Ort',category:'Kategorie',capacity:'Teilnehmerlimit',description:'Beschreibung',summary:'Untertitel',documentUrl:'PDF-/Web-Link',sourceUrl:'PDF-/Web-Link',old:'Bisherige Lehrmeinung',new:'Neue Lehrmeinung',text:'Meldung',why:'Beschreibung',theory:'Überblick'})[k]||k,value:item[k]??'',type:k==='date'?'date':k==='capacity'?'number':['description','text','old','new','why','theory'].includes(k)?'rich':'text',required:k==='title'||k==='name'}));
       if(store==='differential'){fields.push({key:'knowledgeType',label:'Art des Wissensartikels',type:'select',value:item.knowledgeType||'symptom',options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]});}
       if(store==='articles'){const cats=await ostLitCategories(await articles());fields.push({key:'litCategory',label:'Literaturkategorie',type:'select',options:[{value:'',label:'– Kategorie wählen –'},...cats.map(c=>({value:c,label:c}))]});}
@@ -1512,12 +1528,42 @@
                 return d.diseases.map(({ value, source, index }) => ({ id: 'disease:' + source.id + ':' + index, title: value.name, icon: 'heart', type: 'disease', value, source }));
             return d.materials.map(({ kind, value }, i) => ({ id: 'material:' + kind + ':' + (value.id || i), title: value.title || 'Material', icon: kind === 'checklist' ? 'checklist' : 'book', type: kind, value }));
         }
+        // 615: lossless in-memory view of the older multi-field articles.
+        // The legacy fields remain in GitHub/Cloudflare; a unified text is only
+        // written once a user explicitly saves it with the new editor.
+        function ost615LegacyHtml(v){
+            const blocks=[];
+            const block=(title,content)=>{if(String(content||'').trim()) blocks.push(`<h2>${esc(title)}</h2>${ost570CleanHtml(content)}`);};
+            const list=xs=>arr(xs).length?`<ul>${arr(xs).map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:'';
+            block((v.sectionTitles||{}).theory||'Überblick',v.theory);
+            block((v.sectionTitles||{}).redflags||'Red Flags / Warnzeichen',v.redflagsHtml||list(v.redflags));
+            block((v.sectionTitles||{}).questions||'Wichtige Fragen / Anamnese',v.questionsHtml||list(v.questions));
+            const causes=arr(v.causes).map(c=>typeof c==='string'?{name:c}:c).filter(Boolean);
+            if(causes.length){
+                blocks.push('<h2>Mögliche Krankheitsbilder</h2>');
+                for(const c of causes){
+                    blocks.push(`<h3>${esc(c.name||'Krankheitsbild')}</h3>`);
+                    if(c.articleHtml) blocks.push(ost570CleanHtml(c.articleHtml));
+                    else for(const [heading,value] of [['Symptome',c.symptoms],['Einordnung',c.info],['Pathophysiologie',c.physiology],['Befunde',c.findings],['Pharmakologie',c.medications||c.medication],['CAVE / Warnzeichen',c.cave]]){
+                        if(value)blocks.push(`<h4>${esc(heading)}</h4>${ost570CleanHtml(renderModuleText(value))}`);
+                    }
+                    if(/^https?:\/\//i.test(String(c.sourceUrl||'')))blocks.push(`<p><a href="${esc(c.sourceUrl)}">${esc(c.sourceLabel||'Fachquelle')}</a></p>`);
+                }
+            }
+            block((v.sectionTitles||{}).richContent||'Weitere Fachinformationen',v.richContent);
+            block((v.sectionTitles||{}).sources||'Quellen und Literatur',v.sourcesHtml);
+            return blocks.join('')||'<p>Dieser Artikel kann noch ergänzt werden.</p>';
+        }
         function article(item) {
             if (!item)
                 return '<div class="cf551-empty">Hier sind noch keine Inhalte hinterlegt.</div>';
             const { value: v } = item;
             let body = '';
             if (item.type === 'symptom') {
+                // All three knowledge types have the same uncluttered article view.
+                const html=v.articleHtml?.trim()?ost570CleanHtml(v.articleHtml):ost615LegacyHtml(v);
+                const subtitle=String(v.articleSummary||'').trim();
+                return `<article class="ost615-article"><div class="ost615-body">${subtitle?`<p class="ost615-summary">${esc(subtitle)}</p>`:''}<div class="ost615-rich ost-module-body">${html}</div></div></article>`;
                 const warning = arr(v.redflags);
                 const questions = arr(v.questions);
                 const causes = arr(v.causes).map(c => typeof c === 'string' ? { name: c } : c);
@@ -1589,10 +1635,33 @@
             }).join('')||'<p class="mw613-empty">Keine passenden Wissensartikel gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
             const kind=typeOf(current.value);
-            out.innerHTML=`<header class="ost570-article-head ost570-title-only mw613-article-heading"><div><span class="mw613-article-kicker">${esc(organ.label)} · ${knowledgeTypes[kind].label}</span><h1 class="ost570-title-text">${esc(current.title)}</h1></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
-            $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
+            out.innerHTML=`<header class="ost570-article-head ost570-title-only mw613-article-heading ost615-heading"><div><span class="mw613-article-kicker">${esc(organ.label)} · ${knowledgeTypes[kind].label}</span><h1 class="ost570-title-text">${esc(current.title)}</h1></div><button type="button" class="ost615-edit" data-ost615-edit>✎ Artikel bearbeiten</button></header>${article(current)}`;
+            $('[data-ost615-edit]',out).addEventListener('click',()=>ost615Edit(current));
             $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index||0))));
             out.querySelector('[data-ost583-cause-add]')?.addEventListener('click',()=>ost583CreateCause(current));
+        }
+        async function ost615Edit(record){
+            if(!ost576IsEditing()){alert('Bitte auf der Startseite zuerst „Bearbeitung freigeben“ aktivieren.');return;}
+            if(!await ost574Pin())return;
+            const v=record.value||record;
+            const originalContent=v.articleHtml?.trim()?v.articleHtml:ost615LegacyHtml(v);
+            ost576Modal('Wissensartikel bearbeiten',[
+                {key:'title',label:'Titel',value:v.title||'',required:true},
+                {key:'knowledgeType',label:'Artikelart',type:'select',value:typeOf(v),options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]},
+                {key:'articleSummary',label:'Kurzüberblick (optional)',type:'textarea',value:v.articleSummary||''},
+                {key:'articleHtml',label:'Fachartikel – frei formatierbarer Inhalt',type:'rich',value:originalContent}
+            ],async values=>{
+                const title=values.title?.trim();if(!title)return false;
+                const latest=await get('differential');
+                const i=latest.findIndex(x=>String(x.id)===String(v.id));if(i<0)throw new Error('Artikel nicht mehr gefunden.');
+                const next={...latest[i],title:title.slice(0,180),knowledgeType:values.knowledgeType,
+                    articleSummary:(values.articleSummary||'').trim(),
+                    articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
+                // Preserve theory/redflags/questions/causes and every unknown field.
+                const ok=await save('differential',latest.map((x,j)=>j===i?next:x));
+                if(ok){Object.assign(v,next);draw();}
+                return ok;
+            });
         }
         async function ost583CreateCause(item){
           if(!await ost574Pin())return;
