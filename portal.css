@@ -5904,3 +5904,21 @@ html body.app-shell .ost576-modal .ost616-checkbox-field + .ost583-modal-field {
   html body.app-shell main .ost616-article .ost616-card-grid {grid-template-columns:1fr;gap:9px}
   html body.app-shell main .ost616-article .ost616-card {padding:13px 15px}
 }
+
+
+/* 617: only Red Flags and Anamnese; stacked at ALL viewport widths. */
+html body.app-shell main .ost616-article .ost616-card-grid {
+  display:flex!important;
+  flex-direction:column!important;
+  grid-template-columns:minmax(0,1fr)!important;
+  align-items:stretch!important;
+  gap:11px!important;
+  width:100%!important;
+  max-width:940px;
+  margin:0 auto 17px!important;
+}
+html body.app-shell main .ost616-article .ost616-card {
+  width:100%!important;
+  box-sizing:border-box!important;
+}
+html body.app-shell main .ost616-article .ost616-card-overview {display:none!important;}

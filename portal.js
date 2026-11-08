@@ -1338,8 +1338,6 @@
         const fields=[
           {key:'title',label:'Titel',value:'',required:true},
           {key:'knowledgeType',label:'Artikelart',type:'select',value:'symptom',options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]},
-          {key:'show_overview',label:'Übersicht anzeigen',type:'checkbox',value:true},
-          {key:'card_overview',label:'Übersicht – Inhalt',type:'rich',value:''},
           {key:'show_redflags',label:'Red Flags / Warnzeichen anzeigen',type:'checkbox',value:false},
           {key:'card_redflags',label:'Red Flags / Warnzeichen – Inhalt',type:'rich',value:''},
           {key:'show_anamnesis',label:'Anamnese anzeigen',type:'checkbox',value:false},
@@ -1349,7 +1347,7 @@
         ost576Modal('Neuen Wissensartikel anlegen',fields,async values=>{
           const data=await get('differential');if(!Array.isArray(data))return false;
           const next={...item,title:String(values.title||'').trim(),knowledgeType:values.knowledgeType,
-            quickInfo:Object.fromEntries(['overview','redflags','anamnesis'].map(key=>[key,{
+            quickInfo:Object.fromEntries(['redflags','anamnesis'].map(key=>[key,{
                 visible:values['show_'+key]===true,html:ost570CleanHtml(values['card_'+key]||'')
             }])),
             articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
@@ -1572,12 +1570,10 @@
         }
         function ost616Cards(v){
             const value=(key,legacy)=>v.quickInfo?.[key]?.html!==undefined?v.quickInfo[key].html:legacy;
-            const overview=value('overview',v.articleSummary||v.theory||'');
             const redflags=value('redflags',v.redflagsHtml||ost616LegacyList(v.redflags));
             const anamnesis=value('anamnesis',v.questionsHtml||ost616LegacyList(v.questions));
             const shown=(key,html)=>typeof v.quickInfo?.[key]?.visible==='boolean'?v.quickInfo[key].visible:!!String(html||'').trim();
             return [
-                {key:'overview',label:'Übersicht',html:overview,visible:shown('overview',overview),icon:'▤'},
                 {key:'redflags',label:'Red Flags / Warnzeichen',html:redflags,visible:shown('redflags',redflags),icon:'!'},
                 {key:'anamnesis',label:'Anamnese',html:anamnesis,visible:shown('anamnesis',anamnesis),icon:'☷'}
             ];
@@ -1721,10 +1717,10 @@
                 const latest=await get('differential');
                 const i=latest.findIndex(x=>String(x.id)===String(v.id));if(i<0)throw new Error('Artikel nicht mehr gefunden.');
                 const next={...latest[i],title:title.slice(0,180),knowledgeType:values.knowledgeType,
-                    quickInfo:Object.fromEntries(['overview','redflags','anamnesis'].map(key=>[key,{
+                    quickInfo:{...latest[i].quickInfo,...Object.fromEntries(['redflags','anamnesis'].map(key=>[key,{
                         visible:values['show_'+key]===true,
                         html:ost570CleanHtml(values['card_'+key]||'')
-                    }])),
+                    }]))},
                     articleHtml:ost570CleanHtml(values.articleHtml||''),articleFormat:'unified'};
                 // Preserve theory/redflags/questions/causes and every unknown field.
                 const ok=await save('differential',latest.map((x,j)=>j===i?next:x));
