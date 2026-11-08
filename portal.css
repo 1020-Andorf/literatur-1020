@@ -5784,3 +5784,54 @@ body.app-shell .cf547-training .ost612-device-edit:hover{border-color:#c53143;co
 body.app-shell:not(.ost576-edit-enabled) .cf547-training .ost612-device-add{display:none!important;}
 body.app-shell .cf547-training .ost612-device-card .ost573-card-editor{display:block;}
 @media(max-width:550px){body.app-shell .cf547-training .ost612-device-edit{font-size:.74rem;padding:5px 7px;}}
+
+/* 613 — Medizinisches Wissen, editorial library layout.
+   New selectors intentionally do not reuse the old ost572 tile styling. */
+html body.app-shell main .mw613-library{max-width:1000px!important;margin:0 auto!important;padding:4px 2px 28px!important}
+html body.app-shell main .mw613-intro{margin:4px 0 19px!important;padding:3px 1px!important}
+html body.app-shell main .mw613-eyebrow{display:block;color:#a9293a;font-size:.71rem;font-weight:750;letter-spacing:.085em;text-transform:uppercase;margin-bottom:6px}
+html body.app-shell main .mw613-intro h1{font-size:clamp(1.5rem,4.5vw,2.05rem)!important;line-height:1.16!important;color:#173d55!important;letter-spacing:-.025em!important;margin:0 0 7px!important}
+html body.app-shell main .mw613-intro p{font-size:.94rem!important;line-height:1.52!important;color:#637989!important;margin:0!important}
+html body.app-shell main .mw613-library [hidden]{display:none!important}
+html body.app-shell main .mw613-systems-section,html body.app-shell main .mw613-topics-section{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;margin:0 0 20px!important}
+html body.app-shell main .mw613-systems-section>h2{font-size:1.04rem!important;color:#213f53!important;line-height:1.4!important;font-weight:700!important;margin:0 0 12px!important}
+html body.app-shell main .mw613-library nav.cf551-organ-nav.mw613-systems{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;column-gap:12px!important;row-gap:12px!important;max-width:none!important;width:100%!important;padding:0!important;margin:0!important;align-items:stretch!important}
+html body.app-shell main .mw613-library .mw613-system-wrap{position:relative;display:flex!important;min-width:0!important;margin:0!important;padding:0!important;flex-direction:column}
+html body.app-shell main .mw613-library .mw613-system-link{box-sizing:border-box;display:flex!important;flex:1;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:7px;min-height:126px;padding:15px 16px 13px;border:1px solid #dce4e9;border-radius:14px;background:#fff;color:#173d55;text-decoration:none;box-shadow:0 2px 8px rgba(18,54,72,.025);transition:border-color .16s,background .16s}
+html body.app-shell main .mw613-library .mw613-system-link:hover,html body.app-shell main .mw613-library .mw613-system-link:focus-visible{border-color:#c53143;background:#fffafa;outline-offset:2px}
+html body.app-shell main .mw613-library .mw613-system-link.mw613-selected{border:2px solid #b82b3d;background:#fff8f9;padding:14px 15px 12px}
+html body.app-shell main .mw613-library .mw613-system-icon{width:30px;height:30px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:#fff0f2;color:#b22a3d}
+html body.app-shell main .mw613-library .mw613-system-icon svg{width:20px!important;height:20px!important;stroke:currentColor!important;max-width:20px!important;color:inherit!important}
+html body.app-shell main .mw613-library .mw613-system-link strong{color:#173d55!important;-webkit-text-fill-color:#173d55!important;line-height:1.24!important;font-size:.96rem!important;font-weight:680!important;overflow-wrap:anywhere!important}
+html body.app-shell main .mw613-library .mw613-system-link small{margin-top:auto!important;font-size:.74rem!important;line-height:1.2!important;color:#687e8e!important;-webkit-text-fill-color:#687e8e!important}
+html body.app-shell main .mw613-library .mw613-section-heading{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:20px 0 12px;padding-top:18px;border-top:1px solid #e6ecef}
+html body.app-shell main .mw613-library .mw613-section-heading h2{font-size:clamp(1.12rem,3.4vw,1.36rem)!important;font-weight:720!important;line-height:1.28!important;margin:0!important;color:#173d55!important}
+html body.app-shell main .mw613-library .mw613-result-count{flex:none;color:#748795;font-size:.79rem;padding-bottom:2px}
+html body.app-shell main .mw613-library .mw613-search{display:flex!important;align-items:center;gap:8px;padding:0 11px!important;margin:0 0 12px!important;background:#fff!important;border:1px solid #dce6ea!important;border-radius:11px!important;max-width:none!important;min-height:42px!important}
+html body.app-shell main .mw613-library .mw613-search svg{color:#8194a1!important;width:18px!important;height:18px!important;flex:none}
+html body.app-shell main .mw613-library .mw613-search input{width:100%!important;min-width:0;border:0!important;background:transparent!important;box-shadow:none!important;color:#173d55!important;font-size:.92rem!important;padding:9px 0!important;outline:0!important}
+html body.app-shell main .mw613-library nav.cf551-category-nav.mw613-topics{display:flex!important;flex-direction:column!important;gap:8px!important;width:100%!important;max-width:none!important;min-width:0!important;padding:0!important;margin:0!important}
+html body.app-shell main .mw613-library .mw613-article-wrap{position:relative;display:block!important;width:100%!important;min-width:0!important;margin:0!important;padding:0!important}
+html body.app-shell main .mw613-library .mw613-article-link{display:flex!important;align-items:center!important;gap:13px!important;box-sizing:border-box!important;min-height:68px!important;width:100%!important;padding:12px 15px!important;border:1px solid #e0e8ed!important;border-radius:12px!important;background:#fff!important;box-shadow:none!important;text-decoration:none!important;color:#173d55!important;transition:background .16s,border-color .16s}
+html body.app-shell main .mw613-library .mw613-article-link:hover,html body.app-shell main .mw613-library .mw613-article-link:focus-visible{border-color:#c53143!important;background:#fffafb!important}
+html body.app-shell main .mw613-library .mw613-article-icon{flex:none;width:36px;height:36px;border-radius:10px;background:#f3f5f7;display:flex;align-items:center;justify-content:center;color:#7d3d47;font-size:1.2rem;line-height:1;font-weight:600}
+html body.app-shell main .mw613-library .mw613-article-text{min-width:0;display:flex;flex:1;flex-direction:column;gap:2px}
+html body.app-shell main .mw613-library .mw613-article-text strong{font-weight:650!important;line-height:1.28!important;font-size:.97rem!important;color:#173d55!important;-webkit-text-fill-color:#173d55!important;overflow-wrap:anywhere!important}
+html body.app-shell main .mw613-library .mw613-article-text small{font-size:.76rem!important;color:#778996!important;-webkit-text-fill-color:#778996!important}
+html body.app-shell main .mw613-library .mw613-chevron{color:#8499a5;font-size:1.35rem;line-height:1}
+html body.app-shell main .mw613-library .mw613-empty{padding:16px 10px;color:#687e8e;margin:0;font-size:.91rem}
+html body.app-shell main .mw613-library .mw613-back{display:inline-flex;margin:0 0 17px!important;color:#a92a3e;text-decoration:none;font-size:.87rem;font-weight:620}
+html body.app-shell main .mw613-library .mw613-article-heading{padding:0 1px 12px!important;margin:0 0 12px!important}
+html body.app-shell main .mw613-library .mw613-article-kicker{font-size:.76rem!important;color:#a92a3e;font-weight:700;letter-spacing:.015em}
+html body.app-shell main .mw613-library .ost583-tile-pencil{position:absolute!important;z-index:3!important;right:8px!important;top:8px!important;bottom:auto!important;left:auto!important}
+html body.app-shell main .mw613-library .mw613-article-wrap .ost583-tile-pencil{top:18px!important;right:35px!important}
+html body.app-shell.ost576-edit-enabled main .mw613-library .mw613-article-link{padding-right:80px!important}
+html body.app-shell.ost576-edit-enabled main .mw613-library .mw613-system-link{padding-right:36px!important}
+html body.app-shell main .mw613-library .mw613-organ-add{margin-top:10px!important}
+@media(max-width:750px){html body.app-shell main .mw613-library nav.cf551-organ-nav.mw613-systems{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:440px){html body.app-shell main .mw613-library .mw613-system-link{min-height:113px!important;padding:12px!important;gap:6px}html body.app-shell main .mw613-library .mw613-system-link.mw613-selected{padding:11px!important}html body.app-shell main .mw613-library .mw613-system-link strong{font-size:.88rem!important}html body.app-shell main .mw613-library .mw613-article-link{padding:10px 11px!important;min-height:64px!important}html body.app-shell main .mw613-library .mw613-article-icon{width:32px;height:32px}html body.app-shell main .mw613-library .mw613-intro p{font-size:.86rem!important}}
+
+/* 614: PDF upload affordance in inline device editors. */
+body.app-shell .ost573-card-editor .ost614-pdf-label{display:grid;gap:7px;font-size:.9rem;font-weight:600;color:#25465b;}
+body.app-shell .ost573-card-editor input[data-ost614-device-pdf]{background:#fff;border:1px solid #d1dde5;border-radius:9px;padding:9px;width:100%;font-size:.87rem;}
+body.app-shell .ost614-upload-status{display:block;min-height:1.2em;font-size:.83rem;color:#48677a;margin:4px 0 8px;}

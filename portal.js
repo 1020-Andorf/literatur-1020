@@ -138,7 +138,7 @@
         {
             const menu = [
                 { id: 'home', label: 'Start', href: 'index.html', icon: svg.home, match: ['home'] },
-                { id: 'wissen', label: 'Leitsymptome', href: 'themen-uebersicht.html', icon: svg.books, match: ['wissen', 'differential', 'algorithms', 'literature', 'guidelines', 'abcde', 'modules'] },
+                { id: 'wissen', label: 'Medizinisches Wissen', href: 'themen-uebersicht.html', icon: svg.books, match: ['wissen', 'differential', 'algorithms', 'literature', 'guidelines', 'abcde', 'modules'] },
                 { id: 'training', label: 'Training', href: 'training.html', icon: svg.skill, match: ['training', 'skills', 'guide', 'faq'] },
                 { id: 'materials', label: 'Materialien', href: 'materialien.html', icon: ostIcon('book'), match: ['materials', 'guidelines', 'literature'] },
                 { id: 'events', label: 'Termine', href: 'termine.html', icon: svg.calendar, match: ['events'] },
@@ -150,7 +150,7 @@
             const desktopTop = document.createElement('nav');
             desktopTop.className = 'clinical-desktop-header';
             desktopTop.setAttribute('aria-label', 'Bereiche');
-            desktopTop.innerHTML = `<a class="clinical-logo" href="index.html">OST <strong>1020</strong></a><div class="clinical-desktop-links"><a href="index.html">Start</a><a href="themen-uebersicht.html">Leitsymptome</a><a href="training.html">Training</a><a href="materialien.html">Materialien</a><a href="termine.html">Termine</a><a href="dienstbesprechungen.html">Besprechungen</a></div>`;
+            desktopTop.innerHTML = `<a class="clinical-logo" href="index.html">OST <strong>1020</strong></a><div class="clinical-desktop-links"><a href="index.html">Start</a><a href="themen-uebersicht.html">Medizinisches Wissen</a><a href="training.html">Training</a><a href="materialien.html">Materialien</a><a href="termine.html">Termine</a><a href="dienstbesprechungen.html">Besprechungen</a></div>`;
             // Unified navigation: one unobtrusive topbar on phone and desktop.
             // desktopTop is deliberately not inserted.
             const sidebar = document.createElement('aside');
@@ -172,7 +172,7 @@
             const bottom = document.createElement('nav');
             bottom.className = 'clinical-bottom-nav';
             bottom.setAttribute('aria-label', 'Schnellnavigation');
-            bottom.innerHTML = `<a href="index.html" ${page === 'home' ? 'aria-current="page"' : ''}>${svg.home}<span>Start</span></a><a href="themen-uebersicht.html" ${['wissen', 'topics', 'differential', 'modules'].includes(page) ? 'aria-current="page"' : ''}>${svg.books}<span>Leitsymptome</span></a><a href="training.html" ${['training', 'skills', 'guide', 'faq'].includes(page) ? 'aria-current="page"' : ''}>${svg.skill}<span>Training</span></a><a href="materialien.html" ${['materials', 'guidelines', 'literature'].includes(page) ? 'aria-current="page"' : ''}>${ostIcon('book')}<span>Materialien</span></a>`;
+            bottom.innerHTML = `<a href="index.html" ${page === 'home' ? 'aria-current="page"' : ''}>${svg.home}<span>Start</span></a><a href="themen-uebersicht.html" ${['wissen', 'topics', 'differential', 'modules'].includes(page) ? 'aria-current="page"' : ''}>${svg.books}<span>Wissen</span></a><a href="training.html" ${['training', 'skills', 'guide', 'faq'].includes(page) ? 'aria-current="page"' : ''}>${svg.skill}<span>Training</span></a><a href="materialien.html" ${['materials', 'guidelines', 'literature'].includes(page) ? 'aria-current="page"' : ''}>${ostIcon('book')}<span>Materialien</span></a>`;
             // No fixed bottom navigation: it must never cover content or safe-area.
         }
     }
@@ -425,7 +425,7 @@
     function normalizedTitle(t) { return String(t || '').replace(/^[^\p{L}\p{N}]+/gu, '').replace(/\s+/g, ' ').trim(); }
     function headerTitle() {
         const params = new URLSearchParams(location.search);
-        const map = { home: 'Wissenssammlung', wissen: 'Leitsymptome', topics: 'Leitsymptome', training: 'Training', events: 'Termine', news: 'Aktuelles', meetings: 'Besprechungen & Vorträge', editor: 'Redaktion', differential: 'Diagnostik', algorithms: 'Algorithmen & Merkhilfen', literature: 'Literatur', guidelines: 'Leitlinien / Guidelines', abcde: 'ABCDE-Schema', changes: 'Lehrmeinungsänderungen', materials: 'Materialien', skills: 'Training · Skills', guide: 'Training · Simulation', faq: 'Training · FAQ' };
+        const map = { home: 'Wissenssammlung', wissen: 'Medizinisches Wissen', topics: 'Medizinisches Wissen', training: 'Training', events: 'Termine', news: 'Aktuelles', meetings: 'Besprechungen & Vorträge', editor: 'Redaktion', differential: 'Diagnostik', algorithms: 'Algorithmen & Merkhilfen', literature: 'Literatur', guidelines: 'Leitlinien / Guidelines', abcde: 'ABCDE-Schema', changes: 'Lehrmeinungsänderungen', materials: 'Materialien', skills: 'Training · Skills', guide: 'Training · Simulation', faq: 'Training · FAQ' };
         if (page === 'modules') {
             const slug = params.get('bereich') || 'anatomy';
             return (MODULE_TYPES[slug] && MODULE_TYPES[slug].title) || 'Wissensbereich';
@@ -500,7 +500,7 @@
         }).join('')}</div>`;
         const picks = (Array.isArray(lit) ? lit : []).filter(x => (x.featured === true || x.featured === 'true')).sort((a, b) => Number(a.featureRank || 99) - Number(b.featureRank || 99) || String(b.added || '').localeCompare(String(a.added || ''))).slice(0, 2);
         const destinations = [
-            ['topics', 'Leitsymptome', 'themen-uebersicht.html', 'anatomy'],
+            ['topics', 'Medizinisches Wissen', 'themen-uebersicht.html', 'anatomy'],
             ['training', 'Training', 'training.html', 'training'],
             ['literature', 'Materialien', 'materialien.html', 'book'],
             ['events', 'Termine', 'termine.html', 'calendar'],
@@ -634,7 +634,10 @@
         return `<div class="ost-model-stage ${mode === 'diagnosis' ? 'ost-diagnosis-model' : 'ost-anatomy-model'}"><div class="ost-model-art"><img src="${BODY_MODEL_IMAGE}" alt="Anatomisches Körpermodell, Organe direkt antippen" draggable="false" loading="eager" onerror="this.onerror=null;this.src='assets/anatomie-koerpermodell.png'">${elements}</div><small class="ost-model-credit">Anatomische Darstellung: DBCLS / Togopic, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a> (angepasste Darstellung)</small></div>`;
     }
     function renderModuleText(raw) {
-        if(/^\s*<(?:p|div|ul|ol|h[2-4]|blockquote|figure|font|span|strong|em|a|img)(?:\s|>)/i.test(String(raw||'')))return ost570CleanHtml(raw);
+        // Device and knowledge descriptions may mix plain text with legacy HTML
+        // (e.g. text + <br><div>...). Sanitize and render the complete fragment,
+        // not only fragments that begin with a tag.
+        if(/<\/?(?:p|div|br|ul|ol|li|h[2-4]|blockquote|figure|font|span|strong|b|em|i|u|a|img)\b[^>]*>/i.test(String(raw||'')))return ost570CleanHtml(raw);
         const lines = String(raw || '').split(/\r?\n/);
         let list = false;
         const out = [];
@@ -687,7 +690,7 @@
     }
     function moduleFields(x) { if (x.module === 'checklists' || x.module === 'material-checklists')
         return moduleIconSelect(x.icon) + `<label class="ost-module-field"><span>Titel</span><input data-mf="title" value="${esc(x.title || '')}"></label><label class="ost-module-field"><span>Kategorie / Übung</span><input data-mf="category" value="${esc(x.category || '')}"></label><label class="ost-module-field"><span>Kurzbeschreibung</span><textarea data-mf="summary" rows="3">${esc(x.summary || '')}</textarea></label><label class="ost-module-field"><span>Weitere Hinweise (optional)</span><textarea data-mf="body" rows="4">${esc(x.body || '')}</textarea></label><label class="ost-module-field"><span>PDF-Adresse</span><input type="url" data-mf="documentUrl" value="${esc(x.documentUrl || '')}" placeholder="Wird beim Upload automatisch eingetragen"></label><label class="ost-image-upload">📄 PDF hochladen<input type="file" data-module-upload="pdf" accept="application/pdf,.pdf"></label>`; return moduleIconSelect(x.icon) + ['title', 'category', 'summary', 'body', 'image', 'imageCaption', 'sources', 'synonyms', 'reviewOwner', 'reviewDue'].map(k => { const label = { title: 'Titel', category: 'Kategorie', summary: 'Kurzbeschreibung', body: 'Fachinhalt / Lernnotizen', image: 'Titelbild (URL oder Bildpfad)', imageCaption: 'Bildunterschrift / Alternativtext', sources: 'Quellen / Hersteller- und Handbuchlinks (URLs)', synonyms: 'Suchbegriffe / Synonyme (mit Komma getrennt)', reviewOwner: 'Fachliche Prüfung durch', reviewDue: 'Nächste Prüfung (JJJJ-MM-TT)' }[k]; if (k === 'body')
-        return `<label class="ost-module-field"><span>${label}</span><div class="ost-rich-toolbar"><button type="button" data-rich="heading">Überschrift</button><button type="button" data-rich="bold"><b>Fett</b></button><button type="button" data-rich="italic"><i>Kursiv</i></button><button type="button" data-rich="list">Aufzählung</button><button type="button" data-rich="image">📷 Bild hochladen & einfügen</button></div><textarea class="ost-rich-input" data-mf="body" rows="15" placeholder="Ausführliche Fachtexte …">${esc(x.body || '')}</textarea><small>Absätze, ## Überschrift, **fett**, *kursiv*, - Listen. Bilder können direkt im Text eingefügt werden.</small><label class="ost-image-upload ost-hidden-upload">Bild in den Text hochladen<input type="file" data-module-upload="inline" accept="image/png,image/jpeg,image/webp"></label></label>`; return `<label class="ost-module-field"><span>${label}</span>${['sources', 'summary'].includes(k) ? `<textarea data-mf="${k}" rows="3">${esc(x[k] || '')}</textarea>` : `<input data-mf="${k}" value="${esc(x[k] || '')}">`}${k === 'image' ? '<label class="ost-image-upload">Titelbild hochladen<input type="file" data-module-upload="cover" accept="image/png,image/jpeg,image/webp"></label>' : ''}</label>`; }).join(''); }
+        return x.module==='mpg' ? `<div class="ost-module-field ost614-wysiwyg"><label>${label}</label>${ost573Toolbar()}<div class="ost573-editable" contenteditable="true" role="textbox" aria-label="Fachinhalt / Lernnotizen" data-mf="body">${ost570CleanHtml(x.body||'')}</div><small>Text direkt formatieren. Fett, Kursiv und Listen werden wie dargestellt gespeichert.</small></div>` : `<label class="ost-module-field"><span>${label}</span><div class="ost-rich-toolbar"><button type="button" data-rich="heading">Überschrift</button><button type="button" data-rich="bold"><b>Fett</b></button><button type="button" data-rich="italic"><i>Kursiv</i></button><button type="button" data-rich="list">Aufzählung</button><button type="button" data-rich="image">📷 Bild hochladen & einfügen</button></div><textarea class="ost-rich-input" data-mf="body" rows="15" placeholder="Ausführliche Fachtexte …">${esc(x.body || '')}</textarea><small>Absätze, ## Überschrift, **fett**, *kursiv*, - Listen. Bilder können direkt im Text eingefügt werden.</small><label class="ost-image-upload ost-hidden-upload">Bild in den Text hochladen<input type="file" data-module-upload="inline" accept="image/png,image/jpeg,image/webp"></label></label>`; return `<label class="ost-module-field"><span>${label}</span>${['sources', 'summary'].includes(k) ? `<textarea data-mf="${k}" rows="3">${esc(x[k] || '')}</textarea>` : `<input data-mf="${k}" value="${esc(x[k] || '')}">`}${k === 'image' ? '<label class="ost-image-upload">Titelbild hochladen<input type="file" data-module-upload="cover" accept="image/png,image/jpeg,image/webp"></label>' : ''}</label>`; }).join('') + (x.module==='mpg'?`<label class="ost-module-field"><span>PDF-Anleitung / Weblink</span><input data-mf="documentUrl" type="url" value="${esc(x.documentUrl||'')}" placeholder="https://…"></label><label class="ost-module-field ost614-pdf-label">📄 PDF-Anleitung hochladen<input type="file" data-module-upload="pdf" accept="application/pdf,.pdf"></label>`:''); }
     // ------------------------------------------------------------------------
     // Lernmodule
     // ------------------------------------------------------------------------
@@ -913,7 +916,9 @@
         };
         const render = () => { const heading = active === 'anatomy' ? 'Anatomie & Physiologie' : active === 'checklists' ? 'Übungschecklisten' : active === 'material-checklists' ? 'Checklisten' : 'Wissensbereiche';
             const description = ['checklists', 'material-checklists'].includes(active) ? 'Checklisten auswählen, bearbeiten und als PDF ergänzen. Einträge lassen sich ohne Inhaltsverlust zwischen Training und Materialien verschieben.' : 'Fachartikel, Begriffe und Geräte pflegen. Bei Geräten: Modell im Titel, Hersteller in Kategorie, Spezifikationen und Anleitungshinweise im Fachinhalt; Handbuch-Links unter Quellen.';
-            box.innerHTML = `<div class="editor-toolbar ost567-heading"><div><span class="ost567-eyebrow">REDAKTION / WISSEN</span><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div>${active === 'anatomy' ? anatomyImportPanel() : ''}<div class="ost567-edit-shell"><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) && editorSection !== 'wissen' ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>${editorSection === 'wissen' ? '3. Eintrag auswählen' : 'Eintrag auswählen'}<select data-mod-select><option value="">– Bitte auswählen –</option>${orderedModuleItems().map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${checklistMoveField(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div></div>${legacyChecklistPicker()}${moduleOrderPanel()}<p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`; };
+            box.innerHTML = `<div class="editor-toolbar ost567-heading"><div><span class="ost567-eyebrow">REDAKTION / WISSEN</span><h2>${heading}</h2><p>${description}</p></div><div class="ost-editor-module-actions"><button type="button" class="btn" data-mod-seed>Neue Lerntexte übernehmen</button><button type="button" class="btn primary" data-mod-new>+ Eintrag</button></div></div><div data-mod-note role="status"></div>${active === 'anatomy' ? anatomyImportPanel() : ''}<div class="ost567-edit-shell"><div class="ost-entry-picker cf551-module-pickers">${['anatomy', 'befund'].includes(active) && editorSection !== 'wissen' ? `<label>Organgruppe<select data-mod-region>${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${organFilter === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${organFilter === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}<label>${editorSection === 'wissen' ? '3. Eintrag auswählen' : 'Eintrag auswählen'}<select data-mod-select><option value="">– Bitte auswählen –</option>${orderedModuleItems().map(x => `<option value="${esc(x.id)}" ${selectedId === x.id ? "selected" : ""}>${esc(x.title)}</option>`).join("")}</select></label></div><div class="ost-module-admin-list">${items.filter(x => x.module === active && x.id === selectedId).map(x => `<details open data-mod-id="${esc(x.id)}"><summary><strong>${esc(x.title || 'Ohne Titel')}</strong><span>${x.status === 'draft' ? 'Entwurf' : 'Öffentlich'}</span></summary><div class="ost-module-fields">${['anatomy', 'befund'].includes(active) ? `<label class="ost-module-field"><span>Organgruppe</span><select data-mf="organGroup">${CF_TOPICS.map(t => `<option value="${esc(t.id)}" ${x.organGroup === t.id ? 'selected' : ''}>${esc(t.label)}</option>`).join('')}<option value="other" ${x.organGroup === 'other' ? 'selected' : ''}>Weitere Themen</option></select></label>` : ''}${moduleFields(x)}${checklistMoveField(x)}${active === 'anatomy' ? anatomyEditorFields(x) : ''}<label class="ost-module-field"><span>Status</span><select data-mf="status"><option value="published" ${x.status !== 'draft' ? 'selected' : ''}>Veröffentlicht</option><option value="draft" ${x.status === 'draft' ? 'selected' : ''}>Entwurf</option></select></label><div class="ost-module-admin-buttons"><button type="button" class="btn primary" data-mod-save>Speichern</button><button type="button" class="btn danger" data-mod-delete>Eintrag löschen</button></div></div></details>`).join('') || '<div class="empty">Noch keine Einträge. Mit „+ Eintrag“ starten.</div>'}</div></div>${legacyChecklistPicker()}${moduleOrderPanel()}<p class="diag-hint">Die Themenmodule teilen sich eine Datensammlung. Ältere Pilotdaten bleiben zur sicheren Wiederherstellung gespeichert. Entwürfe sind kein Zugriffsschutz.</p>`;
+            box.querySelectorAll('.ost614-wysiwyg').forEach(host=>ost573BindRich(host,host.querySelector('[contenteditable]')));
+        };
         const persist = async () => { const ok = await save('knowledgeModules', items); const el = box.querySelector('[data-mod-note]'); if (el)
             el.textContent = ok ? 'Mit dem Worker synchronisiert.' : 'Lokal gespeichert – Worker-Synchronisierung nicht bestätigt.'; return ok; };
         box.addEventListener('input', e => {
@@ -922,7 +927,7 @@
             if (field && item) {
                 const x = items.find(i => i.id === item.dataset.modId);
                 if (x)
-                    x[field.dataset.mf] = field.value;
+                    x[field.dataset.mf] = field.isContentEditable ? ost570CleanHtml(field.innerHTML) : field.value;
             }
             const sub = e.target.closest('[data-sub-title],[data-sub-body]');
             if (sub) {
@@ -960,14 +965,17 @@
             return; const file = input.files[0]; if (file.size > 10 * 1024 * 1024) {
             alert('Bitte Dateien unter 10 MB wählen.');
             return;
-        } if (input.dataset.moduleUpload === 'pdf' && (file.type !== 'application/pdf' || !file.name.toLowerCase().endsWith('.pdf'))) {
+        } if (input.dataset.moduleUpload === 'pdf' && (!file.name.toLowerCase().endsWith('.pdf') || (file.type && file.type !== 'application/pdf'))) {
             alert('Bitte eine PDF-Datei wählen.');
             return;
         } const card = input.closest('[data-mod-id]'); if (!card)
-            return; const note = card.querySelector('.ost-module-upload-note') || document.createElement('div'); note.className = 'ost-module-upload-note'; input.parentElement.after(note); note.textContent = 'Bild wird hochgeladen …'; try {
+            return; const note = card.querySelector('.ost-module-upload-note') || document.createElement('div'); note.className = 'ost-module-upload-note'; input.parentElement.after(note); note.textContent = 'Datei wird hochgeladen …'; try {
             const url = await uploadMedia(file);
             if (input.dataset.moduleUpload === 'pdf') {
-                card.querySelector('[data-mf="documentUrl"]').value = url;
+                const urlField=card.querySelector('[data-mf="documentUrl"]');
+                if(urlField)urlField.value=url;
+                const item=items.find(x=>String(x.id)===String(card.dataset.modId));
+                if(item)item.documentUrl=url;
             }
             else if (input.dataset.moduleUpload === 'cover') {
                 card.querySelector('[data-mf="image"]').value = url;
@@ -1009,7 +1017,7 @@
             const card = sb.closest('[data-mod-id]'), x = items.find(v => v.id === card?.dataset.modId);
             if (!x)
                 return;
-            card.querySelectorAll('[data-mf]').forEach(el => x[el.dataset.mf] = el.value);
+            card.querySelectorAll('[data-mf]').forEach(el => x[el.dataset.mf] = el.isContentEditable ? ost570CleanHtml(el.innerHTML) : el.value);
             x.subsections = Array.isArray(x.subsections) ? x.subsections : [];
             const row = sb.closest('[data-sub-index]'), i = Number(row?.dataset.subIndex);
             if (sb.hasAttribute('data-sub-add'))
@@ -1113,7 +1121,7 @@
             render();
             return;
         } if (e.target.closest('[data-mod-save]')) {
-            card.querySelectorAll('[data-mf]').forEach(el => x[el.dataset.mf] = el.value);
+            card.querySelectorAll('[data-mf]').forEach(el => x[el.dataset.mf] = el.isContentEditable ? ost570CleanHtml(el.innerHTML) : el.value);
             if (!x.title.trim()) {
                 alert('Titel fehlt.');
                 return;
@@ -1325,6 +1333,7 @@
       const item={...ost575Defaults[store],...overrides,id:'inline-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6)};
       const map={news:['title','date','category','text'],events:['title','date','time','location','category','capacity','description'],changes:['title','date','category','old','new','source'],meetings:['title','date','category','speaker','summary'],articles:['title','authors','journal','year','why','freeUrl'],differential:['title','theory'],knowledgeModules:['title','summary','documentUrl'],algorithms:['title','sourceUrl','source'],skills:['name']};
       const keys=map[store]||['title'];const fields=keys.map(k=>({key:k,label:({title:'Titel',name:'Skillgruppe',date:'Datum',time:'Uhrzeit',location:'Ort',category:'Kategorie',capacity:'Teilnehmerlimit',description:'Beschreibung',summary:'Untertitel',documentUrl:'PDF-/Web-Link',sourceUrl:'PDF-/Web-Link',old:'Bisherige Lehrmeinung',new:'Neue Lehrmeinung',text:'Meldung',why:'Beschreibung',theory:'Überblick'})[k]||k,value:item[k]??'',type:k==='date'?'date':k==='capacity'?'number':['description','text','old','new','why','theory'].includes(k)?'rich':'text',required:k==='title'||k==='name'}));
+      if(store==='differential'){fields.push({key:'knowledgeType',label:'Art des Wissensartikels',type:'select',value:item.knowledgeType||'symptom',options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]});}
       if(store==='articles'){const cats=await ostLitCategories(await articles());fields.push({key:'litCategory',label:'Literaturkategorie',type:'select',options:[{value:'',label:'– Kategorie wählen –'},...cats.map(c=>({value:c,label:c}))]});}
       ost576Modal('Neuen Eintrag erstellen',fields,async values=>{const data=await get(store);if(!Array.isArray(data))return false;Object.assign(item,values);if(store==='articles'){item.tags=values.litCategory?[values.litCategory]:[];delete item.litCategory;}if('capacity' in item)item.capacity=Number(item.capacity)||10;const ok=await save(store,[...data,item]);if(ok)location.reload();return ok;});
     }
@@ -1457,11 +1466,21 @@
         const km = (Array.isArray(modules) ? modules : []).filter(x => x.status !== 'draft');
         const area = $('[data-main]');
         let organ = CF_TOPICS.find(t => t.id === params.get('thema')) || CF_TOPICS[0];
-        const views = [['symptoms', 'Leitsymptome', 'heart']];
+        const views = [['symptoms', 'Medizinisches Wissen', 'heart']];
         let tab = 'symptoms';
         let chosen = params.get('eintrag') || '';
         const stage = params.get('eintrag') ? 'article' : params.get('thema') ? 'symptoms' : 'organs';
-        area.innerHTML = `<section class="cf551-wissen cf552-wissen ost570-hub"><div class="ost570-breadcrumb" data-cf-crumb></div><div class="cf547-search" data-cf-search-wrap>${ostIcon('search')}<input data-cf-search type="search" placeholder="Leitsymptom suchen …" aria-label="Leitsymptom suchen"></div><section class="cf552-filter-group cf552-organ-group" data-cf-organ-section><nav class="cf551-organ-nav" data-cf-organs aria-label="Körpersystem auswählen"></nav></section><section class="cf552-filter-group cf552-category-group" data-cf-category-section><nav class="cf551-category-nav" data-cf-categories aria-label="Leitsymptome"></nav></section><div class="cf551-content" data-cf-content></div></section>`;
+        area.innerHTML = `<section class="cf551-wissen cf552-wissen ost570-hub mw613-library">
+          <div class="mw613-intro" data-mw613-intro><span class="mw613-eyebrow">OST 1020 / WISSEN</span><h1>Medizinisches Wissen</h1><p>Fachwissen, Krankheitsbilder und klinische Zusammenhänge für den Rettungsdienst.</p></div>
+          <div class="ost570-breadcrumb" data-cf-crumb></div>
+          <section class="cf552-filter-group cf552-organ-group mw613-systems-section" data-cf-organ-section><h2>Körpersysteme</h2><nav class="cf551-organ-nav mw613-systems" data-cf-organs aria-label="Körpersystem auswählen"></nav></section>
+          <section class="cf552-filter-group cf552-category-group mw613-topics-section" data-cf-category-section>
+            <div class="mw613-section-heading"><div><span class="mw613-eyebrow">WISSENSARTIKEL</span><h2 data-mw613-group-title></h2></div><span class="mw613-result-count" data-mw613-count></span></div>
+            <div class="cf547-search mw613-search" data-cf-search-wrap>${ostIcon('search')}<input data-cf-search type="search" placeholder="Thema suchen …" aria-label="Wissensartikel im Körpersystem suchen"></div>
+            <nav class="cf551-category-nav mw613-topics" data-cf-categories aria-label="Wissensartikel"></nav>
+          </section>
+          <div class="cf551-content" data-cf-content></div>
+        </section>`;
         const input = $('[data-cf-search]', area), organBar = $('[data-cf-organs]', area), categoryBar = $('[data-cf-categories]', area), out = $('[data-cf-content]', area);
         const plain = (value) => esc(Array.isArray(value) ? value.join(', ') : String(value || ''));
         const section = (title, value) => value ? `<section class="cf551-article-section ${/warnzeichen|cave/i.test(title) ? 'ost568-panel ost568-danger' : /medikamente/i.test(title) ? 'ost568-panel ost568-amber' : ''}" id="abschnitt-${normalizedSearch(title).replace(/[^a-z0-9]+/g, '-')}"><h3>${esc(title)}</h3><p>${plain(value)}</p></section>` : '';
@@ -1535,37 +1554,44 @@
         function articleLink(item) { const u=new URLSearchParams({thema:organ.id,eintrag:item.id});return 'themen-uebersicht.html?'+u.toString(); }
         function organsLink(){return 'themen-uebersicht.html';}
         function symptomLink(){return 'themen-uebersicht.html?thema='+encodeURIComponent(organ.id);}
+        const knowledgeTypes={symptom:{label:'Leitsymptom',icon:'stethoscope'},disease:{label:'Krankheitsbild',icon:'heart'},basics:{label:'Grundlagen',icon:'book'}};
+        const typeOf=x=>knowledgeTypes[x?.knowledgeType] ? x.knowledgeType : 'symptom';
+        const activeOrgans=()=>CF_TOPICS.filter(t=>!organMeta(t.id).hidden);
+        const typeGlyph={symptom:'✚',disease:'♡',basics:'▤'};
         function draw() {
             const currentTitle = $('.topbar .brand strong');
-            if(currentTitle) currentTitle.textContent=chosen ? 'Fachartikel' : params.has('thema') ? organ.label : 'Körpersysteme';
+            if(currentTitle)currentTitle.textContent=chosen ? 'Fachartikel' : 'Medizinisches Wissen';
             const current=entries().find(x=>x.id===chosen);
             const isArticle=!!current;
-            const hasOrgan=!!params.get('thema');
-            organSection.hidden=hasOrgan;catSection.hidden=!hasOrgan || isArticle;
-            searchWrap.hidden=true;
-            crumb.innerHTML='';
-            const ost611Paint=nav=>nav.querySelectorAll('a.ost572-tile').forEach(tile=>{
-                const set=(node,prop,value)=>node.style.setProperty(prop,value,'important');
-                set(tile,'background','#ffffff');set(tile,'background-color','#ffffff');
-                set(tile,'background-image','none');set(tile,'border','1px solid #bf293d');
-                set(tile,'border-left','1px solid #bf293d');set(tile,'color','#183e58');
-                set(tile,'box-shadow','none');set(tile,'text-shadow','none');
-                tile.querySelectorAll('strong,.ost572-chevron').forEach(el=>{
-                    set(el,'color','#183e58');set(el,'-webkit-text-fill-color','#183e58');set(el,'opacity','1');
-                });
-            });
-            organBar.innerHTML=CF_TOPICS.filter(t=>!organMeta(t.id).hidden).map((t,i)=>`<div class="ost583-tile-wrap"><a class="ost570-tile ost572-tile" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}"><span class="ost572-count" aria-hidden="true">${ostIcon(t.icon || 'anatomy')}</span><strong>${esc(t.label)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-organ="${esc(t.id)}" aria-label="${esc(t.label)} umbenennen">✎</button></div>`).join('');
-            if(!hasOrgan && ost576IsEditing()){const b=document.createElement('button');b.type='button';b.className='ost575-add';b.textContent='＋ Körpersystem';b.onclick=()=>ost583CreateOrgan();organBar.after(b);}
-            ost611Paint(organBar);
-            if(!hasOrgan){out.innerHTML='';return;}
+            // Keep the selected system visible while browsing. A direct article link
+            // shows the same existing article body and retains its back navigation.
+            organSection.hidden=isArticle;
+            catSection.hidden=isArticle;
+            searchWrap.hidden=isArticle;
+            $('[data-mw613-intro]',area).hidden=isArticle;
+            crumb.innerHTML=isArticle?`<a class="mw613-back" href="${symptomLink()}">‹ Zurück zu ${esc(organ.label)}</a>`:'';
+            const organs=activeOrgans();
+            organBar.innerHTML=organs.map(t=>{
+              const count=differentials.filter(x=>!x.deleted&&t.groups.includes(x.group)).length;
+              const selected=t.id===organ.id;
+              return `<div class="ost583-tile-wrap mw613-system-wrap"><a class="mw613-system-link ${selected?'mw613-selected':''}" href="themen-uebersicht.html?thema=${encodeURIComponent(t.id)}" ${selected?'aria-current="true"':''}><span class="mw613-system-icon" aria-hidden="true">${ostIcon(t.icon||'anatomy')}</span><strong>${esc(t.label)}</strong><small>${count} ${count===1?'Artikel':'Artikel'}</small></a><button type="button" class="ost583-tile-pencil" data-ost583-organ="${esc(t.id)}" aria-label="${esc(t.label)} bearbeiten">✎</button></div>`;
+            }).join('');
+            // Unlike the old version, switching systems does not hide this grid.
+            const oldAdd=organSection.parentElement.querySelector('[data-mw613-organ-add]');if(oldAdd)oldAdd.remove();
+            if(ost576IsEditing()&&!isArticle){const b=document.createElement('button');b.type='button';b.className='ost575-add mw613-organ-add';b.dataset.mw613OrganAdd='';b.textContent='＋ Körpersystem';b.onclick=()=>ost583CreateOrgan();organBar.after(b);}
             const all=entries(), needle=normalizedSearch(input.value.trim());
             const found=needle ? all.filter(x=>normalizedSearch(x.title).includes(needle)) : all;
-            categoryBar.innerHTML=found.map((x,i)=>`<div class="ost583-tile-wrap"><a class="ost570-symptom-tile ost572-tile" href="${articleLink(x)}"><strong>${esc(x.title)}</strong><span class="ost572-chevron">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-symptom="${esc(x.value.id)}" aria-label="${esc(x.title)} umbenennen">✎</button></div>`).join('') || '<p>Keine passenden Leitsymptome gefunden.</p>';
-            ost611Paint(categoryBar);
+            $('[data-mw613-group-title]',area).textContent=organ.label;
+            $('[data-mw613-count]',area).textContent=`${found.length} ${found.length===1?'Artikel':'Artikel'}`;
+            categoryBar.innerHTML=found.map(x=>{
+                const kind=typeOf(x.value),meta=knowledgeTypes[kind];
+                return `<div class="ost583-tile-wrap mw613-article-wrap"><a class="mw613-article-link" href="${articleLink(x)}"><span class="mw613-article-icon" aria-hidden="true">${typeGlyph[kind]}</span><span class="mw613-article-text"><strong>${esc(x.title)}</strong><small>${meta.label}</small></span><span class="mw613-chevron" aria-hidden="true">›</span></a><button type="button" class="ost583-tile-pencil" data-ost583-symptom="${esc(x.value.id)}" aria-label="${esc(x.title)} bearbeiten">✎</button></div>`;
+            }).join('')||'<p class="mw613-empty">Keine passenden Wissensartikel gefunden.</p>';
             if(!isArticle){out.innerHTML='';return;}
-            out.innerHTML=`<header class="ost570-article-head ost570-title-only"><div><h1 class="ost570-title-text">${esc(current.title)}</h1></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
+            const kind=typeOf(current.value);
+            out.innerHTML=`<header class="ost570-article-head ost570-title-only mw613-article-heading"><div><span class="mw613-article-kicker">${esc(organ.label)} · ${knowledgeTypes[kind].label}</span><h1 class="ost570-title-text">${esc(current.title)}</h1></div><button type="button" class="ost570-edit-btn" data-ost570-edit aria-label="Titel mit PIN bearbeiten" title="Titel bearbeiten">✎</button></header>${article(current)}<section class="ost570-inline-editor" data-ost570-editor hidden></section>`;
             $('[data-ost570-edit]',out).addEventListener('click',()=>editArticle(current,'title'));
-            $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index || 0))));
+            $$('[data-ost571-part]',out).forEach(b=>b.addEventListener('click',()=>editArticle(current,b.dataset.ost571Part,Number(b.dataset.ost571Index||0))));
             out.querySelector('[data-ost583-cause-add]')?.addEventListener('click',()=>ost583CreateCause(current));
         }
         async function ost583CreateCause(item){
@@ -1687,7 +1713,7 @@
                 return;
             }
         }
-        if(params.has('thema') && !params.has('eintrag'))ost575AddButton(area,'differential',{title:'Neues Leitsymptom',group:organ.groups[0]||'Weitere',questions:[],redflags:[],causes:[]});
+        if(!params.has('eintrag'))ost575AddButton(area,'differential',{title:'Neuer Wissensartikel',knowledgeType:'symptom',group:organ.groups[0]||'Weitere',questions:[],redflags:[],causes:[]});
         async function ost583CreateOrgan(){
             if(!await ost574Pin())return;
             ost576Modal('Organsystem hinzufügen',[{key:'label',label:'Name des Organsystems',required:true}],async vals=>{
@@ -1734,18 +1760,19 @@
             }else{
                 const item=differentials.find(x=>String(x.id)===sb.dataset.ost583Symptom);if(!item)return;
                 const currentTopic=CF_TOPICS.find(t=>t.groups.includes(item.group))||organ;
-                const modal=ost576Modal('Leitsymptom bearbeiten',[
+                const modal=ost576Modal('Wissensartikel bearbeiten',[
                     {key:'title',label:'Titel',value:item.title,required:true},
+                    {key:'knowledgeType',label:'Artikelart',type:'select',value:typeOf(item),options:[{value:'symptom',label:'Leitsymptom'},{value:'disease',label:'Krankheitsbild'},{value:'basics',label:'Grundlagen'}]},
                     {key:'organId',label:'Organsystem',type:'select',value:currentTopic.id,options:CF_TOPICS.filter(t=>!organMeta(t.id).hidden).map(t=>({value:t.id,label:t.label}))}
                 ],async values=>{
                     const latest=await get('differential'),idx=latest.findIndex(x=>String(x.id)===String(item.id));if(idx<0)return false;
                     const target=CF_TOPICS.find(t=>t.id===values.organId)||currentTopic;
-                    latest[idx]={...latest[idx],title:values.title.trim(),group:target.groups[0]};
+                    latest[idx]={...latest[idx],title:values.title.trim(),group:target.groups[0],knowledgeType:values.knowledgeType};
                     if(await save('differential',latest)){location.reload();return true;}return false;
                 });
-                const del=document.createElement('button');del.type='button';del.className='btn danger';del.textContent='Leitsymptom löschen';
+                const del=document.createElement('button');del.type='button';del.className='btn danger';del.textContent='Wissensartikel löschen';
                 del.onclick=async()=>{
-                    if(!confirm('Leitsymptom einschließlich aller Krankheitsbilder endgültig löschen?'))return;
+                    if(!confirm('Wissensartikel einschließlich aller enthaltenen Informationen endgültig löschen?'))return;
                     const latest=await get('differential'),remaining=latest.filter(x=>String(x.id)!==String(item.id));
                     if(remaining.length===latest.length)return;
                     if(await save('differential',remaining))location.reload();else alert('Löschen fehlgeschlagen.');
@@ -1775,11 +1802,33 @@
         card.classList.add('ost573-editing-card');
         let host=card.querySelector('.ost573-card-editor');
         if(!host){host=document.createElement('section');host.className='ost573-card-editor';card.querySelector('.cf563-entry-body')?.prepend(host);}
-        host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt / Beschreibung</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><label>PDF- oder Weblink<input type="url" data-ost575-document-url value="${esc(data[idx].documentUrl||data[idx].sourceUrl||'')}" placeholder="https://…"></label>${data[idx].module==='mpg'?'':`<label>Untertitel<input data-ost575-subtitle value="${esc(data[idx].summary||data[idx].source||'')}"></label>`}<div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
+        host.innerHTML=`<label>Titel<input data-ost573-card-title value="${esc(data[idx].title||'')}"></label><label>Inhalt / Beschreibung</label>${ost573Toolbar()}<div class="ost573-editable" data-ost573-card-rich contenteditable="true"></div><label>PDF- oder Weblink<input type="url" data-ost575-document-url value="${esc(data[idx].documentUrl||data[idx].sourceUrl||'')}" placeholder="https://…"></label>${data[idx].module==='mpg'?'<label class="ost614-pdf-label">📄 Anleitung / PDF hochladen<input type="file" data-ost614-device-pdf accept="application/pdf,.pdf"></label><span class="ost614-upload-status" data-ost614-upload-status role="status" aria-live="polite"></span>':''}${data[idx].module==='mpg'?'':`<label>Untertitel<input data-ost575-subtitle value="${esc(data[idx].summary||data[idx].source||'')}"></label>`}<div class="ost570-actions"><button type="button" class="btn primary" data-ost573-card-save>Speichern</button><button type="button" class="btn" data-ost573-card-cancel>Abbrechen</button><span role="status" data-ost573-card-status></span></div>`;
         const rich=host.querySelector('[data-ost573-card-rich]');rich.innerHTML=ost570CleanHtml(data[idx][textField]||'');ost573BindRich(host,rich);
+        let uploadingDevicePdf=false;
+        const pdfInput=host.querySelector('[data-ost614-device-pdf]');
+        if(pdfInput)pdfInput.onchange=async()=>{
+            const file=pdfInput.files?.[0],status=host.querySelector('[data-ost614-upload-status]');
+            if(!file)return;
+            if(!/\.pdf$/i.test(file.name) || (file.type && file.type!=='application/pdf')){
+                status.textContent='Bitte eine PDF-Datei auswählen.';pdfInput.value='';return;
+            }
+            if(file.size>19*1024*1024){status.textContent='Datei zu groß (maximal 19 MB).';pdfInput.value='';return;}
+            uploadingDevicePdf=true;pdfInput.disabled=true;
+            host.querySelector('[data-ost573-card-save]').disabled=true;
+            status.textContent='PDF wird hochgeladen …';
+            try{
+                const url=await uploadMedia(file);
+                if(!/^https?:\/\//i.test(String(url||'')))throw Error('Keine gültige Datei-Adresse erhalten.');
+                host.querySelector('[data-ost575-document-url]').value=url;
+                status.textContent='PDF hochgeladen. Bitte jetzt „Speichern“ wählen.';
+            }catch(err){status.textContent='Upload fehlgeschlagen: '+(err.message||'Worker prüfen');}
+            finally{uploadingDevicePdf=false;pdfInput.disabled=false;pdfInput.value='';host.querySelector('[data-ost573-card-save]').disabled=false;}
+        };
         host.querySelector('[data-ost573-card-cancel]').onclick=()=>{card.classList.remove('ost573-editing-card'); host.remove();};
         host.querySelector('[data-ost573-card-save]').onclick=async()=>{
-            const state=host.querySelector('[data-ost573-card-status]');state.textContent='Speichere …';
+            const state=host.querySelector('[data-ost573-card-status]');
+            if(uploadingDevicePdf){state.textContent='PDF-Upload noch nicht abgeschlossen.';return;}
+            state.textContent='Speichere …';
             const latest=await get(store), index=latest.findIndex(x=>String(x.id)===String(id));
             if(index<0){state.textContent='Datensatz nicht gefunden.';return;}
             latest[index]={...latest[index],title:host.querySelector('[data-ost573-card-title]').value.trim()||latest[index].title,[textField]:ost570CleanHtml(rich.innerHTML)};
